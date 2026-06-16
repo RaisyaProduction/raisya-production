@@ -319,9 +319,26 @@
                             📥 Export List Aktif ke Excel
                         </button>
                     </div>
+        <!-- TAMBAHAN: INPUT PENDAPATAN LAIN / ONGKOS PASANG -->
+<div class="bg-white p-5 rounded-2xl shadow-sm border mt-4 space-y-3">
+    <h3 class="font-bold text-gray-800 text-xs uppercase tracking-wide text-emerald-600">💰 2. Pendapatan Lain (Ongkos Pasang/Jasa)</h3>
+    <div class="grid grid-cols-2 gap-2">
+        <div>
+            <label class="block text-xs font-medium text-gray-500">Tanggal</label>
+            <input type="date" id="net-inc-date" class="mt-1 block w-full p-2 border rounded-lg text-xs bg-gray-50">
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-gray-500">Nominal (Rp)</label>
+            <input type="number" id="net-inc-amount" placeholder="0" class="mt-1 block w-full p-2 border rounded-lg text-xs">
+        </div>
+    </div>
+    <div>
+        <label class="block text-xs font-medium text-gray-500">Keterangan (Contoh: Pasang Budi)</label>
+        <input type="text" id="net-inc-desc" class="mt-1 block w-full p-2 border rounded-lg text-xs">
+    </div>
+    <button onclick="addInternetIncidental()" class="w-full bg-emerald-600 text-white p-2 rounded-lg font-medium text-xs hover:bg-emerald-700">Simpan Pendapatan Lain</button>
                 </div>
             </div>
-
             <!-- TAB 2: MASTER DATABASE PELANGGAN -->
             <div id="panel-net-master" class="space-y-4 hidden">
                 <div class="bg-white p-5 rounded-2xl shadow-sm border space-y-3">
