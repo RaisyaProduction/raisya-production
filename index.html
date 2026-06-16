@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RAISYA PRODUCTION</title>
     
-    <!-- Manifest untuk Fitur Instalasi HP (PWA) -->
+    <!-- Manifest PWA -->
     <link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22Raisya%20Production%22%2C%22short_name%22%3A%22RaisyaProd%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f3f4f6%22%2C%22theme_color%22%3A%22%234f46e5%22%7D">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -17,15 +17,15 @@
 </head>
 <body class="bg-gray-100 font-sans antialiased pb-12">
 
-    <!-- ================= 1. GERBANG LOGIN UTAMA APLIKASI ================= -->
+    <!-- ================= LAYAR 1: GERBANG LOGIN UTAMA APLIKASI ================= -->
     <div id="gerbang-login-utama" class="fixed inset-0 bg-indigo-900 flex items-center justify-center p-4 z-100">
         <div class="bg-white p-6 rounded-2xl shadow-2xl max-w-sm w-full text-center">
             <h2 class="text-2xl font-bold text-indigo-900 tracking-wider mb-1">RAISYA PRODUCTION</h2>
-            <p class="text-xs text-gray-500 mb-6">Sistem Informasi Pembukuan Internal</p>
+            <p class="text-xs text-gray-500 mb-6">Sistem Informasi Pembukuan Utama</p>
             
             <form id="form-login-utama" class="space-y-4 text-left">
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 uppercase">Username</label>
+                    <label class="block text-xs font-bold text-gray-700 uppercase">Username Utama</label>
                     <input type="text" id="login-username" required placeholder="Masukkan Username" class="mt-1 block w-full rounded-lg border border-gray-300 p-3 bg-gray-50 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                 </div>
                 <div>
@@ -43,19 +43,99 @@
     </div>
 
 
-    <!-- ================= 2. KONTEN CORE APLIKASI (DISEMBUNYIKAN SEBELUM LOGIN) ================= -->
+    <!-- ================= LAYAR 2: MENU UTAMA PILIHAN PEMBUKUAN ================= -->
+    <div id="layar-menu-utama" class="fixed inset-0 bg-gray-50 flex items-center justify-center p-4 z-50 hidden overflow-y-auto">
+        <div class="max-w-md w-full bg-white p-6 rounded-2xl shadow-xl border border-gray-200">
+            <div class="text-center mb-6">
+                <h2 class="text-xl font-bold text-gray-800 tracking-wide">PILIH LOGIN PEMBUKUAN</h2>
+                <p class="text-xs text-gray-500 mt-1">Silakan pilih unit pembukuan yang ingin diedit</p>
+            </div>
+            
+            <div class="space-y-3">
+                <button onclick="pilihUnitPembukuan('keluarga')" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3.5 px-4 rounded-xl shadow-sm text-sm text-left flex justify-between items-center transition-all cursor-pointer">
+                    <span>1. PEMBUKUAN KEUANGAN KELUARGA</span>
+                    <span>➔</span>
+                </button>
+                <button onclick="pilihUnitPembukuan('internet')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 px-4 rounded-xl shadow-sm text-sm text-left flex justify-between items-center transition-all cursor-pointer">
+                    <span>2. PEMBUKUAN BISNIS INTERNET</span>
+                    <span>➔</span>
+                </button>
+                <button onclick="pilihUnitPembukuan('rumah_hantu')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 px-4 rounded-xl shadow-sm text-sm text-left flex justify-between items-center transition-all cursor-pointer">
+                    <span>3. PEMBUKUAN BISNIS RUMAH HANTU</span>
+                    <span>➔</span>
+                </button>
+                <button onclick="pilihUnitPembukuan('playground')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 px-4 rounded-xl shadow-sm text-sm text-left flex justify-between items-center transition-all cursor-pointer">
+                    <span>4. PEMBUKUAN BISNIS PLAYGROUND</span>
+                    <span>➔</span>
+                </button>
+                <button onclick="pilihUnitPembukuan('party_decor')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 px-4 rounded-xl shadow-sm text-sm text-left flex justify-between items-center transition-all cursor-pointer">
+                    <span>5. PEMBUKUAN BISNIS RAISYA DECORATION</span>
+                    <span>➔</span>
+                </button>
+            </div>
+
+            <hr class="border-gray-200 my-5">
+            <button onclick="logoutUtama()" class="w-full bg-red-100 hover:bg-red-200 text-red-700 font-bold py-2.5 rounded-xl text-xs transition-all cursor-pointer">
+                🚪 KELUAR DARI SISTEM (LOGOUT)
+            </button>
+        </div>
+    </div>
+
+
+    <!-- ================= LAYAR 3A: GERBANG LOGIN KHUSUS UNIT BISNIS ================= -->
+    <div id="panel-login-bisnis" class="fixed inset-0 bg-gray-900 bg-opacity-90 flex items-center justify-center p-4 z-40 hidden">
+        <div class="bg-white p-6 rounded-xl shadow-lg max-w-sm w-full text-center border-t-4 border-indigo-600">
+            <h3 id="judul-login-bisnis" class="text-md font-bold text-gray-800 uppercase mb-1">Login Pembukuan Bisnis</h3>
+            <p class="text-2xs text-gray-400 mb-4">Akses terbatas untuk pengelolaan unit terkait</p>
+            
+            <form id="form-login-bisnis" class="space-y-4 text-left">
+                <div>
+                    <label class="block text-2xs font-bold text-gray-600 uppercase">Username Bisnis</label>
+                    <input type="text" id="bisnis-username" required class="mt-1 block w-full rounded-lg border border-gray-300 p-2.5 bg-gray-50 text-sm focus:outline-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-2xs font-bold text-gray-600 uppercase">Password</label>
+                    <input type="password" id="bisnis-password" required placeholder="••••••" class="mt-1 block w-full rounded-lg border border-gray-300 p-2.5 bg-gray-50 text-sm focus:outline-indigo-500">
+                </div>
+                <div id="error-bisnis-pesan" class="text-2xs text-red-600 font-bold hidden text-center">
+                    ❌ Username atau Password Bisnis Salah!
+                </div>
+                <div class="flex gap-2 pt-2">
+                    <button type="button" onclick="kembaliKeMenuUtama()" class="w-1/2 bg-gray-200 text-gray-700 font-bold py-2.5 rounded-lg text-xs cursor-pointer">Batal</button>
+                    <button type="submit" class="w-1/2 bg-indigo-600 text-white font-bold py-2.5 rounded-lg text-xs cursor-pointer">Verifikasi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- ================= LAYAR 3B: SUB-LOGIN KELUARGA (SUAMI / ISTRI) ================= -->
+    <div id="panel-login-keluarga" class="fixed inset-0 bg-gray-100 flex items-center justify-center p-4 z-40 hidden">
+        <div class="bg-white p-6 rounded-xl shadow-md border-2 border-dashed border-amber-300 max-w-sm w-full text-center">
+            <h3 class="text-lg font-bold text-gray-800 mb-2">🔐 Catatan Anggaran Keluarga</h3>
+            <p class="text-xs text-gray-500 mb-5">Silakan pilih status Anda untuk mencatatkan keuangan keluarga</p>
+            <div class="grid grid-cols-2 gap-4 mb-5">
+                <button onclick="loginKeluarga('Suami')" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-lg cursor-pointer transition-all">👨 SUAMI</button>
+                <button onclick="loginKeluarga('Istri')" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 rounded-lg cursor-pointer transition-all">👩 ISTRI</button>
+            </div>
+            <button onclick="kembaliKeMenuUtama()" class="text-xs text-indigo-600 font-semibold underline hover:text-indigo-800 cursor-pointer">← Kembali ke Menu Pembukuan</button>
+        </div>
+    </div>
+
+
+    <!-- ================= LAYAR 4: KONTEN KOR INTERFACE PEMBUKUAN AKTIF ================= -->
     <div id="app-content-wrapper" class="hidden">
         
         <!-- Top Bar / Header -->
-        <header class="bg-indigo-600 text-white shadow-md sticky top-0 z-50">
+        <header class="bg-indigo-600 text-white shadow-md sticky top-0 z-30">
             <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-2">
                 <div>
                     <h1 class="text-2xl font-bold tracking-wider text-center sm:text-left">RAISYA PRODUCTION</h1>
                     <p class="text-xs text-indigo-200">Sistem Pembukuan Terintegrasi (Admin: Radhika)</p>
                 </div>
-                <div class="flex items-center gap-2">
-                    <button id="btn-install" class="hidden bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold text-xs py-2 px-4 rounded-full shadow transition-all cursor-pointer">
-                        📲 INSTAL DI HP
+                <div class="flex items-center gap-3">
+                    <button onclick="kembaliKeMenuUtama()" class="bg-amber-400 hover:bg-amber-500 text-gray-900 font-bold text-xs py-2 px-4 rounded-full shadow transition-all cursor-pointer">
+                        📋 MENU PEMBUKUAN
                     </button>
                     <button onclick="logoutUtama()" class="bg-red-500 hover:bg-red-600 text-white font-bold text-xs py-2 px-4 rounded-full shadow transition-all cursor-pointer">
                         🚪 KELUAR
@@ -66,147 +146,145 @@
 
         <div class="max-w-6xl mx-auto p-4 sm:p-6">
             
-            <!-- Pilihan Kategori Pembukuan -->
-            <div class="mb-6">
-                <label class="block text-sm font-bold text-gray-700 mb-2">PILIH UNIT PEMBUKUAN:</label>
-                <select id="kategori-selector" class="block w-full bg-white border-2 border-indigo-500 rounded-xl p-3 text-gray-800 font-semibold shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-                    <option value="keluarga">1. PEMBUKUAN KEUANGAN KELUARGA</option>
-                    <option value="internet">2. PEMBUKUAN BISNIS INTERNET</option>
-                    <option value="rumah_hantu">3. PEMBUKUAN BISNIS RUMAH HANTU PRODUCTION</option>
-                    <option value="playground">4. PEMBUKUAN BISNIS PLAYGROUND</option>
-                    <option value="party_decor">5. PEMBUKUAN BISNIS RAISYA PARTI & DECORATION</option>
-                </select>
-            </div>
-
-            <hr class="border-gray-300 my-6">
-
-            <!-- PANEL SUB-LOGIN KELUARGA (SUAMI/ISTRI) -->
-            <div id="panel-login-keluarga" class="bg-white p-6 rounded-xl shadow-md border-2 border-dashed border-indigo-300 max-w-md mx-auto my-8 hidden text-center">
-                <h3 class="text-lg font-bold text-gray-800 mb-2">🔐 Catatan Anggaran Keluarga</h3>
-                <p class="text-xs text-gray-500 mb-4">Silakan pilih status Anda untuk mendata pengeluaran</p>
-                <div class="grid grid-cols-2 gap-4">
-                    <button onclick="loginKeluarga('Suami')" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-lg cursor-pointer transition-all">👨 SUAMI</button>
-                    <button onclick="loginKeluarga('Istri')" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 rounded-lg cursor-pointer transition-all">👩 ISTRI</button>
-                </div>
-            </div>
-
-            <!-- SUB-KONTEN UTAMA PEMBUKUAN -->
-            <div id="konten-aplikasi-utama">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2 border-b border-gray-200 pb-4">
+                <h2 id="nama-pembukuan-aktif" class="text-xl font-bold text-gray-800 uppercase tracking-wide text-indigo-700"></h2>
                 
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
-                    <h2 id="nama-pembukuan-aktif" class="text-xl font-bold text-gray-800 uppercase tracking-wide text-indigo-700"></h2>
-                    <div id="user-status-badge" class="hidden text-xs bg-indigo-100 text-indigo-800 font-bold px-3 py-1.5 rounded-full border border-indigo-200">
-                        👤 Dicatat Oleh: <span id="nama-user-aktif" class="underline"></span> 
-                        <button onclick="logoutKeluarga()" class="text-red-500 hover:text-red-700 ml-2 font-bold cursor-pointer">Ganti</button>
-                    </div>
+                <!-- Identitas Penginput -->
+                <div id="user-status-badge" class="text-xs bg-indigo-100 text-indigo-800 font-bold px-3 py-1.5 rounded-full border border-indigo-200">
+                    👤 Penginput Aktif: <span id="nama-user-aktif" class="underline"></span> 
+                    <button id="btn-ganti-user-sub" onclick="gantiSubUser()" class="text-red-500 hover:text-red-700 ml-2 font-bold cursor-pointer">Ganti</button>
                 </div>
-
-                <!-- KHUSUS KELUARGA: Fitur Input Anggaran Rumah Tangga -->
-                <div id="panel-anggaran-keluarga" class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl shadow-sm mb-6 hidden">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                        <div>
-                            <h4 class="text-sm font-bold text-amber-800 uppercase tracking-wider">Anggaran Rumah Tangga</h4>
-                            <p class="text-xs text-amber-600">Tentukan total plafon anggaran bulanan Anda di sini.</p>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-sm font-bold text-gray-700">Rp</span>
-                            <input type="number" id="input-total-anggaran" value="3000000" class="bg-white border border-amber-300 rounded-lg p-2 text-sm font-bold w-40 text-gray-800 focus:outline-amber-500">
-                            <button id="btn-save-anggaran" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs py-2 px-3 rounded-lg cursor-pointer transition-all">Set</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Dashboard Ringkasan -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                    <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
-                        <p id="label-card-1" class="text-xs font-semibold text-gray-400 uppercase">Total Pemasukan</p>
-                        <p id="total-pemasukan" class="text-xl font-bold text-green-600 mt-1">Rp 0</p>
-                    </div>
-                    <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
-                        <p id="label-card-2" class="text-xs font-semibold text-gray-400 uppercase">Total Pengeluaran</p>
-                        <p id="total-pengeluaran" class="text-xl font-bold text-red-600 mt-1">Rp 0</p>
-                    </div>
-                    <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
-                        <p id="label-card-3" class="text-xs font-semibold text-gray-400 uppercase">Saldo / Keuntungan</p>
-                        <p id="saldo-akhir" class="text-xl font-bold text-blue-600 mt-1">Rp 0</p>
-                    </div>
-                </div>
-
-                <!-- Konten Form & Tabel -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- Form Input -->
-                    <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 h-fit">
-                        <h3 id="judul-form-catat" class="text-lg font-bold text-gray-800 mb-4">Catat Transaksi</h3>
-                        <form id="transaction-form" class="space-y-4">
-                            <div>
-                                <label id="label-deskripsi" class="block text-xs font-semibold text-gray-600">Keterangan / Nama Item</label>
-                                <input type="text" id="deskripsi" required placeholder="Contoh: Belanja Bulanan / Listrik" class="mt-1 block w-full rounded-lg border-gray-300 p-2.5 bg-gray-50 text-sm">
-                            </div>
-                            <div id="wrapper-jenis-transaksi">
-                                <label class="block text-xs font-semibold text-gray-600">Jenis Transaksi</label>
-                                <select id="jenis" class="mt-1 block w-full rounded-lg border-gray-300 p-2.5 bg-gray-50 text-sm">
-                                    <option value="pemasukan">Pemasukan (+)</option>
-                                    <option value="pengeluaran" selected>Pengeluaran (-)</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label id="label-jumlah" class="block text-xs font-semibold text-gray-600">Jumlah Uang (Rp)</label>
-                                <input type="number" id="jumlah" required placeholder="0" class="mt-1 block w-full rounded-lg border-gray-300 p-2.5 bg-gray-50 text-sm">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-gray-600">Tanggal</label>
-                                <input type="date" id="tanggal" required class="mt-1 block w-full rounded-lg border-gray-300 p-2.5 bg-gray-50 text-sm">
-                            </div>
-                            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-lg text-sm cursor-pointer transition-all">
-                                Simpan Data
-                            </button>
-                        </form>
-                    </div>
-
-                    <!-- Grafik & Tabel -->
-                    <div class="lg:col-span-2 space-y-6">
-                        <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
-                            <h3 class="text-lg font-bold text-gray-800 mb-2">Grafik Analisis</h3>
-                            <div class="h-48">
-                                <canvas id="financialChart"></canvas>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
-                            <div class="flex justify-between items-center mb-3">
-                                <h3 class="text-lg font-bold text-gray-800">Riwayat Catatan</h3>
-                                <button id="clear-btn" class="text-xs text-red-500 hover:text-red-700 font-semibold cursor-pointer">Hapus Semua Data Unit Ini</button>
-                            </div>
-                            <div class="overflow-x-auto">
-                                <table class="min-w-full text-sm text-left">
-                                    <thead class="bg-gray-50 text-gray-500 uppercase text-xs">
-                                        <tr>
-                                            <th class="p-3">Tanggal</th>
-                                            <th class="p-3">Keterangan / Catatan</th>
-                                            <th id="th-jenis" class="p-3">Jenis</th>
-                                            <th class="p-3">Jumlah</th>
-                                            <th class="p-3 text-center">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="transaction-table-body" class="divide-y divide-gray-100">
-                                        <!-- Diisi via JS -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
+
+            <!-- KHUSUS KELUARGA: Fitur Input Anggaran Utama -->
+            <div id="panel-anggaran-keluarga" class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl shadow-sm mb-6 hidden">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h4 class="text-sm font-bold text-amber-800 uppercase tracking-wider">Anggaran Rumah Tangga</h4>
+                        <p class="text-xs text-amber-600">Atur plafon anggaran belanja bulanan keluarga di bawah ini.</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm font-bold text-gray-700">Rp</span>
+                        <input type="number" id="input-total-anggaran" value="3000000" class="bg-white border border-amber-300 rounded-lg p-2 text-sm font-bold w-40 text-gray-800 focus:outline-amber-500">
+                        <button id="btn-save-anggaran" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs py-2 px-3 rounded-lg cursor-pointer transition-all">Set</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Ringkasan -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
+                    <p id="label-card-1" class="text-xs font-semibold text-gray-400 uppercase">Total Pemasukan</p>
+                    <p id="total-pemasukan" class="text-xl font-bold text-green-600 mt-1">Rp 0</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
+                    <p id="label-card-2" class="text-xs font-semibold text-gray-400 uppercase">Total Pengeluaran</p>
+                    <p id="total-pengeluaran" class="text-xl font-bold text-red-600 mt-1">Rp 0</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
+                    <p id="label-card-3" class="text-xs font-semibold text-gray-400 uppercase">Saldo / Keuntungan</p>
+                    <p id="saldo-akhir" class="text-xl font-bold text-blue-600 mt-1">Rp 0</p>
+                </div>
+            </div>
+
+            <!-- Konten Form Input & Tabel Riwayat -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Form Input -->
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 h-fit">
+                    <h3 id="judul-form-catat" class="text-lg font-bold text-gray-800 mb-4">Catat Transaksi</h3>
+                    <form id="transaction-form" class="space-y-4">
+                        <div>
+                            <label id="label-deskripsi" class="block text-xs font-semibold text-gray-600">Keterangan / Nama Item</label>
+                            <input type="text" id="deskripsi" required placeholder="Contoh: Pendapatan / Pembelian" class="mt-1 block w-full rounded-lg border border-gray-300 p-2.5 bg-gray-50 text-sm">
+                        </div>
+                        <div id="wrapper-jenis-transaksi">
+                            <label class="block text-xs font-semibold text-gray-600">Jenis Transaksi</label>
+                            <select id="jenis" class="mt-1 block w-full rounded-lg border border-gray-300 p-2.5 bg-gray-50 text-sm">
+                                <option value="pemasukan">Pemasukan (+)</option>
+                                <option value="pengeluaran" selected>Pengeluaran (-)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label id="label-jumlah" class="block text-xs font-semibold text-gray-600">Jumlah Uang (Rp)</label>
+                            <input type="number" id="jumlah" required placeholder="0" class="mt-1 block w-full rounded-lg border border-gray-300 p-2.5 bg-gray-50 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600">Tanggal</label>
+                            <input type="date" id="tanggal" required class="mt-1 block w-full rounded-lg border border-gray-300 p-2.5 bg-gray-50 text-sm">
+                        </div>
+                        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-lg text-sm cursor-pointer transition-all">
+                            Simpan Data
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Grafik & Tabel -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
+                        <h3 class="text-lg font-bold text-gray-800 mb-2">Grafik Analisis</h3>
+                        <div class="h-48">
+                            <canvas id="financialChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-lg font-bold text-gray-800">Riwayat Catatan</h3>
+                            <button id="clear-btn" class="text-xs text-red-500 hover:text-red-700 font-semibold cursor-pointer">Hapus Semua Data Unit Ini</button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full text-sm text-left">
+                                <thead class="bg-gray-50 text-gray-500 uppercase text-xs">
+                                    <tr>
+                                        <th class="p-3">Tanggal</th>
+                                        <th class="p-3">Keterangan / Catatan</th>
+                                        <th id="th-jenis" class="p-3">Jenis</th>
+                                        <th class="p-3">Jumlah</th>
+                                        <th class="p-3 text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transaction-table-body" class="divide-y divide-gray-100">
+                                    <!-- Diisi via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
     <!-- LOGIKA CORE APLIKASI -->
     <script>
-        // Memeriksa Status Login Utama di Memori HP
-        let sessionLoginUtama = sessionStorage.getItem('login_utama_sukses') || false;
+        let unitAktif = 'keluarga';
 
-        // Form Login Utama Handler
+        // DATABASE MAP USERNAME DAN PASSWORD BISNIS
+        const akunBisnisMap = {
+            internet: { user: "Internet", pass: "002886" },
+            rumah_hantu: { user: "RumahHantu", pass: "002886" },
+            playground: { user: "Playground", pass: "002886" },
+            party_decor: { user: "Decoration", pass: "002886" }
+        };
+
+        let databasePembukuan = JSON.parse(localStorage.getItem('raisya_production_db')) || {
+            keluarga: [], internet: [], rumah_hantu: [], playground: [], party_decor: []
+        };
+
+        let totalAnggaranKeluarga = parseFloat(localStorage.getItem('total_anggaran_keluarga')) || 3000000;
+        let currentUserKeluarga = localStorage.getItem('current_user_keluarga') || null;
+        let currentBisnisVerified = false; 
+
+        let myChart;
+        const form = document.getElementById('transaction-form');
+        const tanggalInput = document.getElementById('tanggal');
+        const inputAnggaran = document.getElementById('input-total-anggaran');
+        const btnSaveAnggaran = document.getElementById('btn-save-anggaran');
+        
+        tanggalInput.value = new Date().toISOString().split('T')[0];
+        inputAnggaran.value = totalAnggaranKeluarga;
+
+        // FORM LOGIN UTAMA
         const formLoginUtama = document.getElementById('form-login-utama');
         formLoginUtama.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -214,10 +292,26 @@
             const passIn = document.getElementById('login-password').value;
             const errorMsg = document.getElementById('error-login-pesan');
 
-            // Validasi Sesuai Permintaan Anda
             if (userIn === "Radhika" && passIn === "002886") {
                 sessionStorage.setItem('login_utama_sukses', 'true');
-                document.getElementById('gerbang-login-utama').classList.add('hidden');
+                tampilkanLayarSesuaiState();
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
+        });
+
+        // FORM LOGIN SUB-BISNIS
+        const formLoginBisnis = document.getElementById('form-login-bisnis');
+        formLoginBisnis.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const userIn = document.getElementById('bisnis-username').value;
+            const passIn = document.getElementById('bisnis-password').value;
+            const errorMsg = document.getElementById('error-bisnis-pesan');
+            const aturanAkun = akunBisnisMap[unitAktif];
+
+            if (userIn === aturanAkun.user && passIn === aturanAkun.pass) {
+                currentBisnisVerified = true;
+                document.getElementById('panel-login-bisnis').classList.add('hidden');
                 document.getElementById('app-content-wrapper').classList.remove('hidden');
                 updateUI();
             } else {
@@ -227,80 +321,108 @@
 
         window.logoutUtama = function() {
             sessionStorage.removeItem('login_utama_sukses');
-            window.location.reload(); // Refresh halaman untuk mengunci aplikasi kembali
+            localStorage.removeItem('current_user_keluarga');
+            window.location.reload();
         }
 
-        // DATABASE UTAMA KOORDINASI
-        let databasePembukuan = JSON.parse(localStorage.getItem('raisya_production_db')) || {
-            keluarga: [], internet: [], rumah_hantu: [], playground: [], party_decor: []
-        };
+        window.pilihUnitPembukuan = function(unit) {
+            unitAktif = unit;
+            currentBisnisVerified = false; // Reset status verifikasi bisnis sebelumnya
+            
+            // Sembunyikan menu utama
+            document.getElementById('layar-menu-utama').classList.add('hidden');
 
-        let totalAnggaranKeluarga = parseFloat(localStorage.getItem('total_anggaran_keluarga')) || 3000000;
-        let currentUserKeluarga = localStorage.getItem('current_user_keluarga') || null;
+            if (unit === 'keluarga') {
+                if (!currentUserKeluarga) {
+                    document.getElementById('panel-login-keluarga').classList.remove('hidden');
+                } else {
+                    document.getElementById('app-content-wrapper').classList.remove('hidden');
+                    updateUI();
+                }
+            } else {
+                // Tampilkan popup login bisnis sesuai unit yang diklik
+                document.getElementById('bisnis-username').value = '';
+                document.getElementById('bisnis-password').value = '';
+                document.getElementById('error-bisnis-pesan').classList.add('hidden');
+                document.getElementById('judul-login-bisnis').innerText = `KUNCI AKSES: ${getNamaUnitAktif().substring(3)}`;
+                document.getElementById('panel-login-bisnis').classList.remove('hidden');
+            }
+        }
 
-        let myChart;
-        const kategoriSelector = document.getElementById('kategori-selector');
-        const form = document.getElementById('transaction-form');
-        const tanggalInput = document.getElementById('tanggal');
-        const inputAnggaran = document.getElementById('input-total-anggaran');
-        const btnSaveAnggaran = document.getElementById('btn-save-anggaran');
-        
-        tanggalInput.value = new Date().toISOString().split('T')[0];
-        inputAnggaran.value = totalAnggaranKeluarga;
+        window.kembaliKeMenuUtama = function() {
+            document.getElementById('app-content-wrapper').classList.add('hidden');
+            document.getElementById('panel-login-keluarga').classList.add('hidden');
+            document.getElementById('panel-login-bisnis').classList.add('hidden');
+            document.getElementById('layar-menu-utama').classList.remove('hidden');
+        }
 
-        btnSaveAnggaran.addEventListener('click', function() {
-            totalAnggaranKeluarga = parseFloat(inputAnggaran.value) || 0;
-            localStorage.setItem('total_anggaran_keluarga', totalAnggaranKeluarga);
-            alert("Anggaran Rumah Tangga diatur ke " + formatRupiah(totalAnggaranKeluarga));
-            updateUI();
-        });
+        window.gantiSubUser = function() {
+            if (unitAktif === 'keluarga') {
+                logoutKeluarga();
+            } else {
+                kembaliKeMenuUtama();
+            }
+        }
 
+        // KELUARGA SUB-LOGIN
         window.loginKeluarga = function(role) {
             currentUserKeluarga = role;
             localStorage.setItem('current_user_keluarga', role);
+            document.getElementById('panel-login-keluarga').classList.add('hidden');
+            document.getElementById('app-content-wrapper').classList.remove('hidden');
             updateUI();
         }
 
         window.logoutKeluarga = function() {
             currentUserKeluarga = null;
             localStorage.removeItem('current_user_keluarga');
-            updateUI();
+            document.getElementById('app-content-wrapper').classList.add('hidden');
+            document.getElementById('panel-login-keluarga').classList.remove('hidden');
         }
 
-        function getUnitAktif() { return kategoriSelector.value; }
-        function getNamaUnitAktif() { return kategoriSelector.options[kategoriSelector.selectedIndex].text; }
+        btnSaveAnggaran.addEventListener('click', function() {
+            totalAnggaranKeluarga = parseFloat(inputAnggaran.value) || 0;
+            localStorage.setItem('total_anggaran_keluarga', totalAnggaranKeluarga);
+            alert("Anggaran Rumah Tangga berhasil diatur.");
+            updateUI();
+        });
+
         function formatRupiah(angka) { return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka); }
 
-        function checkGerbangUtama() {
-            if(sessionStorage.getItem('login_utama_sukses') === 'true') {
-                document.getElementById('gerbang-login-utama').classList.add('hidden');
-                document.getElementById('app-content-wrapper').classList.remove('hidden');
-                return true;
-            } else {
+        function tampilkanLayarSesuaiState() {
+            const isLoginUtama = sessionStorage.getItem('login_utama_sukses') === 'true';
+            
+            if (!isLoginUtama) {
                 document.getElementById('gerbang-login-utama').classList.remove('hidden');
+                document.getElementById('layar-menu-utama').classList.add('hidden');
                 document.getElementById('app-content-wrapper').classList.add('hidden');
-                return false;
+                document.getElementById('panel-login-keluarga').classList.add('hidden');
+                document.getElementById('panel-login-bisnis').classList.add('hidden');
+            } else {
+                document.getElementById('gerbang-login-utama').classList.add('hidden');
+                document.getElementById('layar-menu-utama').classList.remove('hidden');
+                document.getElementById('app-content-wrapper').classList.add('hidden');
+                document.getElementById('panel-login-keluarga').classList.add('hidden');
+                document.getElementById('panel-login-bisnis').classList.add('hidden');
             }
+        }
+
+        function getNamaUnitAktif() {
+            const namaMap = {
+                keluarga: "1. PEMBUKUAN KEUANGAN KELUARGA",
+                internet: "2. PEMBUKUAN BISNIS INTERNET",
+                rumah_hantu: "3. PEMBUKUAN BISNIS RUMAH HANTU PRODUCTION",
+                playground: "4. PEMBUKUAN BISNIS PLAYGROUND",
+                party_decor: "5. PEMBUKUAN BISNIS RAISYA PARTI & DECORATION"
+            };
+            return namaMap[unitAktif];
         }
 
         function updateUI() {
-            if (!checkGerbangUtama()) return;
-
-            const unit = getUnitAktif();
             const namaUnit = getNamaUnitAktif();
-            
-            if (unit === 'keluarga' && !currentUserKeluarga) {
-                document.getElementById('panel-login-keluarga').classList.remove('hidden');
-                document.getElementById('konten-aplikasi-utama').classList.add('hidden');
-                return;
-            } else {
-                document.getElementById('panel-login-keluarga').classList.add('hidden');
-                document.getElementById('konten-aplikasi-utama').classList.remove('hidden');
-            }
-
             document.getElementById('nama-pembukuan-aktif').innerText = namaUnit;
 
-            const dataTransaksi = databasePembukuan[unit] || [];
+            const dataTransaksi = databasePembukuan[unitAktif] || [];
             let totalPemasukan = 0;
             let totalPengeluaran = 0;
 
@@ -309,11 +431,11 @@
 
             dataTransaksi.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
 
-            if (unit === 'keluarga') {
+            if (unitAktif === 'keluarga') {
                 document.getElementById('panel-anggaran-keluarga').classList.remove('hidden');
                 document.getElementById('wrapper-jenis-transaksi').classList.add('hidden');
-                document.getElementById('user-status-badge').classList.remove('hidden');
                 document.getElementById('nama-user-aktif').innerText = currentUserKeluarga;
+                document.getElementById('btn-ganti-user-sub').innerText = "Ganti";
                 
                 document.getElementById('label-card-1').innerText = "TOTAL ANGGARAN";
                 document.getElementById('label-card-2').innerText = "ANGGARAN TERPAKAI";
@@ -327,13 +449,14 @@
             } else {
                 document.getElementById('panel-anggaran-keluarga').classList.add('hidden');
                 document.getElementById('wrapper-jenis-transaksi').classList.remove('hidden');
-                document.getElementById('user-status-badge').classList.add('hidden');
+                document.getElementById('nama-user-aktif').innerText = akunBisnisMap[unitAktif].user;
+                document.getElementById('btn-ganti-user-sub').innerText = "Kunci";
                 
                 document.getElementById('label-card-1').innerText = "TOTAL PEMASUKAN";
                 document.getElementById('label-card-2').innerText = "TOTAL PENGELUARAN";
                 document.getElementById('label-card-3').innerText = "SALDO / KEUNTUNGAN";
                 
-                document.getElementById('judul-form-catat').innerText = "Catat Transaksi";
+                document.getElementById('judul-form-catat').innerText = "Catat Transaksi Bisnis";
                 document.getElementById('label-deskripsi').innerText = "Keterangan / Nama Item";
                 document.getElementById('label-jumlah').innerText = "Jumlah Uang (Rp)";
                 document.getElementById('th-jenis').classList.remove('hidden');
@@ -350,7 +473,7 @@
                 let tdJenis = `<td class="p-3"><span class="px-2 py-0.5 text-2xs font-bold rounded-full ${t.jenis === 'pemasukan' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">${t.jenis.toUpperCase()}</span></td>`;
                 
                 let keteranganTeks = t.deskripsi;
-                if (unit === 'keluarga') {
+                if (unitAktif === 'keluarga') {
                     tdJenis = '';
                     if (t.oleh) {
                         const warnaBadge = t.oleh === 'Suami' ? 'bg-blue-100 text-blue-800' : 'bg-pink-100 text-pink-800';
@@ -370,7 +493,7 @@
                 tableBody.appendChild(row);
             });
 
-            if (unit === 'keluarga') {
+            if (unitAktif === 'keluarga') {
                 let sisa = totalAnggaranKeluarga - totalPengeluaran;
                 document.getElementById('total-pemasukan').innerText = formatRupiah(totalAnggaranKeluarga);
                 document.getElementById('total-pemasukan').className = "text-xl font-bold text-amber-600 mt-1";
@@ -399,17 +522,16 @@
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-            const unit = getUnitAktif();
             
             const dataBaru = {
                 deskripsi: document.getElementById('deskripsi').value,
                 jenis: document.getElementById('jenis').value,
                 jumlah: document.getElementById('jumlah').value,
                 tanggal: tanggalInput.value,
-                oleh: unit === 'keluarga' ? currentUserKeluarga : null
+                oleh: unitAktif === 'keluarga' ? currentUserKeluarga : null
             };
 
-            databasePembukuan[unit].push(dataBaru);
+            databasePembukuan[unitAktif].push(dataBaru);
             updateUI();
 
             document.getElementById('deskripsi').value = '';
@@ -418,21 +540,17 @@
 
         window.hapusTransaksi = function(index) {
             if(confirm("Hapus catatan transaksi ini?")) {
-                const unit = getUnitAktif();
-                databasePembukuan[unit].splice(index, 1);
+                databasePembukuan[unitAktif].splice(index, 1);
                 updateUI();
             }
         }
 
         document.getElementById('clear-btn').addEventListener('click', function() {
             if(confirm(`Hapus SEMUA data pada ${getNamaUnitAktif()}?`)) {
-                const unit = getUnitAktif();
-                databasePembukuan[unit] = [];
+                databasePembukuan[unitAktif] = [];
                 updateUI();
             }
         });
-
-        kategoriSelector.addEventListener('change', updateUI);
 
         function updateChart(val1, val2, isKeluarga) {
             const ctx = document.getElementById('financialChart').getContext('2d');
@@ -460,25 +578,7 @@
             });
         }
 
-        // Fitur Deteksi Instalasi HP (PWA)
-        let deferredPrompt;
-        const btnInstall = document.getElementById('btn-install');
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            btnInstall.classList.remove('hidden');
-        });
-        btnInstall.addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') btnInstall.classList.add('hidden');
-                deferredPrompt = null;
-            }
-        });
-
-        // Cek login awal
-        updateUI();
+        tampilkanLayarSesuaiState();
     </script>
 </body>
 </html>
