@@ -97,7 +97,7 @@
         </div>
 
         <!-- ========================================== -->
-        <!-- LAYER 3: PANEL LOGIN MASING-MASING MENU (BIAR KETIK SENDIRI) -->
+        <!-- LAYER 3: PANEL LOGIN MASING-MASING MENU -->
         <!-- ========================================== -->
         <div id="login-menu-section" class="hidden bg-white p-6 rounded-2xl shadow-md space-y-4 border border-indigo-100">
             <div class="flex justify-between items-center border-b pb-2">
@@ -176,6 +176,7 @@
                     <table class="w-full text-left text-xs">
                         <thead>
                             <tr class="border-b bg-gray-50 text-gray-500 uppercase tracking-wider">
+                                <th class="p-2">Tanggal</th>
                                 <th class="p-2">Tipe</th>
                                 <th class="p-2">Keterangan</th>
                                 <th class="p-2 text-right">Jumlah</th>
@@ -269,11 +270,9 @@
         function bukaModalLoginMenu(keyMenu) {
             menuTarget = keyMenu; // Kunci target menu pembukuan yang sedang dicoba buka
             
-            // Kosongkan kolom input agar user mengetik mandiri dari awal (Mencegah pembobolan)
             document.getElementById('menu-username').value = "";
             document.getElementById('menu-password').value = "";
             
-            // Sembunyikan daftar menu utama, tampilkan panel verifikasi
             document.getElementById('pilih-menu-section').classList.add('hidden');
             document.getElementById('login-menu-section').classList.remove('hidden');
         }
@@ -288,7 +287,6 @@
             const userIn = document.getElementById('menu-username').value.trim();
             const passIn = document.getElementById('menu-password').value;
 
-            // Validasi pencocokan ganda: Username wajib sesuai dengan menu yang di-klik DAN password wajib 002886
             if (userIn === menuTarget && passIn === "002886") {
                 document.getElementById('login-menu-section').classList.add('hidden');
                 document.getElementById('transaksi-section').classList.remove('hidden');
@@ -318,7 +316,7 @@
 
         function addTransaction() {
             const type = document.getElementById('trans-type').value;
-            const desc = document.getElementById('trans-desc').value.trim();
+            let desc = document.getElementById('trans-desc').value.trim();
             const amount = parseInt(document.getElementById('trans-amount').value);
 
             if (!desc || isNaN(amount) || amount <= 0) {
@@ -326,9 +324,40 @@
                 return;
             }
 
-            database[menuTarget].push({ type, desc, amount });
+            // --- FITUR BARU: KONFIRMASI SUAMI / ISTRI KHUSUS BUKU KELUARGA ---
+            let penanggungJawab = "";
+            if (menuTarget === "Keluarga") {
+                let konfirmasi = prompt("Konfirmasi Penginputan Anggaran Keluarga!\nKetik '1' untuk SUAMI\nKetik '2' untuk ISTRI");
+                
+                if (konfirmasi === "1") {
+                    penanggungJawab = " [Oleh: Suami]";
+                } else if (konfirmasi === "2") {
+                    penanggungJawab = " [Oleh: Istri]";
+                } else {
+                    alert("Transaksi Dibatalkan! Anda harus memilih '1' atau '2' sebagai konfirmasi identitas.");
+                    return; 
+                }
+                desc = desc + penanggungJawab; // Gabungkan info ke keterangan agar tercatat permanen
+            }
+
+            // --- FITUR BARU: GENERATE TANGGAL DAN WAKTU SEKARANG ---
+            const hariIni = new Date();
+            const opsiTanggal = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            const tanggalFormat = hariIni.toLocaleDateString('id-ID', opsiTanggal);
+            const waktuFormat = hariIni.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+            const tanggalLengkap = `${tanggalFormat} ${waktuFormat}`;
+
+            // Masukkan data baru ke database browser
+            database[menuTarget].push({ 
+                date: tanggalLengkap, 
+                type: type, 
+                desc: desc, 
+                amount: amount 
+            });
+            
             localStorage.setItem('raisya_pembukuan', JSON.stringify(database));
 
+            // Reset Form Input
             document.getElementById('trans-desc').value = "";
             document.getElementById('trans-amount').value = "";
 
@@ -347,10 +376,14 @@
                 if (t.type === 'Masuk') totalMasuk += t.amount;
                 if (t.type === 'Keluar') totalKeluar += t.amount;
 
+                // Pengaman jika ada data usang sebelum fitur tanggal ditambahkan
+                const tanggalTransaksi = t.date ? t.date : "-";
+
                 const row = document.createElement('tr');
                 const badgeColor = t.type === 'Masuk' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
                 
                 row.innerHTML = `
+                    <td class="p-2 text-gray-500 font-mono whitespace-nowrap">${tanggalTransaksi}</td>
                     <td class="p-2"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${badgeColor}">${t.type}</span></td>
                     <td class="p-2 font-medium text-gray-700">${t.desc}</td>
                     <td class="p-2 text-right font-bold ${t.type === 'Masuk' ? 'text-green-600' : 'text-red-600'}">Rp ${t.amount.toLocaleString('id-ID')}</td>
@@ -359,7 +392,7 @@
             });
 
             if (transactions.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="3" class="text-center p-4 text-gray-400 italic">Belum ada rincian anggaran</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center p-4 text-gray-400 italic">Belum ada rincian anggaran</td></tr>`;
             }
 
             document.getElementById('stat-masuk').innerText = `Rp ${totalMasuk.toLocaleString('id-ID')}`;
