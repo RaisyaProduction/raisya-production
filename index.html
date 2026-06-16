@@ -3,121 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PT. ADHIKARYA BINTANG MANDIRI</title>
+    <title>RAISYA DECORATION - Sistem Pembukuan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
-<body class="bg-gray-100 p-4">
+<body class="bg-gray-100 font-sans">
 
-<div id="app" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
-    <h1 class="text-xl font-bold text-center mb-6">PT. ADHIKARYA BINTANG MANDIRI</h1>
+    <header class="bg-blue-800 text-white p-4 text-center shadow-lg">
+        <h1 class="text-2xl font-bold">RAISYA DECORATION</h1>
+    </header>
 
-    <!-- 1. LOGIN FORM -->
-    <div id="login-form">
-        <input type="text" id="user" placeholder="Username" class="border p-2 w-full mb-2">
-        <input type="password" id="pass" placeholder="Password" class="border p-2 w-full mb-2">
-        <button onclick="login()" class="bg-blue-600 text-white w-full py-2 rounded">Login</button>
-        <button onclick="showLupaPass()" class="text-xs text-blue-500 mt-4 block w-full text-center underline">Lupa Password?</button>
-    </div>
-
-    <!-- 2. LUPA & RESET PASSWORD FORM -->
-    <div id="lupa-pass-form" class="hidden">
-        <h2 class="font-bold mb-2">Verifikasi Akun</h2>
-        <input type="text" id="kontak" placeholder="Email / Nomor HP" class="border p-2 w-full mb-2">
-        <button onclick="verifikasi()" class="bg-orange-500 text-white w-full py-2 rounded">Verifikasi</button>
-    </div>
-
-    <div id="reset-pass-form" class="hidden">
-        <h2 class="font-bold mb-2">Buat Password Baru</h2>
-        <input type="password" id="new-pass" placeholder="Password Baru" class="border p-2 w-full mb-2">
-        <button onclick="simpanBaru()" class="bg-green-600 text-white w-full py-2 rounded">Simpan</button>
-    </div>
-
-    <!-- 3. MENU UTAMA -->
-    <div id="menu-utama" class="hidden">
-        <h2 class="font-bold mb-4">Pilih Pembukuan:</h2>
-        <div class="grid gap-2">
-            <button onclick="pilihModul('Keluarga')" class="bg-indigo-600 text-white p-2 rounded">1. Pembukuan Keluarga</button>
-            <button onclick="pilihModul('RumahHantu')" class="bg-red-600 text-white p-2 rounded">2. Bisnis Rumah Hantu</button>
-            <button onclick="pilihModul('Playground')" class="bg-yellow-600 text-white p-2 rounded">3. Bisnis Playground</button>
-            <button onclick="pilihModul('Raisya')" class="bg-pink-600 text-white p-2 rounded">4. Raisya Decoration</button>
-            <button onclick="pilihModul('Internet')" class="bg-green-600 text-white p-2 rounded">5. Bisnis Internet</button>
+    <main id="app" class="container mx-auto p-4">
+        <div id="login-section" class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4 text-center" id="login-title">Login Admin</h2>
+            <input type="text" id="username" placeholder="Username" class="w-full p-2 mb-3 border rounded">
+            <input type="password" id="password" placeholder="Password" class="w-full p-2 mb-3 border rounded">
+            <button onclick="checkLogin()" class="w-full bg-blue-600 text-white p-2 rounded">Masuk</button>
+            <p class="mt-4 text-sm text-center">
+                Lupa password? Hubungi: <br> 
+                Email: dedesugiono.ai@gmail.com <br> 
+                WA: 081220285226
+            </p>
         </div>
-    </div>
 
-    <!-- 4. AREA KERJA -->
-    <div id="area-kerja" class="hidden">
-        <!-- TOMBOL KEMBALI DIUBAH KE FUNGSI backToMenu -->
-        <button onclick="backToMenu()" class="text-sm text-blue-600 font-bold mb-4">← Kembali ke Daftar Menu</button>
-        <h2 id="title-modul" class="font-bold mb-4"></h2>
-        <input type="text" id="i-nama" placeholder="Nama" class="border p-1 w-full mb-1">
-        <input type="number" id="i-jml" placeholder="Jumlah" class="border p-1 w-full mb-1">
-        <button onclick="tambahData()" class="bg-blue-500 text-white w-full py-1 rounded">Simpan</button>
-        <table class="w-full mt-4 border text-sm">
-            <tbody id="tabel-data"></tbody>
-        </table>
-        <button onclick="ekspor()" class="bg-gray-800 text-white w-full py-2 mt-4 rounded">Download Excel</button>
-    </div>
-</div>
+        <div id="dashboard-section" class="hidden">
+            <h2 class="text-xl mb-4">Pilih Menu Utama:</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <button onclick="loadModule('keuangan-keluarga')" class="bg-green-600 text-white p-6 rounded">1. KEUANGAN KELUARGA</button>
+                <button onclick="loadModule('rumah-hantu')" class="bg-red-600 text-white p-6 rounded">2. BISNIS RUMAH HANTU</button>
+                <button onclick="loadModule('playground')" class="bg-yellow-600 text-white p-6 rounded">3. BISNIS PLAYGROUND</button>
+                <button onclick="loadModule('raisya-dec')" class="bg-pink-600 text-white p-6 rounded">4. RAISYA DECORATION</button>
+                <button onclick="loadModule('internet')" class="bg-purple-600 text-white p-6 rounded">5. BISNIS INTERNET</button>
+                <button onclick="loadModule('rekap')" class="bg-gray-800 text-white p-6 rounded">6. REKAPITULASI ALL</button>
+            </div>
+        </div>
+    </main>
 
-<script>
-    let db = [];
-    const ADMIN_KONTAK = ["dedesugiono.ai@gmail.com", "081220285226"];
+    <script>
+        // Logika Sederhana untuk Login
+        const credentials = {
+            "Radhika": "002886",
+            "Suami/Istri": "002886",
+            "RumahHantu": "002886",
+            "Playground": "002886",
+            "RaisyaDecoration": "002886",
+            "Internet": "002886"
+        };
 
-    function login() {
-        const u = document.getElementById('user').value;
-        const p = document.getElementById('pass').value;
-        if (p === '002886') {
-            document.getElementById('login-form').classList.add('hidden');
-            document.getElementById('menu-utama').classList.remove('hidden');
-        } else alert("Password salah!");
-    }
+        function checkLogin() {
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+            if (credentials[u] === p) {
+                document.getElementById('login-section').classList.add('hidden');
+                document.getElementById('dashboard-section').classList.remove('hidden');
+            } else {
+                alert("Username atau Password Salah!");
+            }
+        }
 
-    // Fungsi Baru untuk Kembali ke Menu tanpa reload
-    function backToMenu() {
-        document.getElementById('area-kerja').classList.add('hidden');
-        document.getElementById('menu-utama').classList.remove('hidden');
-    }
-
-    function showLupaPass() {
-        document.getElementById('login-form').classList.add('hidden');
-        document.getElementById('lupa-pass-form').classList.remove('hidden');
-    }
-
-    function verifikasi() {
-        const k = document.getElementById('kontak').value;
-        if (ADMIN_KONTAK.includes(k)) {
-            document.getElementById('lupa-pass-form').classList.add('hidden');
-            document.getElementById('reset-pass-form').classList.remove('hidden');
-        } else alert("Kontak tidak ditemukan!");
-    }
-
-    function simpanBaru() {
-        alert("Password berhasil diperbarui!");
-        document.getElementById('reset-pass-form').classList.add('hidden');
-        document.getElementById('login-form').classList.remove('hidden');
-    }
-
-    function pilihModul(m) {
-        document.getElementById('menu-utama').classList.add('hidden');
-        document.getElementById('area-kerja').classList.remove('hidden');
-        document.getElementById('title-modul').innerText = "Modul: " + m;
-        document.getElementById('tabel-data').innerHTML = ""; // Bersihkan tampilan
-    }
-
-    function tambahData() {
-        const n = document.getElementById('i-nama').value;
-        const j = document.getElementById('i-jml').value;
-        db.push({Nama: n, Jumlah: j});
-        document.getElementById('tabel-data').innerHTML += `<tr><td class="border p-1">${n}</td><td class="border p-1">${j}</td></tr>`;
-    }
-
-    function ekspor() {
-        const ws = XLSX.utils.json_to_sheet(db);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Data");
-        XLSX.writeFile(wb, "Data_Pembukuan.xlsx");
-    }
-</script>
+        // Fungsi Ekspor Excel
+        function exportToExcel(tableId, filename) {
+            const table = document.getElementById(tableId);
+            const wb = XLSX.utils.table_to_book(table);
+            XLSX.writeFile(wb, filename + ".xlsx");
+        }
+    </script>
 </body>
 </html>
