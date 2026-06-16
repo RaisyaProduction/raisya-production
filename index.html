@@ -96,27 +96,31 @@
                         <div class="ml-3 font-semibold text-slate-700 group-hover:text-rose-600 text-xs uppercase tracking-wide">Laporan Keuangan Keluarga</div>
                         <i class="fa-solid fa-chevron-right ml-auto text-slate-300 group-hover:text-rose-400 text-[10px]"></i>
                     </button>
-                    
                     <button onclick="openBizLogin('GHOST')" class="group flex items-center p-3.5 bg-slate-50 hover:bg-rose-50/40 border border-slate-200 rounded-xl transition-all text-left cursor-pointer">
                         <div class="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-600 flex items-center justify-center font-bold text-xs group-hover:scale-105 transition-transform">2</div>
                         <div class="ml-3 font-semibold text-slate-700 group-hover:text-rose-600 text-xs uppercase tracking-wide">Laporan Bisnis Rumah Hantu</div>
                         <i class="fa-solid fa-chevron-right ml-auto text-slate-300 group-hover:text-rose-400 text-[10px]"></i>
                     </button>
-
                     <button onclick="openBizLogin('PLAYGROUND')" class="group flex items-center p-3.5 bg-slate-50 hover:bg-rose-50/40 border border-slate-200 rounded-xl transition-all text-left cursor-pointer">
                         <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold text-xs group-hover:scale-105 transition-transform">3</div>
                         <div class="ml-3 font-semibold text-slate-700 group-hover:text-rose-600 text-xs uppercase tracking-wide">Laporan Bisnis Playground</div>
                         <i class="fa-solid fa-chevron-right ml-auto text-slate-300 group-hover:text-rose-400 text-[10px]"></i>
                     </button>
-
                     <button onclick="openBizLogin('RAISYA_DEC')" class="group flex items-center p-3.5 bg-slate-50 hover:bg-rose-50/40 border border-slate-200 rounded-xl transition-all text-left cursor-pointer">
                         <div class="w-8 h-8 rounded-lg bg-rose-500/10 text-rose-600 flex items-center justify-center font-bold text-xs group-hover:scale-105 transition-transform">4</div>
                         <div class="ml-3 font-semibold text-slate-700 group-hover:text-rose-600 text-xs uppercase tracking-wide">Laporan Bisnis Raisya Decoration</div>
                         <i class="fa-solid fa-chevron-right ml-auto text-slate-300 group-hover:text-rose-400 text-[10px]"></i>
                     </button>
-
-                    <button onclick="alert('Menu Laporan Bisnis Internet')" class="group flex items-center p-3.5 bg-slate-50 hover:bg-rose-50/40 border border-slate-200 rounded-xl transition-all text-left cursor-pointer"><div class="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-600 flex items-center justify-center font-bold text-xs">5</div><div class="ml-3 font-semibold text-slate-700 text-xs uppercase tracking-wide">Laporan Bisnis Internet</div><i class="fa-solid fa-chevron-right ml-auto text-slate-300 text-[10px]"></i></button>
-                    <button onclick="alert('Menu Laporan Rekap Semua Laporan')" class="group flex items-center p-3.5 bg-slate-50 hover:bg-rose-50/40 border border-slate-200 rounded-xl transition-all text-left cursor-pointer"><div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-bold text-xs">6</div><div class="ml-3 font-semibold text-slate-700 text-xs uppercase tracking-wide">Laporan Rekap Semua Laporan</div><i class="fa-solid fa-chevron-right ml-auto text-slate-300 text-[10px]"></i></button>
+                    <button onclick="openBizLogin('INTERNET')" class="group flex items-center p-3.5 bg-slate-50 hover:bg-rose-50/40 border border-slate-200 rounded-xl transition-all text-left cursor-pointer">
+                        <div class="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-600 flex items-center justify-center font-bold text-xs group-hover:scale-105 transition-transform">5</div>
+                        <div class="ml-3 font-semibold text-slate-700 group-hover:text-rose-600 text-xs uppercase tracking-wide">Laporan Bisnis Internet</div>
+                        <i class="fa-solid fa-chevron-right ml-auto text-slate-300 group-hover:text-rose-400 text-[10px]"></i>
+                    </button>
+                    <button onclick="openBizLogin('REKAP')" class="group flex items-center p-3.5 bg-slate-50 hover:bg-rose-50/40 border border-slate-200 rounded-xl transition-all text-left cursor-pointer">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-bold text-xs group-hover:scale-105 transition-transform">6</div>
+                        <div class="ml-3 font-semibold text-slate-700 group-hover:text-rose-600 text-xs uppercase tracking-wide">Laporan Rekap Semua Laporan</div>
+                        <i class="fa-solid fa-chevron-right ml-auto text-slate-300 group-hover:text-rose-400 text-[10px]"></i>
+                    </button>
                 </div>
             </div>
 
@@ -165,7 +169,7 @@
                     <h3 id="form-title" class="text-xs font-bold text-slate-500 uppercase"><i class="fa-solid fa-pen-to-square text-rose-500 mr-1"></i>Tambah Anggaran Baru</h3>
                     <input type="hidden" id="edit-index" value="-1">
                     <div class="grid grid-cols-1 gap-2.5">
-                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase">Nama Pengeluaran</label><input type="text" id="inp-nama" class="w-full px-3 py-2 bg-white border rounded-xl text-xs focus:outline-none focus:border-rose-500"></div>
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase">Nama Pengeluaran</label><input type="text" id="inp-nama" class="w-full px-3 py-2 bg-white border rounded-xl text-xs focus:outline-none"></div>
                         <div class="grid grid-cols-2 gap-2">
                             <div><label class="block text-[10px] font-bold text-slate-500 uppercase">Tanggal</label><input type="date" id="inp-tanggal" class="w-full px-3 py-2 bg-white border rounded-xl text-xs focus:outline-none"></div>
                             <div><label class="block text-[10px] font-bold text-slate-500 uppercase">Jumlah (Rp)</label><input type="number" id="inp-jumlah" class="w-full px-3 py-2 bg-white border rounded-xl text-xs focus:outline-none"></div>
@@ -180,7 +184,6 @@
                 </div>
                 <div id="container-list" class="space-y-2 max-h-[200px] overflow-y-auto"></div>
             </div>
-
 
             <div id="page-biz-login" class="hidden space-y-4">
                 <div class="text-center mb-1">
@@ -204,113 +207,156 @@
                 </div>
             </div>
 
-
             <div id="page-biz-report" class="hidden space-y-5">
                 <div class="flex justify-between items-center border-b border-slate-100 pb-2">
                     <div>
-                        <span id="biz-report-badge" class="px-2 py-0.5 text-[9px] font-extrabold bg-purple-100 text-purple-600 rounded-full uppercase tracking-wider">Bisnis Unit</span>
+                        <span id="biz-report-badge" class="px-2 py-0.5 text-[9px] font-extrabold rounded-full uppercase tracking-wider">Bisnis Unit</span>
                         <h2 id="biz-report-head" class="text-sm font-bold text-slate-700 mt-1">Laporan Bisnis</h2>
                     </div>
                     <button onclick="switchPage('page-menu')" class="text-xs font-semibold bg-slate-100 text-slate-600 px-2.5 py-1.5 rounded-lg">Menu Utama</button>
                 </div>
-
                 <div class="flex bg-slate-100 p-1 rounded-xl">
                     <button id="tab-in" onclick="switchBizTab('IN')" class="w-1/2 text-center py-2 text-xs font-bold rounded-lg transition-all cursor-pointer">ANGGARAN MASUK</button>
                     <button id="tab-out" onclick="switchBizTab('OUT')" class="w-1/2 text-center py-2 text-xs font-bold rounded-lg transition-all cursor-pointer">ANGGARAN KELUAR</button>
                 </div>
-
                 <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
-                    <h3 id="biz-form-title" class="text-xs font-bold uppercase flex items-center gap-1">
-                        <i class="fa-solid fa-square-plus"></i> Tambah Anggaran Baru
-                    </h3>
+                    <h3 id="biz-form-title" class="text-xs font-bold uppercase flex items-center gap-1">Tambah Anggaran Baru</h3>
                     <input type="hidden" id="biz-edit-index" value="-1">
                     <div class="grid grid-cols-1 gap-2.5">
-                        <div>
-                            <label class="block text-[10px] font-bold text-slate-500 uppercase mb-0.5">Nama Anggaran</label>
-                            <input type="text" id="b-inp-nama" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none">
-                        </div>
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-0.5">Nama Anggaran</label><input type="text" id="b-inp-nama" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
                         <div class="grid grid-cols-2 gap-2">
-                            <div>
-                                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-0.5">Tanggal</label>
-                                <input type="date" id="b-inp-tanggal" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-0.5">Jumlah (Rp)</label>
-                                <input type="number" id="b-inp-jumlah" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none">
-                            </div>
+                            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-0.5">Tanggal</label><input type="date" id="b-inp-tanggal" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
+                            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-0.5">Jumlah (Rp)</label><input type="number" id="b-inp-jumlah" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
                         </div>
-                        <div>
-                            <label class="block text-[10px] font-bold text-slate-500 uppercase mb-0.5">Keterangan</label>
-                            <input type="text" id="b-inp-keterangan" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none">
-                        </div>
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-0.5">Keterangan</label><input type="text" id="b-inp-keterangan" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
                     </div>
-                    <div class="flex space-x-2 pt-1">
-                        <button id="b-btn-batal" onclick="resetBizForm()" class="hidden w-1/3 bg-slate-200 text-slate-600 font-semibold py-2 rounded-xl text-xs">Batal</button>
-                        <button id="b-btn-simpan" onclick="saveBizData()" class="flex-1 text-white font-semibold py-2 rounded-xl text-xs shadow-sm">
-                            Simpan Anggaran
-                        </button>
-                    </div>
+                    <div class="flex space-x-2 pt-1"><button id="b-btn-batal" onclick="resetBizForm()" class="hidden w-1/3 bg-slate-200 text-slate-600 font-semibold py-2 rounded-xl text-xs">Batal</button><button id="b-btn-simpan" onclick="saveBizData()" class="flex-1 text-white font-semibold py-2 rounded-xl text-xs">Simpan Anggaran</button></div>
                 </div>
-
                 <div id="biz-total-box" class="text-white p-4 rounded-2xl flex justify-between items-center shadow-md">
+                    <div><p id="biz-total-lbl" class="text-[10px] font-semibold uppercase tracking-wider">Total</p><h3 id="b-txt-total" class="text-xl font-extrabold text-amber-400 mt-0.5">Rp 0</h3></div>
+                    <button onclick="exportBizToExcel()" class="bg-emerald-500 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1 cursor-pointer"><i class="fa-solid fa-file-excel"></i> Excel</button>
+                </div>
+                <div class="space-y-2"><h3 id="biz-list-title" class="text-xs font-bold text-slate-400 uppercase tracking-wider">Daftar Anggaran</h3><div id="biz-container-list" class="space-y-2 max-h-[200px] overflow-y-auto pr-1"></div></div>
+            </div>
+
+            <div id="page-internet-report" class="hidden space-y-4">
+                <div class="flex justify-between items-center border-b pb-2">
                     <div>
-                        <p id="biz-total-lbl" class="text-[10px] font-semibold uppercase tracking-wider">Total Anggaran</p>
-                        <h3 id="b-txt-total" class="text-xl font-extrabold text-amber-400 mt-0.5">Rp 0</h3>
+                        <span class="px-2 py-0.5 text-[9px] font-extrabold bg-cyan-100 text-cyan-700 rounded-full uppercase tracking-wider">Bisnis Unit</span>
+                        <h2 class="text-md font-bold text-slate-700 mt-0.5">Laporan Bisnis Internet</h2>
                     </div>
-                    <button onclick="exportBizToExcel()" class="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1 shadow-sm transition-all cursor-pointer">
-                        <i class="fa-solid fa-file-excel text-sm"></i> Excel
-                    </button>
+                    <button onclick="switchPage('page-menu')" class="text-xs font-semibold bg-slate-100 text-slate-600 px-2.5 py-1.5 rounded-lg">Menu Utama</button>
+                </div>
+                <div class="grid grid-cols-2 gap-1 bg-slate-100 p-1 rounded-xl text-[10px] font-bold text-slate-600">
+                    <button id="btn-sub-net1" onclick="switchNetSubMenu(1)" class="py-1.5 rounded-lg text-center bg-white text-cyan-600 shadow-xs">1. DATA PELANGGAN</button>
+                    <button id="btn-sub-net2" onclick="switchNetSubMenu(2)" class="py-1.5 rounded-lg text-center">2. ANGGARAN TAGIHAN</button>
+                    <button id="btn-sub-net3" onclick="switchNetSubMenu(3)" class="py-1.5 rounded-lg text-center">3. MASUK LAINNYA</button>
+                    <button id="btn-sub-net4" onclick="switchNetSubMenu(4)" class="py-1.5 rounded-lg text-center">4. KELUAR BULANAN</button>
+                    <button id="btn-sub-net5" onclick="switchNetSubMenu(5)" class="py-1.5 rounded-lg text-center col-span-2">5. KELUAR LAINNYA</button>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-2xl border space-y-3">
+                    <h3 id="net-form-title" class="text-xs font-bold text-cyan-600 uppercase">Input Data</h3>
+                    <input type="hidden" id="net-edit-index" value="-1">
+                    <div id="net-fields-container" class="grid grid-cols-1 gap-2"></div>
+                    <div class="flex space-x-2 pt-1">
+                        <button id="net-btn-batal" onclick="resetNetForm()" class="hidden w-1/3 bg-slate-200 text-slate-600 font-semibold py-2 rounded-xl text-xs">Batal</button>
+                        <button onclick="saveNetData()" class="flex-1 bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2 rounded-xl text-xs shadow-xs">Simpan Data</button>
+                    </div>
+                </div>
+                <div id="net-filter-box" class="hidden flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border">
+                    <label class="text-xs font-bold text-slate-500">Filter Tampilkan Tanggal Tagihan:</label>
+                    <select id="net-filter-date" onchange="renderInternetData()" class="bg-white border rounded-lg text-xs p-1 focus:outline-none">
+                        <option value="ALL">Semua Tanggal</option><option value="05">Tanggal 05</option><option value="10">Tanggal 10</option><option value="15">Tanggal 15</option><option value="20">Tanggal 20</option><option value="25">Tanggal 25</option><option value="30">Tanggal 30</option>
+                    </select>
+                </div>
+                <div id="net-total-box" class="bg-gradient-to-r from-cyan-700 to-slate-900 text-white p-4 rounded-2xl space-y-1 shadow-md">
+                    <div class="flex justify-between items-center">
+                        <div><p id="net-lbl-t1" class="text-[9px] uppercase font-bold text-cyan-200">Total Ringkasan</p><h3 id="net-txt-t1" class="text-lg font-black text-amber-300">Rp 0</h3></div>
+                        <button onclick="exportNetToExcel()" class="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1 shadow-xs transition-all"><i class="fa-solid fa-file-excel"></i> Excel</button>
+                    </div>
+                    <div id="net-subrekap-box" class="hidden grid grid-cols-2 gap-2 border-t border-white/10 pt-1.5 text-[10px] text-slate-300 font-semibold">
+                        <div>Terbayar: <span id="net-txt-paid" class="text-emerald-400">Rp 0</span></div>
+                        <div>Belum Terbayar: <span id="net-txt-unpaid" class="text-rose-400">Rp 0</span></div>
+                    </div>
+                </div>
+                <div class="space-y-1.5">
+                    <h3 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Daftar Rekaman Data</h3>
+                    <div id="net-container-list" class="space-y-2 max-h-[180px] overflow-y-auto pr-1"></div>
+                </div>
+            </div>
+
+            <div id="page-all-rekap" class="hidden space-y-5">
+                <div class="flex justify-between items-center border-b pb-2">
+                    <div>
+                        <span class="px-2 py-0.5 text-[9px] font-extrabold bg-emerald-100 text-emerald-700 rounded-full uppercase tracking-wider">Eksekutif Dashboard</span>
+                        <h2 class="text-sm font-bold text-slate-700 mt-1">Rekap Seluruh Anggaran</h2>
+                    </div>
+                    <button onclick="switchPage('page-menu')" class="text-xs font-semibold bg-slate-100 text-slate-600 px-2.5 py-1.5 rounded-lg">Menu Utama</button>
                 </div>
 
-                <div class="space-y-2">
-                    <h3 id="biz-list-title" class="text-xs font-bold text-slate-400 uppercase tracking-wider">Daftar Anggaran</h3>
-                    <div id="biz-container-list" class="space-y-2 max-h-[200px] overflow-y-auto pr-1"></div>
+                <div class="grid grid-cols-1 gap-3">
+                    <div class="bg-gradient-to-br from-emerald-600 to-teal-700 p-4 rounded-2xl text-white shadow-xs">
+                        <p class="text-[10px] font-bold uppercase tracking-wider opacity-80"><i class="fa-solid fa-wallet mr-1"></i> Total Anggaran Masuk Semua Laporan</p>
+                        <h2 id="rekap-total-masuk" class="text-2xl font-black mt-0.5 text-white">Rp 0</h2>
+                    </div>
+                    <div class="bg-gradient-to-br from-rose-600 to-pink-700 p-4 rounded-2xl text-white shadow-xs">
+                        <p class="text-[10px] font-bold uppercase tracking-wider opacity-80"><i class="fa-solid fa-money-bill-wave mr-1"></i> Total Anggaran Keluar Semua Laporan</p>
+                        <h2 id="rekap-total-keluar" class="text-2xl font-black mt-0.5 text-white">Rp 0</h2>
+                    </div>
+                    <div id="rekap-laba-box" class="bg-gradient-to-br from-amber-500 to-orange-600 p-4 rounded-2xl text-white shadow-md">
+                        <p class="text-[10px] font-bold uppercase tracking-wider opacity-80"><i class="fa-solid fa-chart-line mr-1"></i> Total Keuntungan Bisnis (Laba Bersih)</p>
+                        <h2 id="rekap-total-laba" class="text-2xl font-black mt-0.5 text-yellow-200">Rp 0</h2>
+                    </div>
                 </div>
+
+                <button onclick="exportGlobalRekapToExcel()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-md cursor-pointer transition-all">
+                    <i class="fa-solid fa-file-excel text-sm"></i> Download Excel Rekap Semua Laporan
+                </button>
             </div>
 
         </div>
     </div>
 
     <script>
-        // Kredensial Sistem Utama & Multi-Bisnis
         let systemCredentials = {
             username: "Radhika", password: "002886", words: "Raisya",
             validEmail: "dedesugiono.ai@gmail.com", validPhone: "081220285226",
             familyPassword: "002886",
             GHOST: { user: "RumahHantu", pass: "002886", name: "Rumah Hantu", theme: "purple" },
             PLAYGROUND: { user: "Playground", pass: "002886", name: "Playground", theme: "amber" },
-            RAISYA_DEC: { user: "RaisyaDecoration", pass: "002886", name: "Raisya Decoration", theme: "rose" }
+            RAISYA_DEC: { user: "RaisyaDecoration", pass: "002886", name: "Raisya Decoration", theme: "rose" },
+            INTERNET: { user: "Internet", pass: "002886", name: "Internet", theme: "cyan" },
+            REKAP: { user: "Rekap", pass: "002886", name: "Rekap Semua Laporan", theme: "emerald" }
         };
 
         let selectedRole = ""; 
-        let activeBiz = ""; // Nilai: 'GHOST', 'PLAYGROUND', atau 'RAISYA_DEC'
+        let activeBiz = ""; 
         let currentBizTab = "IN"; 
+        let activeNetSub = 1;
 
-        // Pemisahan Database internal localstorage masing-masing bisnis
+        // Database Arrays LocalStorage
         let reportData = JSON.parse(localStorage.getItem('family_reports')) || [];
-        
         let bizDatabases = {
-            GHOST: {
-                IN: JSON.parse(localStorage.getItem('ghost_inbound')) || [{ nama: "Penjualan Tiket Weekend", tanggal: "2026-06-14", jumlah: 4500000, keterangan: "Total 150 Pengunjung" }],
-                OUT: JSON.parse(localStorage.getItem('ghost_outbound')) || [{ nama: "Honor Pemeran Hantu", tanggal: "2026-06-15", jumlah: 1200000, keterangan: "4 Orang Talent" }]
-            },
-            PLAYGROUND: {
-                IN: JSON.parse(localStorage.getItem('play_inbound')) || [],
-                OUT: JSON.parse(localStorage.getItem('play_outbound')) || []
-            },
-            RAISYA_DEC: {
-                IN: JSON.parse(localStorage.getItem('dec_inbound')) || [],
-                OUT: JSON.parse(localStorage.getItem('dec_outbound')) || []
-            }
+            GHOST: { IN: JSON.parse(localStorage.getItem('ghost_inbound')) || [], OUT: JSON.parse(localStorage.getItem('ghost_outbound')) || [] },
+            PLAYGROUND: { IN: JSON.parse(localStorage.getItem('play_inbound')) || [], OUT: JSON.parse(localStorage.getItem('play_outbound')) || [] },
+            RAISYA_DEC: { IN: JSON.parse(localStorage.getItem('dec_inbound')) || [], OUT: JSON.parse(localStorage.getItem('dec_outbound')) || [] }
+        };
+
+        let netDatabases = {
+            pelanggan: JSON.parse(localStorage.getItem('net_customers')) || [],
+            tagihan: JSON.parse(localStorage.getItem('net_bills')) || [],
+            masukLain: JSON.parse(localStorage.getItem('net_inc_other')) || [],
+            keluarBulan: JSON.parse(localStorage.getItem('net_exp_month')) || [],
+            keluarLain: JSON.parse(localStorage.getItem('net_exp_other')) || []
         };
 
         function switchPage(pageId) {
-            const pages = ['page-login', 'page-forgot', 'page-reset', 'page-menu', 'page-family-conf', 'page-family-login', 'page-family-report', 'page-biz-login', 'page-biz-report'];
+            const pages = ['page-login', 'page-forgot', 'page-reset', 'page-menu', 'page-family-conf', 'page-family-login', 'page-family-report', 'page-biz-login', 'page-biz-report', 'page-internet-report', 'page-all-rekap'];
             pages.forEach(p => document.getElementById(p).classList.add('hidden'));
             document.getElementById(pageId).classList.remove('hidden');
 
             const container = document.getElementById('main-container');
-            if(pageId === 'page-family-report' || pageId === 'page-biz-report') {
+            if(['page-family-report', 'page-biz-report', 'page-internet-report', 'page-all-rekap'].includes(pageId)) {
                 container.classList.remove('max-w-md'); container.classList.add('max-w-xl');
             } else {
                 container.classList.remove('max-w-xl'); container.classList.add('max-w-md');
@@ -321,12 +367,8 @@
             const userInp = document.getElementById('login-user').value.trim();
             const passInp = document.getElementById('login-pass').value.trim();
             const wordInp = document.getElementById('login-words').value.trim();
-            if(userInp === systemCredentials.username && passInp === systemCredentials.password && wordInp.toLowerCase() === systemCredentials.words.toLowerCase()) {
-                switchPage('page-menu');
-            } else {
-                document.getElementById('login-error').innerText = "Kredensial Utama Salah!";
-                document.getElementById('login-error').classList.remove('hidden');
-            }
+            if(userInp === systemCredentials.username && passInp === systemCredentials.password && wordInp.toLowerCase() === systemCredentials.words.toLowerCase()) switchPage('page-menu');
+            else { document.getElementById('login-error').innerText="Kredensial Utama Salah!"; document.getElementById('login-error').classList.remove('hidden'); }
         }
 
         function handleForgot() {
@@ -336,11 +378,8 @@
         }
 
         function handleReset() {
-            const np = document.getElementById('reset-pass').value.trim();
-            if(!np) return;
-            systemCredentials.password = np;
-            alert("Password utama diperbarui!");
-            switchPage('page-login');
+            const np = document.getElementById('reset-pass').value.trim(); if(!np) return;
+            systemCredentials.password = np; alert("Password utama diperbarui!"); switchPage('page-login');
         }
 
         function handleLogout() {
@@ -357,11 +396,8 @@
         }
         function handleFamilyLogin() {
             const pass = document.getElementById('family-login-pass').value.trim();
-            if(pass === systemCredentials.familyPassword) {
-                document.getElementById('badge-role').innerText = "Akses: " + selectedRole; renderData(); switchPage('page-family-report');
-            } else {
-                document.getElementById('family-login-error').innerText = "Password Otoritas Salah!"; document.getElementById('family-login-error').classList.remove('hidden');
-            }
+            if(pass === systemCredentials.familyPassword) { document.getElementById('badge-role').innerText = "Akses: " + selectedRole; renderData(); switchPage('page-family-report'); }
+            else { document.getElementById('family-login-error').innerText = "Password Otoritas Salah!"; document.getElementById('family-login-error').classList.remove('hidden'); }
         }
         function renderData() {
             const container = document.getElementById('container-list'); container.innerHTML = ""; let total = 0;
@@ -397,35 +433,24 @@
             const ws = XLSX.utils.aoa_to_sheet(rows); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Keluarga"); XLSX.writeFile(wb, "Laporan_Keuangan_Keluarga.xlsx");
         }
 
-
-        // ================= ALUR OPERASIONAL MULTI-BISNIS UTALISATOR =================
+        // ================= ALUR OPERASIONAL MULTI-BISNIS & REKAP =================
         function openBizLogin(bizKey) {
-            activeBiz = bizKey;
-            let targetConfig = systemCredentials[bizKey];
-            
-            // Konfigurasi visual login box
+            activeBiz = bizKey; let targetConfig = systemCredentials[bizKey];
             document.getElementById('biz-login-title').innerHTML = `<i class="fa-solid fa-briefcase text-${targetConfig.theme}-600 mr-1"></i> Otoritas ${targetConfig.name}`;
-            document.getElementById('biz-login-user').value = "";
-            document.getElementById('biz-login-pass').value = "";
+            document.getElementById('biz-login-user').value = ""; document.getElementById('biz-login-pass').value = "";
             document.getElementById('biz-login-error').classList.add('hidden');
-            
-            // Ganti warna tombol validasi sesuai tema bisnis
             let btnValidate = document.querySelector('.id-btn-validated');
             btnValidate.className = `w-2/3 id-btn-validated text-white font-semibold py-2.5 rounded-xl text-xs cursor-pointer bg-${targetConfig.theme}-600 hover:bg-${targetConfig.theme}-700`;
-
             switchPage('page-biz-login');
         }
 
         function handleBizLogin() {
-            const u = document.getElementById('biz-login-user').value.trim();
-            const p = document.getElementById('biz-login-pass').value.trim();
+            const u = document.getElementById('biz-login-user').value.trim(); const p = document.getElementById('biz-login-pass').value.trim();
             let cfg = systemCredentials[activeBiz];
-            
             if(u === cfg.user && p === cfg.pass) {
-                currentBizTab = "IN";
-                applyBizTheme();
-                switchBizTab('IN');
-                switchPage('page-biz-report');
+                if(activeBiz === 'INTERNET') { activeNetSub = 1; switchNetSubMenu(1); switchPage('page-internet-report'); }
+                else if(activeBiz === 'REKAP') { calculateAndRenderGlobalRekap(); switchPage('page-all-rekap'); }
+                else { currentBizTab = "IN"; applyBizTheme(); switchBizTab('IN'); switchPage('page-biz-report'); }
             } else {
                 document.getElementById('biz-login-error').innerText = "Username atau Password Manajemen Bisnis Salah!";
                 document.getElementById('biz-login-error').classList.remove('hidden');
@@ -433,174 +458,323 @@
         }
 
         function applyBizTheme() {
-            let cfg = systemCredentials[activeBiz];
-            // Update Text Header
-            document.getElementById('biz-report-head').innerText = "Laporan " + cfg.name;
-            
-            // Atur Badge Kategori Warna
-            let badge = document.getElementById('biz-report-badge');
-            badge.className = `px-2 py-0.5 text-[9px] font-extrabold rounded-full uppercase tracking-wider bg-${cfg.theme}-100 text-${cfg.theme}-600`;
-            
-            // Atur Box Total Rekap
+            let cfg = systemCredentials[activeBiz]; document.getElementById('biz-report-head').innerText = "Laporan " + cfg.name;
+            let badge = document.getElementById('biz-report-badge'); badge.className = `px-2 py-0.5 text-[9px] font-extrabold rounded-full uppercase tracking-wider bg-${cfg.theme}-100 text-${cfg.theme}-600`;
             let totalBox = document.getElementById('biz-total-box');
-            if(activeBiz === 'GHOST') totalBox.className = "bg-gradient-to-r from-purple-900 to-indigo-950 text-white p-4 rounded-2xl flex justify-between items-center shadow-md";
-            else if(activeBiz === 'PLAYGROUND') totalBox.className = "bg-gradient-to-r from-amber-600 to-amber-800 text-white p-4 rounded-2xl flex justify-between items-center shadow-md";
+            if(activeBiz==='GHOST') totalBox.className = "bg-gradient-to-r from-purple-900 to-indigo-950 text-white p-4 rounded-2xl flex justify-between items-center shadow-md";
+            else if(activeBiz==='PLAYGROUND') totalBox.className = "bg-gradient-to-r from-amber-600 to-amber-800 text-white p-4 rounded-2xl flex justify-between items-center shadow-md";
             else totalBox.className = "bg-gradient-to-r from-rose-600 to-pink-700 text-white p-4 rounded-2xl flex justify-between items-center shadow-md";
-            
             document.getElementById('biz-total-lbl').className = `text-[10px] font-semibold text-${cfg.theme}-200 uppercase tracking-wider`;
         }
 
         function switchBizTab(tab) {
-            currentBizTab = tab;
-            let cfg = systemCredentials[activeBiz];
-            const tabIn = document.getElementById('tab-in');
-            const tabOut = document.getElementById('tab-out');
-
+            currentBizTab = tab; let cfg = systemCredentials[activeBiz]; const tabIn = document.getElementById('tab-in'); const tabOut = document.getElementById('tab-out');
             if(tab === 'IN') {
-                tabIn.className = `w-1/2 text-center py-2 text-xs font-bold rounded-lg transition-all cursor-pointer bg-white text-${cfg.theme}-600 shadow-xs`;
-                tabOut.className = "w-1/2 text-center py-2 text-xs font-bold rounded-lg transition-all cursor-pointer text-slate-500 hover:text-slate-700";
-                document.getElementById('biz-total-lbl').innerText = "Total Anggaran Masuk";
-                document.getElementById('biz-list-title').innerText = "Daftar Anggaran Masuk Tercatat";
+                tabIn.className = `w-1/2 text-center py-2 text-xs font-bold rounded-lg transition-all bg-white text-${cfg.theme}-600 shadow-xs`;
+                tabOut.className = "w-1/2 text-center py-2 text-xs font-bold rounded-lg transition-all text-slate-500 hover:text-slate-700";
+                document.getElementById('biz-total-lbl').innerText = "Total Anggaran Masuk"; document.getElementById('biz-list-title').innerText = "Daftar Anggaran Masuk Tercatat";
             } else {
-                tabOut.className = `w-1/2 text-center py-2 text-xs font-bold rounded-lg transition-all cursor-pointer bg-white text-${cfg.theme}-600 shadow-xs`;
-                tabIn.className = "w-1/2 text-center py-2 text-xs font-bold rounded-lg transition-all cursor-pointer text-slate-500 hover:text-slate-700";
-                document.getElementById('biz-total-lbl').innerText = "Total Anggaran Pengeluaran";
-                document.getElementById('biz-list-title').innerText = "Daftar Anggaran Pengeluaran Tercatat";
+                tabOut.className = `w-1/2 text-center py-2 text-xs font-bold rounded-lg transition-all bg-white text-${cfg.theme}-600 shadow-xs`;
+                tabIn.className = "w-1/2 text-center py-2 text-xs font-bold rounded-lg transition-all text-slate-500 hover:text-slate-700";
+                document.getElementById('biz-total-lbl').innerText = "Total Anggaran Pengeluaran"; document.getElementById('biz-list-title').innerText = "Daftar Anggaran Pengeluaran Tercatat";
             }
-            resetBizForm();
-            renderBizData();
+            resetBizForm(); renderBizData();
         }
 
         function renderBizData() {
-            const container = document.getElementById('biz-container-list');
-            container.innerHTML = "";
-            let total = 0;
-            let targetData = bizDatabases[activeBiz][currentBizTab];
-            let cfg = systemCredentials[activeBiz];
-
+            const container = document.getElementById('biz-container-list'); container.innerHTML = ""; let total = 0;
+            let targetData = bizDatabases[activeBiz][currentBizTab]; let cfg = systemCredentials[activeBiz];
             targetData.forEach((item, index) => {
                 total += parseInt(item.jumlah || 0);
-                container.innerHTML += `
-                    <div class="bg-white border border-slate-200 p-3 rounded-xl flex justify-between items-center shadow-xs">
-                        <div>
-                            <h4 class="text-xs font-bold text-slate-700">${item.nama}</h4>
-                            <p class="text-[10px] text-slate-400 font-medium"><i class="fa-regular fa-calendar mr-1"></i>${item.tanggal} | <span class="italic">${item.keterangan || '-'}</span></p>
-                            <p class="text-xs font-bold text-${cfg.theme}-600 mt-1">Rp ${parseInt(item.jumlah).toLocaleString('id-ID')}</p>
-                        </div>
-                        <div class="flex space-x-1">
-                            <button onclick="editBizData(${index})" class="w-7 h-7 bg-amber-50 text-amber-600 rounded-lg text-xs cursor-pointer"><i class="fa-solid fa-pen"></i></button>
-                            <button onclick="deleteBizData(${index})" class="w-7 h-7 bg-red-50 text-red-600 rounded-lg text-xs cursor-pointer"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    </div>
-                `;
+                container.innerHTML += `<div class="bg-white border p-3 rounded-xl flex justify-between items-center shadow-xs"><div><h4 class="text-xs font-bold text-slate-700">${item.nama}</h4><p class="text-[10px] text-slate-400 font-medium"><i class="fa-regular fa-calendar mr-1"></i>${item.tanggal} | <span class="italic">${item.keterangan || '-'}</span></p><p class="text-xs font-bold text-${cfg.theme}-600 mt-1">Rp ${parseInt(item.jumlah).toLocaleString('id-ID')}</p></div><div class="flex space-x-1"><button onclick="editBizData(${index})" class="w-7 h-7 bg-amber-50 text-amber-600 rounded-lg text-xs cursor-pointer"><i class="fa-solid fa-pen"></i></button><button onclick="deleteBizData(${index})" class="w-7 h-7 bg-red-50 text-red-600 rounded-lg text-xs cursor-pointer"><i class="fa-solid fa-trash"></i></button></div></div>`;
             });
-
             document.getElementById('b-txt-total').innerText = "Rp " + total.toLocaleString('id-ID');
-            
-            // Simpan data spesifik sesuai LocalStorage Bisnis yang Aktif
-            if(activeBiz === 'GHOST') {
-                localStorage.setItem('ghost_inbound', JSON.stringify(bizDatabases.GHOST.IN));
-                localStorage.setItem('ghost_outbound', JSON.stringify(bizDatabases.GHOST.OUT));
-            } else if(activeBiz === 'PLAYGROUND') {
-                localStorage.setItem('play_inbound', JSON.stringify(bizDatabases.PLAYGROUND.IN));
-                localStorage.setItem('play_outbound', JSON.stringify(bizDatabases.PLAYGROUND.OUT));
-            } else if(activeBiz === 'RAISYA_DEC') {
-                localStorage.setItem('dec_inbound', JSON.stringify(bizDatabases.RAISYA_DEC.IN));
-                localStorage.setItem('dec_outbound', JSON.stringify(bizDatabases.RAISYA_DEC.OUT));
-            }
+            if(activeBiz==='GHOST') { localStorage.setItem('ghost_inbound', JSON.stringify(bizDatabases.GHOST.IN)); localStorage.setItem('ghost_outbound', JSON.stringify(bizDatabases.GHOST.OUT)); }
+            else if(activeBiz==='PLAYGROUND') { localStorage.setItem('play_inbound', JSON.stringify(bizDatabases.PLAYGROUND.IN)); localStorage.setItem('play_outbound', JSON.stringify(bizDatabases.PLAYGROUND.OUT)); }
+            else if(activeBiz==='RAISYA_DEC') { localStorage.setItem('dec_inbound', JSON.stringify(bizDatabases.RAISYA_DEC.IN)); localStorage.setItem('dec_outbound', JSON.stringify(bizDatabases.RAISYA_DEC.OUT)); }
         }
 
         function saveBizData() {
-            const idx = parseInt(document.getElementById('biz-edit-index').value);
-            const nama = document.getElementById('b-inp-nama').value.trim();
-            const tanggal = document.getElementById('b-inp-tanggal').value;
-            const jumlah = document.getElementById('b-inp-jumlah').value.trim();
-            const keterangan = document.getElementById('b-inp-keterangan').value.trim();
-
-            if(!nama || !tanggal || !jumlah) {
-                alert("Mohon lengkapi semua kolom!");
-                return;
-            }
-
+            const idx = parseInt(document.getElementById('biz-edit-index').value); const nama = document.getElementById('b-inp-nama').value.trim(); const tanggal = document.getElementById('b-inp-tanggal').value; const jumlah = document.getElementById('b-inp-jumlah').value.trim(); const keterangan = document.getElementById('b-inp-keterangan').value.trim();
+            if(!nama || !tanggal || !jumlah) return alert("Mohon lengkapi semua kolom!");
             const itemObj = { nama, tanggal, jumlah: parseInt(jumlah), keterangan };
             let targetData = bizDatabases[activeBiz][currentBizTab];
-
-            if(idx === -1) targetData.push(itemObj);
-            else targetData[idx] = itemObj;
-
-            resetBizForm();
-            renderBizData();
+            if(idx === -1) targetData.push(itemObj); else targetData[idx] = itemObj;
+            resetBizForm(); renderBizData();
         }
 
         function editBizData(index) {
-            let targetData = bizDatabases[activeBiz][currentBizTab];
-            const item = targetData[index];
-
-            document.getElementById('biz-edit-index').value = index;
-            document.getElementById('b-inp-nama').value = item.nama;
-            document.getElementById('b-inp-tanggal').value = item.tanggal;
-            document.getElementById('b-inp-jumlah').value = item.jumlah;
-            document.getElementById('b-inp-keterangan').value = item.keterangan;
-
-            document.getElementById('biz-form-title').innerHTML = `<i class="fa-solid fa-pen-to-square text-amber-500"></i> Mode Edit Anggaran`;
-            document.getElementById('b-btn-simpan').className = "flex-1 bg-amber-500 text-white py-2 rounded-xl text-xs font-bold";
-            document.getElementById('b-btn-batal').classList.remove('hidden');
+            let targetData = bizDatabases[activeBiz][currentBizTab]; const item = targetData[index];
+            document.getElementById('biz-edit-index').value = index; document.getElementById('b-inp-nama').value = item.nama; document.getElementById('b-inp-tanggal').value = item.tanggal; document.getElementById('b-inp-jumlah').value = item.jumlah; document.getElementById('b-inp-keterangan').value = item.keterangan;
+            document.getElementById('biz-form-title').innerHTML = `Mode Edit Anggaran`;
+            document.getElementById('b-btn-simpan').className = "flex-1 bg-amber-500 text-white py-2 rounded-xl text-xs font-bold"; document.getElementById('b-btn-batal').classList.remove('hidden');
         }
 
-        function deleteBizData(index) {
-            if(confirm("Apakah Anda yakin ingin menghapus anggaran ini?")) {
-                let targetData = bizDatabases[activeBiz][currentBizTab];
-                targetData.splice(index, 1);
-                renderBizData();
-            }
-        }
-
+        function deleteBizData(index) { if(confirm("Apakah Anda yakin ingin menghapus anggaran ini?")) { bizDatabases[activeBiz][currentBizTab].splice(index, 1); renderBizData(); } }
         function resetBizForm() {
-            let cfg = systemCredentials[activeBiz];
-            document.getElementById('biz-edit-index').value = "-1";
-            document.getElementById('b-inp-nama').value = "";
-            document.getElementById('b-inp-tanggal').value = "";
-            document.getElementById('b-inp-jumlah').value = "";
-            document.getElementById('b-inp-keterangan').value = "";
-
+            let cfg = systemCredentials[activeBiz]; if(!cfg) return;
+            document.getElementById('biz-edit-index').value = "-1"; document.getElementById('b-inp-nama').value = ""; document.getElementById('b-inp-tanggal').value = ""; document.getElementById('b-inp-jumlah').value = ""; document.getElementById('b-inp-keterangan').value = "";
             const title = (currentBizTab === 'IN') ? "Tambah Anggaran Masuk Baru" : "Tambah Anggaran Pengeluaran Baru";
-            document.getElementById('biz-form-title').innerHTML = `<i class="fa-solid fa-square-plus text-${cfg.theme}-600"></i> ${title}`;
-            document.getElementById('b-btn-simpan').className = `flex-1 bg-${cfg.theme}-600 hover:bg-${cfg.theme}-700 text-white py-2 rounded-xl text-xs font-bold`;
-            document.getElementById('b-btn-batal').classList.add('hidden');
+            document.getElementById('biz-form-title').innerHTML = title;
+            document.getElementById('b-btn-simpan').className = `flex-1 bg-${cfg.theme}-600 text-white py-2 rounded-xl text-xs font-bold`; document.getElementById('b-btn-batal').classList.add('hidden');
         }
 
         function exportBizToExcel() {
-            let targetData = bizDatabases[activeBiz][currentBizTab];
-            let labelTipe = (currentBizTab === 'IN') ? "ANGGARAN MASUK" : "ANGGARAN PENGELUARAN";
-            let cfg = systemCredentials[activeBiz];
+            let targetData = bizDatabases[activeBiz][currentBizTab]; let labelTipe = (currentBizTab === 'IN') ? "ANGGARAN MASUK" : "ANGGARAN PENGELUARAN"; let cfg = systemCredentials[activeBiz];
+            if(targetData.length === 0) return alert("Tidak ada data untuk diekspor!");
+            let rows = [[`RAISYA DECORATION - LAPORAN BISNIS ${cfg.name.toUpperCase()}`],["Kategori Laporan:", labelTipe, "Tanggal Cetak:", new Date().toLocaleDateString('id-ID')],[],["No", "Nama Anggaran", "Tanggal", "Jumlah Anggaran (Rp)", "Keterangan"]];
+            let totalVal = 0; targetData.forEach((item, idx) => { totalVal += item.jumlah; rows.push([idx + 1, item.nama, item.tanggal, item.jumlah, item.keterangan]); });
+            rows.push([],["", "TOTAL " + labelTipe, "", totalVal, ""]);
+            const ws = XLSX.utils.aoa_to_sheet(rows); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Laporan");
+            XLSX.writeFile(wb, `Laporan_${cfg.name.replace(" ", "_")}.xlsx`);
+        }
 
-            if(targetData.length === 0) {
-                alert("Tidak ada data untuk diekspor!");
-                return;
+        // ================= JALUR STRUKTUR KHUSUS BISNIS INTERNET (MENU 5) =================
+        function switchNetSubMenu(subNo) {
+            activeNetSub = subNo; const subs = [1,2,3,4,5];
+            subs.forEach(s => {
+                const btn = document.getElementById('btn-sub-net' + s);
+                btn.className = "py-1.5 rounded-lg text-center cursor-pointer " + (s === subNo ? "bg-white text-cyan-600 shadow-xs" : "text-slate-500 hover:bg-slate-200/50");
+            });
+            document.getElementById('net-filter-box').classList.add('hidden');
+            document.getElementById('net-subrekap-box').classList.add('hidden');
+            if(subNo === 1) document.getElementById('net-filter-box').classList.remove('hidden');
+            if(subNo === 2 || subNo === 4) document.getElementById('net-subrekap-box').classList.remove('hidden');
+            resetNetForm(); renderInternetFields(); renderInternetData();
+        }
+
+        function renderInternetFields() {
+            const container = document.getElementById('net-fields-container'); container.innerHTML = "";
+            if(activeNetSub === 1) {
+                document.getElementById('net-form-title').innerText = "1. Tambah Data Pelanggan Tetap";
+                container.innerHTML = `<div><label class="block text-[10px] font-bold text-slate-500 uppercase">Nama Pelanggan</label><input type="text" id="net-f1-nama" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div><div><label class="block text-[10px] font-bold text-slate-500 uppercase">Alamat Rumah</label><input type="text" id="net-f1-alamat" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div><div class="grid grid-cols-2 gap-2"><div><label class="block text-[10px] font-bold text-slate-500 uppercase">No. HP / WhatsApp</label><input type="text" id="net-f1-hp" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div><div><label class="block text-[10px] font-bold text-slate-500 uppercase">Siklus Tanggal Tagihan</label><select id="net-f1-siklus" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"><option value="05">05</option><option value="10">10</option><option value="15">15</option><option value="20">20</option><option value="25">25</option><option value="30">30</option></select></div></div><div><label class="block text-[10px] font-bold text-slate-500 uppercase">Tagihan Internet Bulanan (Rp)</label><input type="number" id="net-f1-tagihan" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div><div><label class="block text-[10px] font-bold text-slate-500 uppercase">Keterangan Paket</label><input type="text" id="net-f1-ket" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>`;
+            } 
+            else if(activeNetSub === 2) {
+                document.getElementById('net-form-title').innerText = "2. Input Pembayaran Tagihan Masuk Bulanan";
+                let customerOptions = "<option value=''>-- Pilih Pelanggan --</option>";
+                netDatabases.pelanggan.forEach(p => { customerOptions += `<option value="${p.nama}" data-tagihan="${p.tagihan}" data-siklus="${p.siklus}">${p.nama} (Tgl ${p.siklus} - Rp ${parseInt(p.tagihan).toLocaleString('id-ID')})</option>`; });
+                container.innerHTML = `<div><label class="block text-[10px] font-bold text-slate-500 uppercase">Nama Pelanggan Tetap</label><select id="net-f2-nama" onchange="autoFillNetInvoice()" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none">${customerOptions}</select></div><div class="grid grid-cols-2 gap-2"><div><label class="block text-[10px] font-bold text-slate-500 uppercase">Tanggal Jatuh Tagihan</label><input type="date" id="net-f2-tanggal" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div><div><label class="block text-[10px] font-bold text-slate-500 uppercase">Tagihan Internet (Rp)</label><input type="number" id="net-f2-tagihan" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div></div><div class="grid grid-cols-2 gap-2"><div><label class="block text-[10px] font-bold text-slate-500 uppercase">Petugas Penagihan</label><select id="net-f2-petugas" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"><option value="Dede S">1. Dede S</option><option value="Petugas 2">2. Petugas 2</option><option value="Petugas 3">3. Petugas 3</option></select></div><div><label class="block text-[10px] font-bold text-slate-500 uppercase">Metode Pembayaran</label><select id="net-f2-metode" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"><option value="Cash">Cash</option><option value="Transfer">Transfer</option></select></div></div><div><label class="block text-[10px] font-bold text-slate-500 uppercase">Status Penagihan</label><select id="net-f2-status" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"><option value="Terbayar">Terbayar</option><option value="Belum Terbayar">Belum Terbayar</option></select></div>`;
             }
+            else if(activeNetSub === 3) {
+                document.getElementById('net-form-title').innerText = "3. Input Anggaran Masuk Lainnya";
+                container.innerHTML = `<div><label class="block text-[10px] font-bold text-slate-500 uppercase">Nama Anggaran</label><input type="text" id="net-f3-nama" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div><div class="grid grid-cols-2 gap-2"><div><label class="block text-[10px] font-bold text-slate-500 uppercase">Tanggal</label><input type="date" id="net-f3-tanggal" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div><div><label class="block text-[10px] font-bold text-slate-500 uppercase">Total Tagihan Masuk (Rp)</label><input type="number" id="net-f3-jumlah" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div></div><div><label class="block text-[10px] font-bold text-slate-500 uppercase">Keterangan</label><input type="text" id="net-f3-ket" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>`;
+            }
+            else if(activeNetSub === 4 || activeNetSub === 5) {
+                const labelSub = activeNetSub === 4 ? "4. Anggaran Pengeluaran Bulanan" : "5. Anggaran Pengeluaran Lainnya";
+                document.getElementById('net-form-title').innerText = labelSub;
+                let statusFieldHTML = activeNetSub === 4 ? `<div><label class="block text-[10px] font-bold text-slate-500 uppercase">Keterangan Status</label><select id="net-f45-status" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"><option value="Terbayar">Terbayar</option><option value="Belum Terbayar">Belum Terbayar</option></select></div>` : `<div><label class="block text-[10px] font-bold text-slate-500 uppercase">Keterangan Bebas</label><input type="text" id="net-f45-ket" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>`;
+                container.innerHTML = `<div><label class="block text-[10px] font-bold text-slate-500 uppercase">Nama Pengeluaran</label><input type="text" id="net-f45-nama" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div><div class="grid grid-cols-2 gap-2"><div><label class="block text-[10px] font-bold text-slate-500 uppercase">Tanggal Transaksi</label><input type="date" id="net-f45-tanggal" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div><div><label class="block text-[10px] font-bold text-slate-500 uppercase">Jumlah Anggaran (Rp)</label><input type="number" id="net-f45-jumlah" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div></div> ${statusFieldHTML}`;
+            }
+        }
 
-            let rows = [
-                [`RAISYA DECORATION - LAPORAN BISNIS ${cfg.name.toUpperCase()}`],
-                ["Kategori Laporan:", labelTipe, "Tanggal Cetak:", new Date().toLocaleDateString('id-ID')],
-                [],
-                ["No", "Nama Anggaran", "Tanggal", "Jumlah Anggaran (Rp)", "Keterangan"]
-            ];
+        function autoFillNetInvoice() {
+            const selectEl = document.getElementById('net-f2-nama'); const selectedOpt = selectEl.options[selectEl.selectedIndex];
+            if(!selectedOpt.value) return; document.getElementById('net-f2-tagihan').value = selectedOpt.getAttribute('data-tagihan');
+        }
 
-            let totalVal = 0;
-            targetData.forEach((item, idx) => {
-                totalVal += item.jumlah;
-                rows.push([idx + 1, item.nama, item.tanggal, item.jumlah, item.keterangan]);
+        function renderInternetData() {
+            const listContainer = document.getElementById('net-container-list'); listContainer.innerHTML = "";
+            let totalGlobal = 0; let totalPaid = 0; let totalUnpaid = 0;
+
+            if(activeNetSub === 1) {
+                document.getElementById('net-lbl-t1').innerText = "Total Anggaran Masuk Pertagihan (Potensial)";
+                const filterVal = document.getElementById('net-filter-date').value;
+                netDatabases.pelanggan.forEach((item, index) => {
+                    if(filterVal !== "ALL" && item.siklus !== filterVal) return;
+                    totalGlobal += parseInt(item.tagihan || 0);
+                    listContainer.innerHTML += `<div class="bg-white border border-slate-200 p-2.5 rounded-xl flex justify-between items-center text-xs"><div><h4 class="font-bold text-slate-700">${item.nama} <span class="bg-cyan-100 text-cyan-700 font-bold px-1.5 py-0.5 rounded text-[9px]">Siklus Tgl: ${item.siklus}</span></h4><p class="text-[10px] text-slate-400 mt-0.5"><i class="fa-solid fa-location-dot"></i> ${item.alamat} | <i class="fa-solid fa-phone"></i> ${item.hp}</p><p class="text-cyan-600 font-extrabold mt-0.5">Rp ${parseInt(item.tagihan).toLocaleString('id-ID')}</p></div><div class="flex space-x-1"><button onclick="editNetData(${index})" class="w-6 h-6 bg-amber-50 text-amber-600 rounded-lg text-[10px] cursor-pointer"><i class="fa-solid fa-pen"></i></button><button onclick="deleteNetData(${index})" class="w-6 h-6 bg-red-50 text-red-600 rounded-lg text-[10px] cursor-pointer"><i class="fa-solid fa-trash"></i></button></div></div>`;
+                });
+                document.getElementById('net-txt-t1').innerText = "Rp " + totalGlobal.toLocaleString('id-ID');
+                localStorage.setItem('net_customers', JSON.stringify(netDatabases.pelanggan));
+            } 
+            else if(activeNetSub === 2) {
+                document.getElementById('net-lbl-t1').innerText = "Total Hitung Semua Tagihan";
+                netDatabases.tagihan.forEach((item, index) => {
+                    const amt = parseInt(item.tagihan || 0); totalGlobal += amt;
+                    if(item.status === "Terbayar") totalPaid += amt; else totalUnpaid += amt;
+                    const statusBadge = item.status === "Terbayar" ? `<span class="bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded text-[9px] font-black">TERBAYAR</span>` : `<span class="bg-red-100 text-red-700 px-1.5 py-0.5 rounded text-[9px] font-black">BELUM TERBAYAR</span>`;
+                    listContainer.innerHTML += `<div class="bg-white border border-slate-200 p-2.5 rounded-xl flex justify-between items-center text-xs"><div><h4 class="font-bold text-slate-700">${item.nama} ${statusBadge}</h4><p class="text-[10px] text-slate-400 mt-0.5">Jatuh Tempo: ${item.tanggal} | Penagih: <b>${item.petugas}</b> (${item.metode})</p><p class="text-cyan-600 font-extrabold mt-0.5">Rp ${amt.toLocaleString('id-ID')}</p></div><div class="flex space-x-1"><button onclick="editNetData(${index})" class="w-6 h-6 bg-amber-50 text-amber-600 rounded-lg text-[10px] cursor-pointer"><i class="fa-solid fa-pen"></i></button><button onclick="deleteNetData(${index})" class="w-6 h-6 bg-red-50 text-red-600 rounded-lg text-[10px] cursor-pointer"><i class="fa-solid fa-trash"></i></button></div></div>`;
+                });
+                document.getElementById('net-txt-t1').innerText = "Rp " + totalGlobal.toLocaleString('id-ID');
+                document.getElementById('net-txt-paid').innerText = "Rp " + totalPaid.toLocaleString('id-ID');
+                document.getElementById('net-txt-unpaid').innerText = "Rp " + totalUnpaid.toLocaleString('id-ID');
+                localStorage.setItem('net_bills', JSON.stringify(netDatabases.tagihan));
+            }
+            else if(activeNetSub === 3) {
+                document.getElementById('net-lbl-t1').innerText = "Total Anggaran Masuk Lainnya";
+                netDatabases.masukLain.forEach((item, index) => {
+                    totalGlobal += parseInt(item.jumlah || 0);
+                    listContainer.innerHTML += `<div class="bg-white border border-slate-200 p-2.5 rounded-xl flex justify-between items-center text-xs"><div><h4 class="font-bold text-slate-700">${item.nama}</h4><p class="text-[10px] text-slate-400 mt-0.5">Tanggal: ${item.tanggal} | Keterangan: ${item.ket || '-'}</p><p class="text-cyan-600 font-extrabold mt-0.5">Rp ${parseInt(item.jumlah).toLocaleString('id-ID')}</p></div><div class="flex space-x-1"><button onclick="editNetData(${index})" class="w-6 h-6 bg-amber-50 text-amber-600 rounded-lg text-[10px] cursor-pointer"><i class="fa-solid fa-pen"></i></button><button onclick="deleteNetData(${index})" class="w-6 h-6 bg-red-50 text-red-600 rounded-lg text-[10px] cursor-pointer"><i class="fa-solid fa-trash"></i></button></div></div>`;
+                });
+                document.getElementById('net-txt-t1').innerText = "Rp " + totalGlobal.toLocaleString('id-ID');
+                localStorage.setItem('net_inc_other', JSON.stringify(netDatabases.masukLain));
+            }
+            else if(activeNetSub === 4) {
+                document.getElementById('net-lbl-t1').innerText = "Total Pengeluaran Bulanan";
+                netDatabases.keluarBulan.forEach((item, index) => {
+                    const amt = parseInt(item.jumlah || 0); totalGlobal += amt;
+                    if(item.status === "Terbayar") totalPaid += amt; else totalUnpaid += amt;
+                    const statusBadge = item.status === "Terbayar" ? `<span class="bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded text-[9px] font-black">TERBAYAR</span>` : `<span class="bg-red-100 text-red-700 px-1.5 py-0.5 rounded text-[9px] font-black">BELUM TERBAYAR</span>`;
+                    listContainer.innerHTML += `<div class="bg-white border border-slate-200 p-2.5 rounded-xl flex justify-between items-center text-xs"><div><h4 class="font-bold text-slate-700">${item.nama} ${statusBadge}</h4><p class="text-[10px] text-slate-400 mt-0.5">Tanggal Transaksi: ${item.tanggal}</p><p class="text-rose-600 font-extrabold mt-0.5">Rp ${amt.toLocaleString('id-ID')}</p></div><div class="flex space-x-1"><button onclick="editNetData(${index})" class="w-6 h-6 bg-amber-50 text-amber-600 rounded-lg text-[10px] cursor-pointer"><i class="fa-solid fa-pen"></i></button><button onclick="deleteNetData(${index})" class="w-6 h-6 bg-red-50 text-red-600 rounded-lg text-[10px] cursor-pointer"><i class="fa-solid fa-trash"></i></button></div></div>`;
+                });
+                document.getElementById('net-txt-t1').innerText = "Rp " + totalGlobal.toLocaleString('id-ID');
+                document.getElementById('net-txt-paid').innerText = "Rp " + totalPaid.toLocaleString('id-ID');
+                document.getElementById('net-txt-unpaid').innerText = "Rp " + totalUnpaid.toLocaleString('id-ID');
+                localStorage.setItem('net_exp_month', JSON.stringify(netDatabases.keluarBulan));
+            }
+            else if(activeNetSub === 5) {
+                document.getElementById('net-lbl-t1').innerText = "Total Pengeluaran Lainnya";
+                netDatabases.keluarLain.forEach((item, index) => {
+                    totalGlobal += parseInt(item.jumlah || 0);
+                    listContainer.innerHTML += `<div class="bg-white border border-slate-200 p-2.5 rounded-xl flex justify-between items-center text-xs"><div><h4 class="font-bold text-slate-700">${item.nama}</h4><p class="text-[10px] text-slate-400 mt-0.5">Tanggal: ${item.tanggal} | Info: ${item.ket || '-'}</p><p class="text-rose-600 font-extrabold mt-0.5">Rp ${parseInt(item.jumlah).toLocaleString('id-ID')}</p></div><div class="flex space-x-1"><button onclick="editNetData(${index})" class="w-6 h-6 bg-amber-50 text-amber-600 rounded-lg text-[10px] cursor-pointer"><i class="fa-solid fa-pen"></i></button><button onclick="deleteNetData(${index})" class="w-6 h-6 bg-red-50 text-red-600 rounded-lg text-[10px] cursor-pointer"><i class="fa-solid fa-trash"></i></button></div></div>`;
+                });
+                document.getElementById('net-txt-t1').innerText = "Rp " + totalGlobal.toLocaleString('id-ID');
+                localStorage.setItem('net_exp_other', JSON.stringify(netDatabases.keluarLain));
+            }
+        }
+
+        function saveNetData() {
+            const idx = parseInt(document.getElementById('net-edit-index').value);
+            if(activeNetSub === 1) {
+                const nama = document.getElementById('net-f1-nama').value.trim(), alamat = document.getElementById('net-f1-alamat').value.trim(), hp = document.getElementById('net-f1-hp').value.trim(), siklus = document.getElementById('net-f1-siklus').value, tagihan = document.getElementById('net-f1-tagihan').value.trim(), ket = document.getElementById('net-f1-ket').value.trim();
+                if(!nama || !alamat || !tagihan) return alert("Lengkapi data!");
+                const obj = { nama, alamat, hp, siklus, tagihan: parseInt(tagihan), ket };
+                if(idx === -1) netDatabases.pelanggan.push(obj); else netDatabases.pelanggan[idx] = obj;
+            } 
+            else if(activeNetSub === 2) {
+                const nama = document.getElementById('net-f2-nama').value, tanggal = document.getElementById('net-f2-tanggal').value, tagihan = document.getElementById('net-f2-tagihan').value.trim(), petugas = document.getElementById('net-f2-petugas').value, metode = document.getElementById('net-f2-metode').value, status = document.getElementById('net-f2-status').value;
+                if(!nama || !tanggal || !tagihan) return alert("Lengkapi data!");
+                const obj = { nama, tanggal, tagihan: parseInt(tagihan), petugas, metode, status };
+                if(idx === -1) netDatabases.tagihan.push(obj); else netDatabases.tagihan[idx] = obj;
+            }
+            else if(activeNetSub === 3) {
+                const nama = document.getElementById('net-f3-nama').value.trim(), tanggal = document.getElementById('net-f3-tanggal').value, jumlah = document.getElementById('net-f3-jumlah').value.trim(), ket = document.getElementById('net-f3-ket').value.trim();
+                if(!nama || !tanggal || !jumlah) return alert("Lengkapi data!");
+                const obj = { nama, tanggal, jumlah: parseInt(jumlah), ket };
+                if(idx === -1) netDatabases.masukLain.push(obj); else netDatabases.masukLain[idx] = obj;
+            }
+            else if(activeNetSub === 4) {
+                const nama = document.getElementById('net-f45-nama').value.trim(), tanggal = document.getElementById('net-f45-tanggal').value, jumlah = document.getElementById('net-f45-jumlah').value.trim(), status = document.getElementById('net-f45-status').value;
+                if(!nama || !tanggal || !jumlah) return alert("Lengkapi data!");
+                const obj = { nama, tanggal, jumlah: parseInt(jumlah), status };
+                if(idx === -1) netDatabases.keluarBulan.push(obj); else netDatabases.keluarBulan[idx] = obj;
+            }
+            else if(activeNetSub === 5) {
+                const nama = document.getElementById('net-f45-nama').value.trim(), tanggal = document.getElementById('net-f45-tanggal').value, jumlah = document.getElementById('net-f45-jumlah').value.trim(), ket = document.getElementById('net-f45-ket').value.trim();
+                if(!nama || !tanggal || !jumlah) return alert("Lengkapi data!");
+                const obj = { nama, tanggal, jumlah: parseInt(jumlah), ket };
+                if(idx === -1) netDatabases.keluarLain.push(obj); else netDatabases.keluarLain[idx] = obj;
+            }
+            resetNetForm(); renderInternetData();
+        }
+
+        function editNetData(index) {
+            document.getElementById('net-edit-index').value = index; document.getElementById('net-btn-batal').classList.remove('hidden');
+            if(activeNetSub === 1) {
+                const item = netDatabases.pelanggan[index]; document.getElementById('net-f1-nama').value = item.nama; document.getElementById('net-f1-alamat').value = item.alamat; document.getElementById('net-f1-hp').value = item.hp; document.getElementById('net-f1-siklus').value = item.siklus; document.getElementById('net-f1-tagihan').value = item.tagihan; document.getElementById('net-f1-ket').value = item.ket;
+            } else if(activeNetSub === 2) {
+                const item = netDatabases.tagihan[index]; document.getElementById('net-f2-nama').value = item.nama; document.getElementById('net-f2-tanggal').value = item.tanggal; document.getElementById('net-f2-tagihan').value = item.tagihan; document.getElementById('net-f2-petugas').value = item.petugas; document.getElementById('net-f2-metode').value = item.metode; document.getElementById('net-f2-status').value = item.status;
+            } else if(activeNetSub === 3) {
+                const item = netDatabases.masukLain[index]; document.getElementById('net-f3-nama').value = item.nama; document.getElementById('net-f3-tanggal').value = item.tanggal; document.getElementById('net-f3-jumlah').value = item.jumlah; document.getElementById('net-f3-ket').value = item.ket;
+            } else if(activeNetSub === 4) {
+                const item = netDatabases.keluarBulan[index]; document.getElementById('net-f45-nama').value = item.nama; document.getElementById('net-f45-tanggal').value = item.tanggal; document.getElementById('net-f45-jumlah').value = item.jumlah; document.getElementById('net-f45-status').value = item.status;
+            } else if(activeNetSub === 5) {
+                const item = netDatabases.keluarLain[index]; document.getElementById('net-f45-nama').value = item.nama; document.getElementById('net-f45-tanggal').value = item.tanggal; document.getElementById('net-f45-jumlah').value = item.jumlah; document.getElementById('net-f45-ket').value = item.ket;
+            }
+        }
+
+        function deleteNetData(index) {
+            if(confirm("Hapus data?")) {
+                if(activeNetSub === 1) netDatabases.pelanggan.splice(index, 1);
+                else if(activeNetSub === 2) netDatabases.tagihan.splice(index, 1);
+                else if(activeNetSub === 3) netDatabases.masukLain.splice(index, 1);
+                else if(activeNetSub === 4) netDatabases.keluarBulan.splice(index, 1);
+                else if(activeNetSub === 5) netDatabases.keluarLain.splice(index, 1);
+                renderInternetData();
+            }
+        }
+        function resetNetForm() { document.getElementById('net-edit-index').value = "-1"; document.getElementById('net-btn-batal').classList.add('hidden'); renderInternetFields(); }
+
+        function exportNetToExcel() {
+            let rows = [["RAISYA DECORATION - BISNIS UNIT INTERNET"]], sheetName = "Internet", fileName = "Laporan_Bisnis_Internet.xlsx";
+            if(activeNetSub === 1) {
+                sheetName = "Data Pelanggan"; fileName = "1_Database_Pelanggan_Internet.xlsx"; rows.push(["MENU: DATABASE PELANGGAN TETAP"], [], ["No", "Nama Pelanggan", "Alamat", "No. HP", "Siklus Tanggal", "Tagihan (Rp)", "Keterangan"]);
+                let tot = 0; netDatabases.pelanggan.forEach((item, idx) => { tot += item.tagihan; rows.push([idx+1, item.nama, item.alamat, item.hp, item.siklus, item.tagihan, item.ket]); }); rows.push([], ["", "TOTAL POTENSIAL", "", "", "", tot]);
+            } else if(activeNetSub === 2) {
+                sheetName = "Anggaran Tagihan"; fileName = "2_Anggaran_Tagihan_Masuk.xlsx"; rows.push(["MENU: ANGGARAN TAGIHAN MASUK BULANAN"], [], ["No", "Nama Pelanggan", "Tanggal Jatuh Tempo", "Tagihan Internet (Rp)", "Petugas Penagihan", "Metode", "Status"]);
+                let t=0, p=0, up=0; netDatabases.tagihan.forEach((item, idx) => { t += item.tagihan; if(item.status === "Terbayar") p += item.tagihan; else up += item.tagihan; rows.push([idx+1, item.nama, item.tanggal, item.tagihan, item.petugas, item.metode, item.status]); }); rows.push([], ["", "TOTAL KESELURUHAN", t], ["", "TOTAL TERBAYAR", p], ["", "TOTAL BELUM TERBAYAR", up]);
+            } else if(activeNetSub === 3) {
+                sheetName = "Masuk Lainnya"; fileName = "3_Anggaran_Masuk_Lainnya.xlsx"; rows.push(["MENU: ANGGARAN MASUK LAINNYA"], [], ["No", "Nama Anggaran", "Tanggal", "Jumlah (Rp)", "Keterangan"]);
+                let tot = 0; netDatabases.masukLain.forEach((item, idx) => { tot += item.jumlah; rows.push([idx+1, item.nama, item.tanggal, item.jumlah, item.ket]); }); rows.push([], ["", "TOTAL MASUK LAINNYA", "", tot]);
+            } else if(activeNetSub === 4) {
+                sheetName = "Pengeluaran Bulanan"; fileName = "4_Anggaran_Pengeluaran_Bulanan.xlsx"; rows.push(["MENU: ANGGARAN PENGELUARAN BULANAN"], [], ["No", "Nama Pengeluaran", "Tanggal", "Jumlah (Rp)", "Status"]);
+                let t=0, p=0, up=0; netDatabases.keluarBulan.forEach((item, idx) => { t += item.jumlah; if(item.status === "Terbayar") p += item.jumlah; else up += item.jumlah; rows.push([idx+1, item.nama, item.tanggal, item.jumlah, item.status]); }); rows.push([], ["", "TOTAL KESELURUHAN", t], ["", "TOTAL TERBAYAR", p], ["", "TOTAL BELUM TERBAYAR", up]);
+            } else if(activeNetSub === 5) {
+                sheetName = "Pengeluaran Lainnya"; fileName = "5_Anggaran_Pengeluaran_Lainnya.xlsx"; rows.push(["MENU: ANGGARAN PENGELUARAN LAINNYA"], [], ["No", "Nama Pengeluaran", "Tanggal", "Jumlah (Rp)", "Keterangan"]);
+                let tot = 0; netDatabases.keluarLain.forEach((item, idx) => { tot += item.jumlah; rows.push([idx+1, item.nama, item.tanggal, item.jumlah, item.ket]); }); rows.push([], ["", "TOTAL PENGELUARAN LAINNYA", "", tot]);
+            }
+            const ws = XLSX.utils.aoa_to_sheet(rows); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, sheetName); XLSX.writeFile(wb, fileName);
+        }
+
+        // ================= JALUR ENGINE REKAP KOMPREHENSIF (MENU 6) =================
+        let globalCalculatedValues = { masuk: 0, keluar: 0, laba: 0 };
+
+        function calculateAndRenderGlobalRekap() {
+            let totalMasuk = 0;
+            let totalKeluar = 0;
+
+            // 1. Ambil dari Bisnis Multi-Unit (Ghost, Playground, Raisya_Dec)
+            Object.keys(bizDatabases).forEach(key => {
+                bizDatabases[key].IN.forEach(item => totalMasuk += parseInt(item.jumlah || 0));
+                bizDatabases[key].OUT.forEach(item => totalKeluar += parseInt(item.jumlah || 0));
             });
 
-            rows.push([]);
-            rows.push(["", "TOTAL " + labelTipe, "", totalVal, ""]);
+            // 2. Ambil dari Laporan Anggaran Keluarga (Kategori Pengeluaran)
+            reportData.forEach(item => totalKeluar += parseInt(item.jumlah || 0));
+
+            // 3. Ambil dari Bisnis Internet (Hanya yang berstatus Terbayar/Masuk)
+            netDatabases.tagihan.forEach(item => {
+                if(item.status === "Terbayar") totalMasuk += parseInt(item.tagihan || 0);
+            });
+            netDatabases.masukLain.forEach(item => totalMasuk += parseInt(item.jumlah || 0));
+            netDatabases.keluarBulan.forEach(item => totalKeluar += parseInt(item.jumlah || 0));
+            netDatabases.keluarLain.forEach(item => totalKeluar += parseInt(item.jumlah || 0));
+
+            let totalLaba = totalMasuk - totalKeluar;
+
+            // Simpan variabel global untuk ekspor excel
+            globalCalculatedValues = { masuk: totalMasuk, keluar: totalKeluar, laba: totalLaba };
+
+            // Render ke UI Halaman Rekap
+            document.getElementById('rekap-total-masuk').innerText = "Rp " + totalMasuk.toLocaleString('id-ID');
+            document.getElementById('rekap-total-keluar').innerText = "Rp " + totalKeluar.toLocaleString('id-ID');
+            document.getElementById('rekap-total-laba').innerText = "Rp " + totalLaba.toLocaleString('id-ID');
+
+            // Set warna box laba berdasarkan untung/rugi
+            const labaBox = document.getElementById('rekap-laba-box');
+            if(totalLaba >= 0) {
+                labaBox.className = "bg-gradient-to-br from-emerald-500 to-teal-600 p-4 rounded-2xl text-white shadow-md";
+            } else {
+                labaBox.className = "bg-gradient-to-br from-red-500 to-orange-600 p-4 rounded-2xl text-white shadow-md";
+            }
+        }
+
+        function exportGlobalRekapToExcel() {
+            let rows = [
+                ["RAISYA DECORATION - LAPORAN REKAP EKSEKUTIF GLOBAL"],
+                ["Tanggal Cetak Rekap:", new Date().toLocaleDateString('id-ID')],
+                [],
+                ["KOMPONEN RINGKASAN KEUANGAN ALL SEKTOR", "NILAI AKUMULASI (RP)"],
+                ["Total Anggaran Masuk Global (Seluruh Sektor)", globalCalculatedValues.masuk],
+                ["Total Anggaran Keluar Global (Seluruh Sektor & Keluarga)", globalCalculatedValues.keluar],
+                [],
+                ["TOTAL KEUNTUNGAN BISNIS (LABA BERSIH)", globalCalculatedValues.laba]
+            ];
 
             const ws = XLSX.utils.aoa_to_sheet(rows);
             const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Laporan " + cfg.name);
-
-            let namaFile = `Laporan_${labelTipe.replace(" ", "_")}_${cfg.name.replace(" ", "_")}.xlsx`;
-            XLSX.writeFile(wb, namaFile);
+            XLSX.utils.book_append_sheet(wb, ws, "Rekap Finansial");
+            XLSX.writeFile(wb, "Laporan_Rekap_Semua_Laporan.xlsx");
         }
     </script>
 </body>
