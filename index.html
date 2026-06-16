@@ -6,6 +6,8 @@
     <title>RAISYA PRODUCTION</title>
     <!-- Tailwind CSS untuk Desain Bagus & Responsif di HP -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Library SheetJS untuk Export Excel -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body class="bg-gray-100 min-h-screen font-sans">
 
@@ -22,13 +24,11 @@
         <!-- LAYER 1: LOGIN UTAMA / LUPA PASSWORD -->
         <!-- ========================================== -->
         <div id="auth-section" class="bg-white p-6 rounded-2xl shadow-md">
-            <!-- Navigasi Tab Internal -->
             <div class="flex border-b mb-4">
                 <button onclick="switchAuthTab('login')" id="tab-login" class="w-1/2 pb-2 text-center border-b-2 border-indigo-600 font-bold text-indigo-600">Login Utama</button>
                 <button onclick="switchAuthTab('lupa')" id="tab-lupa" class="w-1/2 pb-2 text-center border-b-2 border-transparent text-gray-500 font-bold">Lupa Password</button>
             </div>
 
-            <!-- Form Login Utama -->
             <div id="panel-login" class="space-y-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Username Utama</label>
@@ -41,7 +41,6 @@
                 <button onclick="handleLoginUtama()" class="w-full bg-indigo-600 text-white p-2.5 rounded-lg font-semibold hover:bg-indigo-700 transition">Masuk Aplikasi</button>
             </div>
 
-            <!-- Form Lupa Password -->
             <div id="panel-lupa" class="space-y-4 hidden">
                 <div class="bg-gray-50 p-3 rounded-lg border text-xs text-gray-600 mb-2">
                     Silahkan masukkan Email atau Nomor HP terdaftar untuk memulihkan akun Anda.
@@ -71,7 +70,6 @@
 
             <h3 class="text-gray-700 font-bold text-sm px-1">Pilih Menu Pembukuan:</h3>
             
-            <!-- Daftar 6 Menu Utama -->
             <div class="space-y-2">
                 <button onclick="bukaModalLoginMenu('Keluarga')" class="w-full bg-white hover:bg-indigo-50 text-left p-4 rounded-xl shadow-sm border border-gray-200 font-semibold text-gray-800 transition flex justify-between items-center">
                     <span>1. PEMBUKUAN KEUANGAN KELUARGA</span>
@@ -91,9 +89,8 @@
                 </button>
                 <button onclick="bukaModalLoginMenu('Internet')" class="w-full bg-white hover:bg-indigo-50 text-left p-4 rounded-xl shadow-sm border border-gray-200 font-semibold text-gray-800 transition flex justify-between items-center">
                     <span>5. PEMBUKUAN BISNIS INTERNET</span>
-                    <span class="text-indigo-500 text-xs font-bold">🔒 Verifikasi Akun</span>
+                    <span class="text-cyan-500 text-xs font-bold">🌐 Multi CRM & Billing</span>
                 </button>
-                <!-- MENU BARU -->
                 <button onclick="bukaModalLoginMenu('RekapTotal')" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-left p-4 rounded-xl shadow-md text-white font-bold transition flex justify-between items-center">
                     <span>6. TOTAL REKAPITULASI ALL DIVISI</span>
                     <span class="bg-white/20 text-white text-xs px-2 py-0.5 rounded-full">⭐ Owner Access</span>
@@ -114,7 +111,7 @@
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700">Username Akses</label>
-                <input type="text" id="menu-username" placeholder="Ketik Username..." class="mt-1 block w-full p-2.5 border rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+                <input type="text" id="menu-username" placeholder="Ketik Username..." class="mt-1 block w-full p-2.5 border rounded-lg">
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700">Password Akses</label>
@@ -124,10 +121,9 @@
         </div>
 
         <!-- ========================================== -->
-        <!-- LAYER 4: RINCIAN ANGGARAN MASUK & KELUAR -->
+        <!-- LAYER 4: RINCIAN ANGGARAN STANDAR (1-4) -->
         <!-- ========================================== -->
         <div id="transaksi-section" class="hidden space-y-6">
-            <!-- Header Pembukuan Aktif -->
             <div class="bg-indigo-700 text-white p-4 rounded-xl flex justify-between items-center shadow-md">
                 <div>
                     <button onclick="kembaliKeMenuUtama()" class="text-xs bg-indigo-800 hover:bg-indigo-600 px-2 py-1 rounded text-indigo-100 mb-1">⬅ Keluar Pembukuan</button>
@@ -135,7 +131,6 @@
                 </div>
             </div>
 
-            <!-- Dashboard Ringkasan Saldo -->
             <div class="grid grid-cols-3 gap-2 text-center">
                 <div class="bg-green-50 p-3 rounded-xl border border-green-200">
                     <p class="text-[10px] uppercase font-bold text-green-600">Masuk</p>
@@ -151,13 +146,12 @@
                 </div>
             </div>
 
-            <!-- Form Anggaran Masuk / Keluar -->
             <div class="bg-white p-5 rounded-2xl shadow-sm border">
-                <h3 class="font-bold text-gray-800 mb-3 text-sm flex items-center">➕ Input Anggaran Baru</h3>
+                <h3 class="font-bold text-gray-800 mb-3 text-sm">➕ Input Anggaran Baru</h3>
                 <div class="space-y-3">
                     <div>
                         <label class="block text-xs font-medium text-gray-500">Tanggal Transaksi</label>
-                        <input type="date" id="trans-date" class="mt-1 block w-full p-2 border rounded-lg text-sm bg-gray-50 focus:bg-white">
+                        <input type="date" id="trans-date" class="mt-1 block w-full p-2 border rounded-lg text-sm bg-gray-50">
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-gray-500">Jenis Anggaran</label>
@@ -168,33 +162,223 @@
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-gray-500">Keterangan / Keperluan</label>
-                        <input type="text" id="trans-desc" placeholder="Contoh: Tiket, Gaji, Operasional" class="mt-1 block w-full p-2 border rounded-lg text-sm">
+                        <input type="text" id="trans-desc" class="mt-1 block w-full p-2 border rounded-lg text-sm">
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-gray-500">Jumlah Uang (Rp)</label>
-                        <input type="number" id="trans-amount" placeholder="0" class="mt-1 block w-full p-2 border rounded-lg text-sm">
+                        <input type="number" id="trans-amount" class="mt-1 block w-full p-2 border rounded-lg text-sm">
                     </div>
-                    <button onclick="addTransaction()" class="w-full bg-emerald-600 text-white p-2 rounded-lg font-medium text-sm hover:bg-emerald-700 transition">Simpan Anggaran</button>
+                    <button onclick="addTransaction()" class="w-full bg-emerald-600 text-white p-2 rounded-lg font-medium text-sm hover:bg-emerald-700">Simpan Anggaran</button>
                 </div>
             </div>
 
-            <!-- Tabel Riwayat Anggaran -->
             <div class="bg-white p-4 rounded-2xl shadow-sm border">
                 <h3 class="font-bold text-gray-800 mb-3 text-sm">📊 Riwayat Transaksi</h3>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-xs">
                         <thead>
-                            <tr class="border-b bg-gray-50 text-gray-500 uppercase tracking-wider">
+                            <tr class="border-b bg-gray-50 text-gray-500 uppercase">
                                 <th class="p-2">Tanggal</th>
                                 <th class="p-2">Tipe</th>
                                 <th class="p-2">Keterangan</th>
                                 <th class="p-2 text-right">Jumlah</th>
                             </tr>
                         </thead>
-                        <tbody id="transaction-table-body" class="divide-y">
-                            <!-- Data dimuat via JS -->
-                        </tbody>
+                        <tbody id="transaction-table-body" class="divide-y"></tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- LAYER EXTRA: SPECIAL SCREEN BISNIS INTERNET -->
+        <!-- ========================================== -->
+        <div id="internet-section" class="hidden space-y-6">
+            <div class="bg-cyan-700 text-white p-4 rounded-xl flex justify-between items-center shadow-md">
+                <div>
+                    <button onclick="kembaliKeMenuUtamaDariInternet()" class="text-xs bg-cyan-800 hover:bg-cyan-600 px-2 py-1 rounded text-cyan-100 mb-1">⬅ Keluar Pembukuan</button>
+                    <h2 class="font-black text-sm tracking-wide">5. PEMBUKUAN BISNIS INTERNET</h2>
+                </div>
+            </div>
+
+            <!-- Ringkasan Keuangan Internet -->
+            <div class="grid grid-cols-3 gap-2 text-center">
+                <div class="bg-green-50 p-3 rounded-xl border border-green-200">
+                    <p class="text-[10px] uppercase font-bold text-green-600">Total Masuk</p>
+                    <p id="net-stat-masuk" class="text-xs font-bold text-green-700 mt-1">Rp 0</p>
+                </div>
+                <div class="bg-red-50 p-3 rounded-xl border border-red-200">
+                    <p class="text-[10px] uppercase font-bold text-red-600">Total Keluar</p>
+                    <p id="net-stat-keluar" class="text-xs font-bold text-red-700 mt-1">Rp 0</p>
+                </div>
+                <div class="bg-blue-50 p-3 rounded-xl border border-blue-200">
+                    <p class="text-[10px] uppercase font-bold text-blue-600">Saldo Kas</p>
+                    <p id="net-stat-saldo" class="text-xs font-bold text-blue-700 mt-1">Rp 0</p>
+                </div>
+            </div>
+
+            <!-- Menu Navigasi Sub-Fitur Internet -->
+            <div class="flex bg-gray-200 p-1 rounded-xl text-xs font-bold">
+                <button onclick="switchInternetTab('billing')" id="btn-net-billing" class="w-1/3 py-2 text-center rounded-lg bg-white shadow text-cyan-700">💵 Penagihan</button>
+                <button onclick="switchInternetTab('master')" id="btn-net-master" class="w-1/3 py-2 text-center rounded-lg text-gray-600">👥 Master Pelanggan</button>
+                <button onclick="switchInternetTab('kas')" id="btn-net-kas" class="w-1/3 py-2 text-center rounded-lg text-gray-600">📉 Pengeluaran Kas</button>
+            </div>
+
+            <!-- TAB 1: PENAGIHAN BULANAN -->
+            <div id="panel-net-billing" class="space-y-4">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border space-y-3">
+                    <h3 class="font-bold text-gray-800 text-xs uppercase tracking-wide text-cyan-600">➕ Input Tagihan Masuk Baru</h3>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500">Pilih Pelanggan</label>
+                        <select id="bill-pelanggan" onchange="autoFillBillAmount()" class="mt-1 block w-full p-2 border rounded-lg text-sm bg-gray-50"></select>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500">Tanggal Bayar/Tagihan</label>
+                            <input type="date" id="bill-date" class="mt-1 block w-full p-2 border rounded-lg text-sm bg-gray-50">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500">Nominal Tagihan (Rp)</label>
+                            <input type="number" id="bill-amount" class="mt-1 block w-full p-2 border rounded-lg text-sm bg-gray-50" readonly>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500">Petugas Penagihan</label>
+                            <select id="bill-petugas" class="mt-1 block w-full p-2 border rounded-lg text-sm bg-gray-50">
+                                <option value="Dede S">1. Dede S</option>
+                                <option value="Petugas 1">2. Petugas 1</option>
+                                <option value="Petugas 2">3. Petugas 2</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500">Metode Pembayaran</label>
+                            <select id="bill-metode" class="mt-1 block w-full p-2 border rounded-lg text-sm bg-gray-50">
+                                <option value="Cash">Cash</option>
+                                <option value="Transfer">Transfer</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500">Status Tagihan</label>
+                        <select id="bill-status" class="mt-1 block w-full p-2 border rounded-lg text-sm bg-gray-50 font-bold">
+                            <option value="Belum Bayar" class="text-red-600">❌ Belum Bayar</option>
+                            <option value="Terbayar" class="text-green-600"> Terbayar</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500">Keterangan</label>
+                        <input type="text" id="bill-ket" placeholder="Bulan Jan, Feb, dsb" class="mt-1 block w-full p-2 border rounded-lg text-sm">
+                    </div>
+                    <button onclick="addBillingInvoice()" class="w-full bg-cyan-600 text-white p-2 rounded-lg font-medium text-sm hover:bg-cyan-700">Simpan Tagihan</button>
+                </div>
+
+                <!-- Sub-Tab Laporan Tagihan -->
+                <div class="bg-white p-4 rounded-2xl shadow-sm border space-y-3">
+                    <div class="flex border-b text-xs font-bold">
+                        <button onclick="toggleBillListTab('belum')" id="tab-bill-belum" class="w-1/2 pb-2 text-center border-b-2 border-red-500 text-red-600">Belum Bayar ❌</button>
+                        <button onclick="toggleBillListTab('sudah')" id="tab-bill-sudah" class="w-1/2 pb-2 text-center border-b-2 border-transparent text-gray-400">Sudah Terbayar </button>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="border-b bg-gray-50 text-gray-500 uppercase">
+                                    <th class="p-2">Pelanggan/Tgl</th>
+                                    <th class="p-2">Kolektor</th>
+                                    <th class="p-2 text-right">Jumlah</th>
+                                    <th class="p-2 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="billing-table-body" class="divide-y"></tbody>
+                        </table>
+                    </div>
+
+                    <!-- TOMBOL EXPORT EXCEL BARU -->
+                    <div class="pt-2 flex gap-2">
+                        <button onclick="exportBillingToExcel()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs p-2.5 rounded-lg transition flex items-center justify-center gap-1">
+                            📥 Export List Aktif ke Excel
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: MASTER DATABASE PELANGGAN -->
+            <div id="panel-net-master" class="space-y-4 hidden">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border space-y-3">
+                    <h3 id="master-form-title" class="font-bold text-gray-800 text-xs uppercase tracking-wide text-indigo-600">👥 Input Pelanggan Baru</h3>
+                    <input type="hidden" id="master-index" value="-1">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500">Nama Lengkap Pelanggan</label>
+                        <input type="text" id="cust-name" placeholder="Contoh: Budi Santoso" class="mt-1 block w-full p-2 border rounded-lg text-sm">
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500">Siklus Tgl Tagihan</label>
+                            <input type="number" id="cust-cycle" placeholder="Contoh: 10" min="1" max="31" class="mt-1 block w-full p-2 border rounded-lg text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500">Tagihan Internet (Rp)</label>
+                            <input type="number" id="cust-package" placeholder="150000" class="mt-1 block w-full p-2 border rounded-lg text-sm">
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="saveCustomerData()" id="btn-save-cust" class="w-full bg-indigo-600 text-white p-2 rounded-lg font-medium text-sm hover:bg-indigo-700">Simpan Data Pelanggan</button>
+                        <button onclick="resetCustomerForm()" id="btn-cancel-cust" class="hidden w-1/3 bg-gray-300 text-gray-700 p-2 rounded-lg font-medium text-sm">Batal</button>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl shadow-sm border">
+                    <h3 class="font-bold text-gray-800 mb-3 text-sm">🗃️ Database Master Pelanggan</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="border-b bg-gray-50 text-gray-500">
+                                    <th class="p-2">Nama</th>
+                                    <th class="p-2 text-center">Siklus</th>
+                                    <th class="p-2 text-right">Paket</th>
+                                    <th class="p-2 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customer-table-body" class="divide-y"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: PENGELUARAN KAS OPERASIONAL INTERNET -->
+            <div id="panel-net-kas" class="space-y-4 hidden">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border space-y-3">
+                    <h3 class="font-bold text-gray-800 text-xs uppercase tracking-wide text-red-600">📉 Catat Biaya Pengeluaran</h3>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500">Tanggal</label>
+                        <input type="date" id="net-out-date" class="mt-1 block w-full p-2 border rounded-lg text-sm bg-gray-50">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500">Keperluan / Keterangan</label>
+                        <input type="text" id="net-out-desc" placeholder="Contoh: Beli Mikrotik, Kabel, dll" class="mt-1 block w-full p-2 border rounded-lg text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500">Nominal Pengeluaran (Rp)</label>
+                        <input type="number" id="net-out-amount" placeholder="0" class="mt-1 block w-full p-2 border rounded-lg text-sm">
+                    </div>
+                    <button onclick="addInternetExpense()" class="w-full bg-red-600 text-white p-2 rounded-lg font-medium text-sm hover:bg-red-700">Simpan Pengeluaran</button>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl shadow-sm border">
+                    <h3 class="font-bold text-gray-800 mb-3 text-sm">📊 Log Khusus Pengeluaran Internet</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="border-b bg-gray-50 text-gray-500">
+                                    <th class="p-2">Tanggal</th>
+                                    <th class="p-2">Keterangan</th>
+                                    <th class="p-2 text-right">Jumlah</th>
+                                </tr>
+                            </thead>
+                            <tbody id="net-expense-table-body" class="divide-y"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -203,7 +387,6 @@
         <!-- LAYER 5: SCREEN KHUSUS TOTAL REKAPITULASI  -->
         <!-- ========================================== -->
         <div id="rekap-total-section" class="hidden space-y-6">
-            <!-- Header Rekap -->
             <div class="bg-gradient-to-r from-emerald-600 to-teal-700 text-white p-4 rounded-xl flex justify-between items-center shadow-md">
                 <div>
                     <button onclick="kembaliDariRekap()" class="text-xs bg-teal-800 hover:bg-teal-600 px-2 py-1 rounded text-teal-100 mb-1">⬅ Kembali ke Menu</button>
@@ -211,7 +394,6 @@
                 </div>
             </div>
 
-            <!-- Grand Dashboard Akumulasi -->
             <div class="bg-indigo-950 p-4 rounded-2xl text-white shadow-xl space-y-3">
                 <p class="text-center text-[10px] uppercase font-bold tracking-widest text-indigo-300">Total Akumulasi Seluruh Pembukuan</p>
                 <div class="grid grid-cols-2 gap-3 text-center border-b border-indigo-800 pb-3">
@@ -230,7 +412,6 @@
                 </div>
             </div>
 
-            <!-- Tabel Pemetaan Saldo Per Divisi -->
             <div class="bg-white p-4 rounded-2xl shadow-sm border">
                 <h3 class="font-bold text-gray-800 mb-3 text-sm">📋 Ringkasan Per Divisi Pembukuan</h3>
                 <div class="overflow-x-auto">
@@ -243,9 +424,7 @@
                                 <th class="p-2 text-right text-indigo-600">Saldo</th>
                             </tr>
                         </thead>
-                        <tbody id="rekap-table-body" class="divide-y font-medium text-gray-700">
-                            <!-- Data 5 Divisi Dimuat Otomatis -->
-                        </tbody>
+                        <tbody id="rekap-table-body" class="divide-y font-medium text-gray-700"></tbody>
                     </table>
                 </div>
             </div>
@@ -259,19 +438,26 @@
             "Keluarga": "1. PEMBUKUAN KEUANGAN KELUARGA",
             "RumahHantu": "2. PEMBUKUAN BISNIS RUMAH HANTU",
             "Playground": "3. PEMBUKUAN BISNIS PLAYGROUND ANAK",
-            "RaisyaDecoration": "4. PEMBUKUAN BISNIS RAISYA DECORATION",
-            "Internet": "5. PEMBUKUAN BISNIS INTERNET"
+            "RaisyaDecoration": "4. PEMBUKUAN BISNIS RAISYA DECORATION"
         };
 
         if (!localStorage.getItem('raisya_password')) {
             localStorage.setItem('raisya_password', '002886');
         }
 
+        // Database Inti
         let database = JSON.parse(localStorage.getItem('raisya_pembukuan')) || {
             Keluarga: [], RumahHantu: [], Playground: [], RaisyaDecoration: [], Internet: []
         };
 
+        // Database Khusus Internet (Master & Billing)
+        let internetCRM = JSON.parse(localStorage.getItem('raisya_crm_internet')) || {
+            customers: [],
+            invoices: []
+        };
+
         let menuTarget = null;
+        let currentBillFilter = "belum"; // Filter tab tagihan ("belum" / "sudah")
 
         function switchAuthTab(tab) {
             const panels = ['login', 'lupa'];
@@ -314,7 +500,7 @@
             const currentSavedPassword = localStorage.getItem('raisya_password');
             
             if (contactIn === "dedesugiono.ai@gmail.com" || contactIn === "081220285226") {
-                alert("Verifikasi Berhasil!\n\nPassword Akun Utama Radhika / Raisya saat ini adalah: " + currentSavedPassword);
+                alert("Verifikasi Berhasil!\n\nPassword Akun Radhika / Raisya / Internet saat ini adalah: " + currentSavedPassword);
                 switchAuthTab('login');
             } else {
                 alert("Data tidak cocok! Periksa kembali Email atau Nomor HP.");
@@ -324,13 +510,14 @@
         // --- LAYER 2 & 3: LOGIN MASING-MASING PEMBUKUAN ---
         function bukaModalLoginMenu(keyMenu) {
             menuTarget = keyMenu;
-            
             document.getElementById('menu-username').value = "";
             document.getElementById('menu-password').value = "";
             
             const infoBox = document.getElementById('info-box-login');
             if(keyMenu === 'RekapTotal') {
                 infoBox.innerText = "Sistem Mendeteksi Hak Akses Khusus Owner. Masukkan Username 'Raisya' beserta Password untuk melihat kalkulasi seluruh laporan.";
+            } else if (keyMenu === 'Internet') {
+                infoBox.innerText = "Masukkan Username 'Internet' beserta Password Pembukuan untuk mengelola data pelanggan & billing tagihan.";
             } else {
                 infoBox.innerText = "Silahkan ketik ulang Username Divisi ini beserta Password Pembukuan untuk membuka data.";
             }
@@ -347,19 +534,30 @@
         function handleLoginMenu() {
             const userIn = document.getElementById('menu-username').value.trim();
             const passIn = document.getElementById('menu-password').value;
-            const currentSavedPassword = localStorage.getItem('raisya_password'); // Menggunakan password terenkripsi browser
+            const currentSavedPassword = localStorage.getItem('raisya_password');
 
             if (menuTarget === "RekapTotal") {
-                // VALIDASI LOGIN KHUSUS MENU REKAP UTAMA
                 if (userIn === "Raisya" && passIn === currentSavedPassword) {
                     document.getElementById('login-menu-section').classList.add('hidden');
                     document.getElementById('rekap-total-section').classList.remove('hidden');
                     hitungDanTampilkanRekapTotal();
                 } else {
-                    alert("Akses Ditolak!\n\nUsername atau Password Owner Rekapitulasi Salah.");
+                    alert("Akses Ditolak! Username atau Password Owner Salah.");
+                }
+            } else if (menuTarget === "Internet") {
+                if (userIn === "Internet" && passIn === "002886") {
+                    document.getElementById('login-menu-section').classList.add('hidden');
+                    document.getElementById('internet-section').classList.remove('hidden');
+                    
+                    const hariIni = new Date().toISOString().split('T')[0];
+                    document.getElementById('bill-date').value = hariIni;
+                    document.getElementById('net-out-date').value = hariIni;
+                    
+                    refreshInternetDashboard();
+                } else {
+                    alert("Gagal Masuk! \n\nUsername: Internet\nPassword: Periksa kembali");
                 }
             } else {
-                // VALIDASI MENU PEMBUKUAN 1-5
                 if (userIn === menuTarget && passIn === "002886") {
                     document.getElementById('login-menu-section').classList.add('hidden');
                     document.getElementById('transaksi-section').classList.remove('hidden');
@@ -370,14 +568,18 @@
 
                     updateDashboard();
                 } else {
-                    alert("Gagal Membuka Pembukuan!\n\nUsername Divisi atau Password yang Anda ketik tidak cocok.");
+                    alert("Username Divisi atau Password tidak cocok.");
                 }
             }
         }
 
-        // --- LAYER 4: KELOLA ANGGARAN ---
         function kembaliKeMenuUtama() {
             document.getElementById('transaksi-section').classList.add('hidden');
+            document.getElementById('pilih-menu-section').classList.remove('hidden');
+        }
+
+        function kembaliKeMenuUtamaDariInternet() {
+            document.getElementById('internet-section').classList.add('hidden');
             document.getElementById('pilih-menu-section').classList.remove('hidden');
         }
 
@@ -388,17 +590,17 @@
 
         function handleLogout() {
             menuTarget = null;
-            document.getElementById('login-username').value = "";
-            document.getElementById('login-password').value = "";
-            document.getElementById('forget-contact').value = "";
-            
             document.getElementById('auth-section').classList.remove('hidden');
             document.getElementById('pilih-menu-section').classList.add('hidden');
             document.getElementById('login-menu-section').classList.add('hidden');
             document.getElementById('transaksi-section').classList.add('hidden');
+            document.getElementById('internet-section').classList.add('hidden');
             document.getElementById('rekap-total-section').classList.add('hidden');
         }
 
+        // ============================================================
+        // LOGIKA KHUSUS LAYER 4: KELOLA ANGGARAN STANDAR (DIVISI 1-4)
+        // ============================================================
         function addTransaction() {
             const dateIn = document.getElementById('trans-date').value;
             const type = document.getElementById('trans-type').value;
@@ -406,40 +608,25 @@
             const amount = parseInt(document.getElementById('trans-amount').value);
 
             if (!dateIn || !desc || isNaN(amount) || amount <= 0) {
-                alert("Mohon isi tanggal, keterangan, dan nominal uang dengan benar!");
+                alert("Mohon isi form dengan benar!");
                 return;
             }
 
-            let penanggungJawab = "";
             if (menuTarget === "Keluarga") {
                 let konfirmasi = prompt("Konfirmasi Penginputan Anggaran Keluarga!\nKetik '1' untuk SUAMI\nKetik '2' untuk ISTRI");
-                
-                if (konfirmasi === "1") {
-                    penanggungJawab = " [Oleh: Suami]";
-                } else if (konfirmasi === "2") {
-                    penanggungJawab = " [Oleh: Istri]";
-                } else {
-                    alert("Transaksi Dibatalkan! Anda harus memilih '1' atau '2' sebagai konfirmasi identitas.");
-                    return; 
-                }
-                desc = desc + penanggungJawab;
+                if (konfirmasi === "1") desc += " [Oleh: Suami]";
+                else if (konfirmasi === "2") desc += " [Oleh: Istri]";
+                else { alert("Dibatalkan!"); return; }
             }
 
-            const partTanggal = dateIn.split('-');
-            const tanggalRapi = `${partTanggal[2]}/${partTanggal[1]}/${partTanggal[0]}`;
+            const part = dateIn.split('-');
+            const tglRapi = `${part[2]}/${part[1]}/${part[0]}`;
 
-            database[menuTarget].push({ 
-                date: tanggalRapi, 
-                type: type, 
-                desc: desc, 
-                amount: amount 
-            });
-            
+            database[menuTarget].push({ date: tglRapi, type: type, desc: desc, amount: amount });
             localStorage.setItem('raisya_pembukuan', JSON.stringify(database));
 
             document.getElementById('trans-desc').value = "";
             document.getElementById('trans-amount').value = "";
-
             updateDashboard();
         }
 
@@ -447,58 +634,376 @@
             const transactions = database[menuTarget] || [];
             const tbody = document.getElementById('transaction-table-body');
             tbody.innerHTML = "";
-
-            let totalMasuk = 0;
-            let totalKeluar = 0;
+            let masuk = 0, keluar = 0;
 
             transactions.forEach(t => {
-                if (t.type === 'Masuk') totalMasuk += t.amount;
-                if (t.type === 'Keluar') totalKeluar += t.amount;
+                if (t.type === 'Masuk') masuk += t.amount;
+                if (t.type === 'Keluar') keluar += t.amount;
 
-                const tanggalTransaksi = t.date ? t.date : "-";
                 const row = document.createElement('tr');
-                const badgeColor = t.type === 'Masuk' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
-                
+                const badge = t.type === 'Masuk' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
                 row.innerHTML = `
-                    <td class="p-2 text-gray-500 font-mono whitespace-nowrap">${tanggalTransaksi}</td>
-                    <td class="p-2"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${badgeColor}">${t.type}</span></td>
-                    <td class="p-2 font-medium text-gray-700">${t.desc}</td>
+                    <td class="p-2 font-mono whitespace-nowrap">${t.date}</td>
+                    <td class="p-2"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${badge}">${t.type}</span></td>
+                    <td class="p-2 text-gray-700">${t.desc}</td>
                     <td class="p-2 text-right font-bold ${t.type === 'Masuk' ? 'text-green-600' : 'text-red-600'}">Rp ${t.amount.toLocaleString('id-ID')}</td>
                 `;
                 tbody.appendChild(row);
             });
 
-            if (transactions.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="text-center p-4 text-gray-400 italic">Belum ada rincian anggaran</td></tr>`;
-            }
-
-            document.getElementById('stat-masuk').innerText = `Rp ${totalMasuk.toLocaleString('id-ID')}`;
-            document.getElementById('stat-keluar').innerText = `Rp ${totalKeluar.toLocaleString('id-ID')}`;
-            document.getElementById('stat-saldo').innerText = `Rp ${(totalMasuk - totalKeluar).toLocaleString('id-ID')}`;
+            document.getElementById('stat-masuk').innerText = `Rp ${masuk.toLocaleString('id-ID')}`;
+            document.getElementById('stat-keluar').innerText = `Rp ${keluar.toLocaleString('id-ID')}`;
+            document.getElementById('stat-saldo').innerText = `Rp ${(masuk - keluar).toLocaleString('id-ID')}`;
         }
 
-        // --- KELOLA LOGIKA MENU KE-6 (REKAP AGREGAT TOTAL) ---
+        // ============================================================
+        // INDEPENDEN LOGIKA: SISTEM BISNIS INTERNET (CRM & BILLING)
+        // ============================================================
+        function switchInternetTab(tabName) {
+            ['billing', 'master', 'kas'].forEach(t => {
+                document.getElementById(`panel-net-${t}`).classList.add('hidden');
+                document.getElementById(`btn-net-${t}`).className = "w-1/3 py-2 text-center rounded-lg text-gray-600";
+            });
+            document.getElementById(`panel-net-${tabName}`).classList.remove('hidden');
+            document.getElementById(`btn-net-${tabName}`).className = "w-1/3 py-2 text-center rounded-lg bg-white shadow text-cyan-700 font-bold";
+        }
+
+        function refreshInternetDashboard() {
+            let totalMasuk = 0;
+            let totalKeluar = 0;
+
+            database.Internet.forEach(t => {
+                if (t.type === "Masuk") totalMasuk += t.amount;
+                if (t.type === "Keluar") totalKeluar += t.amount;
+            });
+
+            document.getElementById('net-stat-masuk').innerText = "Rp " + totalMasuk.toLocaleString('id-ID');
+            document.getElementById('net-stat-keluar').innerText = "Rp " + totalKeluar.toLocaleString('id-ID');
+            document.getElementById('net-stat-saldo').innerText = "Rp " + (totalMasuk - totalKeluar).toLocaleString('id-ID');
+
+            renderMasterPelangganDropdown();
+            renderMasterPelangganTable();
+            renderBillingInvoicesTable();
+            renderInternetExpenseTable();
+        }
+
+        function renderMasterPelangganDropdown() {
+            const select = document.getElementById('bill-pelanggan');
+            select.innerHTML = "<option value=''>-- Pilih Pelanggan --</option>";
+            internetCRM.customers.forEach((c, idx) => {
+                const opt = document.createElement('option');
+                opt.value = idx;
+                opt.innerText = `${c.name} (Tgl Tagih: ${c.cycle})`;
+                select.appendChild(opt);
+            });
+        }
+
+        function autoFillBillAmount() {
+            const idx = document.getElementById('bill-pelanggan').value;
+            if(idx !== "") {
+                document.getElementById('bill-amount').value = internetCRM.customers[idx].package;
+            } else {
+                document.getElementById('bill-amount').value = "";
+            }
+        }
+
+        function renderMasterPelangganTable() {
+            const tbody = document.getElementById('customer-table-body');
+            tbody.innerHTML = "";
+            
+            if(internetCRM.customers.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center italic text-gray-400">Database pelanggan kosong</td></tr>`;
+                return;
+            }
+
+            internetCRM.customers.forEach((c, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-2 font-bold text-gray-800">${c.name}</td>
+                    <td class="p-2 text-center text-gray-600">Siklus ${c.cycle}</td>
+                    <td class="p-2 text-right font-semibold text-indigo-600">Rp ${parseInt(c.package).toLocaleString('id-ID')}</td>
+                    <td class="p-2 text-center space-x-1 whitespace-nowrap">
+                        <button onclick="editCustomerData(${idx})" class="bg-amber-500 text-white px-1.5 py-0.5 rounded text-[10px]">Edit</button>
+                        <button onclick="deleteCustomerData(${idx})" class="bg-red-500 text-white px-1.5 py-0.5 rounded text-[10px]">Hapus</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function saveCustomerData() {
+            const name = document.getElementById('cust-name').value.trim();
+            const cycle = document.getElementById('cust-cycle').value.trim();
+            const packageAmt = document.getElementById('cust-package').value.trim();
+            const editIdx = parseInt(document.getElementById('master-index').value);
+
+            if(!name || !cycle || !packageAmt) {
+                alert("Semua data wajib diisi!"); return;
+            }
+
+            const dataPelanggan = { name: name, cycle: cycle, package: parseInt(packageAmt) };
+
+            if(editIdx === -1) {
+                internetCRM.customers.push(dataPelanggan);
+            } else {
+                internetCRM.customers[editIdx] = dataPelanggan;
+            }
+
+            localStorage.setItem('raisya_crm_internet', JSON.stringify(internetCRM));
+            resetCustomerForm();
+            refreshInternetDashboard();
+            alert("Data pelanggan berhasil disimpan!");
+        }
+
+        function editCustomerData(idx) {
+            const target = internetCRM.customers[idx];
+            document.getElementById('cust-name').value = target.name;
+            document.getElementById('cust-cycle').value = target.cycle;
+            document.getElementById('cust-package').value = target.package;
+            document.getElementById('master-index').value = idx;
+
+            document.getElementById('master-form-title').innerText = "✏️ Edit Pelanggan";
+            document.getElementById('master-form-title').className = "font-bold text-xs uppercase tracking-wide text-amber-600";
+            document.getElementById('btn-save-cust').innerText = "Update Data";
+            document.getElementById('btn-cancel-cust').classList.remove('hidden');
+        }
+
+        function deleteCustomerData(idx) {
+            if(confirm("Apakah Anda yakin ingin menghapus pelanggan ini?")) {
+                internetCRM.customers.splice(idx, 1);
+                localStorage.setItem('raisya_crm_internet', JSON.stringify(internetCRM));
+                refreshInternetDashboard();
+            }
+        }
+
+        function resetCustomerForm() {
+            document.getElementById('cust-name').value = "";
+            document.getElementById('cust-cycle').value = "";
+            document.getElementById('cust-package').value = "";
+            document.getElementById('master-index').value = "-1";
+
+            document.getElementById('master-form-title').innerText = "➕ Input Pelanggan Baru";
+            document.getElementById('master-form-title').className = "font-bold text-xs uppercase tracking-wide text-indigo-600";
+            document.getElementById('btn-save-cust').innerText = "Simpan Data Pelanggan";
+            document.getElementById('btn-cancel-cust').classList.add('hidden');
+        }
+
+        // --- SUB LOGIKA: MANAGEMEN INPUT BILLING (TAGIHAN) ---
+        function toggleBillListTab(statusFilter) {
+            currentBillFilter = statusFilter;
+            if(statusFilter === 'belum') {
+                document.getElementById('tab-bill-belum').className = "w-1/2 pb-2 text-center border-b-2 border-red-500 text-red-600";
+                document.getElementById('tab-bill-sudah').className = "w-1/2 pb-2 text-center border-b-2 border-transparent text-gray-400";
+            } else {
+                document.getElementById('tab-bill-belum').className = "w-1/2 pb-2 text-center border-b-2 border-transparent text-gray-400";
+                document.getElementById('tab-bill-sudah').className = "w-1/2 pb-2 text-center border-b-2 border-green-500 text-green-600";
+            }
+            renderBillingInvoicesTable();
+        }
+
+        function addBillingInvoice() {
+            const custIdx = document.getElementById('bill-pelanggan').value;
+            const dateIn = document.getElementById('bill-date').value;
+            const status = document.getElementById('bill-status').value;
+            const petugas = document.getElementById('bill-petugas').value;
+            const metode = document.getElementById('bill-metode').value;
+            const ket = document.getElementById('bill-ket').value.trim();
+
+            if(custIdx === "" || !dateIn) {
+                alert("Pilih pelanggan dan tanggal penagihan!"); return;
+            }
+
+            const pelangganObj = internetCRM.customers[custIdx];
+            const part = dateIn.split('-');
+            const tglRapi = `${part[2]}/${part[1]}/${part[0]}`;
+
+            const invoiceObj = {
+                customerName: pelangganObj.name,
+                date: tglRapi,
+                amount: pelangganObj.package,
+                status: status,
+                collector: petugas,
+                method: metode,
+                note: ket
+            };
+
+            internetCRM.invoices.push(invoiceObj);
+            localStorage.setItem('raisya_crm_internet', JSON.stringify(internetCRM));
+
+            if(status === "Terbayar") {
+                database.Internet.push({
+                    date: tglRapi,
+                    type: "Masuk",
+                    desc: `Tagihan Internet: ${pelangganObj.name} (${ket}) [Kol: ${petugas}-${metode}]`,
+                    amount: pelangganObj.package
+                });
+                localStorage.setItem('raisya_pembukuan', JSON.stringify(database));
+            }
+
+            document.getElementById('bill-ket').value = "";
+            document.getElementById('bill-pelanggan').value = "";
+            document.getElementById('bill-amount').value = "";
+            
+            refreshInternetDashboard();
+            alert("Siklus Invoice Tagihan Berhasil Terbit!");
+        }
+
+        function renderBillingInvoicesTable() {
+            const tbody = document.getElementById('billing-table-body');
+            tbody.innerHTML = "";
+
+            const filteredInvoices = internetCRM.invoices.filter(inv => {
+                if(currentBillFilter === "belum") return inv.status === "Belum Bayar";
+                return inv.status === "Terbayar";
+            });
+
+            if(filteredInvoices.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center italic text-gray-400">Tidak ada log tagihan</td></tr>`;
+                return;
+            }
+
+            filteredInvoices.forEach((inv) => {
+                const realIndex = internetCRM.invoices.indexOf(inv);
+                const tr = document.createElement('tr');
+                
+                let actionBtn = "";
+                if(inv.status === "Belum Bayar") {
+                    actionBtn = `<button onclick="prosesPelunasanTagihan(${realIndex})" class="bg-emerald-600 text-white px-2 py-0.5 rounded text-[10px] font-bold">Set Lunas</button>`;
+                } else {
+                    actionBtn = `<span class="text-green-600 text-[10px] font-bold">Lunas (${inv.method})</span>`;
+                }
+
+                tr.innerHTML = `
+                    <td class="p-2">
+                        <div class="font-bold text-gray-800">${inv.customerName}</div>
+                        <div class="text-[10px] text-gray-400 font-mono">${inv.date} - <span class="text-indigo-600">${inv.note || ''}</span></div>
+                    </td>
+                    <td class="p-2 text-gray-600 text-[11px]">${inv.collector}</td>
+                    <td class="p-2 text-right font-bold text-gray-700">Rp ${inv.amount.toLocaleString('id-ID')}</td>
+                    <td class="p-2 text-center font-mono">${actionBtn}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function prosesPelunasanTagihan(indexAsli) {
+            const inv = internetCRM.invoices[indexAsli];
+            let konfirm = confirm(`Konfirmasi Pelunasan Tagihan atas nama ${inv.customerName}?`);
+            
+            if(konfirm) {
+                inv.status = "Terbayar";
+                database.Internet.push({
+                    date: inv.date,
+                    type: "Masuk",
+                    desc: `Pelunasan Tagihan Internet: ${inv.customerName} (${inv.note || 'Bulanan'}) [Kol: ${inv.collector}-${inv.method}]`,
+                    amount: inv.amount
+                });
+
+                localStorage.setItem('raisya_crm_internet', JSON.stringify(internetCRM));
+                localStorage.setItem('raisya_pembukuan', JSON.stringify(database));
+                refreshInternetDashboard();
+            }
+        }
+
+        // --- FITUR BARU: EXPORT DATA KE EXCEL ---
+        function exportBillingToExcel() {
+            // 1. Filter data berdasarkan tab aktif
+            const statusTarget = currentBillFilter === "belum" ? "Belum Bayar" : "Terbayar";
+            const targetData = internetCRM.invoices.filter(inv => inv.status === statusTarget);
+
+            if(targetData.length === 0) {
+                alert(`Gagal! Tidak ada data tagihan dengan status [${statusTarget}] untuk di-export.`);
+                return;
+            }
+
+            // 2. Format baris kolom agar rapi saat masuk ke Excel
+            const excelRows = targetData.map((inv, index) => ({
+                "No": index + 1,
+                "Nama Pelanggan": inv.customerName,
+                "Tanggal Tagihan": inv.date,
+                "Petugas Kolektor": inv.collector,
+                "Metode Bayar": inv.method,
+                "Nominal Tagihan (Rp)": inv.amount,
+                "Keterangan Bulan": inv.note || "",
+                "Status": inv.status
+            }));
+
+            // 3. Proses pembuatan file Excel menggunakan library SheetJS
+            const worksheet = XLSX.utils.json_to_sheet(excelRows);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Laporan Penagihan");
+
+            // 4. Download file otomatis ke HP/Laptop
+            const namaFile = `Daftar_Tagihan_Internet_${statusTarget.replace(" ", "_")}.xlsx`;
+            XLSX.writeFile(workbook, namaFile);
+        }
+
+        // --- SUB LOGIKA: PENGELUARAN INTERNET ---
+        function addInternetExpense() {
+            const dateIn = document.getElementById('net-out-date').value;
+            const desc = document.getElementById('net-out-desc').value.trim();
+            const amount = parseInt(document.getElementById('net-out-amount').value);
+
+            if(!dateIn || !desc || isNaN(amount) || amount <= 0) {
+                alert("Lengkapi input pengeluaran internet!"); return;
+            }
+
+            const part = dateIn.split('-');
+            const tglRapi = `${part[2]}/${part[1]}/${part[0]}`;
+
+            database.Internet.push({
+                date: tglRapi,
+                type: "Keluar",
+                desc: "[Opersional Internet] " + desc,
+                amount: amount
+            });
+
+            localStorage.setItem('raisya_pembukuan', JSON.stringify(database));
+            document.getElementById('net-out-desc').value = "";
+            document.getElementById('net-out-amount').value = "";
+            
+            refreshInternetDashboard();
+            alert("Biaya pengeluaran kas internet berhasil disimpan!");
+        }
+
+        function renderInternetExpenseTable() {
+            const tbody = document.getElementById('net-expense-table-body');
+            tbody.innerHTML = "";
+            const expenses = database.Internet.filter(t => t.type === "Keluar");
+
+            if(expenses.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" class="p-3 text-center text-gray-400 italic">Belum ada pengeluaran kas</td></tr>`;
+                return;
+            }
+
+            expenses.forEach(e => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-2 font-mono">${e.date}</td>
+                    <td class="p-2 text-gray-700">${e.desc}</td>
+                    <td class="p-2 text-right font-bold text-red-600">Rp ${e.amount.toLocaleString('id-ID')}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // ============================================================
+        // LOGIKA KHUSUS LAYER 5: REKAPITULASI TOTAL GLOBAL AGREGAT
+        // ============================================================
         function hitungDanTampilkanRekapTotal() {
             const tbody = document.getElementById('rekap-table-body');
             tbody.innerHTML = "";
+            let grandMasuk = 0, grandKeluar = 0;
 
-            let grandTotalMasuk = 0;
-            let grandTotalKeluar = 0;
-
-            // List kunci database divisi 1 s.d 5
             const listDivisi = ["Keluarga", "RumahHantu", "Playground", "RaisyaDecoration", "Internet"];
             const namaFormatDivisi = [
-                "1. KEUANGAN KELUARGA",
-                "2. BISNIS RUMAH HANTU",
-                "3. BISNIS PLAYGROUND ANAK",
-                "4. BISNIS RAISYA DECORATION",
-                "5. BISNIS INTERNET"
+                "1. KEUANGAN KELUARGA", "2. BISNIS RUMAH HANTU", "3. BISNIS PLAYGROUND ANAK", 
+                "4. BISNIS RAISYA DECORATION", "5. BISNIS INTERNET (KAS)"
             ];
 
             listDivisi.forEach((divisiKey, index) => {
                 const dataTransaksi = database[divisiKey] || [];
-                let subMasuk = 0;
-                let subKeluar = 0;
+                let subMasuk = 0, subKeluar = 0;
 
                 dataTransaksi.forEach(t => {
                     if (t.type === "Masuk") subMasuk += t.amount;
@@ -506,14 +1011,11 @@
                 });
 
                 let subSaldo = subMasuk - subKeluar;
+                grandMasuk += subMasuk;
+                grandKeluar += subKeluar;
 
-                // Akumulasikan ke Grand Total
-                grandTotalMasuk += subMasuk;
-                grandTotalKeluar += subKeluar;
-
-                // Bangun Baris Tabel untuk data per divisi
                 const row = document.createElement('tr');
-                row.className = "border-b hover:bg-gray-50 transition";
+                row.className = "border-b hover:bg-gray-50";
                 row.innerHTML = `
                     <td class="p-3 font-semibold text-gray-800">${namaFormatDivisi[index]}</td>
                     <td class="p-3 text-right text-green-600 font-bold">Rp ${subMasuk.toLocaleString('id-ID')}</td>
@@ -523,12 +1025,9 @@
                 tbody.appendChild(row);
             });
 
-            // Update Teks Grand Total Laporan Dashboard Atas
-            document.getElementById('grand-masuk').innerText = `Rp ${grandTotalMasuk.toLocaleString('id-ID')}`;
-            document.getElementById('grand-keluar').innerText = `Rp ${grandTotalKeluar.toLocaleString('id-ID')}`;
-            
-            const grandSaldoAkhir = grandTotalMasuk - grandTotalKeluar;
-            document.getElementById('grand-saldo').innerText = `Rp ${grandSaldoAkhir.toLocaleString('id-ID')}`;
+            document.getElementById('grand-masuk').innerText = `Rp ${grandMasuk.toLocaleString('id-ID')}`;
+            document.getElementById('grand-keluar').innerText = `Rp ${grandKeluar.toLocaleString('id-ID')}`;
+            document.getElementById('grand-saldo').innerText = `Rp ${(grandMasuk - grandKeluar).toLocaleString('id-ID')}`;
         }
     </script>
 </body>
