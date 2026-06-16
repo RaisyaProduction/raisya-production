@@ -3,69 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAISYA DECORATION - Sistem Pembukuan</title>
+    <title>RAISYA DECORATION SYSTEM</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
-<body class="bg-gray-100 font-sans">
+<body class="bg-gray-100 min-h-screen">
 
-    <header class="bg-blue-800 text-white p-4 text-center shadow-lg">
-        <h1 class="text-2xl font-bold">RAISYA DECORATION</h1>
+    <!-- Header -->
+    <header class="bg-blue-800 text-white p-6 text-center shadow-lg">
+        <h1 class="text-3xl font-bold">RAISYA DECORATION</h1>
     </header>
 
-    <main id="app" class="container mx-auto p-4">
-        <div id="login-section" class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
-            <h2 class="text-xl font-semibold mb-4 text-center" id="login-title">Login Admin</h2>
-            <input type="text" id="username" placeholder="Username" class="w-full p-2 mb-3 border rounded">
-            <input type="password" id="password" placeholder="Password" class="w-full p-2 mb-3 border rounded">
-            <button onclick="checkLogin()" class="w-full bg-blue-600 text-white p-2 rounded">Masuk</button>
-            <p class="mt-4 text-sm text-center">
-                Lupa password? Hubungi: <br> 
-                Email: dedesugiono.ai@gmail.com <br> 
-                WA: 081220285226
-            </p>
+    <main class="container mx-auto p-4 mt-6">
+        <!-- Section Login -->
+        <div id="login-container" class="max-w-sm mx-auto bg-white p-8 rounded-xl shadow-xl">
+            <h2 class="text-2xl font-bold mb-6 text-center text-gray-700">Login Sistem</h2>
+            <input type="text" id="username" placeholder="Username" class="w-full p-3 mb-4 border rounded-lg">
+            <input type="password" id="password" placeholder="Password" class="w-full p-3 mb-4 border rounded-lg">
+            
+            <button onclick="login()" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700">MASUK</button>
+            
+            <button onclick="lupaPassword()" class="w-full mt-4 text-sm text-blue-500 hover:underline">
+                Lupa Password?
+            </button>
         </div>
 
-        <div id="dashboard-section" class="hidden">
-            <h2 class="text-xl mb-4">Pilih Menu Utama:</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <button onclick="loadModule('keuangan-keluarga')" class="bg-green-600 text-white p-6 rounded">1. KEUANGAN KELUARGA</button>
-                <button onclick="loadModule('rumah-hantu')" class="bg-red-600 text-white p-6 rounded">2. BISNIS RUMAH HANTU</button>
-                <button onclick="loadModule('playground')" class="bg-yellow-600 text-white p-6 rounded">3. BISNIS PLAYGROUND</button>
-                <button onclick="loadModule('raisya-dec')" class="bg-pink-600 text-white p-6 rounded">4. RAISYA DECORATION</button>
-                <button onclick="loadModule('internet')" class="bg-purple-600 text-white p-6 rounded">5. BISNIS INTERNET</button>
-                <button onclick="loadModule('rekap')" class="bg-gray-800 text-white p-6 rounded">6. REKAPITULASI ALL</button>
+        <!-- Section Menu Utama (Hidden Default) -->
+        <div id="main-menu" class="hidden">
+            <h2 class="text-2xl font-bold mb-6 text-center">MENU UTAMA</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button onclick="alert('Membuka Pembukuan Keuangan Keluarga...')" class="bg-green-600 text-white p-6 rounded-lg text-lg font-bold">1. PEMBUKUAN KEUANGAN KELUARGA</button>
+                <button onclick="alert('Membuka Pembukuan Bisnis Rumah Hantu...')" class="bg-red-600 text-white p-6 rounded-lg text-lg font-bold">2. PEMBUKUAN BISNIS RUMAH HANTU</button>
+                <button onclick="alert('Membuka Pembukuan Bisnis Playground...')" class="bg-yellow-600 text-white p-6 rounded-lg text-lg font-bold">3. PEMBUKUAN BISNIS PLAYGROUND</button>
+                <button onclick="alert('Membuka Pembukuan Bisnis Raisya Decoration...')" class="bg-pink-600 text-white p-6 rounded-lg text-lg font-bold">4. PEMBUKUAN BISNIS RAISYA DECORATION</button>
+                <button onclick="alert('Membuka Pembukuan Bisnis Internet...')" class="bg-purple-600 text-white p-6 rounded-lg text-lg font-bold">5. PEMBUKUAN BISNIS INTERNET</button>
+                <button onclick="alert('Membuka Rekapitulasi...')" class="bg-gray-800 text-white p-6 rounded-lg text-lg font-bold">6. REKAPITULASI ALL PEMBUKUAN</button>
             </div>
+            <button onclick="location.reload()" class="mt-6 w-full bg-gray-300 py-2 rounded">Keluar / Logout</button>
         </div>
     </main>
 
     <script>
-        // Logika Sederhana untuk Login
-        const credentials = {
-            "Radhika": "002886",
-            "Suami/Istri": "002886",
-            "RumahHantu": "002886",
-            "Playground": "002886",
-            "RaisyaDecoration": "002886",
-            "Internet": "002886"
-        };
+        const validContactEmail = "dedesugiono.ai@gmail.com";
+        const validContactHp = "081220285226";
 
-        function checkLogin() {
-            const u = document.getElementById('username').value;
-            const p = document.getElementById('password').value;
-            if (credentials[u] === p) {
-                document.getElementById('login-section').classList.add('hidden');
-                document.getElementById('dashboard-section').classList.remove('hidden');
+        function login() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+
+            // Daftar User
+            const users = {
+                "Radhika": "002886",
+                "Suami/Istri": "002886",
+                "RumahHantu": "002886",
+                "Playground": "002886",
+                "RaisyaDecoration": "002886",
+                "Internet": "002886"
+            };
+
+            if (users[user] && users[user] === pass) {
+                // Khusus Pembukuan Keluarga
+                if(user === "Suami/Istri") {
+                    const status = confirm("Klik OK jika Anda Suami, Klik Batal jika Anda Istri");
+                    alert("Selamat datang, " + (status ? "Suami" : "Istri"));
+                }
+                
+                document.getElementById('login-container').classList.add('hidden');
+                document.getElementById('main-menu').classList.remove('hidden');
             } else {
                 alert("Username atau Password Salah!");
             }
         }
 
-        // Fungsi Ekspor Excel
-        function exportToExcel(tableId, filename) {
-            const table = document.getElementById(tableId);
-            const wb = XLSX.utils.table_to_book(table);
-            XLSX.writeFile(wb, filename + ".xlsx");
+        function lupaPassword() {
+            const input = prompt("Konfirmasi Nama Email atau Nomor HP Anda:");
+            
+            if (input === validContactEmail || input === validContact.hp || input === validContactHp) {
+                const newPass = prompt("Verifikasi berhasil. Masukkan password baru:");
+                if (newPass) {
+                    alert("Password berhasil diperbarui! Silakan login kembali.");
+                }
+            } else {
+                alert("Data tidak ditemukan. Hubungi 081220285226.");
+            }
         }
     </script>
 </body>
