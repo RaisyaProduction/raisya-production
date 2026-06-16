@@ -5,69 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RAISYA DECORATION SYSTEM</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body class="bg-gray-100 min-h-screen">
 
-    <!-- Header -->
     <header class="bg-blue-800 text-white p-6 text-center shadow-lg">
         <h1 class="text-3xl font-bold">RAISYA DECORATION</h1>
     </header>
 
     <main class="container mx-auto p-4 mt-6">
-        <!-- Section Login -->
         <div id="login-container" class="max-w-sm mx-auto bg-white p-8 rounded-xl shadow-xl">
-            <h2 class="text-2xl font-bold mb-6 text-center text-gray-700">Login Sistem</h2>
+            <h2 class="text-2xl font-bold mb-6 text-center">Login Sistem</h2>
             <input type="text" id="username" placeholder="Username" class="w-full p-3 mb-4 border rounded-lg">
             <input type="password" id="password" placeholder="Password" class="w-full p-3 mb-4 border rounded-lg">
-            
-            <button onclick="login()" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700">MASUK</button>
-            
-            <button onclick="lupaPassword()" class="w-full mt-4 text-sm text-blue-500 hover:underline">
-                Lupa Password?
-            </button>
+            <button onclick="login()" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold">MASUK</button>
+            <button onclick="lupaPassword()" class="w-full mt-4 text-sm text-blue-500 hover:underline">Lupa Password?</button>
         </div>
 
-        <!-- Section Menu Utama (Hidden Default) -->
         <div id="main-menu" class="hidden">
-            <h2 class="text-2xl font-bold mb-6 text-center">MENU UTAMA</h2>
+            <h2 class="text-2xl font-bold mb-6 text-center">PILIH MENU PEMBUKUAN</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <button onclick="alert('Membuka Pembukuan Keuangan Keluarga...')" class="bg-green-600 text-white p-6 rounded-lg text-lg font-bold">1. PEMBUKUAN KEUANGAN KELUARGA</button>
-                <button onclick="alert('Membuka Pembukuan Bisnis Rumah Hantu...')" class="bg-red-600 text-white p-6 rounded-lg text-lg font-bold">2. PEMBUKUAN BISNIS RUMAH HANTU</button>
-                <button onclick="alert('Membuka Pembukuan Bisnis Playground...')" class="bg-yellow-600 text-white p-6 rounded-lg text-lg font-bold">3. PEMBUKUAN BISNIS PLAYGROUND</button>
-                <button onclick="alert('Membuka Pembukuan Bisnis Raisya Decoration...')" class="bg-pink-600 text-white p-6 rounded-lg text-lg font-bold">4. PEMBUKUAN BISNIS RAISYA DECORATION</button>
-                <button onclick="alert('Membuka Pembukuan Bisnis Internet...')" class="bg-purple-600 text-white p-6 rounded-lg text-lg font-bold">5. PEMBUKUAN BISNIS INTERNET</button>
-                <button onclick="alert('Membuka Rekapitulasi...')" class="bg-gray-800 text-white p-6 rounded-lg text-lg font-bold">6. REKAPITULASI ALL PEMBUKUAN</button>
+                <button onclick="bukaModul('KEUANGAN KELUARGA')" class="bg-green-600 text-white p-6 rounded-lg font-bold">1. PEMBUKUAN KELUARGA</button>
+                <button onclick="bukaModul('BISNIS RUMAH HANTU')" class="bg-red-600 text-white p-6 rounded-lg font-bold">2. BISNIS RUMAH HANTU</button>
+                <button onclick="bukaModul('BISNIS PLAYGROUND')" class="bg-yellow-600 text-white p-6 rounded-lg font-bold">3. BISNIS PLAYGROUND</button>
+                <button onclick="bukaModul('RAISYA DECORATION')" class="bg-pink-600 text-white p-6 rounded-lg font-bold">4. RAISYA DECORATION</button>
+                <button onclick="bukaModul('BISNIS INTERNET')" class="bg-purple-600 text-white p-6 rounded-lg font-bold">5. BISNIS INTERNET</button>
+                <button onclick="bukaModul('REKAPITULASI')" class="bg-gray-800 text-white p-6 rounded-lg font-bold">6. REKAPITULASI ALL</button>
             </div>
-            <button onclick="location.reload()" class="mt-6 w-full bg-gray-300 py-2 rounded">Keluar / Logout</button>
+            <button onclick="location.reload()" class="mt-8 w-full bg-red-500 text-white py-2 rounded">Log Out</button>
         </div>
     </main>
 
     <script>
-        const validContactEmail = "dedesugiono.ai@gmail.com";
-        const validContactHp = "081220285226";
-
         function login() {
             const user = document.getElementById('username').value;
             const pass = document.getElementById('password').value;
-
-            // Daftar User
-            const users = {
-                "Radhika": "002886",
-                "Suami/Istri": "002886",
-                "RumahHantu": "002886",
-                "Playground": "002886",
-                "RaisyaDecoration": "002886",
-                "Internet": "002886"
-            };
+            const users = {"Radhika":"002886", "Suami/Istri":"002886", "RumahHantu":"002886", "Playground":"002886", "RaisyaDecoration":"002886", "Internet":"002886"};
 
             if (users[user] && users[user] === pass) {
-                // Khusus Pembukuan Keluarga
-                if(user === "Suami/Istri") {
-                    const status = confirm("Klik OK jika Anda Suami, Klik Batal jika Anda Istri");
-                    alert("Selamat datang, " + (status ? "Suami" : "Istri"));
-                }
-                
                 document.getElementById('login-container').classList.add('hidden');
                 document.getElementById('main-menu').classList.remove('hidden');
             } else {
@@ -75,16 +49,17 @@
             }
         }
 
+        function bukaModul(nama) {
+            alert("Anda sedang mengakses: " + nama + "\n\nCatatan: Fitur Input/Edit/Hapus akan segera diaktifkan pada update berikutnya.");
+        }
+
         function lupaPassword() {
-            const input = prompt("Konfirmasi Nama Email atau Nomor HP Anda:");
-            
-            if (input === validContactEmail || input === validContact.hp || input === validContactHp) {
-                const newPass = prompt("Verifikasi berhasil. Masukkan password baru:");
-                if (newPass) {
-                    alert("Password berhasil diperbarui! Silakan login kembali.");
-                }
+            const input = prompt("Konfirmasi Email/HP Anda:");
+            if (input === "dedesugiono.ai@gmail.com" || input === "081220285226") {
+                const newPass = prompt("Verifikasi Sukses. Masukkan password baru:");
+                if (newPass) alert("Password berhasil diubah!");
             } else {
-                alert("Data tidak ditemukan. Hubungi 081220285226.");
+                alert("Data tidak valid. Silakan hubungi admin.");
             }
         }
     </script>
