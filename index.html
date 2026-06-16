@@ -5,16 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RAISYA PRODUCTION</title>
     
+    <!-- Manifest PWA -->
     <link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22Raisya%20Production%22%2C%22short_name%22%3A%22RaisyaProd%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f3f4f6%22%2C%22theme_color%22%3A%22%234f46e5%22%7D">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Raisya Production">
 
+    <!-- Tailwind CSS & Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gray-100 font-sans antialiased pb-12">
 
+    <!-- ================= LAYAR 1: GERBANG LOGIN UTAMA APLIKASI ================= -->
     <div id="gerbang-login-utama" class="fixed inset-0 bg-indigo-900 flex items-center justify-center p-4 z-100">
         <div class="bg-white p-6 rounded-2xl shadow-2xl max-w-sm w-full text-center">
             <h2 class="text-2xl font-bold text-indigo-900 tracking-wider mb-1">RAISYA PRODUCTION</h2>
@@ -40,6 +43,7 @@
     </div>
 
 
+    <!-- ================= LAYAR 2: MENU UTAMA PILIHAN PEMBUKUAN ================= -->
     <div id="layar-menu-utama" class="fixed inset-0 bg-gray-50 flex items-center justify-center p-4 z-50 hidden overflow-y-auto">
         <div class="max-w-md w-full bg-white p-6 rounded-2xl shadow-xl border border-gray-200">
             <div class="text-center mb-6">
@@ -78,6 +82,7 @@
     </div>
 
 
+    <!-- ================= LAYAR 3A: GERBANG LOGIN KHUSUS UNIT BISNIS ================= -->
     <div id="panel-login-bisnis" class="fixed inset-0 bg-gray-900 bg-opacity-90 flex items-center justify-center p-4 z-40 hidden">
         <div class="bg-white p-6 rounded-xl shadow-lg max-w-sm w-full text-center border-t-4 border-indigo-600">
             <h3 id="judul-login-bisnis" class="text-md font-bold text-gray-800 uppercase mb-1">Login Pembukuan Bisnis</h3>
@@ -104,6 +109,7 @@
     </div>
 
 
+    <!-- ================= LAYAR 3B: SUB-LOGIN KELUARGA (PILIH & VERIFIKASI) ================= -->
     <div id="panel-login-keluarga" class="fixed inset-0 bg-gray-900 bg-opacity-90 flex items-center justify-center p-4 z-40 hidden">
         <div class="bg-white p-6 rounded-xl shadow-xl border-t-4 border-amber-500 max-w-sm w-full text-center">
             <h3 class="text-lg font-bold text-gray-800 mb-2">🔐 Catatan Anggaran Keluarga</h3>
@@ -140,8 +146,10 @@
     </div>
 
 
+    <!-- ================= LAYAR 4: KONTEN KOR INTERFACE PEMBUKUAN AKTIF ================= -->
     <div id="app-content-wrapper" class="hidden">
         
+        <!-- Top Bar / Header -->
         <header class="bg-indigo-600 text-white shadow-md sticky top-0 z-30">
             <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-2">
                 <div>
@@ -170,6 +178,20 @@
                 </div>
             </div>
 
+            <!-- MENU SUB-TABS NAVIGASI KHUSUS BISNIS INTERNET (MASTER MENU) -->
+            <div id="tabs-master-internet" class="flex border-b border-gray-200 mb-6 gap-2 hidden">
+                <button onclick="switchTabInternet('master')" id="tab-btn-master" class="py-2.5 px-4 font-bold text-sm rounded-t-xl transition-all border-t border-x cursor-pointer bg-white text-indigo-700 border-gray-200">
+                    📊 MASTER MENU (DASHBOARD)
+                </button>
+                <button onclick="switchTabInternet('masuk')" id="tab-btn-masuk" class="py-2.5 px-4 font-bold text-sm rounded-t-xl transition-all cursor-pointer text-gray-500 hover:text-indigo-600">
+                    💰 INPUT ANGGARAN MASUK
+                </button>
+                <button onclick="switchTabInternet('keluar')" id="tab-btn-keluar" class="py-2.5 px-4 font-bold text-sm rounded-t-xl transition-all cursor-pointer text-gray-500 hover:text-indigo-600">
+                    💸 INPUT ANGGARAN KELUAR
+                </button>
+            </div>
+
+            <!-- KHUSUS KELUARGA: Fitur Input Anggaran Utama -->
             <div id="panel-anggaran-keluarga" class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl shadow-sm mb-6 hidden">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
@@ -184,7 +206,8 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <!-- Dashboard Ringkasan Finansial Dinamis -->
+            <div id="dashboard-cards-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                 <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
                     <p id="label-card-1" class="text-2xs font-semibold text-gray-400 uppercase tracking-wider">Total Pemasukan</p>
                     <p id="total-pemasukan" class="text-lg font-bold text-green-600 mt-1">Rp 0</p>
@@ -198,15 +221,81 @@
                     <p id="saldo-akhir" class="text-lg font-bold text-blue-600 mt-1">Rp 0</p>
                 </div>
                 <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
-                    <p id="label-card-4" class="text-2xs font-semibold text-gray-400 uppercase tracking-wider">Sisa Tagihan / Piutang</p>
+                    <p id="label-card-4" class="text-2xs font-semibold text-gray-400 uppercase tracking-wider">Status Tambahan</p>
                     <p id="card-tambahan-value" class="text-lg font-bold text-amber-600 mt-1">Rp 0</p>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- ================= SUB-PANEL KONTEN KHUSUS INTERNET: 1. MASTER VIEW ================= -->
+            <div id="panel-internet-master-view" class="space-y-6 hidden">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <h3 class="text-base font-bold text-gray-800 mb-1">📊 REKAP FINANSIAL MASTER (BISNIS INTERNET)</h3>
+                    <p class="text-xs text-gray-500 mb-4">Ringkasan keuntungan berdasarkan uang masuk asli dan pengeluaran lunas.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 border-t border-gray-100 pt-4">
+                        <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200">
+                            <span class="text-2xs font-bold text-emerald-700 uppercase block">1. Anggaran Masuk (Riil Pelanggan)</span>
+                            <span id="master-net-masuk" class="text-xl font-black text-emerald-800 block mt-1">Rp 0</span>
+                            <span class="text-3xs text-emerald-600 mt-1 block">Total dana yang sudah disetor lunas oleh pelanggan.</span>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-xl border border-red-200">
+                            <span class="text-2xs font-bold text-red-700 uppercase block">2. Anggaran Keluar (Operasional Dibayar)</span>
+                            <span id="master-net-keluar" class="text-xl font-black text-red-800 block mt-1">Rp 0</span>
+                            <span class="text-3xs text-red-600 mt-1 block">Biaya belanja usaha internet yang sudah dibayarkan.</span>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-xl border border-blue-200">
+                            <span class="text-2xs font-bold text-blue-700 uppercase block">3. Sisa Keuntungan Bersih</span>
+                            <span id="master-net-sisa" class="text-xl font-black text-blue-800 block mt-1">Rp 0</span>
+                            <span class="text-3xs text-blue-600 mt-1 block">Rumus: Anggaran Masuk - Anggaran Keluar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Sekilas Arus Masuk -->
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                        <h4 class="text-xs font-bold text-indigo-900 uppercase tracking-wider mb-2">📋 INTISARI ARUS ANGGARAN MASUK</h4>
+                        <div class="max-h-60 overflow-y-auto">
+                            <table class="min-w-full text-2xs text-left">
+                                <thead class="bg-gray-50 text-gray-600 font-bold">
+                                    <tr>
+                                        <th class="p-2">Nama</th>
+                                        <th class="p-2 text-right">Tagihan</th>
+                                        <th class="p-2 text-right">Dibayar</th>
+                                        <th class="p-2">Via</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="mini-table-internet-masuk" class="divide-y divide-gray-100"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- Sekilas Arus Keluar -->
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                        <h4 class="text-xs font-bold text-amber-900 uppercase tracking-wider mb-2">📋 INTISARI ARUS ANGGARAN KELUAR</h4>
+                        <div class="max-h-60 overflow-y-auto">
+                            <table class="min-w-full text-2xs text-left">
+                                <thead class="bg-gray-50 text-gray-600 font-bold">
+                                    <tr>
+                                        <th class="p-2">Keterangan Nota</th>
+                                        <th class="p-2 text-right">Jumlah</th>
+                                        <th class="p-2">Status</th>
+                                        <th class="p-2">Keterangan</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="mini-table-internet-keluar" class="divide-y divide-gray-100"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Konten Form Input & Tabel Riwayat Standar / Per Tab Interaktif -->
+            <div id="panel-core-pembukuan-standard" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Form Input Fleksibel -->
                 <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 h-fit">
                     <h3 id="judul-form-catat" class="text-lg font-bold text-gray-800 mb-4">Catat Transaksi</h3>
                     
+                    <!-- FORM STANDAR (Keluarga, Rumah Hantu, Playground, Decor) -->
                     <form id="transaction-form" class="space-y-4">
                         <div>
                             <label id="label-deskripsi" class="block text-xs font-semibold text-gray-600">Keterangan / Nama Item</label>
@@ -232,7 +321,10 @@
                         </button>
                     </form>
 
+                    <!-- FORM KHUSUS 1: INPUT ANGGARAN MASUK INTERNET -->
                     <form id="internet-billing-form" class="space-y-3 hidden">
+                        <div id="badge-mode-form-masuk" class="p-2 bg-indigo-50 border border-indigo-200 text-indigo-900 rounded font-bold text-2xs text-center uppercase">💰 FORM ANGGARAN MASUK PELANGGAN</div>
+                        <input type="hidden" id="net-edit-index" value="-1">
                         <div>
                             <label class="block text-xs font-semibold text-gray-600">1. Nama Pelanggan</label>
                             <input type="text" id="net-pelanggan" required placeholder="Nama lengkap pelanggan" class="mt-1 block w-full rounded-lg border border-gray-300 p-2 bg-gray-50 text-sm">
@@ -258,16 +350,55 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-gray-600">6. Keterangan Tambahan</label>
+                            <label class="block text-xs font-semibold text-gray-600">6. Keterangan</label>
                             <textarea id="net-keterangan" placeholder="Catatan opsional..." class="mt-1 block w-full rounded-lg border border-gray-300 p-2 bg-gray-50 text-sm h-16"></textarea>
                         </div>
-                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg text-sm cursor-pointer transition-all">
-                            Simpan Tagihan Pelanggan
+                        <div class="flex gap-2">
+                            <button type="button" id="btn-cancel-edit-masuk" onclick="resetFormMasukInternet()" class="w-1/3 bg-gray-200 text-gray-700 font-bold py-2.5 rounded-lg text-xs hidden cursor-pointer">Batal</button>
+                            <button type="submit" id="btn-submit-masuk" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg text-sm cursor-pointer transition-all">
+                                Simpan Anggaran Masuk
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- FORM KHUSUS 2: INPUT ANGGARAN KELUAR INTERNET -->
+                    <form id="internet-expense-form" class="space-y-3 hidden">
+                        <div class="p-2 bg-red-50 border border-red-200 text-red-900 rounded font-bold text-2xs text-center uppercase">💸 FORM ANGGARAN KELUAR OPERASIONAL</div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600">1. Keterangan Pembayaran (Metode/Petugas)</label>
+                            <select id="out-metode" class="mt-1 block w-full rounded-lg border border-gray-300 p-2 bg-gray-50 text-sm">
+                                <option value="Transfer">Transfer</option>
+                                <option value="Petugas 1 Ngaliman">Petugas 1 Ngaliman</option>
+                                <option value="Petugas 2 Bapak">Petugas 2 Bapak</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600">2. Tagihan Pengeluaran (Rp)</label>
+                            <input type="number" id="out-tagihan" required placeholder="0" class="mt-1 block w-full rounded-lg border border-gray-300 p-2 bg-gray-50 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600">3. Status Pengeluaran</label>
+                            <select id="out-status" class="mt-1 block w-full rounded-lg border border-gray-300 p-2 bg-gray-50 text-sm">
+                                <option value="Sudah Dibayar">Sudah Dibayar (Lunas)</option>
+                                <option value="Belum Dibayar">Belum Dibayar (Utang/Bon)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600">4. Keterangan (Detail Pengeluaran)</label>
+                            <textarea id="out-keterangan" required placeholder="Contoh: Bayar Bandwidth Bulanan, Beli Kabel FO" class="mt-1 block w-full rounded-lg border border-gray-300 p-2 bg-gray-50 text-sm h-20"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600">5. Tanggal Pengeluaran</label>
+                            <input type="date" id="out-tanggal" required class="mt-1 block w-full rounded-lg border border-gray-300 p-2 bg-gray-50 text-sm">
+                        </div>
+                        <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-lg text-sm cursor-pointer transition-all">
+                            Simpan Anggaran Keluar
                         </button>
                     </form>
 
                 </div>
 
+                <!-- Grafik & Tabel -->
                 <div class="lg:col-span-2 space-y-6">
                     <div id="wrapper-chart-box" class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
                         <h3 class="text-lg font-bold text-gray-800 mb-2">Grafik Analisis</h3>
@@ -276,6 +407,7 @@
                         </div>
                     </div>
 
+                    <!-- TABEL UTAMA (TAMPIL UNTUK KELUARGA & BISNIS LAINNYA) -->
                     <div id="box-riwayat-standar" class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
                         <div class="flex justify-between items-center mb-3">
                             <h3 class="text-lg font-bold text-gray-800">Riwayat Catatan</h3>
@@ -297,13 +429,11 @@
                         </div>
                     </div>
 
-                    <div id="box-riwayat-internet" class="space-y-6 hidden">
-                        
+                    <!-- INTERNET SUB-TAB VIEW: AREA TABEL ANGGARAN MASUK -->
+                    <div id="box-tab-internet-masuk" class="space-y-6 hidden">
+                        <!-- Kelompok 1: Belum Bayar / Kurang Bayar -->
                         <div class="bg-white p-5 rounded-xl shadow-sm border border-red-200 shadow-red-50">
-                            <div class="flex justify-between items-center mb-3 border-b border-gray-100 pb-2">
-                                <h3 class="text-sm font-bold text-red-700 uppercase tracking-wide">⚠️ DATA PELANGGAN BELUM BAYAR / KURANG</h3>
-                                <button onclick="hapusSemuaDataUnit()" class="text-2xs text-red-400 hover:text-red-600 underline">Kosongkan Internet</button>
-                            </div>
+                            <h3 class="text-xs font-bold text-red-700 uppercase tracking-wide mb-3 border-b border-gray-100 pb-2">⚠️ DATA PELANGGAN BELUM BAYAR / KURANG BAYAR</h3>
                             <div class="overflow-x-auto">
                                 <table class="min-w-full text-xs text-left">
                                     <thead class="bg-red-50 text-red-700 uppercase font-bold">
@@ -318,12 +448,13 @@
                                         </tr>
                                     </thead>
                                     <tbody id="table-internet-belum-bayar" class="divide-y divide-gray-100"></tbody>
-                                </table>
+                                end</table>
                             </div>
                         </div>
 
+                        <!-- Kelompok 2: Sudah Bayar Lunas -->
                         <div class="bg-white p-5 rounded-xl shadow-sm border border-green-200 shadow-green-50">
-                            <h3 class="text-sm font-bold text-green-700 uppercase tracking-wide mb-3 border-b border-gray-100 pb-2">✅ DATA PELANGGAN SUDAH BAYAR (LUNAS)</h3>
+                            <h3 class="text-xs font-bold text-green-700 uppercase tracking-wide mb-3 border-b border-gray-100 pb-2">✅ DATA PELANGGAN SUDAH BAYAR (LUNAS)</h3>
                             <div class="overflow-x-auto">
                                 <table class="min-w-full text-xs text-left">
                                     <thead class="bg-green-50 text-green-700 uppercase font-bold">
@@ -341,7 +472,47 @@
                                 </table>
                             </div>
                         </div>
+                    </div>
 
+                    <!-- INTERNET SUB-TAB VIEW: AREA TABEL ANGGARAN KELUAR -->
+                    <div id="box-tab-internet-keluar" class="space-y-6 hidden">
+                        <!-- Pengeluaran Belum Dibayar (Utang/Bon) -->
+                        <div class="bg-white p-5 rounded-xl shadow-sm border border-amber-200 shadow-amber-50">
+                            <h3 class="text-xs font-bold text-amber-700 uppercase tracking-wide mb-3 border-b border-gray-100 pb-2">⚠️ DAFTAR PENGELUARAN BELUM DIBAYAR (UTANG/BON BON)</h3>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full text-xs text-left">
+                                    <thead class="bg-amber-50 text-amber-700 uppercase font-bold">
+                                        <tr>
+                                            <th class="p-2.5">Tanggal</th>
+                                            <th class="p-2.5">Keterangan Nota</th>
+                                            <th class="p-2.5 text-right">Tagihan Biaya</th>
+                                            <th class="p-2.5">Rencana Via</th>
+                                            <th class="p-2.5 text-center">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table-out-belum-bayar" class="divide-y divide-gray-100"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Pengeluaran Sudah Dibayar Lunas -->
+                        <div class="bg-white p-5 rounded-xl shadow-sm border border-red-200 shadow-red-50">
+                            <h3 class="text-xs font-bold text-red-700 uppercase tracking-wide mb-3 border-b border-gray-100 pb-2">✅ DAFTAR PENGELUARAN SUDAH DIBAYAR (LUNAS)</h3>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full text-xs text-left">
+                                    <thead class="bg-red-50 text-red-700 uppercase font-bold">
+                                        <tr>
+                                            <th class="p-2.5">Tanggal</th>
+                                            <th class="p-2.5">Keterangan Nota</th>
+                                            <th class="p-2.5 text-right">Jumlah Keluar</th>
+                                            <th class="p-2.5">Keterangan Pembayaran</th>
+                                            <th class="p-2.5 text-center">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table-out-sudah-bayar" class="divide-y divide-gray-100"></tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -350,8 +521,10 @@
         </div>
     </div>
 
+    <!-- LOGIKA CORE APLIKASI -->
     <script>
         let unitAktif = 'keluarga';
+        let subTabInternetAktif = 'master'; // master, masuk, keluar
         let roleKeluargaSementara = null;
 
         const akunBisnisMap = {
@@ -361,19 +534,30 @@
             party_decor: { user: "Decoration", pass: "002886" }
         };
 
-        let databasePembukuan = JSON.parse(localStorage.getItem('raisya_production_db')) || {
-            keluarga: [], internet: [], rumah_hantu: [], playground: [], party_decor: []
+        // Struktur data
+        let databasePembukuan = JSON.parse(localStorage.getItem('raisya_production_db_v2')) || {
+            keluarga: [], 
+            internet: { masuk: [], keluar: [] }, 
+            rumah_hantu: [], 
+            playground: [], 
+            party_decor: []
         };
+
+        if (Array.isArray(databasePembukuan.internet)) {
+            databasePembukuan.internet = { masuk: [], keluar: [] };
+        }
 
         let totalAnggaranKeluarga = parseFloat(localStorage.getItem('total_anggaran_keluarga')) || 3000000;
         let currentUserKeluarga = localStorage.getItem('current_user_keluarga') || null;
 
         let myChart;
         const formStandar = document.getElementById('transaction-form');
-        const formInternet = document.getElementById('internet-billing-form');
+        const formInternetMasuk = document.getElementById('internet-billing-form');
+        const formInternetKeluar = document.getElementById('internet-expense-form');
         
         document.getElementById('tanggal').value = new Date().toISOString().split('T')[0];
         document.getElementById('net-tanggal').value = new Date().toISOString().split('T')[0];
+        document.getElementById('out-tanggal').value = new Date().toISOString().split('T')[0];
         document.getElementById('input-total-anggaran').value = totalAnggaranKeluarga;
 
         // FORM LOGIN UTAMA
@@ -399,6 +583,8 @@
             if (userIn === aturanAkun.user && passIn === aturanAkun.pass) {
                 document.getElementById('panel-login-bisnis').classList.add('hidden');
                 document.getElementById('app-content-wrapper').classList.remove('hidden');
+                subTabInternetAktif = 'master'; 
+                resetFormMasukInternet();
                 updateUI();
             } else {
                 document.getElementById('error-bisnis-pesan').classList.remove('hidden');
@@ -485,6 +671,23 @@
             document.getElementById('panel-login-keluarga').classList.remove('hidden');
         }
 
+        window.switchTabInternet = function(tab) {
+            subTabInternetAktif = tab;
+            resetFormMasukInternet();
+            
+            const btns = { master: 'tab-btn-master', masuk: 'tab-btn-masuk', keluar: 'tab-btn-keluar' };
+            Object.keys(btns).forEach(k => {
+                const el = document.getElementById(btns[k]);
+                if (k === tab) {
+                    el.className = "py-2.5 px-4 font-bold text-sm rounded-t-xl transition-all border-t border-x cursor-pointer bg-white text-indigo-700 border-gray-200";
+                } else {
+                    el.className = "py-2.5 px-4 font-bold text-sm rounded-t-xl transition-all cursor-pointer text-gray-500 hover:text-indigo-600";
+                }
+            });
+
+            updateUI();
+        }
+
         document.getElementById('btn-save-anggaran').addEventListener('click', function() {
             totalAnggaranKeluarga = parseFloat(document.getElementById('input-total-anggaran').value) || 0;
             localStorage.setItem('total_anggaran_keluarga', totalAnggaranKeluarga);
@@ -517,42 +720,65 @@
             return namaMap[unitAktif];
         }
 
-        // REFRESH & DRAW INTERFACE DATA
+        // MANAGEMENT REFRESH LAYAR & UI DATA
         function updateUI() {
-            const namaUnit = getNamaUnitAktif();
-            document.getElementById('nama-pembukuan-aktif').innerText = namaUnit;
-            const dataTransaksi = databasePembukuan[unitAktif] || [];
+            document.getElementById('nama-pembukuan-aktif').innerText = getNamaUnitAktif();
+            
+            document.getElementById('tabs-master-internet').classList.add('hidden');
+            document.getElementById('panel-internet-master-view').classList.add('hidden');
+            document.getElementById('panel-core-pembukuan-standard').classList.remove('hidden');
+            document.getElementById('wrapper-chart-box').classList.remove('hidden');
+            document.getElementById('dashboard-cards-grid').classList.remove('hidden');
+            
+            formStandar.classList.add('hidden');
+            formInternetMasuk.classList.add('hidden');
+            formInternetKeluar.classList.add('hidden');
+            
+            document.getElementById('box-riwayat-standar').classList.add('hidden');
+            document.getElementById('box-tab-internet-masuk').classList.add('hidden');
+            document.getElementById('box-tab-internet-keluar').classList.add('hidden');
 
-            // Reset visibilitas komponen penampung kontainer tambahan
             const card4 = document.getElementById('card-tambahan-value').parentElement;
             card4.classList.add('hidden');
 
             if (unitAktif === 'internet') {
-                // Sembunyikan form standar, hidupkan form khusus internet
-                formStandar.classList.add('hidden');
-                formInternet.classList.remove('hidden');
-                document.getElementById('box-riwayat-standar').classList.add('hidden');
-                document.getElementById('box-riwayat-internet').classList.remove('hidden');
-                document.getElementById('wrapper-chart-box').classList.add('hidden'); // Sembunyikan chart lingkaran untuk internet
+                document.getElementById('tabs-master-internet').classList.remove('hidden');
+                document.getElementById('nama-user-aktif').innerText = "Admin Internet Master";
+                document.getElementById('wrapper-chart-box').classList.add('hidden'); 
 
-                document.getElementById('nama-user-aktif').innerText = "Admin Internet";
+                if (subTabInternetAktif === 'master') {
+                    document.getElementById('panel-internet-master-view').classList.remove('hidden');
+                    document.getElementById('panel-core-pembukuan-standard').classList.add('hidden');
+                    document.getElementById('dashboard-cards-grid').classList.add('hidden'); 
+                } 
+                else if (subTabInternetAktif === 'masuk') {
+                    formInternetMasuk.classList.remove('hidden');
+                    document.getElementById('box-tab-internet-masuk').classList.remove('hidden');
+                    card4.classList.remove('hidden');
+                    
+                    document.getElementById('label-card-1').innerText = "TOTAL NOMINAL TAGIHAN";
+                    document.getElementById('label-card-2').innerText = "ANGGARAN MASUK (DIBAYAR)";
+                    document.getElementById('label-card-3').innerText = "SISA PIUTANG PELANGGAN";
+                    document.getElementById('label-card-4').innerText = "TOTAL DATA PELANGGAN";
+                } 
+                else if (subTabInternetAktif === 'keluar') {
+                    formInternetKeluar.classList.remove('hidden');
+                    document.getElementById('box-tab-internet-keluar').classList.remove('hidden');
+                    card4.classList.remove('hidden');
+                    
+                    document.getElementById('label-card-1').innerText = "TOTAL NOTA PENGELUARAN";
+                    document.getElementById('label-card-2').innerText = "ANGGARAN KELUAR (LUNAS)";
+                    document.getElementById('label-card-3').innerText = "SISA UTANG OPERASIONAL";
+                    document.getElementById('label-card-4').innerText = "TOTAL NOTA DATA";
+                }
 
-                // Judul Atas Card Rekap Khusus Internet
-                document.getElementById('label-card-1').innerText = "TOTAL TAGIHAN KELUAR";
-                document.getElementById('label-card-2').innerText = "TAGIHAN MASUK (BAYAR)";
-                document.getElementById('label-card-3').innerText = "SISA TAGIHAN (PIUTANG)";
-                
-                card4.classList.remove('hidden');
-                document.getElementById('label-card-4').innerText = "TOTAL PELANGGAN";
-
-                renderPembukuanInternet(dataTransaksi);
-            } else {
-                // Hidupkan form standar untuk unit lainnya
+                renderPembukuanInternetSistem();
+            } 
+            else {
                 formStandar.classList.remove('hidden');
-                formInternet.classList.add('hidden');
                 document.getElementById('box-riwayat-standar').classList.remove('hidden');
-                document.getElementById('box-riwayat-internet').classList.add('hidden');
-                document.getElementById('wrapper-chart-box').classList.remove('hidden');
+
+                const dataTransaksi = databasePembukuan[unitAktif] || [];
 
                 if (unitAktif === 'keluarga') {
                     document.getElementById('panel-anggaran-keluarga').classList.remove('hidden');
@@ -581,10 +807,10 @@
                 renderPembukuanStandar(dataTransaksi);
             }
 
-            localStorage.setItem('raisya_production_db', JSON.stringify(databasePembukuan));
+            localStorage.setItem('raisya_production_db_v2', JSON.stringify(databasePembukuan));
         }
 
-        // RENDER PEMBUKUAN STANDAR (Keluarga & Bisnis Lain)
+        // RENDER STANDAR UNIT
         function renderPembukuanStandar(dataTransaksi) {
             let totalPemasukan = 0;
             let totalPengeluaran = 0;
@@ -639,74 +865,208 @@
             }
         }
 
-        // RENDER SISTEM MANAJEMEN BILLING BISNIS INTERNET
-        function renderPembukuanInternet(dataTransaksi) {
-            let runningTotalTagihan = 0;
-            let runningTotalPembayaran = 0;
+        // RENDER PENUH MULTI-TAB BISNIS INTERNET (MASTER, MASUK, KELUAR)
+        function renderPembukuanInternetSistem() {
+            const dataInternet = databasePembukuan.internet;
+            const listMasuk = dataInternet.masuk || [];
+            const listKeluar = dataInternet.keluar || [];
 
-            const tBelum = document.getElementById('table-internet-belum-bayar');
-            const tSudah = document.getElementById('table-internet-sudah-bayar');
-            tBelum.innerHTML = '';
-            tSudah.innerHTML = '';
+            let totalNominalTagihanNet = 0;
+            let totalAnggaranMasukNet = 0; 
+            let totalPiutangPelangganNet = 0;
 
-            // Urutkan berdasarkan tanggal terbaru
-            dataTransaksi.sort((a, b) => new Date(b.tanggalTagihan) - new Date(a.tanggalTagihan));
+            const tBelumMasuk = document.getElementById('table-internet-belum-bayar');
+            const tSudahMasuk = document.getElementById('table-internet-sudah-bayar');
+            const miniTableMasuk = document.getElementById('mini-table-internet-masuk');
+            
+            tBelumMasuk.innerHTML = '';
+            tSudahMasuk.innerHTML = '';
+            miniTableMasuk.innerHTML = '';
 
-            dataTransaksi.forEach((t, originalIndex) => {
+            // Pengurutan berdasarkan tanggal terbaru
+            let listMasukSorted = listMasuk.map((item, originalIndex) => ({...item, originalIndex}))
+                                           .sort((a, b) => new Date(b.tanggalTagihan) - new Date(a.tanggalTagihan));
+
+            listMasukSorted.forEach((t) => {
                 const vTagihan = parseFloat(t.tagihan) || 0;
                 const vBayar = parseFloat(t.pembayaran) || 0;
                 const vSisa = vTagihan - vBayar;
+                const indexAsli = t.originalIndex;
 
-                runningTotalTagihan += vTagihan;
-                runningTotalPembayaran += vBayar;
+                totalNominalTagihanNet += vTagihan;
+                totalAnggaranMasukNet += vBayar;
+                if (vSisa > 0) totalPiutangPelangganNet += vSisa;
 
                 const row = document.createElement('tr');
                 row.className = "hover:bg-gray-50";
 
                 if (vSisa > 0) {
-                    // Masuk Kelompok Belum Lunas / Kurang Bayar
                     row.innerHTML = `
-                        <td class="p-2.5 whitespace-nowrap text-gray-500">${t.tanggalTagihan}</td>
+                        <td class="p-2.5 text-gray-500">${t.tanggalTagihan}</td>
                         <td class="p-2.5 font-bold text-gray-800">${t.namaPelanggan}</td>
-                        <td class="p-2.5 text-right font-semibold text-gray-600">${formatRupiah(vTagihan)}</td>
-                        <td class="p-2.5 text-right font-semibold text-green-600">${formatRupiah(vBayar)}</td>
+                        <td class="p-2.5 text-right text-gray-600">${formatRupiah(vTagihan)}</td>
+                        <td class="p-2.5 text-right text-green-600 font-medium">${formatRupiah(vBayar)}</td>
                         <td class="p-2.5 text-right font-bold text-red-600 bg-red-50">${formatRupiah(vSisa)}</td>
-                        <td class="p-2.5 text-gray-600 font-medium">
-                            <span class="bg-gray-200 px-1 py-0.5 rounded text-2xs">${t.petugas}</span>
-                            <p class="text-3xs italic text-gray-400 mt-0.5">${t.keteranganBebas || ''}</p>
-                        </td>
-                        <td class="p-2.5 text-center">
-                            <button onclick="hapusTransaksi('${originalIndex}')" class="text-red-500 font-bold hover:underline cursor-pointer">Hapus</button>
+                        <td class="p-2.5"><span class="bg-gray-200 px-1 py-0.5 rounded text-3xs">${t.petugas}</span> <span class="text-3xs italic text-gray-400 block">${t.keteranganBebas||''}</span></td>
+                        <td class="p-2.5 text-center whitespace-nowrap">
+                            <button onclick="mulaiEditPelanggan(${indexAsli})" class="text-blue-600 font-bold mr-3 cursor-pointer">Edit</button>
+                            <button onclick="hapusTransaksiInternet('masuk', ${indexAsli})" class="text-red-500 font-bold cursor-pointer">Hapus</button>
                         </td>
                     `;
-                    tBelum.appendChild(row);
+                    tBelumMasuk.appendChild(row);
                 } else {
-                    // Masuk Kelompok Lunas Sudah Bayar
                     row.innerHTML = `
-                        <td class="p-2.5 whitespace-nowrap text-gray-500">${t.tanggalTagihan}</td>
+                        <td class="p-2.5 text-gray-500">${t.tanggalTagihan}</td>
                         <td class="p-2.5 font-bold text-gray-800">${t.namaPelanggan}</td>
-                        <td class="p-2.5 text-right text-gray-500">${formatRupiah(vTagihan)}</td>
+                        <td class="p-2.5 text-right text-gray-400">${formatRupiah(vTagihan)}</td>
                         <td class="p-2.5 text-right font-bold text-green-600">${formatRupiah(vBayar)}</td>
-                        <td class="p-2.5 text-gray-600 font-medium"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded text-2xs font-bold">✔️ ${t.petugas}</span></td>
+                        <td class="p-2.5"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-bold text-3xs">✔️ ${t.petugas}</span></td>
                         <td class="p-2.5 text-gray-400 italic">${t.keteranganBebas || '-'}</td>
-                        <td class="p-2.5 text-center">
-                            <button onclick="hapusTransaksi('${originalIndex}')" class="text-red-500 font-bold hover:underline cursor-pointer">Hapus</button>
+                        <td class="p-2.5 text-center whitespace-nowrap">
+                            <button onclick="mulaiEditPelanggan(${indexAsli})" class="text-blue-600 font-bold mr-3 cursor-pointer">Edit</button>
+                            <button onclick="hapusTransaksiInternet('masuk', ${indexAsli})" class="text-red-500 font-bold cursor-pointer">Hapus</button>
                         </td>
                     `;
-                    tSudah.appendChild(row);
+                    tSudahMasuk.appendChild(row);
                 }
+
+                const miniRow = document.createElement('tr');
+                miniRow.innerHTML = `
+                    <td class="p-2 font-semibold text-gray-700">${t.namaPelanggan}</td>
+                    <td class="p-2 text-right text-gray-400">${formatRupiah(vTagihan)}</td>
+                    <td class="p-2 text-right font-bold text-emerald-600">${formatRupiah(vBayar)}</td>
+                    <td class="p-2"><span class="text-gray-500 text-3xs bg-gray-100 px-1 rounded">${t.petugas}</span></td>
+                `;
+                miniTableMasuk.appendChild(miniRow);
             });
 
-            // Isikan Angka Akumulasi Akhir Ke Panel Atas Dashboard Internet
-            let sisaPiutangSeluruhnya = runningTotalTagihan - runningTotalPembayaran;
 
-            document.getElementById('total-pemasukan').innerText = formatRupiah(runningTotalTagihan);
-            document.getElementById('total-pengeluaran').innerText = formatRupiah(runningTotalPembayaran);
-            document.getElementById('saldo-akhir').innerText = formatRupiah(sisaPiutangSeluruhnya);
-            document.getElementById('card-tambahan-value').innerText = `${dataTransaksi.length} Orang`;
+            // 2. Hitung Akumulasi Arus Keluar Operasional
+            let totalNotaKeluarNet = 0;
+            let totalAnggaranKeluarNet = 0; 
+            let totalUtangOperasionalNet = 0;
+
+            const tBelumKeluar = document.getElementById('table-out-belum-bayar');
+            const tSudahKeluar = document.getElementById('table-out-sudah-bayar');
+            const miniTableKeluar = document.getElementById('mini-table-internet-keluar');
+
+            tBelumKeluar.innerHTML = '';
+            tSudahKeluar.innerHTML = '';
+            miniTableKeluar.innerHTML = '';
+
+            let listKeluarSorted = listKeluar.map((item, originalIndex) => ({...item, originalIndex}))
+                                             .sort((a, b) => new Date(b.tanggalPengeluaran) - new Date(a.tanggalPengeluaran));
+
+            listKeluarSorted.forEach((t) => {
+                const vBiaya = parseFloat(t.tagihanBiaya) || 0;
+                const indexAsli = t.originalIndex;
+                totalNotaKeluarNet += vBiaya;
+
+                const row = document.createElement('tr');
+                row.className = "hover:bg-gray-50";
+
+                if (t.status === 'Belum Dibayar') {
+                    totalUtangOperasionalNet += vBiaya;
+                    row.innerHTML = `
+                        <td class="p-2.5 text-gray-500">${t.tanggalPengeluaran}</td>
+                        <td class="p-2.5 font-bold text-amber-800 bg-amber-50">${t.keterangan}</td>
+                        <td class="p-2.5 text-right font-bold text-gray-700">${formatRupiah(vBiaya)}</td>
+                        <td class="p-2.5"><span class="bg-gray-200 px-1 py-0.5 rounded text-3xs">${t.metode}</span></td>
+                        <td class="p-2.5 text-center whitespace-nowrap">
+                            <button onclick="lunasiUtangInternet(${indexAsli})" class="text-blue-600 font-bold mr-2 cursor-pointer">Set Lunas</button>
+                            <button onclick="hapusTransaksiInternet('keluar', ${indexAsli})" class="text-red-500 cursor-pointer">Hapus</button>
+                        </td>
+                    `;
+                    tBelumKeluar.appendChild(row);
+                } else {
+                    totalAnggaranKeluarNet += vBiaya;
+                    row.innerHTML = `
+                        <td class="p-2.5 text-gray-500">${t.tanggalPengeluaran}</td>
+                        <td class="p-2.5 font-semibold text-gray-800">${t.keterangan}</td>
+                        <td class="p-2.5 text-right font-bold text-red-600">${formatRupiah(vBiaya)}</td>
+                        <td class="p-2.5 text-gray-500"><span class="bg-red-100 text-red-800 px-1 py-0.5 rounded font-bold text-3xs">💸 ${t.metode}</span></td>
+                        <td class="p-2.5 text-center"><button onclick="hapusTransaksiInternet('keluar', ${indexAsli})" class="text-red-500 font-bold cursor-pointer">Hapus</button></td>
+                    `;
+                    tSudahKeluar.appendChild(row);
+                }
+
+                const miniRow = document.createElement('tr');
+                miniRow.innerHTML = `
+                    <td class="p-2 font-semibold text-gray-700">${t.keterangan}</td>
+                    <td class="p-2 text-right font-bold text-red-600">${formatRupiah(vBiaya)}</td>
+                    <td class="p-2"><span class="text-3xs px-1 rounded ${t.status==='Belum Dibayar'?'bg-amber-100 text-amber-800':'bg-red-100 text-red-800'}">${t.status}</span></td>
+                    <td class="p-2 text-gray-400 text-3xs">${t.metode}</td>
+                `;
+                miniTableKeluar.appendChild(miniRow);
+            });
+
+            if (subTabInternetAktif === 'masuk') {
+                document.getElementById('total-pemasukan').innerText = formatRupiah(totalNominalTagihanNet);
+                document.getElementById('total-pengeluaran').innerText = formatRupiah(totalAnggaranMasukNet);
+                document.getElementById('saldo-akhir').innerText = formatRupiah(totalPiutangPelangganNet);
+                document.getElementById('card-tambahan-value').innerText = `${listMasuk.length} Orang`;
+            } 
+            else if (subTabInternetAktif === 'keluar') {
+                document.getElementById('total-pemasukan').innerText = formatRupiah(totalNotaKeluarNet);
+                document.getElementById('total-pengeluaran').innerText = formatRupiah(totalAnggaranKeluarNet);
+                document.getElementById('saldo-akhir').innerText = formatRupiah(totalUtangOperasionalNet);
+                document.getElementById('card-tambahan-value').innerText = `${listKeluar.length} Nota`;
+            }
+
+            let sisaKeuntunganBersihMaster = totalAnggaranMasukNet - totalAnggaranKeluarNet;
+            document.getElementById('master-net-masuk').innerText = formatRupiah(totalAnggaranMasukNet);
+            document.getElementById('master-net-keluar').innerText = formatRupiah(totalAnggaranKeluarNet);
+            
+            const txtSisaMaster = document.getElementById('master-net-sisa');
+            txtSisaMaster.innerText = formatRupiah(sisaKeuntunganBersihMaster);
+            if(sisaKeuntunganBersihMaster >= 0) {
+                txtSisaMaster.className = "text-xl font-black text-blue-800 block mt-1";
+            } else {
+                txtSisaMaster.className = "text-xl font-black text-red-600 block mt-1";
+            }
         }
 
-        // SIMPAN DATA FORM STANDAR
+        // FUNGSI EDIT DATA PELANGGAN INTERNET
+        window.mulaiEditPelanggan = function(index) {
+            const dataItem = databasePembukuan.internet.masuk[index];
+            if (!dataItem) return;
+
+            // Masukkan data lama ke form
+            document.getElementById('net-edit-index').value = index;
+            document.getElementById('net-pelanggan').value = dataItem.namaPelanggan;
+            document.getElementById('net-tagihan').value = dataItem.tagihan;
+            document.getElementById('net-tanggal').value = dataItem.tanggalTagihan;
+            document.getElementById('net-pembayaran').value = dataItem.pembayaran;
+            document.getElementById('net-petugas').value = dataItem.petugas;
+            document.getElementById('net-keterangan').value = dataItem.keteranganBebas || '';
+
+            // Ganti UI Form menjadi mode edit
+            document.getElementById('badge-mode-form-masuk').className = "p-2 bg-amber-100 border border-amber-300 text-amber-950 rounded font-bold text-2xs text-center uppercase";
+            document.getElementById('badge-mode-form-masuk').innerText = "📝 MODE EDIT DATA PELANGGAN";
+            document.getElementById('btn-submit-masuk').innerText = "Simpan Perubahan";
+            document.getElementById('btn-submit-masuk').className = "w-2/3 bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 rounded-lg text-sm cursor-pointer transition-all";
+            document.getElementById('btn-cancel-edit-masuk').classList.remove('hidden');
+
+            // Scroll otomatis ke atas agar form terlihat
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.resetFormMasukInternet = function() {
+            document.getElementById('net-edit-index').value = "-1";
+            document.getElementById('net-pelanggan').value = '';
+            document.getElementById('net-tagihan').value = '';
+            document.getElementById('net-tanggal').value = new Date().toISOString().split('T')[0];
+            document.getElementById('net-pembayaran').value = '0';
+            document.getElementById('net-keterangan').value = '';
+            
+            document.getElementById('badge-mode-form-masuk').className = "p-2 bg-indigo-50 border border-indigo-200 text-indigo-900 rounded font-bold text-2xs text-center uppercase";
+            document.getElementById('badge-mode-form-masuk').innerText = "💰 FORM ANGGARAN MASUK PELANGGAN";
+            document.getElementById('btn-submit-masuk').innerText = "Simpan Anggaran Masuk";
+            document.getElementById('btn-submit-masuk').className = "w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg text-sm cursor-pointer transition-all";
+            document.getElementById('btn-cancel-edit-masuk').classList.add('hidden');
+        }
+
+        // SIMPAN DATA FORM STANDAR UNIT LAIN
         formStandar.addEventListener('submit', function(e) {
             e.preventDefault();
             const dataBaru = {
@@ -722,10 +1082,11 @@
             document.getElementById('jumlah').value = '';
         });
 
-        // SIMPAN DATA FORM KHUSUS INTERNET
-        formInternet.addEventListener('submit', function(e) {
+        // SIMPAN ATAU EDIT ANGGARAN MASUK INTERNET
+        formInternetMasuk.addEventListener('submit', function(e) {
             e.preventDefault();
-            
+            const editIndex = parseInt(document.getElementById('net-edit-index').value);
+
             const paketTagihanInternet = {
                 namaPelanggan: document.getElementById('net-pelanggan').value,
                 tagihan: parseFloat(document.getElementById('net-tagihan').value) || 0,
@@ -735,15 +1096,54 @@
                 keteranganBebas: document.getElementById('net-keterangan').value
             };
 
-            databasePembukuan['internet'].push(paketTagihanInternet);
+            if (editIndex > -1) {
+                // Jalankan Mode Simpan Perubahan (Edit)
+                databasePembukuan.internet.masuk[editIndex] = paketTagihanInternet;
+                alert("Data pelanggan berhasil diperbarui!");
+            } else {
+                // Jalankan Mode Input Baru
+                databasePembukuan.internet.masuk.push(paketTagihanInternet);
+            }
+
+            resetFormMasukInternet();
+            updateUI();
+        });
+
+        // SIMPAN INTERNET: ANGGARAN KELUAR
+        formInternetKeluar.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const paketKeluarInternet = {
+                metode: document.getElementById('out-metode').value,
+                tagihanBiaya: parseFloat(document.getElementById('out-tagihan').value) || 0,
+                status: document.getElementById('out-status').value,
+                keterangan: document.getElementById('out-keterangan').value,
+                tanggalPengeluaran: document.getElementById('out-tanggal').value
+            };
+            databasePembukuan.internet.keluar.push(paketKeluarInternet);
             updateUI();
 
-            // Reset Form Isian Internet
-            document.getElementById('net-pelanggan').value = '';
-            document.getElementById('net-tagihan').value = '';
-            document.getElementById('net-pembayaran').value = '0';
-            document.getElementById('net-keterangan').value = '';
+            document.getElementById('out-tagihan').value = '';
+            document.getElementById('out-keterangan').value = '';
         });
+
+        window.lunasiUtangInternet = function(index) {
+            if (confirm("Ubah status nota pengeluaran ini menjadi Sudah Dibayar (Lunas)?")) {
+                databasePembukuan.internet.keluar[index].status = 'Sudah Dibayar';
+                updateUI();
+            }
+        }
+
+        window.hapusTransaksiInternet = function(subJenis, index) {
+            if (confirm("Hapus baris data riwayat internet ini secara permanen?")) {
+                databasePembukuan.internet[subJenis].splice(index, 1);
+                // Jika sedang mengedit item yang dihapus, batalkan mode edit
+                const editIndex = parseInt(document.getElementById('net-edit-index').value);
+                if (subJenis === 'masuk' && editIndex === index) {
+                    resetFormMasukInternet();
+                }
+                updateUI();
+            }
+        }
 
         window.hapusTransaksi = function(index) {
             if(confirm("Hapus catatan data baris ini?")) {
@@ -754,7 +1154,12 @@
 
         window.hapusSemuaDataUnit = function() {
             if(confirm(`Hapus seluruh riwayat data pada komponen ${getNamaUnitAktif()}?`)) {
-                databasePembukuan[unitAktif] = [];
+                if (unitAktif === 'internet') {
+                    databasePembukuan.internet = { masuk: [], keluar: [] };
+                    resetFormMasukInternet();
+                } else {
+                    databasePembukuan[unitAktif] = [];
+                }
                 updateUI();
             }
         }
@@ -762,7 +1167,7 @@
         function updateChart(val1, val2, isKeluarga) {
             const ctx = document.getElementById('financialChart').getContext('2d');
             if (myChart) myChart.destroy();
-            if (unitAktif === 'internet') return; // Internet tidak butuh donat chart biasa
+            if (unitAktif === 'internet') return; 
             
             const label1 = isKeluarga ? 'Sisa Anggaran' : 'Total Masuk';
             const label2 = isKeluarga ? 'Anggaran Terpakai' : 'Total Keluar';
