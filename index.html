@@ -278,7 +278,7 @@
         }
 
         function kembaliKeMenuUtamaDariLogin() {
-            menuTarget = null;
+            // PERBAIKAN: Jangan reset menuTarget menjadi null di sini agar sesi seleksi tetap terjaga
             document.getElementById('login-menu-section').classList.add('hidden');
             document.getElementById('pilih-menu-section').classList.remove('hidden');
         }
@@ -299,15 +299,19 @@
 
         // --- PROSES LAYER 4: KELOLA ANGGARAN ---
         function kembaliKeMenuUtama() {
+            // PERBAIKAN: Hanya menyembunyikan halaman rincian transaksi dan kembali ke daftar 5 menu utama
             document.getElementById('transaksi-section').classList.add('hidden');
             document.getElementById('pilih-menu-section').classList.remove('hidden');
         }
 
         function handleLogout() {
+            // Reset total semua inputan form kembali ke awal
+            menuTarget = null;
             document.getElementById('login-username').value = "";
             document.getElementById('login-password').value = "";
             document.getElementById('forget-contact').value = "";
             
+            // Paksa kembali ke halaman login paling depan
             document.getElementById('auth-section').classList.remove('hidden');
             document.getElementById('pilih-menu-section').classList.add('hidden');
             document.getElementById('login-menu-section').classList.add('hidden');
@@ -324,7 +328,7 @@
                 return;
             }
 
-            // --- FITUR BARU: KONFIRMASI SUAMI / ISTRI KHUSUS BUKU KELUARGA ---
+            // KONFIRMASI SUAMI / ISTRI KHUSUS BUKU KELUARGA
             let penanggungJawab = "";
             if (menuTarget === "Keluarga") {
                 let konfirmasi = prompt("Konfirmasi Penginputan Anggaran Keluarga!\nKetik '1' untuk SUAMI\nKetik '2' untuk ISTRI");
@@ -337,17 +341,16 @@
                     alert("Transaksi Dibatalkan! Anda harus memilih '1' atau '2' sebagai konfirmasi identitas.");
                     return; 
                 }
-                desc = desc + penanggungJawab; // Gabungkan info ke keterangan agar tercatat permanen
+                desc = desc + penanggungJawab;
             }
 
-            // --- FITUR BARU: GENERATE TANGGAL DAN WAKTU SEKARANG ---
+            // GENERATE TANGGAL DAN WAKTU SEKARANG
             const hariIni = new Date();
             const opsiTanggal = { year: 'numeric', month: '2-digit', day: '2-digit' };
             const tanggalFormat = hariIni.toLocaleDateString('id-ID', opsiTanggal);
             const waktuFormat = hariIni.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
             const tanggalLengkap = `${tanggalFormat} ${waktuFormat}`;
 
-            // Masukkan data baru ke database browser
             database[menuTarget].push({ 
                 date: tanggalLengkap, 
                 type: type, 
@@ -357,7 +360,6 @@
             
             localStorage.setItem('raisya_pembukuan', JSON.stringify(database));
 
-            // Reset Form Input
             document.getElementById('trans-desc').value = "";
             document.getElementById('trans-amount').value = "";
 
@@ -376,7 +378,6 @@
                 if (t.type === 'Masuk') totalMasuk += t.amount;
                 if (t.type === 'Keluar') totalKeluar += t.amount;
 
-                // Pengaman jika ada data usang sebelum fitur tanggal ditambahkan
                 const tanggalTransaksi = t.date ? t.date : "-";
 
                 const row = document.createElement('tr');
