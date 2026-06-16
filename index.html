@@ -2,65 +2,65 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAISYA DECORATION SYSTEM</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>RAISYA DECORATION - Sistem Pembukuan</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f9; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        input, button { padding: 10px; margin: 5px 0; width: 100%; }
+        .btn-action { background-color: #28a745; color: white; border: none; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body>
 
-    <header class="bg-blue-800 text-white p-6 text-center shadow-lg">
-        <h1 class="text-3xl font-bold">RAISYA DECORATION</h1>
-    </header>
-
-    <main class="container mx-auto p-4 mt-6">
-        <div id="login-container" class="max-w-sm mx-auto bg-white p-8 rounded-xl shadow-xl">
-            <h2 class="text-2xl font-bold mb-6 text-center">Login Sistem</h2>
-            <input type="text" id="username" placeholder="Username" class="w-full p-3 mb-4 border rounded-lg">
-            <input type="password" id="password" placeholder="Password" class="w-full p-3 mb-4 border rounded-lg">
-            <button onclick="login()" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold">MASUK</button>
-            <button onclick="lupaPassword()" class="w-full mt-4 text-sm text-blue-500 hover:underline">Lupa Password?</button>
+    <div id="app" class="card">
+        <h1>RAISYA DECORATION</h1>
+        <div id="login-section">
+            <h3>Login Sistem</h3>
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button class="btn-action" onclick="checkLogin()">Masuk</button>
+            <p><small>Lupa Password? Hubungi: dedesugiono.ai@gmail.com / 081220285226</small></p>
         </div>
 
-        <div id="main-menu" class="hidden">
-            <h2 class="text-2xl font-bold mb-6 text-center">PILIH MENU PEMBUKUAN</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <button onclick="bukaModul('KEUANGAN KELUARGA')" class="bg-green-600 text-white p-6 rounded-lg font-bold">1. PEMBUKUAN KELUARGA</button>
-                <button onclick="bukaModul('BISNIS RUMAH HANTU')" class="bg-red-600 text-white p-6 rounded-lg font-bold">2. BISNIS RUMAH HANTU</button>
-                <button onclick="bukaModul('BISNIS PLAYGROUND')" class="bg-yellow-600 text-white p-6 rounded-lg font-bold">3. BISNIS PLAYGROUND</button>
-                <button onclick="bukaModul('RAISYA DECORATION')" class="bg-pink-600 text-white p-6 rounded-lg font-bold">4. RAISYA DECORATION</button>
-                <button onclick="bukaModul('BISNIS INTERNET')" class="bg-purple-600 text-white p-6 rounded-lg font-bold">5. BISNIS INTERNET</button>
-                <button onclick="bukaModul('REKAPITULASI')" class="bg-gray-800 text-white p-6 rounded-lg font-bold">6. REKAPITULASI ALL</button>
-            </div>
-            <button onclick="location.reload()" class="mt-8 w-full bg-red-500 text-white py-2 rounded">Log Out</button>
+        <div id="menu-utama" style="display:none;">
+            <h2>Menu Utama</h2>
+            <ul>
+                <li><button onclick="goTo('keluarga')">1. Pembukuan Keluarga</button></li>
+                <li><button onclick="goTo('rumah-hantu')">2. Bisnis Rumah Hantu</button></li>
+                <li><button onclick="goTo('playground')">3. Bisnis Playground</button></li>
+                <li><button onclick="goTo('decoration')">4. Raisya Decoration</button></li>
+                <li><button onclick="goTo('internet')">5. Bisnis Internet</button></li>
+                <li><button onclick="goTo('rekap')">6. Rekapitulasi All</button></li>
+            </ul>
         </div>
-    </main>
+    </div>
 
     <script>
-        function login() {
-            const user = document.getElementById('username').value;
-            const pass = document.getElementById('password').value;
-            const users = {"Radhika":"002886", "Suami/Istri":"002886", "RumahHantu":"002886", "Playground":"002886", "RaisyaDecoration":"002886", "Internet":"002886"};
+        const credentials = {
+            "Radhika": "002886",
+            "Suami": "002886",
+            "Istri": "002886",
+            "RumahHantu": "002886",
+            "RaisyaDecoration": "002886",
+            "Internet": "002886"
+        };
 
-            if (users[user] && users[user] === pass) {
-                document.getElementById('login-container').classList.add('hidden');
-                document.getElementById('main-menu').classList.remove('hidden');
+        function checkLogin() {
+            let u = document.getElementById('username').value;
+            let p = document.getElementById('password').value;
+            if (credentials[u] === p) {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('menu-utama').style.display = 'block';
             } else {
-                alert("Username atau Password Salah!");
+                alert("Login Gagal!");
             }
         }
 
-        function bukaModul(nama) {
-            alert("Anda sedang mengakses: " + nama + "\n\nCatatan: Fitur Input/Edit/Hapus akan segera diaktifkan pada update berikutnya.");
-        }
-
-        function lupaPassword() {
-            const input = prompt("Konfirmasi Email/HP Anda:");
-            if (input === "dedesugiono.ai@gmail.com" || input === "081220285226") {
-                const newPass = prompt("Verifikasi Sukses. Masukkan password baru:");
-                if (newPass) alert("Password berhasil diubah!");
-            } else {
-                alert("Data tidak valid. Silakan hubungi admin.");
-            }
+        function goTo(menu) {
+            alert("Arahkan ke modul: " + menu);
+            // Logika navigasi antar modul di sini
         }
     </script>
 </body>
