@@ -5,19 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RAISYA PRODUCTION</title>
     
-    <!-- Manifest PWA -->
     <link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22Raisya%20Production%22%2C%22short_name%22%3A%22RaisyaProd%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f3f4f6%22%2C%22theme_color%22%3A%22%234f46e5%22%7D">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Raisya Production">
 
-    <!-- Tailwind CSS & Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gray-100 font-sans antialiased pb-12">
 
-    <!-- ================= LAYAR 1: GERBANG LOGIN UTAMA APLIKASI ================= -->
     <div id="gerbang-login-utama" class="fixed inset-0 bg-indigo-900 flex items-center justify-center p-4 z-100">
         <div class="bg-white p-6 rounded-2xl shadow-2xl max-w-sm w-full text-center">
             <h2 class="text-2xl font-bold text-indigo-900 tracking-wider mb-1">RAISYA PRODUCTION</h2>
@@ -43,7 +40,6 @@
     </div>
 
 
-    <!-- ================= LAYAR 2: MENU UTAMA PILIHAN PEMBUKUAN ================= -->
     <div id="layar-menu-utama" class="fixed inset-0 bg-gray-50 flex items-center justify-center p-4 z-50 hidden overflow-y-auto">
         <div class="max-w-md w-full bg-white p-6 rounded-2xl shadow-xl border border-gray-200">
             <div class="text-center mb-6">
@@ -82,7 +78,6 @@
     </div>
 
 
-    <!-- ================= LAYAR 3A: GERBANG LOGIN KHUSUS UNIT BISNIS ================= -->
     <div id="panel-login-bisnis" class="fixed inset-0 bg-gray-900 bg-opacity-90 flex items-center justify-center p-4 z-40 hidden">
         <div class="bg-white p-6 rounded-xl shadow-lg max-w-sm w-full text-center border-t-4 border-indigo-600">
             <h3 id="judul-login-bisnis" class="text-md font-bold text-gray-800 uppercase mb-1">Login Pembukuan Bisnis</h3>
@@ -109,19 +104,16 @@
     </div>
 
 
-    <!-- ================= LAYAR 3B: SUB-LOGIN KELUARGA (PILIH & VERIFIKASI) ================= -->
     <div id="panel-login-keluarga" class="fixed inset-0 bg-gray-900 bg-opacity-90 flex items-center justify-center p-4 z-40 hidden">
         <div class="bg-white p-6 rounded-xl shadow-xl border-t-4 border-amber-500 max-w-sm w-full text-center">
             <h3 class="text-lg font-bold text-gray-800 mb-2">🔐 Catatan Anggaran Keluarga</h3>
             <p class="text-xs text-gray-500 mb-5">Silakan pilih status Anda terlebih dahulu</p>
             
-            <!-- Tahap 1: Pilih Role -->
             <div id="pilih-role-keluarga" class="grid grid-cols-2 gap-4 mb-4">
                 <button onclick="pilihRoleKeluarga('Suami')" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-lg cursor-pointer transition-all">👨 SUAMI</button>
                 <button onclick="pilihRoleKeluarga('Istri')" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 rounded-lg cursor-pointer transition-all">👩 ISTRI</button>
             </div>
 
-            <!-- Tahap 2: Input Form Login Keluarga (Muncul setelah klik role) -->
             <form id="form-verifikasi-keluarga" class="space-y-4 text-left hidden border-t border-gray-100 pt-4">
                 <div class="bg-amber-50 p-2.5 rounded-lg text-center font-bold text-xs text-amber-900 uppercase">
                     🔑 Verifikasi Akun: <span id="label-role-terpilih"></span>
@@ -148,10 +140,8 @@
     </div>
 
 
-    <!-- ================= LAYAR 4: KONTEN KOR INTERFACE PEMBUKUAN AKTIF ================= -->
     <div id="app-content-wrapper" class="hidden">
         
-        <!-- Top Bar / Header -->
         <header class="bg-indigo-600 text-white shadow-md sticky top-0 z-30">
             <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-2">
                 <div>
@@ -174,14 +164,12 @@
             <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2 border-b border-gray-200 pb-4">
                 <h2 id="nama-pembukuan-aktif" class="text-xl font-bold text-gray-800 uppercase tracking-wide text-indigo-700"></h2>
                 
-                <!-- Identitas Penginput -->
                 <div id="user-status-badge" class="text-xs bg-indigo-100 text-indigo-800 font-bold px-3 py-1.5 rounded-full border border-indigo-200">
                     👤 Penginput Aktif: <span id="nama-user-aktif" class="underline"></span> 
-                    <button id="btn-ganti-user-sub" onclick="gantiSubUser()" class="text-red-500 hover:text-red-700 ml-2 font-bold cursor-pointer">Ganti</button>
+                    <button id="btn-ganti-user-sub" onclick="gantiSubUser()" class="text-red-500 hover:text-red-700 ml-2 font-bold cursor-pointer">Ganti/Kunci</button>
                 </div>
             </div>
 
-            <!-- KHUSUS KELUARGA: Fitur Input Anggaran Utama -->
             <div id="panel-anggaran-keluarga" class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl shadow-sm mb-6 hidden">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
@@ -196,31 +184,33 @@
                 </div>
             </div>
 
-            <!-- Dashboard Ringkasan -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
-                    <p id="label-card-1" class="text-xs font-semibold text-gray-400 uppercase">Total Pemasukan</p>
-                    <p id="total-pemasukan" class="text-xl font-bold text-green-600 mt-1">Rp 0</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+                    <p id="label-card-1" class="text-2xs font-semibold text-gray-400 uppercase tracking-wider">Total Pemasukan</p>
+                    <p id="total-pemasukan" class="text-lg font-bold text-green-600 mt-1">Rp 0</p>
                 </div>
-                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
-                    <p id="label-card-2" class="text-xs font-semibold text-gray-400 uppercase">Total Pengeluaran</p>
-                    <p id="total-pengeluaran" class="text-xl font-bold text-red-600 mt-1">Rp 0</p>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+                    <p id="label-card-2" class="text-2xs font-semibold text-gray-400 uppercase tracking-wider">Total Pengeluaran</p>
+                    <p id="total-pengeluaran" class="text-lg font-bold text-red-600 mt-1">Rp 0</p>
                 </div>
-                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
-                    <p id="label-card-3" class="text-xs font-semibold text-gray-400 uppercase">Saldo / Keuntungan</p>
-                    <p id="saldo-akhir" class="text-xl font-bold text-blue-600 mt-1">Rp 0</p>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+                    <p id="label-card-3" class="text-2xs font-semibold text-gray-400 uppercase tracking-wider">Saldo / Keuntungan</p>
+                    <p id="saldo-akhir" class="text-lg font-bold text-blue-600 mt-1">Rp 0</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+                    <p id="label-card-4" class="text-2xs font-semibold text-gray-400 uppercase tracking-wider">Sisa Tagihan / Piutang</p>
+                    <p id="card-tambahan-value" class="text-lg font-bold text-amber-600 mt-1">Rp 0</p>
                 </div>
             </div>
 
-            <!-- Konten Form Input & Tabel Riwayat -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Form Input -->
                 <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 h-fit">
                     <h3 id="judul-form-catat" class="text-lg font-bold text-gray-800 mb-4">Catat Transaksi</h3>
+                    
                     <form id="transaction-form" class="space-y-4">
                         <div>
                             <label id="label-deskripsi" class="block text-xs font-semibold text-gray-600">Keterangan / Nama Item</label>
-                            <input type="text" id="deskripsi" required placeholder="Contoh: Pendapatan / Pembelian" class="mt-1 block w-full rounded-lg border border-gray-300 p-2.5 bg-gray-50 text-sm">
+                            <input type="text" id="deskripsi" placeholder="Contoh: Pendapatan / Pembelian" class="mt-1 block w-full rounded-lg border border-gray-300 p-2.5 bg-gray-50 text-sm">
                         </div>
                         <div id="wrapper-jenis-transaksi">
                             <label class="block text-xs font-semibold text-gray-600">Jenis Transaksi</label>
@@ -231,31 +221,65 @@
                         </div>
                         <div>
                             <label id="label-jumlah" class="block text-xs font-semibold text-gray-600">Jumlah Uang (Rp)</label>
-                            <input type="number" id="jumlah" required placeholder="0" class="mt-1 block w-full rounded-lg border border-gray-300 p-2.5 bg-gray-50 text-sm">
+                            <input type="number" id="jumlah" placeholder="0" class="mt-1 block w-full rounded-lg border border-gray-300 p-2.5 bg-gray-50 text-sm">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-gray-600">Tanggal</label>
-                            <input type="date" id="tanggal" required class="mt-1 block w-full rounded-lg border border-gray-300 p-2.5 bg-gray-50 text-sm">
+                            <input type="date" id="tanggal" class="mt-1 block w-full rounded-lg border border-gray-300 p-2.5 bg-gray-50 text-sm">
                         </div>
                         <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-lg text-sm cursor-pointer transition-all">
                             Simpan Data
                         </button>
                     </form>
+
+                    <form id="internet-billing-form" class="space-y-3 hidden">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600">1. Nama Pelanggan</label>
+                            <input type="text" id="net-pelanggan" required placeholder="Nama lengkap pelanggan" class="mt-1 block w-full rounded-lg border border-gray-300 p-2 bg-gray-50 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600">2. Input Tagihan Internet (Rp)</label>
+                            <input type="number" id="net-tagihan" required placeholder="0" class="mt-1 block w-full rounded-lg border border-gray-300 p-2 bg-gray-50 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600">3. Input Tanggal Tagihan</label>
+                            <input type="date" id="net-tanggal" required class="mt-1 block w-full rounded-lg border border-gray-300 p-2 bg-gray-50 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600">4. Input Pembayaran Internet Pelanggan (Rp)</label>
+                            <input type="number" id="net-pembayaran" required placeholder="0" class="mt-1 block w-full rounded-lg border border-gray-300 p-2 bg-gray-50 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600">5. Keterangan Pembayaran</label>
+                            <select id="net-petugas" class="mt-1 block w-full rounded-lg border border-gray-300 p-2 bg-gray-50 text-sm">
+                                <option value="Transfer">Transfer</option>
+                                <option value="Petugas 1 Ngaliman">Petugas 1 Ngaliman</option>
+                                <option value="Petugas 2 Bapak">Petugas 2 Bapak</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600">6. Keterangan Tambahan</label>
+                            <textarea id="net-keterangan" placeholder="Catatan opsional..." class="mt-1 block w-full rounded-lg border border-gray-300 p-2 bg-gray-50 text-sm h-16"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg text-sm cursor-pointer transition-all">
+                            Simpan Tagihan Pelanggan
+                        </button>
+                    </form>
+
                 </div>
 
-                <!-- Grafik & Tabel -->
                 <div class="lg:col-span-2 space-y-6">
-                    <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
+                    <div id="wrapper-chart-box" class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
                         <h3 class="text-lg font-bold text-gray-800 mb-2">Grafik Analisis</h3>
                         <div class="h-48">
                             <canvas id="financialChart"></canvas>
                         </div>
                     </div>
 
-                    <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
+                    <div id="box-riwayat-standar" class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
                         <div class="flex justify-between items-center mb-3">
                             <h3 class="text-lg font-bold text-gray-800">Riwayat Catatan</h3>
-                            <button id="clear-btn" class="text-xs text-red-500 hover:text-red-700 font-semibold cursor-pointer">Hapus Semua Data Unit Ini</button>
+                            <button onclick="hapusSemuaDataUnit()" class="text-xs text-red-500 hover:text-red-700 font-semibold cursor-pointer">Hapus Semua Data Unit Ini</button>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="min-w-full text-sm text-left">
@@ -268,24 +292,68 @@
                                         <th class="p-3 text-center">Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody id="transaction-table-body" class="divide-y divide-gray-100">
-                                    <!-- Diisi via JS -->
-                                </tbody>
+                                <tbody id="transaction-table-body" class="divide-y divide-gray-100"></tbody>
                             </table>
                         </div>
                     </div>
+
+                    <div id="box-riwayat-internet" class="space-y-6 hidden">
+                        
+                        <div class="bg-white p-5 rounded-xl shadow-sm border border-red-200 shadow-red-50">
+                            <div class="flex justify-between items-center mb-3 border-b border-gray-100 pb-2">
+                                <h3 class="text-sm font-bold text-red-700 uppercase tracking-wide">⚠️ DATA PELANGGAN BELUM BAYAR / KURANG</h3>
+                                <button onclick="hapusSemuaDataUnit()" class="text-2xs text-red-400 hover:text-red-600 underline">Kosongkan Internet</button>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full text-xs text-left">
+                                    <thead class="bg-red-50 text-red-700 uppercase font-bold">
+                                        <tr>
+                                            <th class="p-2.5">Tanggal</th>
+                                            <th class="p-2.5">Nama Pelanggan</th>
+                                            <th class="p-2.5 text-right">Tagihan</th>
+                                            <th class="p-2.5 text-right">Dibayar</th>
+                                            <th class="p-2.5 text-right text-red-600">Sisa Piutang</th>
+                                            <th class="p-2.5">Petugas/Keterangan</th>
+                                            <th class="p-2.5 text-center">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table-internet-belum-bayar" class="divide-y divide-gray-100"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-xl shadow-sm border border-green-200 shadow-green-50">
+                            <h3 class="text-sm font-bold text-green-700 uppercase tracking-wide mb-3 border-b border-gray-100 pb-2">✅ DATA PELANGGAN SUDAH BAYAR (LUNAS)</h3>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full text-xs text-left">
+                                    <thead class="bg-green-50 text-green-700 uppercase font-bold">
+                                        <tr>
+                                            <th class="p-2.5">Tanggal</th>
+                                            <th class="p-2.5">Nama Pelanggan</th>
+                                            <th class="p-2.5 text-right">Tagihan</th>
+                                            <th class="p-2.5 text-right">Dibayar</th>
+                                            <th class="p-2.5">Penerima Via</th>
+                                            <th class="p-2.5">Ket</th>
+                                            <th class="p-2.5 text-center">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table-internet-sudah-bayar" class="divide-y divide-gray-100"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
 
         </div>
     </div>
 
-    <!-- LOGIKA CORE APLIKASI -->
     <script>
         let unitAktif = 'keluarga';
-        let roleKeluargaSementara = null; // Menyimpan status klik antara Suami / Istri sebelum login sukses
+        let roleKeluargaSementara = null;
 
-        // DATABASE MAP USERNAME DAN PASSWORD BISNIS
         const akunBisnisMap = {
             internet: { user: "Internet", pass: "002886" },
             rumah_hantu: { user: "RumahHantu", pass: "002886" },
@@ -301,37 +369,31 @@
         let currentUserKeluarga = localStorage.getItem('current_user_keluarga') || null;
 
         let myChart;
-        const form = document.getElementById('transaction-form');
-        const tanggalInput = document.getElementById('tanggal');
-        const inputAnggaran = document.getElementById('input-total-anggaran');
-        const btnSaveAnggaran = document.getElementById('btn-save-anggaran');
+        const formStandar = document.getElementById('transaction-form');
+        const formInternet = document.getElementById('internet-billing-form');
         
-        tanggalInput.value = new Date().toISOString().split('T')[0];
-        inputAnggaran.value = totalAnggaranKeluarga;
+        document.getElementById('tanggal').value = new Date().toISOString().split('T')[0];
+        document.getElementById('net-tanggal').value = new Date().toISOString().split('T')[0];
+        document.getElementById('input-total-anggaran').value = totalAnggaranKeluarga;
 
         // FORM LOGIN UTAMA
-        const formLoginUtama = document.getElementById('form-login-utama');
-        formLoginUtama.addEventListener('submit', function(e) {
+        document.getElementById('form-login-utama').addEventListener('submit', function(e) {
             e.preventDefault();
             const userIn = document.getElementById('login-username').value;
             const passIn = document.getElementById('login-password').value;
-            const errorMsg = document.getElementById('error-login-pesan');
-
             if (userIn === "Radhika" && passIn === "002886") {
                 sessionStorage.setItem('login_utama_sukses', 'true');
                 tampilkanLayarSesuaiState();
             } else {
-                errorMsg.classList.remove('hidden');
+                document.getElementById('error-login-pesan').classList.remove('hidden');
             }
         });
 
         // FORM LOGIN SUB-BISNIS
-        const formLoginBisnis = document.getElementById('form-login-bisnis');
-        formLoginBisnis.addEventListener('submit', function(e) {
+        document.getElementById('form-login-bisnis').addEventListener('submit', function(e) {
             e.preventDefault();
             const userIn = document.getElementById('bisnis-username').value;
             const passIn = document.getElementById('bisnis-password').value;
-            const errorMsg = document.getElementById('error-bisnis-pesan');
             const aturanAkun = akunBisnisMap[unitAktif];
 
             if (userIn === aturanAkun.user && passIn === aturanAkun.pass) {
@@ -339,28 +401,24 @@
                 document.getElementById('app-content-wrapper').classList.remove('hidden');
                 updateUI();
             } else {
-                errorMsg.classList.remove('hidden');
+                document.getElementById('error-bisnis-pesan').classList.remove('hidden');
             }
         });
 
-        // FORM LOGIN SUB-KELUARGA (SUAMI / ISTRI)
-        const formVerifikasiKeluarga = document.getElementById('form-verifikasi-keluarga');
-        formVerifikasiKeluarga.addEventListener('submit', function(e) {
+        // FORM LOGIN SUB-KELUARGA
+        document.getElementById('form-verifikasi-keluarga').addEventListener('submit', function(e) {
             e.preventDefault();
             const userIn = document.getElementById('keluarga-username-input').value;
             const passIn = document.getElementById('keluarga-password-input').value;
-            const errorMsg = document.getElementById('error-keluarga-pesan');
 
-            // Validasi: Username harus cocok dengan role yang dipilih ('Suami' atau 'Istri') dan pass harus '002886'
             if (userIn === roleKeluargaSementara && passIn === "002886") {
                 currentUserKeluarga = roleKeluargaSementara;
                 localStorage.setItem('current_user_keluarga', roleKeluargaSementara);
-                
                 document.getElementById('panel-login-keluarga').classList.add('hidden');
                 document.getElementById('app-content-wrapper').classList.remove('hidden');
                 updateUI();
             } else {
-                errorMsg.classList.remove('hidden');
+                document.getElementById('error-keluarga-pesan').classList.remove('hidden');
             }
         });
 
@@ -376,7 +434,7 @@
 
             if (unit === 'keluarga') {
                 if (!currentUserKeluarga) {
-                    batalLoginKeluarga(); // Reset form login keluarga ke tampilan awal (pilih tombol)
+                    batalLoginKeluarga();
                     document.getElementById('panel-login-keluarga').classList.remove('hidden');
                 } else {
                     document.getElementById('app-content-wrapper').classList.remove('hidden');
@@ -399,22 +457,16 @@
         }
 
         window.gantiSubUser = function() {
-            if (unitAktif === 'keluarga') {
-                logoutKeluarga();
-            } else {
-                kembaliKeMenuUtama();
-            }
+            if (unitAktif === 'keluarga') logoutKeluarga();
+            else kembaliKeMenuUtama();
         }
 
-        // AKSI LOGIN KELUARGA
         window.pilihRoleKeluarga = function(role) {
             roleKeluargaSementara = role;
             document.getElementById('label-role-terpilih').innerText = role.toUpperCase();
             document.getElementById('keluarga-username-input').value = '';
             document.getElementById('keluarga-password-input').value = '';
             document.getElementById('error-keluarga-pesan').classList.add('hidden');
-            
-            // Sembunyikan tombol, munculkan form input login
             document.getElementById('pilih-role-keluarga').classList.add('hidden');
             document.getElementById('form-verifikasi-keluarga').classList.remove('hidden');
         }
@@ -433,8 +485,8 @@
             document.getElementById('panel-login-keluarga').classList.remove('hidden');
         }
 
-        btnSaveAnggaran.addEventListener('click', function() {
-            totalAnggaranKeluarga = parseFloat(inputAnggaran.value) || 0;
+        document.getElementById('btn-save-anggaran').addEventListener('click', function() {
+            totalAnggaranKeluarga = parseFloat(document.getElementById('input-total-anggaran').value) || 0;
             localStorage.setItem('total_anggaran_keluarga', totalAnggaranKeluarga);
             alert("Anggaran Rumah Tangga berhasil diatur.");
             updateUI();
@@ -444,19 +496,13 @@
 
         function tampilkanLayarSesuaiState() {
             const isLoginUtama = sessionStorage.getItem('login_utama_sukses') === 'true';
-            
             if (!isLoginUtama) {
                 document.getElementById('gerbang-login-utama').classList.remove('hidden');
                 document.getElementById('layar-menu-utama').classList.add('hidden');
                 document.getElementById('app-content-wrapper').classList.add('hidden');
-                document.getElementById('panel-login-keluarga').classList.add('hidden');
-                document.getElementById('panel-login-bisnis').classList.add('hidden');
             } else {
                 document.getElementById('gerbang-login-utama').classList.add('hidden');
                 document.getElementById('layar-menu-utama').classList.remove('hidden');
-                document.getElementById('app-content-wrapper').classList.add('hidden');
-                document.getElementById('panel-login-keluarga').classList.add('hidden');
-                document.getElementById('panel-login-bisnis').classList.add('hidden');
             }
         }
 
@@ -471,52 +517,84 @@
             return namaMap[unitAktif];
         }
 
+        // REFRESH & DRAW INTERFACE DATA
         function updateUI() {
             const namaUnit = getNamaUnitAktif();
             document.getElementById('nama-pembukuan-aktif').innerText = namaUnit;
-
             const dataTransaksi = databasePembukuan[unitAktif] || [];
+
+            // Reset visibilitas komponen penampung kontainer tambahan
+            const card4 = document.getElementById('card-tambahan-value').parentElement;
+            card4.classList.add('hidden');
+
+            if (unitAktif === 'internet') {
+                // Sembunyikan form standar, hidupkan form khusus internet
+                formStandar.classList.add('hidden');
+                formInternet.classList.remove('hidden');
+                document.getElementById('box-riwayat-standar').classList.add('hidden');
+                document.getElementById('box-riwayat-internet').classList.remove('hidden');
+                document.getElementById('wrapper-chart-box').classList.add('hidden'); // Sembunyikan chart lingkaran untuk internet
+
+                document.getElementById('nama-user-aktif').innerText = "Admin Internet";
+
+                // Judul Atas Card Rekap Khusus Internet
+                document.getElementById('label-card-1').innerText = "TOTAL TAGIHAN KELUAR";
+                document.getElementById('label-card-2').innerText = "TAGIHAN MASUK (BAYAR)";
+                document.getElementById('label-card-3').innerText = "SISA TAGIHAN (PIUTANG)";
+                
+                card4.classList.remove('hidden');
+                document.getElementById('label-card-4').innerText = "TOTAL PELANGGAN";
+
+                renderPembukuanInternet(dataTransaksi);
+            } else {
+                // Hidupkan form standar untuk unit lainnya
+                formStandar.classList.remove('hidden');
+                formInternet.classList.add('hidden');
+                document.getElementById('box-riwayat-standar').classList.remove('hidden');
+                document.getElementById('box-riwayat-internet').classList.add('hidden');
+                document.getElementById('wrapper-chart-box').classList.remove('hidden');
+
+                if (unitAktif === 'keluarga') {
+                    document.getElementById('panel-anggaran-keluarga').classList.remove('hidden');
+                    document.getElementById('wrapper-jenis-transaksi').classList.add('hidden');
+                    document.getElementById('nama-user-aktif').innerText = currentUserKeluarga;
+                    
+                    document.getElementById('label-card-1').innerText = "TOTAL ANGGARAN";
+                    document.getElementById('label-card-2').innerText = "ANGGARAN TERPAKAI";
+                    document.getElementById('label-card-3').innerText = "SISA ANGGARAN";
+                    
+                    document.getElementById('judul-form-catat').innerText = `Catat Pengeluaran (${currentUserKeluarga})`;
+                    document.getElementById('th-jenis').classList.add('hidden');
+                    document.getElementById('jenis').value = 'pengeluaran';
+                } else {
+                    document.getElementById('panel-anggaran-keluarga').classList.add('hidden');
+                    document.getElementById('wrapper-jenis-transaksi').classList.remove('hidden');
+                    document.getElementById('nama-user-aktif').innerText = akunBisnisMap[unitAktif].user;
+                    
+                    document.getElementById('label-card-1').innerText = "TOTAL PEMASUKAN";
+                    document.getElementById('label-card-2').innerText = "TOTAL PENGELUARAN";
+                    document.getElementById('label-card-3').innerText = "SALDO / KEUNTUNGAN";
+                    document.getElementById('judul-form-catat').innerText = "Catat Transaksi Bisnis";
+                    document.getElementById('th-jenis').classList.remove('hidden');
+                }
+
+                renderPembukuanStandar(dataTransaksi);
+            }
+
+            localStorage.setItem('raisya_production_db', JSON.stringify(databasePembukuan));
+        }
+
+        // RENDER PEMBUKUAN STANDAR (Keluarga & Bisnis Lain)
+        function renderPembukuanStandar(dataTransaksi) {
             let totalPemasukan = 0;
             let totalPengeluaran = 0;
-
             const tableBody = document.getElementById('transaction-table-body');
             tableBody.innerHTML = '';
 
             dataTransaksi.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
 
-            if (unitAktif === 'keluarga') {
-                document.getElementById('panel-anggaran-keluarga').classList.remove('hidden');
-                document.getElementById('wrapper-jenis-transaksi').classList.add('hidden');
-                document.getElementById('nama-user-aktif').innerText = currentUserKeluarga;
-                document.getElementById('btn-ganti-user-sub').innerText = "Ganti";
-                
-                document.getElementById('label-card-1').innerText = "TOTAL ANGGARAN";
-                document.getElementById('label-card-2').innerText = "ANGGARAN TERPAKAI";
-                document.getElementById('label-card-3').innerText = "SISA ANGGARAN";
-                
-                document.getElementById('judul-form-catat').innerText = `Catat Pengeluaran (${currentUserKeluarga})`;
-                document.getElementById('label-deskripsi').innerText = "Nama Pengeluaran / Keterangan";
-                document.getElementById('label-jumlah').innerText = "Jumlah Pengeluaran (Rp)";
-                document.getElementById('th-jenis').classList.add('hidden');
-                document.getElementById('jenis').value = 'pengeluaran';
-            } else {
-                document.getElementById('panel-anggaran-keluarga').classList.add('hidden');
-                document.getElementById('wrapper-jenis-transaksi').classList.remove('hidden');
-                document.getElementById('nama-user-aktif').innerText = akunBisnisMap[unitAktif].user;
-                document.getElementById('btn-ganti-user-sub').innerText = "Kunci";
-                
-                document.getElementById('label-card-1').innerText = "TOTAL PEMASUKAN";
-                document.getElementById('label-card-2').innerText = "TOTAL PENGELUARAN";
-                document.getElementById('label-card-3').innerText = "SALDO / KEUNTUNGAN";
-                
-                document.getElementById('judul-form-catat').innerText = "Catat Transaksi Bisnis";
-                document.getElementById('label-deskripsi').innerText = "Keterangan / Nama Item";
-                document.getElementById('label-jumlah').innerText = "Jumlah Uang (Rp)";
-                document.getElementById('th-jenis').classList.remove('hidden');
-            }
-
             dataTransaksi.forEach((t, index) => {
-                const jumlahNum = parseFloat(t.jumlah);
+                const jumlahNum = parseFloat(t.jumlah) || 0;
                 if (t.jenis === 'pemasukan') totalPemasukan += jumlahNum;
                 else totalPengeluaran += jumlahNum;
 
@@ -524,8 +602,8 @@
                 row.className = "hover:bg-gray-50";
                 
                 let tdJenis = `<td class="p-3"><span class="px-2 py-0.5 text-2xs font-bold rounded-full ${t.jenis === 'pemasukan' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">${t.jenis.toUpperCase()}</span></td>`;
-                
                 let keteranganTeks = t.deskripsi;
+
                 if (unitAktif === 'keluarga') {
                     tdJenis = '';
                     if (t.oleh) {
@@ -535,10 +613,10 @@
                 }
 
                 row.innerHTML = `
-                    <td class="p-3 whitespace-nowrap text-xs text-gray-500">${t.tanggal}</td>
+                    <td class="p-3 whitespace-nowrap text-xs text-gray-500">${t.tanggal || '-'}</td>
                     <td class="p-3 font-semibold text-gray-800">${keteranganTeks}</td>
                     ${tdJenis}
-                    <td class="p-3 font-bold text-red-600">${formatRupiah(jumlahNum)}</td>
+                    <td class="p-3 font-bold text-gray-700">${formatRupiah(jumlahNum)}</td>
                     <td class="p-3 text-center">
                         <button onclick="hapusTransaksi('${index}')" class="text-red-500 font-bold text-xs cursor-pointer">Hapus</button>
                     </td>
@@ -549,69 +627,145 @@
             if (unitAktif === 'keluarga') {
                 let sisa = totalAnggaranKeluarga - totalPengeluaran;
                 document.getElementById('total-pemasukan').innerText = formatRupiah(totalAnggaranKeluarga);
-                document.getElementById('total-pemasukan').className = "text-xl font-bold text-amber-600 mt-1";
                 document.getElementById('total-pengeluaran').innerText = formatRupiah(totalPengeluaran);
-                
-                const sisaEl = document.getElementById('saldo-akhir');
-                sisaEl.innerText = formatRupiah(sisa);
-                sisaEl.className = sisa < 0 ? "text-xl font-bold text-red-600 mt-1" : "text-xl font-bold text-blue-600 mt-1";
-                
+                document.getElementById('saldo-akhir').innerText = formatRupiah(sisa);
                 updateChart(sisa, totalPengeluaran, true);
             } else {
                 let saldo = totalPemasukan - totalPengeluaran;
                 document.getElementById('total-pemasukan').innerText = formatRupiah(totalPemasukan);
-                document.getElementById('total-pemasukan').className = "text-xl font-bold text-green-600 mt-1";
                 document.getElementById('total-pengeluaran').innerText = formatRupiah(totalPengeluaran);
-                
-                const saldoEl = document.getElementById('saldo-akhir');
-                saldoEl.innerText = formatRupiah(saldo);
-                saldoEl.className = saldo < 0 ? "text-xl font-bold text-red-600 mt-1" : "text-xl font-bold text-blue-600 mt-1";
-                
+                document.getElementById('saldo-akhir').innerText = formatRupiah(saldo);
                 updateChart(totalPemasukan, totalPengeluaran, false);
             }
-
-            localStorage.setItem('raisya_production_db', JSON.stringify(databasePembukuan));
         }
 
-        form.addEventListener('submit', function(e) {
+        // RENDER SISTEM MANAJEMEN BILLING BISNIS INTERNET
+        function renderPembukuanInternet(dataTransaksi) {
+            let runningTotalTagihan = 0;
+            let runningTotalPembayaran = 0;
+
+            const tBelum = document.getElementById('table-internet-belum-bayar');
+            const tSudah = document.getElementById('table-internet-sudah-bayar');
+            tBelum.innerHTML = '';
+            tSudah.innerHTML = '';
+
+            // Urutkan berdasarkan tanggal terbaru
+            dataTransaksi.sort((a, b) => new Date(b.tanggalTagihan) - new Date(a.tanggalTagihan));
+
+            dataTransaksi.forEach((t, originalIndex) => {
+                const vTagihan = parseFloat(t.tagihan) || 0;
+                const vBayar = parseFloat(t.pembayaran) || 0;
+                const vSisa = vTagihan - vBayar;
+
+                runningTotalTagihan += vTagihan;
+                runningTotalPembayaran += vBayar;
+
+                const row = document.createElement('tr');
+                row.className = "hover:bg-gray-50";
+
+                if (vSisa > 0) {
+                    // Masuk Kelompok Belum Lunas / Kurang Bayar
+                    row.innerHTML = `
+                        <td class="p-2.5 whitespace-nowrap text-gray-500">${t.tanggalTagihan}</td>
+                        <td class="p-2.5 font-bold text-gray-800">${t.namaPelanggan}</td>
+                        <td class="p-2.5 text-right font-semibold text-gray-600">${formatRupiah(vTagihan)}</td>
+                        <td class="p-2.5 text-right font-semibold text-green-600">${formatRupiah(vBayar)}</td>
+                        <td class="p-2.5 text-right font-bold text-red-600 bg-red-50">${formatRupiah(vSisa)}</td>
+                        <td class="p-2.5 text-gray-600 font-medium">
+                            <span class="bg-gray-200 px-1 py-0.5 rounded text-2xs">${t.petugas}</span>
+                            <p class="text-3xs italic text-gray-400 mt-0.5">${t.keteranganBebas || ''}</p>
+                        </td>
+                        <td class="p-2.5 text-center">
+                            <button onclick="hapusTransaksi('${originalIndex}')" class="text-red-500 font-bold hover:underline cursor-pointer">Hapus</button>
+                        </td>
+                    `;
+                    tBelum.appendChild(row);
+                } else {
+                    // Masuk Kelompok Lunas Sudah Bayar
+                    row.innerHTML = `
+                        <td class="p-2.5 whitespace-nowrap text-gray-500">${t.tanggalTagihan}</td>
+                        <td class="p-2.5 font-bold text-gray-800">${t.namaPelanggan}</td>
+                        <td class="p-2.5 text-right text-gray-500">${formatRupiah(vTagihan)}</td>
+                        <td class="p-2.5 text-right font-bold text-green-600">${formatRupiah(vBayar)}</td>
+                        <td class="p-2.5 text-gray-600 font-medium"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded text-2xs font-bold">✔️ ${t.petugas}</span></td>
+                        <td class="p-2.5 text-gray-400 italic">${t.keteranganBebas || '-'}</td>
+                        <td class="p-2.5 text-center">
+                            <button onclick="hapusTransaksi('${originalIndex}')" class="text-red-500 font-bold hover:underline cursor-pointer">Hapus</button>
+                        </td>
+                    `;
+                    tSudah.appendChild(row);
+                }
+            });
+
+            // Isikan Angka Akumulasi Akhir Ke Panel Atas Dashboard Internet
+            let sisaPiutangSeluruhnya = runningTotalTagihan - runningTotalPembayaran;
+
+            document.getElementById('total-pemasukan').innerText = formatRupiah(runningTotalTagihan);
+            document.getElementById('total-pengeluaran').innerText = formatRupiah(runningTotalPembayaran);
+            document.getElementById('saldo-akhir').innerText = formatRupiah(sisaPiutangSeluruhnya);
+            document.getElementById('card-tambahan-value').innerText = `${dataTransaksi.length} Orang`;
+        }
+
+        // SIMPAN DATA FORM STANDAR
+        formStandar.addEventListener('submit', function(e) {
             e.preventDefault();
-            
             const dataBaru = {
                 deskripsi: document.getElementById('deskripsi').value,
                 jenis: document.getElementById('jenis').value,
                 jumlah: document.getElementById('jumlah').value,
-                tanggal: tanggalInput.value,
+                tanggal: document.getElementById('tanggal').value,
                 oleh: unitAktif === 'keluarga' ? currentUserKeluarga : null
             };
-
             databasePembukuan[unitAktif].push(dataBaru);
             updateUI();
-
             document.getElementById('deskripsi').value = '';
             document.getElementById('jumlah').value = '';
         });
 
+        // SIMPAN DATA FORM KHUSUS INTERNET
+        formInternet.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const paketTagihanInternet = {
+                namaPelanggan: document.getElementById('net-pelanggan').value,
+                tagihan: parseFloat(document.getElementById('net-tagihan').value) || 0,
+                tanggalTagihan: document.getElementById('net-tanggal').value,
+                pembayaran: parseFloat(document.getElementById('net-pembayaran').value) || 0,
+                petugas: document.getElementById('net-petugas').value,
+                keteranganBebas: document.getElementById('net-keterangan').value
+            };
+
+            databasePembukuan['internet'].push(paketTagihanInternet);
+            updateUI();
+
+            // Reset Form Isian Internet
+            document.getElementById('net-pelanggan').value = '';
+            document.getElementById('net-tagihan').value = '';
+            document.getElementById('net-pembayaran').value = '0';
+            document.getElementById('net-keterangan').value = '';
+        });
+
         window.hapusTransaksi = function(index) {
-            if(confirm("Hapus catatan transaksi ini?")) {
+            if(confirm("Hapus catatan data baris ini?")) {
                 databasePembukuan[unitAktif].splice(index, 1);
                 updateUI();
             }
         }
 
-        document.getElementById('clear-btn').addEventListener('click', function() {
-            if(confirm(`Hapus SEMUA data pada ${getNamaUnitAktif()}?`)) {
+        window.hapusSemuaDataUnit = function() {
+            if(confirm(`Hapus seluruh riwayat data pada komponen ${getNamaUnitAktif()}?`)) {
                 databasePembukuan[unitAktif] = [];
                 updateUI();
             }
-        });
+        }
 
         function updateChart(val1, val2, isKeluarga) {
             const ctx = document.getElementById('financialChart').getContext('2d');
             if (myChart) myChart.destroy();
+            if (unitAktif === 'internet') return; // Internet tidak butuh donat chart biasa
             
             const label1 = isKeluarga ? 'Sisa Anggaran' : 'Total Masuk';
             const label2 = isKeluarga ? 'Anggaran Terpakai' : 'Total Keluar';
-            const color1 = isKeluarga ? '#3B82F6' : '#10B981';
 
             myChart = new Chart(ctx, {
                 type: 'doughnut',
@@ -619,7 +773,7 @@
                     labels: [label1, label2],
                     datasets: [{
                         data: [val1 < 0 ? 0 : val1, val2],
-                        backgroundColor: [color1, '#EF4444'],
+                        backgroundColor: [isKeluarga ? '#3B82F6' : '#10B981', '#EF4444'],
                         borderWidth: 2
                     }]
                 },
