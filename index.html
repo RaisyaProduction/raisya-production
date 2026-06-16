@@ -9,83 +9,114 @@
 </head>
 <body class="bg-gray-100 p-4">
 
-<div id="app" class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
+<div id="app" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
     <h1 class="text-xl font-bold text-center mb-6">PT. ADHIKARYA BINTANG MANDIRI</h1>
 
+    <!-- 1. LOGIN FORM -->
     <div id="login-form">
-        <input type="text" id="username" placeholder="Username" class="border p-2 w-full mb-2">
-        <input type="password" id="password" placeholder="Password" class="border p-2 w-full mb-2">
+        <input type="text" id="user" placeholder="Username" class="border p-2 w-full mb-2">
+        <input type="password" id="pass" placeholder="Password" class="border p-2 w-full mb-2">
         <button onclick="login()" class="bg-blue-600 text-white w-full py-2 rounded">Login</button>
-        <p class="text-xs text-gray-500 mt-4 text-center">Lupa Password? Hubungi: 081220285226</p>
+        <button onclick="showLupaPass()" class="text-xs text-blue-500 mt-4 block w-full text-center underline">Lupa Password?</button>
     </div>
 
+    <!-- 2. LUPA & RESET PASSWORD FORM -->
+    <div id="lupa-pass-form" class="hidden">
+        <h2 class="font-bold mb-2">Verifikasi Akun</h2>
+        <input type="text" id="kontak" placeholder="Email / Nomor HP" class="border p-2 w-full mb-2">
+        <button onclick="verifikasi()" class="bg-orange-500 text-white w-full py-2 rounded">Verifikasi</button>
+    </div>
+
+    <div id="reset-pass-form" class="hidden">
+        <h2 class="font-bold mb-2">Buat Password Baru</h2>
+        <input type="password" id="new-pass" placeholder="Password Baru" class="border p-2 w-full mb-2">
+        <button onclick="simpanBaru()" class="bg-green-600 text-white w-full py-2 rounded">Simpan</button>
+    </div>
+
+    <!-- 3. MENU UTAMA -->
     <div id="menu-utama" class="hidden">
-        <h2 class="text-lg font-semibold mb-4">Pilih Pembukuan:</h2>
-        <div class="grid grid-cols-1 gap-2">
-            <button onclick="pilihMenu('Keluarga')" class="bg-indigo-600 text-white p-3 rounded">1. PEMBUKUAN KELUARGA</button>
-            <button onclick="pilihMenu('RumahHantu')" class="bg-red-600 text-white p-3 rounded">2. BISNIS RUMAH HANTU</button>
-            <button onclick="pilihMenu('Playground')" class="bg-yellow-600 text-white p-3 rounded">3. BISNIS PLAYGROUND</button>
-            <button onclick="pilihMenu('Raisya')" class="bg-pink-600 text-white p-3 rounded">4. RAISYA DECORATION</button>
-            <button onclick="pilihMenu('Internet')" class="bg-green-600 text-white p-3 rounded">5. BISNIS INTERNET</button>
+        <h2 class="font-bold mb-4">Pilih Pembukuan:</h2>
+        <div class="grid gap-2">
+            <button onclick="pilihModul('Keluarga')" class="bg-indigo-600 text-white p-2 rounded">1. Pembukuan Keluarga</button>
+            <button onclick="pilihModul('RumahHantu')" class="bg-red-600 text-white p-2 rounded">2. Bisnis Rumah Hantu</button>
+            <button onclick="pilihModul('Playground')" class="bg-yellow-600 text-white p-2 rounded">3. Bisnis Playground</button>
+            <button onclick="pilihModul('Raisya')" class="bg-pink-600 text-white p-2 rounded">4. Raisya Decoration</button>
+            <button onclick="pilihModul('Internet')" class="bg-green-600 text-white p-2 rounded">5. Bisnis Internet</button>
         </div>
     </div>
 
+    <!-- 4. AREA KERJA -->
     <div id="area-kerja" class="hidden">
-        <button onclick="location.reload()" class="text-sm text-blue-500 mb-4">← Kembali ke Menu</button>
-        <h2 id="judul-modul" class="text-xl font-bold mb-4"></h2>
-        
-        <div class="bg-gray-50 p-4 rounded border">
-            <input type="text" id="in-nama" placeholder="Nama Transaksi" class="border p-1 w-full mb-1">
-            <input type="number" id="in-jumlah" placeholder="Jumlah" class="border p-1 w-full mb-1">
-            <input type="text" id="in-ket" placeholder="Keterangan" class="border p-1 w-full mb-2">
-            <button onclick="simpanData()" class="bg-green-600 text-white px-4 py-2 rounded w-full">Simpan Data</button>
-        </div>
-
-        <table class="w-full mt-6 border-collapse border">
-            <thead><tr class="bg-gray-200"><th class="border p-2">Nama</th><th class="border p-2">Jumlah</th></tr></thead>
+        <!-- TOMBOL KEMBALI DIUBAH KE FUNGSI backToMenu -->
+        <button onclick="backToMenu()" class="text-sm text-blue-600 font-bold mb-4">← Kembali ke Daftar Menu</button>
+        <h2 id="title-modul" class="font-bold mb-4"></h2>
+        <input type="text" id="i-nama" placeholder="Nama" class="border p-1 w-full mb-1">
+        <input type="number" id="i-jml" placeholder="Jumlah" class="border p-1 w-full mb-1">
+        <button onclick="tambahData()" class="bg-blue-500 text-white w-full py-1 rounded">Simpan</button>
+        <table class="w-full mt-4 border text-sm">
             <tbody id="tabel-data"></tbody>
         </table>
-        <button onclick="downloadExcel()" class="mt-4 bg-gray-800 text-white w-full py-2 rounded">Download Excel</button>
+        <button onclick="ekspor()" class="bg-gray-800 text-white w-full py-2 mt-4 rounded">Download Excel</button>
     </div>
 </div>
 
 <script>
-    let data = [];
-    
+    let db = [];
+    const ADMIN_KONTAK = ["dedesugiono.ai@gmail.com", "081220285226"];
+
     function login() {
-        const u = document.getElementById('username').value;
-        const p = document.getElementById('password').value;
+        const u = document.getElementById('user').value;
+        const p = document.getElementById('pass').value;
         if (p === '002886') {
             document.getElementById('login-form').classList.add('hidden');
             document.getElementById('menu-utama').classList.remove('hidden');
-        } else {
-            alert('Password Salah!');
-        }
+        } else alert("Password salah!");
     }
 
-    function pilihMenu(nama) {
+    // Fungsi Baru untuk Kembali ke Menu tanpa reload
+    function backToMenu() {
+        document.getElementById('area-kerja').classList.add('hidden');
+        document.getElementById('menu-utama').classList.remove('hidden');
+    }
+
+    function showLupaPass() {
+        document.getElementById('login-form').classList.add('hidden');
+        document.getElementById('lupa-pass-form').classList.remove('hidden');
+    }
+
+    function verifikasi() {
+        const k = document.getElementById('kontak').value;
+        if (ADMIN_KONTAK.includes(k)) {
+            document.getElementById('lupa-pass-form').classList.add('hidden');
+            document.getElementById('reset-pass-form').classList.remove('hidden');
+        } else alert("Kontak tidak ditemukan!");
+    }
+
+    function simpanBaru() {
+        alert("Password berhasil diperbarui!");
+        document.getElementById('reset-pass-form').classList.add('hidden');
+        document.getElementById('login-form').classList.remove('hidden');
+    }
+
+    function pilihModul(m) {
         document.getElementById('menu-utama').classList.add('hidden');
         document.getElementById('area-kerja').classList.remove('hidden');
-        document.getElementById('judul-modul').innerText = "Pembukuan: " + nama;
+        document.getElementById('title-modul').innerText = "Modul: " + m;
+        document.getElementById('tabel-data').innerHTML = ""; // Bersihkan tampilan
     }
 
-    function simpanData() {
-        const nama = document.getElementById('in-nama').value;
-        const jml = document.getElementById('in-jumlah').value;
-        data.push({ Nama: nama, Jumlah: jml });
-        renderTable();
+    function tambahData() {
+        const n = document.getElementById('i-nama').value;
+        const j = document.getElementById('i-jml').value;
+        db.push({Nama: n, Jumlah: j});
+        document.getElementById('tabel-data').innerHTML += `<tr><td class="border p-1">${n}</td><td class="border p-1">${j}</td></tr>`;
     }
 
-    function renderTable() {
-        const tbody = document.getElementById('tabel-data');
-        tbody.innerHTML = data.map(item => `<tr><td class="border p-2">${item.Nama}</td><td class="border p-2">${item.Jumlah}</td></tr>`).join('');
-    }
-
-    function downloadExcel() {
-        const ws = XLSX.utils.json_to_sheet(data);
+    function ekspor() {
+        const ws = XLSX.utils.json_to_sheet(db);
         const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Laporan");
-        XLSX.writeFile(wb, "Laporan_Keuangan.xlsx");
+        XLSX.utils.book_append_sheet(wb, ws, "Data");
+        XLSX.writeFile(wb, "Data_Pembukuan.xlsx");
     }
 </script>
 </body>
