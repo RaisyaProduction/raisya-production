@@ -151,6 +151,10 @@
                 <h3 class="font-bold text-gray-800 mb-3 text-sm flex items-center">➕ Input Anggaran Baru</h3>
                 <div class="space-y-3">
                     <div>
+                        <label class="block text-xs font-medium text-gray-500">Tanggal Transaksi</label>
+                        <input type="date" id="trans-date" class="mt-1 block w-full p-2 border rounded-lg text-sm bg-gray-50 focus:bg-white">
+                    </div>
+                    <div>
                         <label class="block text-xs font-medium text-gray-500">Jenis Anggaran</label>
                         <select id="trans-type" class="mt-1 block w-full p-2 border rounded-lg text-sm">
                             <option value="Masuk">Anggaran Masuk (Pendapatan)</option>
@@ -194,7 +198,6 @@
 
     <!-- LOGIKA SCRIPT INTEGRATED -->
     <script>
-        // Teks Judul Menu Pembukuan
         const menuMapping = {
             "Keluarga": "1. PEMBUKUAN KEUANGAN KELUARGA",
             "RumahHantu": "2. PEMBUKUAN BISNIS RUMAH HANTU",
@@ -203,19 +206,16 @@
             "Internet": "5. PEMBUKUAN BISNIS INTERNET"
         };
 
-        // Inisialisasi Password Utama di Browser (Default: 002886)
         if (!localStorage.getItem('raisya_password')) {
             localStorage.setItem('raisya_password', '002886');
         }
 
-        // Database Transaksi Keuangan Browser
         let database = JSON.parse(localStorage.getItem('raisya_pembukuan')) || {
             Keluarga: [], RumahHantu: [], Playground: [], RaisyaDecoration: [], Internet: []
         };
 
-        let menuTarget = null; // Menyimpan tombol menu yang diklik sementara
+        let menuTarget = null;
 
-        // Fungsi Ganti Tab Auth Utama (Login / Lupa Password)
         function switchAuthTab(tab) {
             const panels = ['login', 'lupa'];
             panels.forEach(p => {
@@ -226,7 +226,7 @@
             document.getElementById(`tab-${tab}`).className = "w-1/2 pb-2 text-center border-b-2 border-indigo-600 font-bold text-indigo-600 text-sm";
         }
 
-        // --- PROSES LAYER 1: LOGIN UTAMA ---
+        // --- LAYER 1: LOGIN UTAMA ---
         function handleLoginUtama() {
             const userIn = document.getElementById('login-username').value.trim();
             const passIn = document.getElementById('login-password').value;
@@ -240,7 +240,6 @@
             }
         }
 
-        // Fitur Ubah Password Mandiri (Hanya Mengubah Password Akun Utama Radhika)
         function openChangePasswordModal() {
             const passBaru = prompt("Masukkan Password Utama Baru Anda:");
             if (passBaru === null) return;
@@ -253,7 +252,6 @@
             }
         }
 
-        // Pemulihan Akun Utama
         function handleForgotPassword() {
             const contactIn = document.getElementById('forget-contact').value.trim();
             const currentSavedPassword = localStorage.getItem('raisya_password');
@@ -266,9 +264,9 @@
             }
         }
 
-        // --- PROSES LAYER 2 & 3: LOGIN MASING-MASING PEMBUKUAN ---
+        // --- LAYER 2 & 3: LOGIN MASING-MASING PEMBUKUAN ---
         function bukaModalLoginMenu(keyMenu) {
-            menuTarget = keyMenu; // Kunci target menu pembukuan yang sedang dicoba buka
+            menuTarget = keyMenu;
             
             document.getElementById('menu-username').value = "";
             document.getElementById('menu-password').value = "";
@@ -278,7 +276,6 @@
         }
 
         function kembaliKeMenuUtamaDariLogin() {
-            // PERBAIKAN: Jangan reset menuTarget menjadi null di sini agar sesi seleksi tetap terjaga
             document.getElementById('login-menu-section').classList.add('hidden');
             document.getElementById('pilih-menu-section').classList.remove('hidden');
         }
@@ -291,27 +288,29 @@
                 document.getElementById('login-menu-section').classList.add('hidden');
                 document.getElementById('transaksi-section').classList.remove('hidden');
                 document.getElementById('menu-title').innerText = menuMapping[menuTarget];
+                
+                // Set default input tanggal ke tanggal hari ini (opsional agar memudahkan user)
+                const hariIni = new Date().toISOString().split('T')[0];
+                document.getElementById('trans-date').value = hariIni;
+
                 updateDashboard();
             } else {
                 alert("Gagal Membuka Pembukuan!\n\nUsername Divisi atau Password yang Anda ketik tidak cocok.");
             }
         }
 
-        // --- PROSES LAYER 4: KELOLA ANGGARAN ---
+        // --- LAYER 4: KELOLA ANGGARAN ---
         function kembaliKeMenuUtama() {
-            // PERBAIKAN: Hanya menyembunyikan halaman rincian transaksi dan kembali ke daftar 5 menu utama
             document.getElementById('transaksi-section').classList.add('hidden');
             document.getElementById('pilih-menu-section').classList.remove('hidden');
         }
 
         function handleLogout() {
-            // Reset total semua inputan form kembali ke awal
             menuTarget = null;
             document.getElementById('login-username').value = "";
             document.getElementById('login-password').value = "";
             document.getElementById('forget-contact').value = "";
             
-            // Paksa kembali ke halaman login paling depan
             document.getElementById('auth-section').classList.remove('hidden');
             document.getElementById('pilih-menu-section').classList.add('hidden');
             document.getElementById('login-menu-section').classList.add('hidden');
@@ -319,16 +318,18 @@
         }
 
         function addTransaction() {
+            const dateIn = document.getElementById('trans-date').value;
             const type = document.getElementById('trans-type').value;
             let desc = document.getElementById('trans-desc').value.trim();
             const amount = parseInt(document.getElementById('trans-amount').value);
 
-            if (!desc || isNaN(amount) || amount <= 0) {
-                alert("Mohon isi keterangan dan nominal uang dengan benar!");
+            // Validasi kelengkapan form termasuk tanggal manual
+            if (!dateIn || !desc || isNaN(amount) || amount <= 0) {
+                alert("Mohon isi tanggal, keterangan, dan nominal uang dengan benar!");
                 return;
             }
 
-            // KONFIRMASI SUAMI / ISTRI KHUSUS BUKU KELUARGA
+            // --- KONFIRMASI SUAMI / ISTRI KHUSUS BUKU KELUARGA ---
             let penanggungJawab = "";
             if (menuTarget === "Keluarga") {
                 let konfirmasi = prompt("Konfirmasi Penginputan Anggaran Keluarga!\nKetik '1' untuk SUAMI\nKetik '2' untuk ISTRI");
@@ -344,15 +345,12 @@
                 desc = desc + penanggungJawab;
             }
 
-            // GENERATE TANGGAL DAN WAKTU SEKARANG
-            const hariIni = new Date();
-            const opsiTanggal = { year: 'numeric', month: '2-digit', day: '2-digit' };
-            const tanggalFormat = hariIni.toLocaleDateString('id-ID', opsiTanggal);
-            const waktuFormat = hariIni.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-            const tanggalLengkap = `${tanggalFormat} ${waktuFormat}`;
+            // Format tanggal dari YYYY-MM-DD ke DD/MM/YYYY agar lebih rapi dibaca di Indonesia
+            const partTanggal = dateIn.split('-');
+            const tanggalRapi = `${partTanggal[2]}/${partTanggal[1]}/${partTanggal[0]}`;
 
             database[menuTarget].push({ 
-                date: tanggalLengkap, 
+                date: tanggalRapi, 
                 type: type, 
                 desc: desc, 
                 amount: amount 
@@ -360,6 +358,7 @@
             
             localStorage.setItem('raisya_pembukuan', JSON.stringify(database));
 
+            // Reset form input tapi pertahankan tanggalnya
             document.getElementById('trans-desc').value = "";
             document.getElementById('trans-amount').value = "";
 
@@ -374,12 +373,12 @@
             let totalMasuk = 0;
             let totalKeluar = 0;
 
+            // Sort data berdasarkan entri terbaru yang dimasukkan
             transactions.forEach(t => {
                 if (t.type === 'Masuk') totalMasuk += t.amount;
                 if (t.type === 'Keluar') totalKeluar += t.amount;
 
                 const tanggalTransaksi = t.date ? t.date : "-";
-
                 const row = document.createElement('tr');
                 const badgeColor = t.type === 'Masuk' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
                 
