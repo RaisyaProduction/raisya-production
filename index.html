@@ -4,250 +4,409 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RAISYA DECORATION</title>
-    <!-- Menggunakan Tailwind CSS untuk tampilan yang modern dan premium -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
-<body class="bg-slate-50 min-h-screen flex items-center justify-center font-sans antialiased text-slate-800 selection:bg-rose-500 selection:text-white">
+<body class="bg-slate-50 min-h-screen flex items-center justify-center font-sans antialiased text-slate-800 p-4 selection:bg-rose-500 selection:text-white">
 
-    <!-- ================= CARD UTAMA ================= -->
-    <div class="w-full max-w-md mx-4 bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden transition-all duration-300">
+    <div id="main-container" class="w-full max-w-md bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden transition-all duration-300">
         
-        <!-- HEADER APLIKASI -->
-        <div class="bg-gradient-to-br from-rose-500 to-pink-600 p-8 text-center text-white relative">
+        <div class="bg-gradient-to-br from-rose-500 to-pink-600 p-7 text-center text-white relative">
             <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
-            <h1 class="text-3xl font-extrabold tracking-wider uppercase drop-shadow-md">Raisya Decoration</h1>
-            <p id="app-subtitle" class="text-rose-100 text-sm mt-2 font-medium">Sistem Manajemen Laporan & Bisnis</p>
+            <h1 class="text-2xl font-extrabold tracking-wider uppercase drop-shadow-md">Raisya Decoration</h1>
+            <p id="app-subtitle" class="text-rose-100 text-xs mt-1 font-medium">Sistem Manajemen Laporan & Bisnis</p>
         </div>
 
-        <div class="p-8">
-            <!-- 1. HALAMAN LOGIN -->
-            <div id="page-login" class="space-y-5">
-                <div class="text-center mb-2">
+        <div class="p-6">
+            
+            <div id="page-login" class="space-y-4">
+                <div class="text-center mb-1">
                     <h2 class="text-xl font-bold text-slate-700">Selamat Datang Kembali</h2>
-                    <p class="text-slate-400 text-sm">Silakan masuk untuk mengakses menu utama</p>
+                    <p class="text-slate-400 text-xs">Silakan masuk untuk mengakses menu utama</p>
                 </div>
-                
-                <div id="login-error" class="hidden bg-red-50 text-red-600 text-sm p-3 rounded-xl border border-red-200 text-center font-medium"></div>
-
-                <div class="space-y-4">
+                <div id="login-error" class="hidden bg-red-50 text-red-600 text-xs p-3 rounded-xl border border-red-200 text-center font-medium"></div>
+                <div class="space-y-3">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Username</label>
-                        <input type="text" id="login-user" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all text-sm" placeholder="Masukkan username">
+                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Username</label>
+                        <input type="text" id="login-user" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 text-sm" placeholder="Masukkan username">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Password</label>
-                        <input type="password" id="login-pass" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all text-sm" placeholder="••••••••">
+                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Password</label>
+                        <input type="password" id="login-pass" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 text-sm" placeholder="••••••••">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Kata-Kata Kunci</label>
-                        <input type="text" id="login-words" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all text-sm" placeholder="Masukkan kata kunci">
+                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Kata-Kata Kunci</label>
+                        <input type="text" id="login-words" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 text-sm" placeholder="Masukkan kata kunci">
                     </div>
                 </div>
-
-                <button onclick="handleLogin()" class="w-full mt-2 bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-semibold py-3 px-4 rounded-xl shadow-md shadow-rose-500/20 active:scale-[0.98] transition-all cursor-pointer">
+                <button onclick="handleLogin()" class="w-full bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-semibold py-2.5 rounded-xl shadow-md shadow-rose-500/20 active:scale-[0.98] transition-all cursor-pointer text-sm">
                     Masuk ke Sistem
                 </button>
-
-                <div class="text-center pt-2">
-                    <button onclick="switchPage('page-forgot')" class="text-sm font-medium text-rose-500 hover:text-rose-600 cursor-pointer">Lupa Password?</button>
+                <div class="text-center pt-1">
+                    <button onclick="switchPage('page-forgot')" class="text-xs font-medium text-rose-500 hover:text-rose-600 cursor-pointer">Lupa Password?</button>
                 </div>
             </div>
 
-            <!-- 2. HALAMAN LUPA PASSWORD -->
-            <div id="page-forgot" class="hidden space-y-5">
-                <div class="text-center mb-2">
+            <div id="page-forgot" class="hidden space-y-4">
+                <div class="text-center mb-1">
                     <h2 class="text-xl font-bold text-slate-700">Konfirmasi Identitas</h2>
-                    <p class="text-slate-400 text-sm">Masukkan Email atau Nomor HP yang terdaftar</p>
+                    <p class="text-slate-400 text-xs">Masukkan Email atau Nomor HP yang terdaftar</p>
                 </div>
-
-                <div id="forgot-error" class="hidden bg-red-50 text-red-600 text-sm p-3 rounded-xl border border-red-200 text-center font-medium"></div>
-
+                <div id="forgot-error" class="hidden bg-red-50 text-red-600 text-xs p-3 rounded-xl border border-red-200 text-center font-medium"></div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Email / No. HP</label>
-                    <input type="text" id="forgot-input" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all text-sm" placeholder="dedesugiono.ai@gmail.com atau 081220285226">
+                    <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Email / No. HP</label>
+                    <input type="text" id="forgot-input" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 text-sm" placeholder="dedesugiono.ai@gmail.com atau 081220285226">
                 </div>
-
-                <div class="flex space-x-3 pt-2">
-                    <button onclick="switchPage('page-login')" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold py-3 px-4 rounded-xl transition-all cursor-pointer text-sm">
-                        Batal
-                    </button>
-                    <button onclick="handleForgot()" class="w-2/3 bg-rose-500 hover:bg-rose-600 text-white font-semibold py-3 px-4 rounded-xl shadow-md shadow-rose-500/10 active:scale-[0.98] transition-all cursor-pointer text-sm">
-                        Konfirmasi
-                    </button>
+                <div class="flex space-x-3 pt-1">
+                    <button onclick="switchPage('page-login')" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold py-2.5 rounded-xl text-xs cursor-pointer">Batal</button>
+                    <button onclick="handleForgot()" class="w-2/3 bg-rose-500 hover:bg-rose-600 text-white font-semibold py-2.5 rounded-xl text-xs cursor-pointer">Konfirmasi</button>
                 </div>
             </div>
 
-            <!-- 3. HALAMAN BUAT PASSWORD BARU -->
-            <div id="page-reset" class="hidden space-y-5">
-                <div class="text-center mb-2">
+            <div id="page-reset" class="hidden space-y-4">
+                <div class="text-center mb-1">
                     <h2 class="text-xl font-bold text-slate-700">Buat Password Baru</h2>
-                    <p class="text-slate-400 text-sm">Demi keamanan, silakan ganti password lama Anda</p>
+                    <p class="text-slate-400 text-xs">Demi keamanan, silakan ganti password lama Anda</p>
                 </div>
-
-                <div id="reset-error" class="hidden bg-red-50 text-red-600 text-sm p-3 rounded-xl border border-red-200 text-center font-medium"></div>
-
+                <div id="reset-error" class="hidden bg-red-50 text-red-600 text-xs p-3 rounded-xl border border-red-200 text-center font-medium"></div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Password Baru</label>
-                    <input type="password" id="reset-pass" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all text-sm" placeholder="Masukkan password baru">
+                    <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Password Baru</label>
+                    <input type="password" id="reset-pass" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 text-sm" placeholder="Masukkan password baru">
                 </div>
-
-                <button onclick="handleReset()" class="w-full mt-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 px-4 rounded-xl shadow-md shadow-emerald-500/20 active:scale-[0.98] transition-all cursor-pointer">
+                <button onclick="handleReset()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2.5 rounded-xl shadow-md active:scale-[0.98] transition-all cursor-pointer text-sm">
                     Simpan Password Baru
                 </button>
             </div>
 
-            <!-- 4. HALAMAN MENU UTAMA -->
-            <div id="page-menu" class="hidden space-y-6">
-                <div class="flex justify-between items-center border-b border-slate-100 pb-4">
+            <div id="page-menu" class="hidden space-y-4">
+                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                     <div>
-                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">User Aktif</span>
-                        <h2 class="text-lg font-bold text-slate-700 flex items-center gap-1.5">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">User Aktif</span>
+                        <h2 class="text-md font-bold text-slate-700 flex items-center gap-1">
                             <i class="fa-solid fa-circle-user text-rose-500"></i> Radhika
                         </h2>
                     </div>
-                    <button onclick="handleLogout()" class="text-xs font-semibold bg-slate-100 hover:bg-red-50 hover:text-red-600 text-slate-500 px-3 py-2 rounded-lg transition-all cursor-pointer">
-                        <i class="fa-solid fa-right-from-bracket mr-1"></i> Keluar
+                    <button onclick="handleLogout()" class="text-xs font-semibold bg-slate-100 hover:bg-red-50 hover:text-red-600 text-slate-500 px-2.5 py-1.5 rounded-lg transition-all cursor-pointer">Keluar</button>
+                </div>
+
+                <div class="grid grid-cols-1 gap-2">
+                    <button onclick="openFamilyReportConf()" class="group flex items-center p-3.5 bg-slate-50 hover:bg-rose-50/40 border border-slate-200 rounded-xl transition-all text-left cursor-pointer">
+                        <div class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-600 flex items-center justify-center font-bold text-xs group-hover:scale-105 transition-transform">1</div>
+                        <div class="ml-3 font-semibold text-slate-700 group-hover:text-rose-600 text-xs uppercase tracking-wide">Laporan Keuangan Keluarga</div>
+                        <i class="fa-solid fa-chevron-right ml-auto text-slate-300 group-hover:text-rose-400 text-[10px]"></i>
+                    </button>
+                    <button onclick="alert('Menu Laporan Bisnis Rumah Hantu')" class="group flex items-center p-3.5 bg-slate-50 hover:bg-rose-50/40 border border-slate-200 rounded-xl transition-all text-left cursor-pointer"><div class="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-600 flex items-center justify-center font-bold text-xs">2</div><div class="ml-3 font-semibold text-slate-700 text-xs uppercase tracking-wide">Laporan Bisnis Rumah Hantu</div><i class="fa-solid fa-chevron-right ml-auto text-slate-300 text-[10px]"></i></button>
+                    <button onclick="alert('Menu Laporan Bisnis Playground')" class="group flex items-center p-3.5 bg-slate-50 hover:bg-rose-50/40 border border-slate-200 rounded-xl transition-all text-left cursor-pointer"><div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold text-xs">3</div><div class="ml-3 font-semibold text-slate-700 text-xs uppercase tracking-wide">Laporan Bisnis Playground</div><i class="fa-solid fa-chevron-right ml-auto text-slate-300 text-[10px]"></i></button>
+                    <button onclick="alert('Menu Laporan Bisnis Raisya Decoration')" class="group flex items-center p-3.5 bg-slate-50 hover:bg-rose-50/40 border border-slate-200 rounded-xl transition-all text-left cursor-pointer"><div class="w-8 h-8 rounded-lg bg-rose-500/10 text-rose-600 flex items-center justify-center font-bold text-xs">4</div><div class="ml-3 font-semibold text-slate-700 text-xs uppercase tracking-wide">Laporan Bisnis Raisya Decoration</div><i class="fa-solid fa-chevron-right ml-auto text-slate-300 text-[10px]"></i></button>
+                    <button onclick="alert('Menu Laporan Bisnis Internet')" class="group flex items-center p-3.5 bg-slate-50 hover:bg-rose-50/40 border border-slate-200 rounded-xl transition-all text-left cursor-pointer"><div class="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-600 flex items-center justify-center font-bold text-xs">5</div><div class="ml-3 font-semibold text-slate-700 text-xs uppercase tracking-wide">Laporan Bisnis Internet</div><i class="fa-solid fa-chevron-right ml-auto text-slate-300 text-[10px]"></i></button>
+                    <button onclick="alert('Menu Laporan Rekap Semua Laporan')" class="group flex items-center p-3.5 bg-slate-50 hover:bg-rose-50/40 border border-slate-200 rounded-xl transition-all text-left cursor-pointer"><div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-bold text-xs">6</div><div class="ml-3 font-semibold text-slate-700 text-xs uppercase tracking-wide">Laporan Rekap Semua Laporan</div><i class="fa-solid fa-chevron-right ml-auto text-slate-300 text-[10px]"></i></button>
+                </div>
+            </div>
+
+            <div id="page-family-conf" class="hidden space-y-4">
+                <div class="text-center mb-1">
+                    <h2 class="text-lg font-bold text-slate-700">Konfirmasi Akses</h2>
+                    <p class="text-slate-400 text-xs">Pilih identitas Anda untuk Laporan Keluarga</p>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="selectFamilyRole('Suami')" class="p-4 border-2 border-slate-200 hover:border-blue-500 hover:bg-blue-50/30 rounded-2xl transition-all text-center cursor-pointer group">
+                        <i class="fa-solid fa-user-tie text-3xl text-slate-400 group-hover:text-blue-500 mb-2 block"></i>
+                        <span class="font-bold text-slate-700 text-sm">SUAMI</span>
+                    </button>
+                    <button onclick="selectFamilyRole('Istri')" class="p-4 border-2 border-slate-200 hover:border-pink-500 hover:bg-pink-50/30 rounded-2xl transition-all text-center cursor-pointer group">
+                        <i class="fa-solid fa-user-nurse text-3xl text-slate-400 group-hover:text-pink-500 mb-2 block"></i>
+                        <span class="font-bold text-slate-700 text-sm">ISTRI</span>
+                    </button>
+                </div>
+                <button onclick="switchPage('page-menu')" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-600 py-2 rounded-xl text-xs font-semibold cursor-pointer text-center">Kembali ke Menu Utama</button>
+            </div>
+
+            <div id="page-family-login" class="hidden space-y-4">
+                <div class="text-center mb-1">
+                    <h2 class="text-lg font-bold text-slate-700 flex items-center justify-center gap-1.5">
+                        Akses Login: <span id="family-login-title" class="text-rose-500"></span>
+                    </h2>
+                    <p class="text-slate-400 text-xs">Masukkan password otoritas laporan keluarga</p>
+                </div>
+                <div id="family-login-error" class="hidden bg-red-50 text-red-600 text-xs p-2.5 rounded-xl border border-red-200 text-center font-medium"></div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Password Laporan</label>
+                    <input type="password" id="family-login-pass" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 text-sm" placeholder="••••••••">
+                </div>
+                <div class="flex space-x-3 pt-1">
+                    <button onclick="switchPage('page-family-conf')" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold py-2.5 rounded-xl text-xs cursor-pointer">Batal</button>
+                    <button onclick="handleFamilyLogin()" class="w-2/3 bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold py-2.5 rounded-xl text-xs cursor-pointer">Masuk Laporan</button>
+                </div>
+            </div>
+
+            <div id="page-family-report" class="hidden space-y-5">
+                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                    <div>
+                        <span id="badge-role" class="px-2 py-0.5 text-[9px] font-extrabold bg-rose-100 text-rose-600 rounded-full uppercase tracking-wider"></span>
+                        <h2 class="text-sm font-bold text-slate-700 mt-1">Laporan Keuangan Keluarga</h2>
+                    </div>
+                    <button onclick="switchPage('page-menu')" class="text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-600 px-2.5 py-1.5 rounded-lg cursor-pointer">Menu Utama</button>
+                </div>
+
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 space-y-3">
+                    <h3 id="form-title" class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1">
+                        <i class="fa-solid fa-pen-to-square text-rose-500"></i> Tambah Anggaran Baru
+                    </h3>
+                    <input type="hidden" id="edit-index" value="-1">
+                    <div class="grid grid-cols-1 gap-2.5">
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-500 uppercase mb-0.5">Nama Pengeluaran</label>
+                            <input type="text" id="inp-nama" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-rose-500" placeholder="Contoh: Belanja Bulanan">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-0.5">Tanggal</label>
+                                <input type="date" id="inp-tanggal" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-0.5">Jumlah (Rp)</label>
+                                <input type="number" id="inp-jumlah" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none" placeholder="0">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-500 uppercase mb-0.5">Keterangan</label>
+                            <input type="text" id="inp-keterangan" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none" placeholder="Catatan tambahan">
+                        </div>
+                    </div>
+                    <div class="flex space-x-2 pt-1">
+                        <button id="btn-batal-edit" onclick="resetForm()" class="hidden w-1/3 bg-slate-200 text-slate-600 font-semibold py-2 rounded-xl text-xs cursor-pointer">Batal</button>
+                        <button id="btn-simpan" onclick="saveData()" class="flex-1 bg-rose-500 hover:bg-rose-600 text-white font-semibold py-2 rounded-xl text-xs shadow-sm cursor-pointer">
+                            <i class="fa-solid fa-floppy-disk mr-1"></i> Simpan Data
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-slate-800 to-slate-950 text-white p-4 rounded-2xl flex justify-between items-center shadow-md">
+                    <div>
+                        <p class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Total Jumlah Pengeluaran</p>
+                        <h3 id="txt-total" class="text-xl font-extrabold text-rose-400 mt-0.5">Rp 0</h3>
+                    </div>
+                    <button onclick="exportToExcel()" class="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1 shadow-sm transition-all cursor-pointer">
+                        <i class="fa-solid fa-file-excel text-sm"></i> Excel
                     </button>
                 </div>
 
-                <!-- DAFTAR MENU -->
-                <div class="grid grid-cols-1 gap-3">
-                    <button onclick="selectMenu('LAPORAN KEUANGAN KELUARGA')" class="group flex items-center p-4 bg-slate-50 hover:bg-rose-50/50 border border-slate-200/60 hover:border-rose-200 rounded-2xl transition-all text-left cursor-pointer">
-                        <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform">1</div>
-                        <div class="ml-4 font-semibold text-slate-700 group-hover:text-rose-600 text-sm tracking-wide">LAPORAN KEUANGAN KELUARGA</div>
-                        <i class="fa-solid fa-chevron-right ml-auto text-slate-300 group-hover:text-rose-400 transition-colors text-xs"></i>
-                    </button>
-
-                    <button onclick="selectMenu('LAPORAN BISNIS RUMAH HANTU')" class="group flex items-center p-4 bg-slate-50 hover:bg-rose-50/50 border border-slate-200/60 hover:border-rose-200 rounded-2xl transition-all text-left cursor-pointer">
-                        <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-600 flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform">2</div>
-                        <div class="ml-4 font-semibold text-slate-700 group-hover:text-rose-600 text-sm tracking-wide">LAPORAN BISNIS RUMAH HANTU</div>
-                        <i class="fa-solid fa-chevron-right ml-auto text-slate-300 group-hover:text-rose-400 transition-colors text-xs"></i>
-                    </button>
-
-                    <button onclick="selectMenu('LAPORAN BISNIS PLAYGROUND')" class="group flex items-center p-4 bg-slate-50 hover:bg-rose-50/50 border border-slate-200/60 hover:border-rose-200 rounded-2xl transition-all text-left cursor-pointer">
-                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform">3</div>
-                        <div class="ml-4 font-semibold text-slate-700 group-hover:text-rose-600 text-sm tracking-wide">LAPORAN BISNIS PLAYGROUND</div>
-                        <i class="fa-solid fa-chevron-right ml-auto text-slate-300 group-hover:text-rose-400 transition-colors text-xs"></i>
-                    </button>
-
-                    <button onclick="selectMenu('LAPORAN BISNIS RAISYA DECORATION')" class="group flex items-center p-4 bg-slate-50 hover:bg-rose-50/50 border border-slate-200/60 hover:border-rose-200 rounded-2xl transition-all text-left cursor-pointer">
-                        <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-600 flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform">4</div>
-                        <div class="ml-4 font-semibold text-slate-700 group-hover:text-rose-600 text-sm tracking-wide">LAPORAN BISNIS RAISYA DECORATION</div>
-                        <i class="fa-solid fa-chevron-right ml-auto text-slate-300 group-hover:text-rose-400 transition-colors text-xs"></i>
-                    </button>
-
-                    <button onclick="selectMenu('LAPORAN BISNIS INTERNAT')" class="group flex items-center p-4 bg-slate-50 hover:bg-rose-50/50 border border-slate-200/60 hover:border-rose-200 rounded-2xl transition-all text-left cursor-pointer">
-                        <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-600 flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform">5</div>
-                        <div class="ml-4 font-semibold text-slate-700 group-hover:text-rose-600 text-sm tracking-wide">LAPORAN BISNIS INTERNAT</div>
-                        <i class="fa-solid fa-chevron-right ml-auto text-slate-300 group-hover:text-rose-400 transition-colors text-xs"></i>
-                    </button>
-
-                    <button onclick="selectMenu('LAPORAN REKAP SEMUA LAPORAN')" class="group flex items-center p-4 bg-slate-50 hover:bg-rose-50/50 border border-slate-200/60 hover:border-rose-200 rounded-2xl transition-all text-left cursor-pointer">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform">6</div>
-                        <div class="ml-4 font-semibold text-slate-700 group-hover:text-rose-600 text-sm tracking-wide">LAPORAN REKAP SEMUA LAPORAN</div>
-                        <i class="fa-solid fa-chevron-right ml-auto text-slate-300 group-hover:text-rose-400 transition-colors text-xs"></i>
-                    </button>
+                <div class="space-y-2">
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Daftar Pengeluaran Tercatat</h3>
+                    <div id="container-list" class="space-y-2 max-h-[220px] overflow-y-auto pr-1">
+                        </div>
                 </div>
             </div>
 
         </div>
     </div>
 
-    <!-- ================= LOGIKA JAVASCRIPT ================= -->
     <script>
-        // Data Kredensial Utama (Disimpan di variabel global / bisa diubah dinamis saat reset)
+        // Kredensial & Database Aplikasi Lokal (Menggunakan Memory Browser / LocalStorage)
         let systemCredentials = {
-            username: "Radhika",
-            password: "002886",
-            words: "Raisya",
-            validEmail: "dedesugiono.ai@gmail.com",
-            validPhone: "081220285226"
+            username: "Radhika", password: "002886", words: "Raisya",
+            validEmail: "dedesugiono.ai@gmail.com", validPhone: "081220285226",
+            familyPassword: "002886"
         };
 
-        // Fungsi bantu untuk navigasi halaman antar menu
+        let selectedRole = ""; 
+        // Data awal default sebagai contoh laporan keuangan
+        let reportData = JSON.parse(localStorage.getItem('family_reports')) || [
+            { nama: "Belanja Sembako", tanggal: "2026-06-01", jumlah: 1500000, keterangan: "Kebutuhan bulanan dapur" },
+            { nama: "Tagihan Listrik", tanggal: "2026-06-02", jumlah: 450000, keterangan: "Pembayaran via m-banking" }
+        ];
+
         function switchPage(pageId) {
-            const pages = ['page-login', 'page-forgot', 'page-reset', 'page-menu'];
-            pages.forEach(p => {
-                document.getElementById(p).classList.add('hidden');
-            });
+            const pages = ['page-login', 'page-forgot', 'page-reset', 'page-menu', 'page-family-conf', 'page-family-login', 'page-family-report'];
+            pages.forEach(p => document.getElementById(p).classList.add('hidden'));
             document.getElementById(pageId).classList.remove('hidden');
 
-            // Reset pesan error setiap ganti halaman
-            document.getElementById('login-error').classList.add('hidden');
-            document.getElementById('forgot-error').classList.add('hidden');
-            document.getElementById('reset-error').classList.add('hidden');
-
-            // Ubah subtitle atas biar dinamis
-            const subtitle = document.getElementById('app-subtitle');
-            if(pageId === 'page-menu') subtitle.innerText = "Sistem Menu Utama Terbuka";
-            else if(pageId === 'page-forgot') subtitle.innerText = "Proses Pemulihan Akun";
-            else if(pageId === 'page-reset') subtitle.innerText = "Setel Ulang Kata Sandi";
-            else subtitle.innerText = "Sistem Manajemen Laporan & Bisnis";
+            // Set lebar maksimal box khusus saat melihat halaman detail laporan agar lega
+            const container = document.getElementById('main-container');
+            if(pageId === 'page-family-report') {
+                container.classList.remove('max-w-md');
+                container.classList.add('max-w-xl');
+            } else {
+                container.classList.remove('max-w-xl');
+                container.classList.add('max-w-md');
+            }
         }
 
-        // Aksi Login Masuk
+        // Jalur Login Utama
         function handleLogin() {
             const userInp = document.getElementById('login-user').value.trim();
             const passInp = document.getElementById('login-pass').value.trim();
             const wordInp = document.getElementById('login-words').value.trim();
-            const errorDiv = document.getElementById('login-error');
-
-            if(userInp === systemCredentials.username && 
-               passInp === systemCredentials.password && 
-               wordInp.toLowerCase() === systemCredentials.words.toLowerCase()) {
+            if(userInp === systemCredentials.username && passInp === systemCredentials.password && wordInp.toLowerCase() === systemCredentials.words.toLowerCase()) {
                 switchPage('page-menu');
             } else {
-                errorDiv.innerText = "Username, Password, atau Kata-Kata salah!";
-                errorDiv.classList.remove('hidden');
+                document.getElementById('login-error').innerText = "Kredensial Utama Salah!";
+                document.getElementById('login-error').classList.remove('hidden');
             }
         }
 
-        // Aksi Konfirmasi Lupa Password
         function handleForgot() {
-            const forgotInp = document.getElementById('forgot-input').value.trim();
-            const errorDiv = document.getElementById('forgot-error');
+            const val = document.getElementById('forgot-input').value.trim();
+            if(val === systemCredentials.validEmail || val === systemCredentials.validPhone) switchPage('page-reset');
+            else { document.getElementById('forgot-error').classList.remove('hidden'); document.getElementById('forgot-error').innerText="Identitas tidak terdaftar!"; }
+        }
 
-            if(forgotInp === systemCredentials.validEmail || forgotInp === systemCredentials.validPhone) {
-                switchPage('page-reset');
+        function handleReset() {
+            const np = document.getElementById('reset-pass').value.trim();
+            if(!np) return;
+            systemCredentials.password = np;
+            alert("Password utama diperbarui!");
+            switchPage('page-login');
+        }
+
+        function handleLogout() {
+            document.getElementById('login-user').value=""; document.getElementById('login-pass').value=""; document.getElementById('login-words').value="";
+            switchPage('page-login');
+        }
+
+        // ================= ALUR KHUSUS LAPORAN KELUARGA =================
+        function openFamilyReportConf() {
+            switchPage('page-family-conf');
+        }
+
+        function selectFamilyRole(role) {
+            selectedRole = role;
+            document.getElementById('family-login-title').innerText = role;
+            document.getElementById('family-login-pass').value = "";
+            document.getElementById('family-login-error').classList.add('hidden');
+            switchPage('page-family-login');
+        }
+
+        function handleFamilyLogin() {
+            const pass = document.getElementById('family-login-pass').value.trim();
+            if(pass === systemCredentials.familyPassword) {
+                document.getElementById('badge-role').innerText = "Akses: " + selectedRole;
+                renderData();
+                switchPage('page-family-report');
             } else {
-                errorDiv.innerText = "Data tidak cocok dengan rekam sistem kami!";
-                errorDiv.classList.remove('hidden');
+                document.getElementById('family-login-error').innerText = "Password Otoritas Keluarga Salah!";
+                document.getElementById('family-login-error').classList.remove('hidden');
             }
         }
 
-        // Aksi Menyimpan Password Baru
-        function handleReset() {
-            const newPass = document.getElementById('reset-pass').value.trim();
-            const errorDiv = document.getElementById('reset-error');
+        // Render Data Laporan ke Tampilan Website
+        function renderData() {
+            const container = document.getElementById('container-list');
+            container.innerHTML = "";
+            let total = 0;
 
-            if(newPass === "") {
-                errorDiv.innerText = "Password baru tidak boleh kosong!";
-                errorDiv.classList.remove('hidden');
+            reportData.forEach((item, index) => {
+                total += parseInt(item.jumlah || 0);
+                container.innerHTML += `
+                    <div class="bg-white border border-slate-200 p-3 rounded-xl flex justify-between items-center shadow-xs">
+                        <div class="space-y-0.5">
+                            <h4 class="text-xs font-bold text-slate-700">${item.nama}</h4>
+                            <p class="text-[10px] text-slate-400 font-medium"><i class="fa-regular fa-calendar mr-1"></i>${item.tanggal} | <span class="italic">${item.keterangan || '-'}</span></p>
+                            <p class="text-xs font-bold text-rose-500 mt-1">Rp ${parseInt(item.jumlah).toLocaleString('id-ID')}</p>
+                        </div>
+                        <div class="flex space-x-1">
+                            <button onclick="editData(${index})" class="w-7 h-7 bg-amber-50 text-amber-600 rounded-lg text-xs hover:bg-amber-100 transition-colors cursor-pointer" title="Edit"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="deleteData(${index})" class="w-7 h-7 bg-red-50 text-red-600 rounded-lg text-xs hover:bg-red-100 transition-colors cursor-pointer" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('txt-total').innerText = "Rp " + total.toLocaleString('id-ID');
+            localStorage.setItem('family_reports', JSON.stringify(reportData));
+        }
+
+        // Aksi Simpan & Edit Data
+        function saveData() {
+            const idx = parseInt(document.getElementById('edit-index').value);
+            const nama = document.getElementById('inp-nama').value.trim();
+            const tanggal = document.getElementById('inp-tanggal').value;
+            const jumlah = document.getElementById('inp-jumlah').value.trim();
+            const keterangan = document.getElementById('inp-keterangan').value.trim();
+
+            if(!nama || !tanggal || !jumlah) {
+                alert("Mohon lengkapi kolom Nama, Tanggal, dan Jumlah!");
                 return;
             }
 
-            // Ganti password sistem
-            systemCredentials.password = newPass;
-            alert("Password berhasil diperbarui! Silakan login kembali.");
-            
-            // Bersihkan input dan balik ke login
-            document.getElementById('login-pass').value = "";
-            document.getElementById('reset-pass').value = "";
-            switchPage('page-login');
+            const itemObj = { nama, tanggal, jumlah: parseInt(jumlah), keterangan };
+
+            if(idx === -1) {
+                // Simpan Baru
+                reportData.push(itemObj);
+            } else {
+                // Update Edit Data Lama
+                reportData[idx] = itemObj;
+            }
+
+            resetForm();
+            renderData();
         }
 
-        // Aksi Mengetuk Menu Pilihan
-        function selectMenu(menuName) {
-            alert("Anda memilih: " + menuName + "\n(Fitur halaman detail laporan dapat diintegrasikan sesuai kebutuhan Anda)");
+        function editData(index) {
+            const item = reportData[index];
+            document.getElementById('edit-index').value = index;
+            document.getElementById('inp-nama').value = item.nama;
+            document.getElementById('inp-tanggal').value = item.tanggal;
+            document.getElementById('inp-jumlah').value = item.jumlah;
+            document.getElementById('inp-keterangan').value = item.keterangan;
+
+            document.getElementById('form-title').innerHTML = `<i class="fa-solid fa-pen-to-square text-amber-500"></i> Mode Edit Anggaran`;
+            document.getElementById('btn-simpan').className = "flex-1 bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2 rounded-xl text-xs shadow-sm cursor-pointer";
+            document.getElementById('btn-batal-edit').classList.remove('hidden');
         }
 
-        // Aksi Keluar (Logout)
-        function handleLogout() {
-            document.getElementById('login-user').value = "";
-            document.getElementById('login-pass').value = "";
-            document.getElementById('login-words').value = "";
-            switchPage('page-login');
+        function deleteData(index) {
+            if(confirm("Apakah Anda yakin ingin menghapus data pengeluaran ini?")) {
+                reportData.splice(index, 1);
+                renderData();
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('edit-index').value = "-1";
+            document.getElementById('inp-nama').value = "";
+            document.getElementById('inp-tanggal').value = "";
+            document.getElementById('inp-jumlah').value = "";
+            document.getElementById('inp-keterangan').value = "";
+
+            document.getElementById('form-title').innerHTML = `<i class="fa-solid fa-pen-to-square text-rose-500"></i> Tambah Anggaran Baru`;
+            document.getElementById('btn-simpan').className = "flex-1 bg-rose-500 hover:bg-rose-600 text-white font-semibold py-2 rounded-xl text-xs shadow-sm cursor-pointer";
+            document.getElementById('btn-batal-edit').classList.add('hidden');
+        }
+
+        // ================= FUNGSIONALITAS DOWNLOAD EXCEL (EKSPOR) =================
+        function exportToExcel() {
+            if(reportData.length === 0) {
+                alert("Tidak ada data laporan untuk diekspor!");
+                return;
+            }
+
+            // Buat susunan baris data untuk file excel
+            let rows = [
+                ["RAISYA DECORATION - LAPORAN KEUANGAN KELUARGA"],
+                ["Otoritas Unduh:", selectedRole, "Tanggal Unduh:", new Date().toLocaleDateString('id-ID')],
+                [],
+                ["No", "Nama Pengeluaran", "Tanggal", "Jumlah Pengeluaran (Rp)", "Keterangan Catatan"]
+            ];
+
+            let totalExp = 0;
+            reportData.forEach((item, idx) => {
+                totalExp += item.jumlah;
+                rows.push([idx + 1, item.nama, item.tanggal, item.jumlah, item.keterangan]);
+            });
+
+            rows.push([]);
+            rows.push(["", "TOTAL PENGELUARAN KELUARGA", "", totalExp, ""]);
+
+            // Proses pembuatan spreadsheet via SheetJS
+            const ws = XLSX.utils.aoa_to_sheet(rows);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Laporan Keuangan");
+
+            // Simpan file ke perangkat secara otomatis
+            XLSX.writeFile(wb, "Laporan_Keuangan_Keluarga_RaisyaDecoration.xlsx");
         }
     </script>
 </body>
