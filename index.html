@@ -75,38 +75,41 @@
             <div class="space-y-2">
                 <button onclick="bukaModalLoginMenu('Keluarga')" class="w-full bg-white hover:bg-indigo-50 text-left p-4 rounded-xl shadow-sm border border-gray-200 font-semibold text-gray-800 transition flex justify-between items-center">
                     <span>1. PEMBUKUAN KEUANGAN KELUARGA</span>
-                    <span class="text-indigo-500">🔒 Login</span>
+                    <span class="text-indigo-500 text-xs font-bold">🔒 Verifikasi Akun</span>
                 </button>
                 <button onclick="bukaModalLoginMenu('RumahHantu')" class="w-full bg-white hover:bg-indigo-50 text-left p-4 rounded-xl shadow-sm border border-gray-200 font-semibold text-gray-800 transition flex justify-between items-center">
                     <span>2. PEMBUKUAN BISNIS RUMAH HANTU</span>
-                    <span class="text-indigo-500">🔒 Login</span>
+                    <span class="text-indigo-500 text-xs font-bold">🔒 Verifikasi Akun</span>
                 </button>
                 <button onclick="bukaModalLoginMenu('Playground')" class="w-full bg-white hover:bg-indigo-50 text-left p-4 rounded-xl shadow-sm border border-gray-200 font-semibold text-gray-800 transition flex justify-between items-center">
                     <span>3. PEMBUKUAN BISNIS PLAYGROUND ANAK</span>
-                    <span class="text-indigo-500">🔒 Login</span>
+                    <span class="text-indigo-500 text-xs font-bold">🔒 Verifikasi Akun</span>
                 </button>
                 <button onclick="bukaModalLoginMenu('RaisyaDecoration')" class="w-full bg-white hover:bg-indigo-50 text-left p-4 rounded-xl shadow-sm border border-gray-200 font-semibold text-gray-800 transition flex justify-between items-center">
                     <span>4. PEMBUKUAN BISNIS RAISYA DECORATION</span>
-                    <span class="text-indigo-500">🔒 Login</span>
+                    <span class="text-indigo-500 text-xs font-bold">🔒 Verifikasi Akun</span>
                 </button>
                 <button onclick="bukaModalLoginMenu('Internet')" class="w-full bg-white hover:bg-indigo-50 text-left p-4 rounded-xl shadow-sm border border-gray-200 font-semibold text-gray-800 transition flex justify-between items-center">
                     <span>5. PEMBUKUAN BISNIS INTERNET</span>
-                    <span class="text-indigo-500">🔒 Login</span>
+                    <span class="text-indigo-500 text-xs font-bold">🔒 Verifikasi Akun</span>
                 </button>
             </div>
         </div>
 
         <!-- ========================================== -->
-        <!-- LAYER 3: PANEL LOGIN MASING-MASING MENU -->
+        <!-- LAYER 3: PANEL LOGIN MASING-MASING MENU (BIAR KETIK SENDIRI) -->
         <!-- ========================================== -->
         <div id="login-menu-section" class="hidden bg-white p-6 rounded-2xl shadow-md space-y-4 border border-indigo-100">
             <div class="flex justify-between items-center border-b pb-2">
-                <h3 id="login-menu-title" class="font-bold text-gray-800 text-sm">LOGIN PEMBUKUAN</h3>
+                <h3 class="font-bold text-gray-800 text-sm">OTENTIKASI AKSES</h3>
                 <button onclick="kembaliKeMenuUtamaDariLogin()" class="text-xs text-red-500 hover:underline">❌ Batal</button>
+            </div>
+            <div class="bg-amber-50 border border-amber-200 p-2.5 rounded-lg text-xs text-amber-800">
+                Silahkan ketik ulang Username Divisi ini beserta Password Pembukuan untuk membuka data.
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700">Username Divisi</label>
-                <input type="text" id="menu-username" class="mt-1 block w-full p-2.5 border rounded-lg bg-gray-50 font-semibold text-gray-700" readonly>
+                <input type="text" id="menu-username" placeholder="Ketik Username Divisi..." class="mt-1 block w-full p-2.5 border rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700">Password Divisi</label>
@@ -209,7 +212,7 @@
             Keluarga: [], RumahHantu: [], Playground: [], RaisyaDecoration: [], Internet: []
         };
 
-        let menuTarget = null; // Menyimpan menu pilihan sementara sebelum login divisi sukses
+        let menuTarget = null; // Menyimpan tombol menu yang diklik sementara
 
         // Fungsi Ganti Tab Auth Utama (Login / Lupa Password)
         function switchAuthTab(tab) {
@@ -264,13 +267,13 @@
 
         // --- PROSES LAYER 2 & 3: LOGIN MASING-MASING PEMBUKUAN ---
         function bukaModalLoginMenu(keyMenu) {
-            menuTarget = keyMenu;
-            // Set otomatis username form sesuai pilihan menu
-            document.getElementById('menu-username').value = keyMenu;
-            document.getElementById('menu-password').value = ""; // bersihkan field sandi
-            document.getElementById('login-menu-title').innerText = "LOGIN: " + menuMapping[keyMenu];
+            menuTarget = keyMenu; // Kunci target menu pembukuan yang sedang dicoba buka
             
-            // Sembunyikan daftar menu utama, tampilkan panel login divisi
+            // Kosongkan kolom input agar user mengetik mandiri dari awal (Mencegah pembobolan)
+            document.getElementById('menu-username').value = "";
+            document.getElementById('menu-password').value = "";
+            
+            // Sembunyikan daftar menu utama, tampilkan panel verifikasi
             document.getElementById('pilih-menu-section').classList.add('hidden');
             document.getElementById('login-menu-section').classList.remove('hidden');
         }
@@ -282,22 +285,22 @@
         }
 
         function handleLoginMenu() {
+            const userIn = document.getElementById('menu-username').value.trim();
             const passIn = document.getElementById('menu-password').value;
 
-            // Validasi password divisi (wajib 002886 sesuai instruksi awal)
-            if (passIn === "002886") {
+            // Validasi pencocokan ganda: Username wajib sesuai dengan menu yang di-klik DAN password wajib 002886
+            if (userIn === menuTarget && passIn === "002886") {
                 document.getElementById('login-menu-section').classList.add('hidden');
                 document.getElementById('transaksi-section').classList.remove('hidden');
                 document.getElementById('menu-title').innerText = menuMapping[menuTarget];
                 updateDashboard();
             } else {
-                alert("Password Pembukuan salah! \n\nGunakan password resmi: 002886");
+                alert("Gagal Membuka Pembukuan!\n\nUsername Divisi atau Password yang Anda ketik tidak cocok.");
             }
         }
 
         // --- PROSES LAYER 4: KELOLA ANGGARAN ---
         function kembaliKeMenuUtama() {
-            menuTarget = null;
             document.getElementById('transaksi-section').classList.add('hidden');
             document.getElementById('pilih-menu-section').classList.remove('hidden');
         }
