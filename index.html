@@ -109,16 +109,41 @@
     </div>
 
 
-    <!-- ================= LAYAR 3B: SUB-LOGIN KELUARGA (SUAMI / ISTRI) ================= -->
-    <div id="panel-login-keluarga" class="fixed inset-0 bg-gray-100 flex items-center justify-center p-4 z-40 hidden">
-        <div class="bg-white p-6 rounded-xl shadow-md border-2 border-dashed border-amber-300 max-w-sm w-full text-center">
+    <!-- ================= LAYAR 3B: SUB-LOGIN KELUARGA (PILIH & VERIFIKASI) ================= -->
+    <div id="panel-login-keluarga" class="fixed inset-0 bg-gray-900 bg-opacity-90 flex items-center justify-center p-4 z-40 hidden">
+        <div class="bg-white p-6 rounded-xl shadow-xl border-t-4 border-amber-500 max-w-sm w-full text-center">
             <h3 class="text-lg font-bold text-gray-800 mb-2">🔐 Catatan Anggaran Keluarga</h3>
-            <p class="text-xs text-gray-500 mb-5">Silakan pilih status Anda untuk mencatatkan keuangan keluarga</p>
-            <div class="grid grid-cols-2 gap-4 mb-5">
-                <button onclick="loginKeluarga('Suami')" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-lg cursor-pointer transition-all">👨 SUAMI</button>
-                <button onclick="loginKeluarga('Istri')" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 rounded-lg cursor-pointer transition-all">👩 ISTRI</button>
+            <p class="text-xs text-gray-500 mb-5">Silakan pilih status Anda terlebih dahulu</p>
+            
+            <!-- Tahap 1: Pilih Role -->
+            <div id="pilih-role-keluarga" class="grid grid-cols-2 gap-4 mb-4">
+                <button onclick="pilihRoleKeluarga('Suami')" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-lg cursor-pointer transition-all">👨 SUAMI</button>
+                <button onclick="pilihRoleKeluarga('Istri')" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 rounded-lg cursor-pointer transition-all">👩 ISTRI</button>
             </div>
-            <button onclick="kembaliKeMenuUtama()" class="text-xs text-indigo-600 font-semibold underline hover:text-indigo-800 cursor-pointer">← Kembali ke Menu Pembukuan</button>
+
+            <!-- Tahap 2: Input Form Login Keluarga (Muncul setelah klik role) -->
+            <form id="form-verifikasi-keluarga" class="space-y-4 text-left hidden border-t border-gray-100 pt-4">
+                <div class="bg-amber-50 p-2.5 rounded-lg text-center font-bold text-xs text-amber-900 uppercase">
+                    🔑 Verifikasi Akun: <span id="label-role-terpilih"></span>
+                </div>
+                <div>
+                    <label class="block text-2xs font-bold text-gray-600 uppercase">Confirm Username</label>
+                    <input type="text" id="keluarga-username-input" required class="mt-1 block w-full rounded-lg border border-gray-300 p-2.5 bg-gray-50 text-sm focus:outline-amber-500">
+                </div>
+                <div>
+                    <label class="block text-2xs font-bold text-gray-600 uppercase">Password</label>
+                    <input type="password" id="keluarga-password-input" required placeholder="••••••" class="mt-1 block w-full rounded-lg border border-gray-300 p-2.5 bg-gray-50 text-sm focus:outline-amber-500">
+                </div>
+                <div id="error-keluarga-pesan" class="text-2xs text-red-600 font-bold hidden text-center">
+                    ❌ Username atau Password Keluarga Salah!
+                </div>
+                <div class="flex gap-2 pt-1">
+                    <button type="button" onclick="batalLoginKeluarga()" class="w-1/2 bg-gray-200 text-gray-700 font-bold py-2.5 rounded-lg text-xs cursor-pointer">Kembali</button>
+                    <button type="submit" class="w-1/2 bg-amber-500 text-white font-bold py-2.5 rounded-lg text-xs cursor-pointer">Masuk</button>
+                </div>
+            </form>
+
+            <button onclick="kembaliKeMenuUtama()" class="block w-full text-center text-xs text-indigo-600 font-semibold underline hover:text-indigo-800 mt-4 cursor-pointer">← Kembali ke Menu Pembukuan</button>
         </div>
     </div>
 
@@ -258,6 +283,7 @@
     <!-- LOGIKA CORE APLIKASI -->
     <script>
         let unitAktif = 'keluarga';
+        let roleKeluargaSementara = null; // Menyimpan status klik antara Suami / Istri sebelum login sukses
 
         // DATABASE MAP USERNAME DAN PASSWORD BISNIS
         const akunBisnisMap = {
@@ -273,7 +299,6 @@
 
         let totalAnggaranKeluarga = parseFloat(localStorage.getItem('total_anggaran_keluarga')) || 3000000;
         let currentUserKeluarga = localStorage.getItem('current_user_keluarga') || null;
-        let currentBisnisVerified = false; 
 
         let myChart;
         const form = document.getElementById('transaction-form');
@@ -310,8 +335,28 @@
             const aturanAkun = akunBisnisMap[unitAktif];
 
             if (userIn === aturanAkun.user && passIn === aturanAkun.pass) {
-                currentBisnisVerified = true;
                 document.getElementById('panel-login-bisnis').classList.add('hidden');
+                document.getElementById('app-content-wrapper').classList.remove('hidden');
+                updateUI();
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
+        });
+
+        // FORM LOGIN SUB-KELUARGA (SUAMI / ISTRI)
+        const formVerifikasiKeluarga = document.getElementById('form-verifikasi-keluarga');
+        formVerifikasiKeluarga.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const userIn = document.getElementById('keluarga-username-input').value;
+            const passIn = document.getElementById('keluarga-password-input').value;
+            const errorMsg = document.getElementById('error-keluarga-pesan');
+
+            // Validasi: Username harus cocok dengan role yang dipilih ('Suami' atau 'Istri') dan pass harus '002886'
+            if (userIn === roleKeluargaSementara && passIn === "002886") {
+                currentUserKeluarga = roleKeluargaSementara;
+                localStorage.setItem('current_user_keluarga', roleKeluargaSementara);
+                
+                document.getElementById('panel-login-keluarga').classList.add('hidden');
                 document.getElementById('app-content-wrapper').classList.remove('hidden');
                 updateUI();
             } else {
@@ -327,20 +372,17 @@
 
         window.pilihUnitPembukuan = function(unit) {
             unitAktif = unit;
-            currentBisnisVerified = false; // Reset status verifikasi bisnis sebelumnya
-            
-            // Sembunyikan menu utama
             document.getElementById('layar-menu-utama').classList.add('hidden');
 
             if (unit === 'keluarga') {
                 if (!currentUserKeluarga) {
+                    batalLoginKeluarga(); // Reset form login keluarga ke tampilan awal (pilih tombol)
                     document.getElementById('panel-login-keluarga').classList.remove('hidden');
                 } else {
                     document.getElementById('app-content-wrapper').classList.remove('hidden');
                     updateUI();
                 }
             } else {
-                // Tampilkan popup login bisnis sesuai unit yang diklik
                 document.getElementById('bisnis-username').value = '';
                 document.getElementById('bisnis-password').value = '';
                 document.getElementById('error-bisnis-pesan').classList.add('hidden');
@@ -364,19 +406,30 @@
             }
         }
 
-        // KELUARGA SUB-LOGIN
-        window.loginKeluarga = function(role) {
-            currentUserKeluarga = role;
-            localStorage.setItem('current_user_keluarga', role);
-            document.getElementById('panel-login-keluarga').classList.add('hidden');
-            document.getElementById('app-content-wrapper').classList.remove('hidden');
-            updateUI();
+        // AKSI LOGIN KELUARGA
+        window.pilihRoleKeluarga = function(role) {
+            roleKeluargaSementara = role;
+            document.getElementById('label-role-terpilih').innerText = role.toUpperCase();
+            document.getElementById('keluarga-username-input').value = '';
+            document.getElementById('keluarga-password-input').value = '';
+            document.getElementById('error-keluarga-pesan').classList.add('hidden');
+            
+            // Sembunyikan tombol, munculkan form input login
+            document.getElementById('pilih-role-keluarga').classList.add('hidden');
+            document.getElementById('form-verifikasi-keluarga').classList.remove('hidden');
+        }
+
+        window.batalLoginKeluarga = function() {
+            roleKeluargaSementara = null;
+            document.getElementById('pilih-role-keluarga').classList.remove('hidden');
+            document.getElementById('form-verifikasi-keluarga').classList.add('hidden');
         }
 
         window.logoutKeluarga = function() {
             currentUserKeluarga = null;
             localStorage.removeItem('current_user_keluarga');
             document.getElementById('app-content-wrapper').classList.add('hidden');
+            batalLoginKeluarga();
             document.getElementById('panel-login-keluarga').classList.remove('hidden');
         }
 
