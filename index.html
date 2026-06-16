@@ -242,7 +242,7 @@
                 <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
                     <div class="flex justify-between items-center mb-2">
                         <h4 class="text-xs font-bold text-indigo-900 uppercase tracking-wider">👥 DATABASE MASTER PELANGGAN AKTIF (AUTO-PROYEKSI 3 BULAN KE DEPAN)</h4>
-                        <span class="text-3xs font-black bg-indigo-600 text-white px-2 py-0.5 rounded-full uppercase animate-pulse">📅 Periode: Juli - Sept 2026</span>
+                        <span class="text-3xs font-black bg-indigo-600 text-white px-2 py-0.5 rounded-full uppercase">📅 Periode: Juli - Sept 2026</span>
                     </div>
                     <div id="master-pelanggan-badges" class="flex flex-wrap gap-2 text-xs"></div>
                 </div>
@@ -509,7 +509,7 @@
     </div>
 
     <script>
-        let currentRoleUser = 'admin'; // Keamanan lokal: 'admin' atau 'petugas'
+        let currentRoleUser = 'admin'; 
         let unitAktif = 'keluarga';
         let subTabInternetAktif = 'master'; 
         let roleKeluargaSementara = null;
@@ -548,7 +548,6 @@
         document.getElementById('out-tanggal').value = '2026-07-01';
         document.getElementById('input-total-anggaran').value = totalAnggaranKeluarga;
 
-        // ================= AUTOMATIC BILL GENERATOR FOR 3 MONTHS AHEAD =================
         function jalankanAutoProyeksiTagihan() {
             if (masterPelangganInternet.length === 0) return;
 
@@ -606,11 +605,12 @@
                 sessionStorage.setItem('login_utama_sukses', 'true');
                 sessionStorage.setItem('role_user_aktif', 'petugas');
                 
-                // Petugas langsung diarahkan ke unit internet
+                // Petugas langsung diarahkan ke unit internet, tab INPUT ANGGARAN MASUK
                 unitAktif = 'internet';
+                subTabInternetAktif = 'masuk'; 
+                
                 document.getElementById('gerbang-login-utama').classList.add('hidden');
                 document.getElementById('app-content-wrapper').classList.remove('hidden');
-                subTabInternetAktif = 'master';
                 resetFormMasukInternet();
                 updateUI();
             } else {
@@ -682,7 +682,7 @@
         }
 
         window.kembaliKeMenuUtama = function() {
-            if (currentRoleUser === 'petugas') return; // Cegah bypass
+            if (currentRoleUser === 'petugas') return; 
             document.getElementById('app-content-wrapper').classList.add('hidden');
             document.getElementById('panel-login-keluarga').classList.add('hidden');
             document.getElementById('panel-login-bisnis').classList.add('hidden');
@@ -718,8 +718,8 @@
         }
 
         window.switchTabInternet = function(tab) {
-            if(currentRoleUser === 'petugas' && tab === 'keluar') {
-                alert("Akses ditolak: Petugas tidak diizinkan membuka tab pengeluaran.");
+            if(currentRoleUser === 'petugas' && (tab === 'master' || tab === 'keluar')) {
+                alert("Akses ditolak: Petugas tidak diizinkan membuka halaman ini.");
                 return;
             }
             subTabInternetAktif = tab;
@@ -763,6 +763,7 @@
                     document.getElementById('layar-menu-utama').classList.add('hidden');
                     document.getElementById('app-content-wrapper').classList.remove('hidden');
                     unitAktif = 'internet';
+                    subTabInternetAktif = 'masuk'; // Langsung kunci ke menu input tagihan
                     updateUI();
                 } else {
                     document.getElementById('layar-menu-utama').classList.remove('hidden');
@@ -781,12 +782,11 @@
             return namaMap[unitAktif];
         }
 
-        // CONTROL AUTO COMPLETE PELANGGAN
         const inputPelanggan = document.getElementById('net-pelanggan');
         const suggestionsBox = document.getElementById('search-suggestions');
 
         inputPelanggan.addEventListener('input', function() {
-            if(currentRoleUser === 'petugas') return; // Petugas dilarang isi pelanggan baru
+            if(currentRoleUser === 'petugas') return; 
             
             const query = this.value.toLowerCase().trim();
             suggestionsBox.innerHTML = '';
@@ -828,23 +828,28 @@
         });
 
 
-        // UI & SECURITY ROLE SYSTEM VIEW REFRESH
+        // SISTEM KONTROL HAK AKSES DAN BAR NAVIGASI VIEW
         function updateUI() {
             currentRoleUser = sessionStorage.getItem('role_user_aktif') || 'admin';
             document.getElementById('nama-pembukuan-aktif').innerText = getNamaUnitAktif();
             
-            // Konfigurasi Visibilitas Berdasarkan Role
+            // Konfigurasi Proteksi Menu Petugas
             if (currentRoleUser === 'petugas') {
                 document.getElementById('btn-nav-menu-utama').classList.add('hidden');
-                document.getElementById('tab-nav-keluar').classList.add('hidden');
                 document.getElementById('btn-clear-all-data').classList.add('hidden');
                 document.getElementById('btn-ganti-user-sub').classList.add('hidden');
                 document.getElementById('nama-user-aktif').innerText = "Petugas Lapangan (Terbatas)";
+                
+                // Sembunyikan tombol tab Master Dashboard & Tab Keluar secara visual
+                document.getElementById('tab-btn-master').classList.add('hidden');
+                document.getElementById('tab-nav-keluar').classList.add('hidden');
             } else {
                 document.getElementById('btn-nav-menu-utama').classList.remove('hidden');
-                document.getElementById('tab-nav-keluar').classList.remove('hidden');
                 document.getElementById('btn-clear-all-data').classList.remove('hidden');
                 document.getElementById('btn-ganti-user-sub').classList.remove('hidden');
+                
+                document.getElementById('tab-btn-master').classList.remove('hidden');
+                document.getElementById('tab-nav-keluar').classList.remove('hidden');
             }
 
             document.getElementById('tabs-master-internet').classList.add('hidden');
@@ -1058,315 +1063,3 @@
                         <td class="p-2.5"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-bold text-3xs">✔️ ${t.petugas}</span></td>
                         <td class="p-2.5 text-gray-400 italic">${t.keteranganBebas || '-'}</td>
                         <td class="p-2.5 text-center whitespace-nowrap">
-                            <button onclick="mulaiEditPelanggan(${indexAsli})" class="text-blue-600 font-bold mr-3 cursor-pointer">Edit</button>
-                            ${btnHapusHtml}
-                        </td>
-                    `;
-                    tSudahMasuk.appendChild(row);
-                }
-
-                const miniRow = document.createElement('tr');
-                miniRow.innerHTML = `
-                    <td class="p-2 font-semibold text-gray-700">${t.namaPelanggan} <span class="text-3xs text-gray-400 block">(${t.tanggalTagihan})</span></td>
-                    <td class="p-2 text-right text-gray-400">${formatRupiah(vTagihan)}</td>
-                    <td class="p-2 text-right font-bold text-emerald-600">${formatRupiah(vBayar)}</td>
-                    <td class="p-2"><span class="text-gray-500 text-3xs bg-gray-100 px-1 rounded">${t.petugas}</span></td>
-                `;
-                miniTableMasuk.appendChild(miniRow);
-            });
-
-            let totalNotaKeluarNet = 0;
-            let totalAnggaranKeluarNet = 0; 
-            let totalUtangOperasionalNet = 0;
-
-            const tBelumKeluar = document.getElementById('table-out-belum-bayar');
-            const tSudahKeluar = document.getElementById('table-out-sudah-bayar');
-            const miniTableKeluar = document.getElementById('mini-table-internet-keluar');
-
-            tBelumKeluar.innerHTML = '';
-            tSudahKeluar.innerHTML = '';
-            miniTableKeluar.innerHTML = '';
-
-            let listKeluarSorted = listKeluar.map((item, originalIndex) => ({...item, originalIndex}))
-                                             .sort((a, b) => new Date(b.tanggalPengeluaran) - new Date(a.tanggalPengeluaran));
-
-            listKeluarSorted.forEach((t) => {
-                const vBiaya = parseFloat(t.tagihanBiaya) || 0;
-                const indexAsli = t.originalIndex;
-                totalNotaKeluarNet += vBiaya;
-
-                const row = document.createElement('tr');
-                row.className = "hover:bg-gray-50";
-
-                if (t.status === 'Belum Dibayar') {
-                    totalUtangOperasionalNet += vBiaya;
-                    row.innerHTML = `
-                        <td class="p-2.5 text-gray-500">${t.tanggalPengeluaran}</td>
-                        <td class="p-2.5 font-bold text-amber-800 bg-amber-50">${t.keterangan}</td>
-                        <td class="p-2.5 text-right font-bold text-gray-700">${formatRupiah(vBiaya)}</td>
-                        <td class="p-2.5"><span class="bg-gray-200 px-1 py-0.5 rounded text-3xs">${t.metode}</span></td>
-                        <td class="p-2.5 text-center whitespace-nowrap">
-                            <button onclick="lunasiUtangInternet(${indexAsli})" class="text-blue-600 font-bold mr-2 cursor-pointer">Set Lunas</button>
-                            <button onclick="hapusTransaksiInternet('keluar', ${indexAsli})" class="text-red-500 cursor-pointer">Hapus</button>
-                        </td>
-                    `;
-                    tBelumKeluar.appendChild(row);
-                } else {
-                    totalAnggaranKeluarNet += vBiaya;
-                    row.innerHTML = `
-                        <td class="p-2.5 text-gray-500">${t.tanggalPengeluaran}</td>
-                        <td class="p-2.5 font-semibold text-gray-800">${t.keterangan}</td>
-                        <td class="p-2.5 text-right font-bold text-red-600">${formatRupiah(vBiaya)}</td>
-                        <td class="p-2.5 text-gray-500"><span class="bg-red-100 text-red-800 px-1 py-0.5 rounded font-bold text-3xs">💸 ${t.metode}</span></td>
-                        <td class="p-2.5 text-center"><button onclick="hapusTransaksiInternet('keluar', ${indexAsli})" class="text-red-500 font-bold cursor-pointer">Hapus</button></td>
-                    `;
-                    tSudahKeluar.appendChild(row);
-                }
-
-                const miniRow = document.createElement('tr');
-                miniRow.innerHTML = `
-                    <td class="p-2 font-semibold text-gray-700">${t.keterangan}</td>
-                    <td class="p-2 text-right font-bold text-red-600">${formatRupiah(vBiaya)}</td>
-                    <td class="p-2"><span class="text-3xs px-1 rounded ${t.status==='Belum Dibayar'?'bg-amber-100 text-amber-800':'bg-red-100 text-red-800'}">${t.status}</span></td>
-                    <td class="p-2 text-gray-400 text-3xs">${t.metode}</td>
-                `;
-                miniTableKeluar.appendChild(miniRow);
-            });
-
-            if (subTabInternetAktif === 'masuk') {
-                document.getElementById('total-pemasukan').innerText = formatRupiah(totalNominalTagihanNet);
-                document.getElementById('total-pengeluaran').innerText = formatRupiah(totalAnggaranMasukNet);
-                document.getElementById('saldo-akhir').innerText = formatRupiah(totalPiutangPelangganNet);
-                document.getElementById('card-tambahan-value').innerText = `${listMasuk.length} Transaksi`;
-            } 
-            else if (subTabInternetAktif === 'keluar') {
-                document.getElementById('total-pemasukan').innerText = formatRupiah(totalNotaKeluarNet);
-                document.getElementById('total-pengeluaran').innerText = formatRupiah(totalAnggaranKeluarNet);
-                document.getElementById('saldo-akhir').innerText = formatRupiah(totalUtangOperasionalNet);
-                document.getElementById('card-tambahan-value').innerText = `${listKeluar.length} Nota`;
-            }
-
-            let sisaKeuntunganBersihMaster = totalAnggaranMasukNet - totalAnggaranKeluarNet;
-            document.getElementById('master-net-masuk').innerText = formatRupiah(totalAnggaranMasukNet);
-            document.getElementById('master-net-keluar').innerText = formatRupiah(totalAnggaranKeluarNet);
-            
-            const txtSisaMaster = document.getElementById('master-net-sisa');
-            txtSisaMaster.innerText = formatRupiah(sisaKeuntunganBersihMaster);
-            if(sisaKeuntunganBersihMaster >= 0) {
-                txtSisaMaster.className = "text-xl font-black text-blue-800 block mt-1";
-            } else {
-                txtSisaMaster.className = "text-xl font-black text-red-600 block mt-1";
-            }
-        }
-
-        // FUNGSI EDIT ATAU PILIH DATA TAGIHAN PELANGGAN
-        window.mulaiEditPelanggan = function(index) {
-            const dataItem = databasePembukuan.internet.masuk[index];
-            if (!dataItem) return;
-
-            document.getElementById('net-edit-index').value = index;
-            document.getElementById('net-pelanggan').value = dataItem.namaPelanggan;
-            document.getElementById('net-tagihan').value = dataItem.tagihan;
-            document.getElementById('net-tanggal').value = dataItem.tanggalTagihan;
-            document.getElementById('net-pembayaran').value = dataItem.pembayaran;
-            document.getElementById('net-petugas').value = dataItem.petugas === "Belum Setor" ? "Transfer" : dataItem.petugas;
-            document.getElementById('net-keterangan').value = dataItem.keteranganBebas || '';
-
-            // PROTEKSI KHUSUS PETUGAS: Kunci input vital
-            if (currentRoleUser === 'petugas') {
-                document.getElementById('net-pelanggan').disabled = true;
-                document.getElementById('net-tagihan').disabled = true;
-                document.getElementById('net-tanggal').disabled = true;
-                document.getElementById('notice-petugas-locked').classList.remove('hidden');
-                
-                document.getElementById('badge-mode-form-masuk').className = "p-2 bg-amber-500 text-white rounded font-bold text-2xs text-center uppercase";
-                document.getElementById('badge-mode-form-masuk').innerText = "📝 FORM PETUGAS: INPUT SETORAN BAYAR";
-            } else {
-                document.getElementById('net-pelanggan').disabled = false;
-                document.getElementById('net-tagihan').disabled = false;
-                document.getElementById('net-tanggal').disabled = false;
-                document.getElementById('notice-petugas-locked').classList.add('hidden');
-                
-                document.getElementById('badge-mode-form-masuk').className = "p-2 bg-amber-100 border border-amber-300 text-amber-950 rounded font-bold text-2xs text-center uppercase";
-                document.getElementById('badge-mode-form-masuk').innerText = "📝 MODE ISI PEMBAYARAN / EDIT TAGIHAN";
-            }
-
-            document.getElementById('btn-submit-masuk').innerText = "Simpan Data Pembayaran";
-            document.getElementById('btn-submit-masuk').className = "w-2/3 bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 rounded-lg text-sm cursor-pointer transition-all";
-            document.getElementById('btn-cancel-edit-masuk').classList.remove('hidden');
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        window.resetFormMasukInternet = function() {
-            document.getElementById('net-edit-index').value = "-1";
-            document.getElementById('net-pelanggan').value = '';
-            document.getElementById('net-tagihan').value = '';
-            document.getElementById('net-tanggal').value = '2026-07-01';
-            document.getElementById('net-pembayaran').value = '0';
-            document.getElementById('net-keterangan').value = '';
-            
-            document.getElementById('net-pelanggan').disabled = false;
-            document.getElementById('net-tagihan').disabled = false;
-            document.getElementById('net-tanggal').disabled = false;
-            document.getElementById('notice-petugas-locked').classList.add('hidden');
-
-            suggestionsBox.innerHTML = '';
-            suggestionsBox.classList.add('hidden');
-            
-            document.getElementById('badge-mode-form-masuk').className = "p-2 bg-indigo-50 border border-indigo-200 text-indigo-900 rounded font-bold text-2xs text-center uppercase";
-            document.getElementById('badge-mode-form-masuk').innerText = "💰 FORM ANGGARAN MASUK PELANGGAN";
-            document.getElementById('btn-submit-masuk').innerText = "Simpan Anggaran Masuk";
-            document.getElementById('btn-submit-masuk').className = "w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg text-sm cursor-pointer transition-all";
-            document.getElementById('btn-cancel-edit-masuk').classList.add('hidden');
-        }
-
-        // AKSI KIRIM DATA FORM STANDAR
-        formStandar.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const dataBaru = {
-                deskripsi: document.getElementById('deskripsi').value,
-                jenis: document.getElementById('jenis').value,
-                jumlah: document.getElementById('jumlah').value,
-                tanggal: document.getElementById('tanggal').value,
-                oleh: unitAktif === 'keluarga' ? currentUserKeluarga : null
-            };
-            databasePembukuan[unitAktif].push(dataBaru);
-            updateUI();
-            document.getElementById('deskripsi').value = '';
-            document.getElementById('jumlah').value = '';
-        });
-
-        // AKSI KIRIM DATA FORM MASUK INTERNET
-        formInternetMasuk.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const editIndex = parseInt(document.getElementById('net-edit-index').value);
-            const namaInput = document.getElementById('net-pelanggan').value.trim();
-
-            if (currentRoleUser === 'petugas' && editIndex === -1) {
-                alert("Petugas hanya boleh mengedit draf tagihan yang sudah ada! Silakan pilih dari tabel di bawah.");
-                return;
-            }
-
-            let paketTagihanInternet = {
-                namaPelanggan: namaInput,
-                tagihan: parseFloat(document.getElementById('net-tagihan').value) || 0,
-                tanggalTagihan: document.getElementById('net-tanggal').value,
-                pembayaran: parseFloat(document.getElementById('net-pembayaran').value) || 0,
-                petugas: document.getElementById('net-petugas').value,
-                keteranganBebas: document.getElementById('net-keterangan').value
-            };
-
-            // Jika petugas mengedit, pastikan nilai asli dikunci kembali dari database agar aman dari inspect element
-            if (currentRoleUser === 'petugas' && editIndex > -1) {
-                const dataAsli = databasePembukuan.internet.masuk[editIndex];
-                paketTagihanInternet.namaPelanggan = dataAsli.namaPelanggan;
-                paketTagihanInternet.tagihan = dataAsli.tagihan;
-                paketTagihanInternet.tanggalTagihan = dataAsli.tanggalTagihan;
-            }
-
-            if (currentRoleUser === 'admin' && !masterPelangganInternet.includes(namaInput)) {
-                masterPelangganInternet.push(namaInput);
-                masterPelangganInternet.sort();
-                setTimeout(() => { jalankanAutoProyeksiTagihan(); updateUI(); }, 100);
-            }
-
-            if (editIndex > -1) {
-                databasePembukuan.internet.masuk[editIndex] = paketTagihanInternet;
-                alert("Data setoran berhasil diperbarui!");
-            } else {
-                databasePembukuan.internet.masuk.push(paketTagihanInternet);
-            }
-
-            resetFormMasukInternet();
-            updateUI();
-        });
-
-        // AKSI KIRIM DATA FORM KELUAR INTERNET
-        formInternetKeluar.addEventListener('submit', function(e) {
-            e.preventDefault();
-            if(currentRoleUser === 'petugas') return;
-            const paketKeluarInternet = {
-                metode: document.getElementById('out-metode').value,
-                tagihanBiaya: parseFloat(document.getElementById('out-tagihan').value) || 0,
-                status: document.getElementById('out-status').value,
-                keterangan: document.getElementById('out-keterangan').value,
-                tanggalPengeluaran: document.getElementById('out-tanggal').value
-            };
-            databasePembukuan.internet.keluar.push(paketKeluarInternet);
-            updateUI();
-
-            document.getElementById('out-tagihan').value = '';
-            document.getElementById('out-keterangan').value = '';
-        });
-
-        window.lunasiUtangInternet = function(index) {
-            if(currentRoleUser === 'petugas') return;
-            if (confirm("Ubah status nota pengeluaran ini menjadi Sudah Dibayar (Lunas)?")) {
-                databasePembukuan.internet.keluar[index].status = 'Sudah Dibayar';
-                updateUI();
-            }
-        }
-
-        window.hapusTransaksiInternet = function(subJenis, index) {
-            if(currentRoleUser === 'petugas') return;
-            if (confirm("Hapus baris data riwayat internet ini secara permanen?")) {
-                databasePembukuan.internet[subJenis].splice(index, 1);
-                const editIndex = parseInt(document.getElementById('net-edit-index').value);
-                if (subJenis === 'masuk' && editIndex === index) {
-                    resetFormMasukInternet();
-                }
-                updateUI();
-            }
-        }
-
-        window.hapusTransaksi = function(index) {
-            if(confirm("Hapus catatan data baris ini?")) {
-                databasePembukuan[unitAktif].splice(index, 1);
-                updateUI();
-            }
-        }
-
-        window.hapusSemuaDataUnit = function() {
-            if(currentRoleUser === 'petugas') return;
-            if(confirm(`Hapus seluruh riwayat data pada komponen ${getNamaUnitAktif()}?`)) {
-                if (unitAktif === 'internet') {
-                    databasePembukuan.internet = { masuk: [], keluar: [] };
-                    resetFormMasukInternet();
-                } else {
-                    databasePembukuan[unitAktif] = [];
-                }
-                updateUI();
-            }
-        }
-
-        function updateChart(val1, val2, isKeluarga) {
-            const ctx = document.getElementById('financialChart').getContext('2d');
-            if (myChart) myChart.destroy();
-            if (unitAktif === 'internet') return; 
-            
-            const label1 = isKeluarga ? 'Sisa Anggaran' : 'Total Masuk';
-            const label2 = isKeluarga ? 'Anggaran Terpakai' : 'Total Keluar';
-
-            myChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: [label1, label2],
-                    datasets: [{
-                        data: [val1 < 0 ? 0 : val1, val2],
-                        backgroundColor: [isKeluarga ? '#3B82F6' : '#10B981', '#EF4444'],
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom' } }
-                }
-            });
-        }
-
-        tampilkanLayarSesuaiState();
-    </script>
-</body>
-</html>
