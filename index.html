@@ -1252,8 +1252,8 @@
 
 <!-- ===== RAISYA PRODUCTION → BLOK 9 R2 - RAISYA DECORATION v2.1 - INTERNET REPORT PAGE ===== -->
 <!-- ============================================================
-     BLOK 9 R2 - RAISYA DECORATION v2.1 - INTERNET REPORT PAGE
-     (19 Sub-Menu lengkap: 1-19 termasuk Tampilkan Penagihan)
+     BLOK 9 R3 - RAISYA DECORATION v2.1 - INTERNET REPORT PAGE
+     (20 Sub-Menu lengkap: 1-18 + 19 Superadmin + 20 Staf)
      ============================================================ -->
             <div id="page-internet-report" class="hidden space-y-4 page-transition">
                 
@@ -1381,12 +1381,21 @@
                     </button>
                 </div>
 
-                <!-- SUB-MENU BARIS 7: TAMPILKAN PENAGIHAN (1 tombol) -->
-                <div class="bg-slate-100 p-1.5 rounded-xl">
-                    <p class="text-[9px] font-bold text-slate-400 uppercase px-1 mb-1">📋 Penagihan</p>
+                <!-- SUB-MENU BARIS 7: PENAGIHAN - KHUSUS SUPERADMIN -->
+                <div id="penagihan-superadmin-group" class="bg-slate-100 p-1.5 rounded-xl">
+                    <p class="text-[9px] font-bold text-slate-400 uppercase px-1 mb-1">📋 Penagihan (Superadmin)</p>
                     <button id="btn-sub-net19" onclick="switchNetSubMenu(19)" 
                             class="w-full py-2.5 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all text-[10px] font-bold bg-gradient-to-r from-teal-50 to-cyan-50 border border-teal-200">
-                            <i class="fa-solid fa-file-invoice-dollar text-teal-600 mr-1"></i> 19. TAMPILKAN PENAGIHAN
+                            <i class="fa-solid fa-file-invoice-dollar text-teal-600 mr-1"></i> 19. DATA PENAGIHAN
+                    </button>
+                </div>
+
+                <!-- SUB-MENU BARIS 8: INPUT PENAGIHAN - KHUSUS STAF INTERNET -->
+                <div id="penagihan-staf-group" class="bg-slate-100 p-1.5 rounded-xl hidden">
+                    <p class="text-[9px] font-bold text-slate-400 uppercase px-1 mb-1">📋 Penagihan (Staf)</p>
+                    <button id="btn-sub-net20" onclick="switchNetSubMenu(20)" 
+                            class="w-full py-2.5 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all text-[10px] font-bold bg-gradient-to-r from-teal-50 to-cyan-50 border border-teal-200">
+                            <i class="fa-solid fa-file-invoice-dollar text-teal-600 mr-1"></i> 20. INPUT PENAGIHAN
                     </button>
                 </div>
 
@@ -1409,7 +1418,7 @@
                     </div>
                 </div>
 
-                <!-- FILTER SIKLUS -->
+                <!-- FILTER SIKLUS (untuk sub 1, 11, 12, 13, 17, 19) -->
                 <div id="net-filter-box" class="hidden flex items-center justify-between bg-slate-50 p-3 rounded-xl border border-slate-200 gap-3 flex-wrap">
                     <label class="text-[10px] font-bold text-slate-500 uppercase flex items-center gap-1">
                         <i class="fa-solid fa-filter text-cyan-500"></i> Filter Siklus:
@@ -1426,7 +1435,7 @@
                     </select>
                 </div>
 
-                <!-- FILTER STATUS -->
+                <!-- FILTER STATUS (untuk sub 11, 12, 13, 14, 19) -->
                 <div id="net-status-filter-box" class="hidden flex items-center justify-between bg-slate-50 p-3 rounded-xl border border-slate-200 gap-3 flex-wrap">
                     <label class="text-[10px] font-bold text-slate-500 uppercase flex items-center gap-1">
                         <i class="fa-solid fa-filter text-cyan-500"></i> Filter Status:
@@ -1439,7 +1448,7 @@
                     </select>
                 </div>
 
-                <!-- FILTER BULAN & TAHUN -->
+                <!-- FILTER BULAN & TAHUN (khusus sub 18: Rekap Bulanan) -->
                 <div id="net-month-filter-box" class="hidden flex items-center justify-between bg-slate-50 p-3 rounded-xl border border-slate-200 gap-3 flex-wrap">
                     <div class="flex items-center gap-2 flex-wrap">
                         <label class="text-[10px] font-bold text-slate-500 uppercase">
@@ -1518,7 +1527,7 @@
                     </div>
                 </div>
             </div>
-<!-- END BLOK 9 R2 -->
+<!-- END BLOK 9 R3 -->
 
 
 <!-- ===== RAISYA PRODUCTION → BLOK 10 - RAISYA DECORATION v2.0 - REKAP ALL REPORTS ===== -->
@@ -3136,8 +3145,7 @@
 <!-- ============================================================
      BLOK 13 R3 - RAISYA DECORATION v2.1 - JAVASCRIPT PART 2b
      (Internet 20 Sub-Menu, Global Rekap, Export)
-     Sub-menu 19: Data Penagihan (Superadmin)
-     Sub-menu 20: Input Penagihan (Staf Internet)
+     PERBAIKAN: Cek duplikat ketat + Superadmin lihat menu Penagihan
      ============================================================ -->
     <script>
         // ========== JALUR INTERNET (20 SUB-MENU) ==========
@@ -3147,10 +3155,11 @@
             const isStafInternet = currentUser && currentUser.role === 'staf_internet';
             const isSuperadmin = currentUser && currentUser.role === 'superadmin';
             
-            // Staf internet bisa akses sub 2,3,11,12,20 (Input Penagihan)
+            // Staf internet: sub 2,3,11,12,20
+            // Superadmin: semua sub (1-20)
             const allowedSubs = isStafInternet ? [2,3,11,12,20] : subs;
 
-            // Sembunyikan/tampilkan grup penagihan berdasarkan role
+            // Tampilkan grup penagihan sesuai role
             const superadminGroup = document.getElementById('penagihan-superadmin-group');
             const stafGroup = document.getElementById('penagihan-staf-group');
             if (superadminGroup) {
@@ -3219,7 +3228,6 @@
                 // Staf Internet: Input Penagihan (hanya tambah)
                 if (filterBox) filterBox.classList.remove('hidden');
                 if (subrekapBox) subrekapBox.classList.remove('hidden');
-                // Cek apakah hari ini adalah tanggal input yang diizinkan
                 const today = new Date().getDate();
                 const allowedInputDates = [5, 10, 15, 20, 25, 30];
                 if (!allowedInputDates.includes(today)) {
@@ -3244,12 +3252,10 @@
             renderInternetData();
         }
 
-        // Fungsi untuk mendapatkan jumlah hari dalam bulan (untuk pengecekan akhir bulan)
         function getDaysInMonth(year, month) {
             return new Date(year, month, 0).getDate();
         }
 
-        // Fungsi untuk memeriksa apakah suatu tanggal termasuk dalam rentang tampilan staf internet
         function isInViewingRange(day, month, year) {
             const daysInMonth = getDaysInMonth(year, month);
             const ranges = [
@@ -3258,17 +3264,13 @@
                 [14, 16],
                 [19, 21],
                 [24, 26],
-                [29, daysInMonth] // 29 sampai akhir bulan (bisa 30, 31, atau 29)
+                [29, daysInMonth]
             ];
-            // Untuk rentang terakhir, jika bulan hanya 28 hari (Februari non-kabisat), sesuaikan
             if (daysInMonth === 28 && ranges[5][0] === 29) {
                 ranges[5][0] = 28;
             }
-            // Jika hari adalah 1, dan kemarin adalah akhir bulan, maka 1 termasuk rentang terakhir
             if (day === 1) {
-                // Cek apakah tanggal 1 termasuk rentang lanjutan dari akhir bulan sebelumnya
-                // Untuk penyederhanaan, tanggal 1 selalu tampil jika merupakan bagian dari rentang 29-30/31/1
-                return true; // tanggal 1 selalu tampil untuk staf internet
+                return true;
             }
             return ranges.some(r => day >= r[0] && day <= r[1]);
         }
@@ -3513,7 +3515,6 @@
                 renderAllPelangganData();
                 return;
             } else if (activeNetSub === 19) {
-                // Superadmin: tampilkan semua data penagihan (tagihan + tunggakan)
                 let allData = [...netDatabases.tagihan, ...netDatabases.tunggakan];
                 data = allData.filter(d => {
                     const pelanggan = netDatabases.pelanggan.find(p => p.nama === d.nama);
@@ -3523,7 +3524,6 @@
                 });
                 document.getElementById('net-lbl-t1').innerText = 'Total Data Penagihan';
             } else if (activeNetSub === 20) {
-                // Staf Internet: tampilkan data penagihan hanya pada rentang tanggal tertentu
                 let allData = [...netDatabases.tagihan, ...netDatabases.tunggakan];
                 const now = new Date();
                 const currentMonth = now.getMonth() + 1;
@@ -3534,9 +3534,7 @@
                     const day = dDate.getDate();
                     const month = dDate.getMonth() + 1;
                     const year = dDate.getFullYear();
-                    // Hanya tampilkan data bulan ini
                     if (month !== currentMonth || year !== currentYear) return false;
-                    // Filter berdasarkan rentang tanggal tampilan
                     return isInViewingRange(day, month, year);
                 });
                 document.getElementById('net-lbl-t1').innerText = 'Data Penagihan (Rentang Tampil)';
@@ -3571,8 +3569,6 @@
                 else if (item.status === 'Belum Terbayar') label = '<span class="bg-red-100 text-red-700 text-[9px] font-bold px-1.5 py-0.5 rounded">BELUM</span>';
                 if (pelanggan && pelanggan.siklus) label += ` <span class="bg-cyan-100 text-cyan-700 text-[9px] font-bold px-1.5 py-0.5 rounded">Tgl ${pelanggan.siklus}</span>`;
 
-                // Untuk sub 19, superadmin bisa edit/hapus
-                // Untuk sub 20, staf tidak bisa edit/hapus
                 const showActions = isSuperadmin && activeNetSub === 19;
                 const actionButtons = showActions ? `
                     <div class="flex space-x-1 ml-2">
@@ -3705,8 +3701,6 @@
                     ket: document.getElementById('net-f1-ket')?.value.trim() || ''
                 });
             } else if (activeNetSub === 2 || activeNetSub === 19) {
-                // Sub 2: Tagihan Masuk (Superadmin)
-                // Sub 19: Data Penagihan (Superadmin)
                 targetArr = netDatabases.tagihan;
                 getObj = () => ({
                     nama: document.getElementById('net-f2-nama')?.value || '',
@@ -3729,7 +3723,6 @@
                     ket: document.getElementById('net-f2-ket')?.value?.trim() || ''
                 });
             } else if (activeNetSub === 20) {
-                // Sub 20: Input Penagihan (Staf Internet)
                 targetArr = netDatabases.tagihan;
                 getObj = () => ({
                     nama: document.getElementById('net-f2-nama')?.value || '',
@@ -3783,11 +3776,16 @@
             const obj = getObj();
             if (!obj.nama) { showToast('⚠️ Nama wajib diisi!', 'error'); return; }
             
-            // Cek duplikat untuk sub 19 dan 20 (nama + tanggal tidak boleh sama)
-            if (activeNetSub === 19 || activeNetSub === 20) {
-                const existingIndex = targetArr.findIndex(item => item.nama === obj.nama && item.tanggal === obj.tanggal);
+            // 🔴 CEK DUPLIKAT KETAT untuk semua yang masuk ke tagihan/tunggakan
+            if (activeNetSub === 2 || activeNetSub === 3 || activeNetSub === 19 || activeNetSub === 20) {
+                const namaInput = obj.nama.toLowerCase().trim();
+                const tanggalInput = obj.tanggal;
+                const existingIndex = targetArr.findIndex(item => 
+                    item.nama.toLowerCase().trim() === namaInput && 
+                    item.tanggal === tanggalInput
+                );
                 if (existingIndex !== -1 && (idx === -1 || existingIndex !== idx)) {
-                    showToast('⚠️ Data dengan nama dan tanggal yang sama sudah ada! Tidak boleh duplikat.', 'error');
+                    showToast('⚠️ Data dengan Nama dan Tanggal yang sama sudah ada! Tidak boleh duplikat.', 'error');
                     return;
                 }
             }
@@ -4046,71 +4044,4 @@
                 bizDatabases[key].OUT.forEach(item => {
                     let amt = parseInt(item.jumlah || 0);
                     totalKeluar += amt; itemCount++;
-                    container.innerHTML += `<div class="bg-white border border-slate-200/60 p-2.5 rounded-xl flex justify-between items-center text-xs"><div><span class="bg-${cfg.theme}-100 text-${cfg.theme}-700 text-[8px] font-black px-1.5 py-0.5 rounded uppercase">${cfg.name}</span><h4 class="font-bold text-slate-700 mt-1">${item.nama}</h4><p class="text-[9px] text-slate-400">Keluar | ${item.tanggal}</p></div><span class="text-rose-600 font-extrabold">-Rp ${amt.toLocaleString('id-ID')}</span></div>`;
-                });
-            });
-
-            [...netDatabases.tagihan.filter(d => d.status === 'Terbayar'), ...netDatabases.masukLain, ...netDatabases.tagihanMasuk1, ...netDatabases.tagihanMasuk2].forEach(item => {
-                let amt = parseInt(item.tagihan || item.jumlah || 0);
-                totalMasuk += amt; itemCount++;
-                container.innerHTML += `<div class="bg-white border border-slate-200/60 p-2.5 rounded-xl flex justify-between items-center text-xs"><div><span class="bg-cyan-100 text-cyan-700 text-[8px] font-black px-1.5 py-0.5 rounded uppercase">Internet</span><h4 class="font-bold text-slate-700 mt-1">${item.nama}</h4><p class="text-[9px] text-slate-400">Masuk | ${item.tanggal || ''}</p></div><span class="text-emerald-600 font-extrabold">+Rp ${amt.toLocaleString('id-ID')}</span></div>`;
-            });
-
-            [...netDatabases.keluar1, ...netDatabases.keluar2, ...netDatabases.tagihanKeluar1, ...netDatabases.tagihanKeluar2, ...netDatabases.tunggakan.filter(d => d.status === 'Terbayar')].forEach(item => {
-                let amt = parseInt(item.tagihan || item.jumlah || 0);
-                totalKeluar += amt; itemCount++;
-                container.innerHTML += `<div class="bg-white border border-slate-200/60 p-2.5 rounded-xl flex justify-between items-center text-xs"><div><span class="bg-cyan-100 text-cyan-700 text-[8px] font-black px-1.5 py-0.5 rounded uppercase">Internet</span><h4 class="font-bold text-slate-700 mt-1">${item.nama}</h4><p class="text-[9px] text-slate-400">Keluar | ${item.tanggal || ''}</p></div><span class="text-rose-600 font-extrabold">-Rp ${amt.toLocaleString('id-ID')}</span></div>`;
-            });
-
-            reportData.forEach(item => {
-                let amt = parseInt(item.jumlah || 0);
-                totalKeluar += amt; itemCount++;
-                container.innerHTML += `<div class="bg-white border border-slate-200/60 p-2.5 rounded-xl flex justify-between items-center text-xs"><div><span class="bg-blue-100 text-blue-700 text-[8px] font-black px-1.5 py-0.5 rounded uppercase">Keluarga</span><h4 class="font-bold text-slate-700 mt-1">${item.nama}</h4><p class="text-[9px] text-slate-400">Keluar | ${item.tanggal}</p></div><span class="text-rose-600 font-extrabold">-Rp ${amt.toLocaleString('id-ID')}</span></div>`;
-            });
-
-            if (container.innerHTML.trim() === '') {
-                container.innerHTML = '<div class="text-center text-slate-400 py-6 text-xs italic">Belum ada data transaksi.</div>';
-            }
-
-            let totalLaba = totalMasuk - totalKeluar;
-            globalCalculatedValues = { masuk: totalMasuk, keluar: totalKeluar, laba: totalLaba };
-
-            document.getElementById('rekap-mini-masuk').innerText = 'Rp ' + totalMasuk.toLocaleString('id-ID');
-            document.getElementById('rekap-mini-keluar').innerText = 'Rp ' + totalKeluar.toLocaleString('id-ID');
-            document.getElementById('rekap-mini-laba').innerText = 'Rp ' + totalLaba.toLocaleString('id-ID');
-            document.getElementById('rekap-total-masuk').innerText = 'Rp ' + totalMasuk.toLocaleString('id-ID');
-            document.getElementById('rekap-total-keluar').innerText = 'Rp ' + totalKeluar.toLocaleString('id-ID');
-            document.getElementById('rekap-total-laba').innerText = 'Rp ' + totalLaba.toLocaleString('id-ID');
-            document.getElementById('rekap-item-count').textContent = itemCount;
-
-            const labaBox = document.getElementById('rekap-laba-box');
-            if (labaBox) {
-                labaBox.className = totalLaba >= 0 
-                    ? 'bg-gradient-to-r from-emerald-500 to-teal-600 p-5 rounded-2xl text-white shadow-lg flex items-center justify-between'
-                    : 'bg-gradient-to-r from-red-500 to-orange-600 p-5 rounded-2xl text-white shadow-lg flex items-center justify-between';
-            }
-        }
-
-        function exportGlobalRekapToExcel() {
-            let rows = [
-                ['RAISYA DECORATION - LAPORAN REKAP EKSEKUTIF GLOBAL'],
-                ['Tanggal:', new Date().toLocaleDateString('id-ID')],
-                [],
-                ['RINGKASAN', 'NILAI (Rp)'],
-                ['Total Anggaran Masuk', globalCalculatedValues.masuk],
-                ['Total Anggaran Keluar', globalCalculatedValues.keluar],
-                [],
-                ['LABA BERSIH', globalCalculatedValues.laba]
-            ];
-            const ws = XLSX.utils.aoa_to_sheet(rows);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Rekap');
-            XLSX.writeFile(wb, 'Rekap_Semua_Laporan.xlsx');
-            showToast('✅ Excel berhasil didownload!', 'success');
-        }
-
-        console.log('✅ Blok 13 – Internet 20 Sub-Menu & Rekap Global siap');
-        console.log('👑 Superadmin: Data Penagihan (sub 19) - tambah, edit, hapus, simpan');
-        console.log('🧑‍💼 Staf Internet: Input Penagihan (sub 20) - hanya tambah, tgl 5,10,15,20,25,30');
-    </script>
-<!-- END BLOK 13 R3 -->
+                    container.innerHTML += `<div class="bg-white border border-slate-200/60 p-2.5 rounded-xl flex justify-between items-center text-xs"><div><span class="bg-${cfg.theme}-100 text-
