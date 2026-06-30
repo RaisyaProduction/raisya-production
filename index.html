@@ -2785,7 +2785,7 @@
 <!-- ============================================================
      BLOK 12 R2 FINAL - RAISYA DECORATION v2.1 - JAVASCRIPT PART 2
      (Business CRUD, Internet 18 Sub-Menu, Global Rekap, Export)
-     Role-based Access + Rekap Bulanan
+     Role-based Access + Rekap Bulanan + Fix REKAP langsung
      ============================================================ -->
     <script>
         // ========== JALUR BISNIS ==========
@@ -2794,6 +2794,14 @@
 
             activeBiz = bizKey;
 
+            // PENGECUALIAN: REKAP langsung tampil tanpa login bisnis
+            if (bizKey === 'REKAP') {
+                calculateAndRenderGlobalRekap();
+                switchPage('page-all-rekap');
+                return;
+            }
+
+            // Cek apakah user adalah staf bisnis yang sesuai
             const roleMap = {
                 'GHOST': 'staf_rumah_hantu',
                 'PLAYGROUND': 'staf_playground',
@@ -2802,9 +2810,9 @@
             };
             const requiredRole = roleMap[bizKey];
             const isStafForBiz = requiredRole && currentUser.role === requiredRole;
-            const isSuperadmin = currentUser.role === 'superadmin';
 
             if (isStafForBiz) {
+                // Staf langsung masuk tanpa login bisnis
                 if (bizKey === 'INTERNET') {
                     activeNetSub = 2;
                     switchNetSubMenu(2);
@@ -2818,6 +2826,7 @@
                 return;
             }
 
+            // Superadmin atau role lain harus login bisnis
             let cfg = systemCredentials[bizKey];
             document.getElementById('biz-login-title').innerHTML = `<i class="fa-solid fa-briefcase mr-1"></i> Otoritas ${cfg.name}`;
             document.getElementById('biz-login-user').value = '';
@@ -3064,7 +3073,6 @@
         function switchNetSubMenu(subNo) {
             activeNetSub = subNo;
             const subs = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18];
-
             const isStafInternet = currentUser && currentUser.role === 'staf_internet';
             const allowedSubs = isStafInternet ? [2,3,11,12] : subs;
 
@@ -3108,7 +3116,6 @@
                 document.getElementById('net-form-container').classList.add('hidden');
                 document.getElementById('net-month-filter-box').classList.remove('hidden');
                 document.getElementById('net-subrekap-box').classList.remove('hidden');
-                // Set default bulan dan tahun saat ini
                 const now = new Date();
                 if (!document.getElementById('net-filter-month').value) {
                     document.getElementById('net-filter-month').value = now.getMonth() + 1;
@@ -3229,11 +3236,9 @@
             const filterStatus = document.getElementById('net-filter-status') ? document.getElementById('net-filter-status').value : 'ALL';
             const isStafInternet = currentUser && currentUser.role === 'staf_internet';
 
-            // Sub 18: Rekap Bulanan
             if (activeNetSub === 18) {
                 const month = parseInt(document.getElementById('net-filter-month').value);
                 const year = parseInt(document.getElementById('net-filter-year').value);
-                // Filter data tagihan dan tunggakan pada bulan/tahun
                 data = [
                     ...netDatabases.tagihan.filter(d => {
                         if (!d.tanggal) return false;
@@ -3246,8 +3251,6 @@
                         return dDate.getFullYear() === year && (dDate.getMonth() + 1) === month;
                     })
                 ];
-                // Tambahkan juga data masuk lain, keluar, dll? Permintaan hanya "rekap laporan tagihan bulanan", fokus ke tagihan dan tunggakan.
-                // Tapi bisa juga semua pemasukan/pengeluaran. Biarkan sesuai kebutuhan: hanya tagihan dan tunggakan.
                 document.getElementById('net-lbl-t1').innerText = 'Rekap Tagihan Bulan ' + month + '/' + year;
             } else if (activeNetSub === 1) {
                 data = netDatabases.pelanggan.filter(p => filterSiklus === 'ALL' || p.siklus === filterSiklus);
@@ -3326,7 +3329,6 @@
                 return;
             }
 
-            // Hitung total
             data.forEach(item => {
                 const amt = parseInt(item.tagihan || item.jumlah || 0);
                 total += amt;
@@ -3334,17 +3336,13 @@
                 else if (item.status === 'Belum Terbayar') unpaid += amt;
             });
 
-            // Untuk sub 18, kita juga tampilkan tunggakan yang belum dibayar dari bulan itu
-            if (activeNetSub === 18) {
-                // paid/unpaid sudah dihitung dari data
-                // tunggakan dari data tunggakan yang belum dibayar
-                tunggakan = data.filter(d => d.status === 'Belum Terbayar' && netDatabases.tunggakan.some(t => t.nama === d.nama && t.tanggal === d.tanggal))
-                               .reduce((acc, d) => acc + parseInt(d.tagihan || 0), 0);
-            } else {
-                // Default tunggakan total
+            if (activeNetSub !== 18) {
                 netDatabases.tunggakan.forEach(item => {
                     tunggakan += parseInt(item.tagihan || 0);
                 });
+            } else {
+                // Untuk sub 18, tunggakan hanya dari data bulan itu yang belum dibayar
+                tunggakan = data.filter(d => d.status === 'Belum Terbayar').reduce((acc, d) => acc + parseInt(d.tagihan || 0), 0);
             }
 
             if (data.length === 0) {
@@ -3353,7 +3351,6 @@
                 document.getElementById('net-empty-state').classList.add('hidden');
             }
 
-            // Render item
             data.forEach((item, i) => {
                 const amt = parseInt(item.tagihan || item.jumlah || 0);
                 const pelanggan = netDatabases.pelanggan.find(p => p.nama === item.nama);
@@ -3779,7 +3776,6 @@
                 });
             });
 
-            // ... (sisa kode rekap global tidak berubah)
             [...netDatabases.tagihan.filter(d => d.status === 'Terbayar'), ...netDatabases.masukLain, ...netDatabases.tagihanMasuk1, ...netDatabases.tagihanMasuk2].forEach(item => {
                 let amt = parseInt(item.tagihan || item.jumlah || 0);
                 totalMasuk += amt; itemCount++;
@@ -3840,6 +3836,7 @@
         console.log('✅ Raisya Decoration v2.1 - Part 2 Siap!');
         console.log('📊 Bisnis, Internet 18 Sub-Menu, Rekap Bulanan, Export loaded');
         console.log('🔒 Role-based access: Staf hanya tambah, tanpa edit/hapus');
+        console.log('🔄 REKAP langsung tanpa login bisnis');
     </script>
 
 </body>
