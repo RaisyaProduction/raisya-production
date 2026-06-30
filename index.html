@@ -1639,7 +1639,7 @@
      BLOK 11 R2 - RAISYA DECORATION v2.1 - JAVASCRIPT PART 1
      (PWA, Toast, Theme, Multi-User Auth, Navigation, Settings,
       Backup, Reset, Family CRUD, Database Baru)
-     REVISI: systemCredentials & changeReportPasswords
+     REVISI: systemCredentials, changeReportPasswords, auto‑isi jabatan
      ============================================================ -->
     <script>
         // ========== PWA SERVICE WORKER ==========
@@ -2303,7 +2303,31 @@
             document.getElementById('akun-status').value = 'aktif';
             document.getElementById('form-akun-title').innerText = 'Tambah Akun Baru';
             document.getElementById('btn-batal-edit-akun').classList.add('hidden');
+            // Set jabatan awal sesuai role default
+            autoFillJabatan();
         }
+
+        // Fungsi untuk mengisi field jabatan berdasarkan role yang dipilih
+        function autoFillJabatan() {
+            const roleEl = document.getElementById('akun-role');
+            const jabatanEl = document.getElementById('akun-jabatan');
+            if (!roleEl || !jabatanEl) return;
+            const role = roleEl.value;
+            const jabatanMap = {
+                'staf_rumah_hantu': 'Staf Rumah Hantu',
+                'staf_playground': 'Staf Playground',
+                'staf_raisya_dec': 'Staf Raisya Decoration',
+                'staf_internet': 'Staf Internet'
+            };
+            jabatanEl.value = jabatanMap[role] || '';
+        }
+
+        // Event listener untuk auto-fill saat dropdown role berubah
+        document.addEventListener('change', function(e) {
+            if (e.target && e.target.id === 'akun-role') {
+                autoFillJabatan();
+            }
+        });
 
         function renderAkunList() {
             const container = document.getElementById('akun-list-container');
@@ -2769,6 +2793,8 @@
             if (!localStorage.getItem('raisya_credentials')) {
                 saveSystemCredentials();
             }
+            // Auto-fill jabatan pertama kali saat halaman dimuat (jika form sudah ada)
+            autoFillJabatan();
             console.log('✅ Raisya Decoration v2.1 - Part 1 Siap!');
             console.log('👤 Multi-User System Active');
             console.log('💾 Database: 10 Array Internet');
