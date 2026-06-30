@@ -1646,13 +1646,54 @@
     <script>
         // ========== PWA SERVICE WORKER ==========
         const swCode = `
-            const CACHE_NAME = 'raisya-dec-v4';
-            self.addEventListener('install', e => self.skipWaiting());
-            self.addEventListener('activate', e => e.waitUntil(clients.claim()));
-            self.addEventListener('fetch', e => {
-                e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
-            });
-        `;
+    const CACHE_NAME = 'raisya-dec-v5';
+    const ASSETS_TO_CACHE = [
+        '/',  // halaman utama
+        'https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
+        'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js'
+    ];
+
+    // Saat service worker terpasang, langsung cache semua aset penting
+    self.addEventListener('install', (e) => {
+        e.waitUntil(
+            caches.open(CACHE_NAME).then(cache => {
+                return cache.addAll(ASSETS_TO_CACHE);
+            })
+        );
+        self.skipWaiting();
+    });
+
+    self.addEventListener('activate', (e) => {
+        e.waitUntil(clients.claim());
+    });
+
+    // Strategi: ambil dari cache dulu, kalau tidak ada baru fetch (jika online)
+    self.addEventListener('fetch', (e) => {
+        e.respondWith(
+            caches.match(e.request).then(cachedResponse => {
+                if (cachedResponse) {
+                    // Kembalikan dari cache
+                    return cachedResponse;
+                }
+                // Jika tidak ada di cache, coba ambil dari jaringan
+                return fetch(e.request).then(response => {
+                    // Simpan ke cache untuk penggunaan offline berikutnya
+                    if (response && response.status === 200) {
+                        const responseClone = response.clone();
+                        caches.open(CACHE_NAME).then(cache => {
+                            cache.put(e.request, responseClone);
+                        });
+                    }
+                    return response;
+                }).catch(() => {
+                    // Jika offline dan tidak ada di cache, bisa tampilkan halaman fallback
+                    // Tapi untuk data JSON/XHR, kita biarkan gagal (toast akan muncul)
+                });
+            })
+        );
+    });
+`;
         
         if ('serviceWorker' in navigator) {
             const blob = new Blob([swCode], { type: 'text/javascript' });
