@@ -1252,11 +1252,7 @@
 <!-- ===== RAISYA PRODUCTION → BLOK 9 R2 - RAISYA DECORATION v2.1 - INTERNET REPORT PAGE ===== -->
 <!-- ============================================================
      BLOK 9 R2 - RAISYA DECORATION v2.1 - INTERNET REPORT PAGE
-     (17 Sub-Menu: Pelanggan, Tagihan Masuk, Tunggakan, 
-      Masuk Lain, Keluar 1, Keluar 2, Tagihan Masuk 1-2,
-      Tagihan Keluar 1-2, Terbayar, Belum, Tunggakan,
-      Tunggakan Belum, Hitung Masuk, Hitung Keluar,
-      Semua Data Pelanggan)
+     (17 Sub-Menu + 18 Rekap Bulanan)
      ============================================================ -->
             <div id="page-internet-report" class="hidden space-y-4 page-transition">
                 
@@ -1274,7 +1270,7 @@
                     </button>
                 </div>
 
-                <!-- SUB-MENU BARIS 1: INPUT DATA (6 tombol - grid 2 kolom) -->
+                <!-- SUB-MENU BARIS 1: INPUT DATA (6 tombol) -->
                 <div class="bg-slate-100 p-1.5 rounded-xl">
                     <p class="text-[9px] font-bold text-slate-400 uppercase px-1 mb-1">📥 Input Data</p>
                     <div class="grid grid-cols-2 gap-1.5 text-[10px] font-bold text-slate-600">
@@ -1305,7 +1301,7 @@
                     </div>
                 </div>
 
-                <!-- SUB-MENU BARIS 2: INPUT TAMBAHAN (4 tombol - grid 2 kolom) -->
+                <!-- SUB-MENU BARIS 2: INPUT TAMBAHAN (4 tombol) -->
                 <div class="bg-slate-100 p-1.5 rounded-xl">
                     <p class="text-[9px] font-bold text-slate-400 uppercase px-1 mb-1">📥 Input Tambahan</p>
                     <div class="grid grid-cols-2 gap-1.5 text-[10px] font-bold text-slate-600">
@@ -1328,7 +1324,7 @@
                     </div>
                 </div>
 
-                <!-- SUB-MENU BARIS 3: TAMPILKAN DATA (3 tombol - full width) -->
+                <!-- SUB-MENU BARIS 3: TAMPILKAN DATA (3 tombol) -->
                 <div class="bg-slate-100 p-1.5 rounded-xl">
                     <p class="text-[9px] font-bold text-slate-400 uppercase px-1 mb-1">👁 Tampilkan Data</p>
                     <div class="space-y-1.5 text-[10px] font-bold text-slate-600">
@@ -1347,7 +1343,7 @@
                     </div>
                 </div>
 
-                <!-- SUB-MENU BARIS 4: TAMPILAN & HITUNG (3 tombol - full width) -->
+                <!-- SUB-MENU BARIS 4: TAMPILAN & HITUNG (3 tombol) -->
                 <div class="bg-slate-100 p-1.5 rounded-xl">
                     <p class="text-[9px] font-bold text-slate-400 uppercase px-1 mb-1">📊 Laporan & Hitung</p>
                     <div class="space-y-1.5 text-[10px] font-bold text-slate-600">
@@ -1372,6 +1368,15 @@
                     <button id="btn-sub-net17" onclick="switchNetSubMenu(17)" 
                             class="w-full py-2.5 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all text-[10px] font-bold bg-gradient-to-r from-cyan-50 to-blue-50 border border-cyan-200">
                             <i class="fa-solid fa-address-book text-cyan-600 mr-1"></i> 17. SEMUA DATA PELANGGAN LENGKAP
+                    </button>
+                </div>
+
+                <!-- SUB-MENU BARIS 6: REKAP BULANAN (1 tombol) - BARU -->
+                <div class="bg-slate-100 p-1.5 rounded-xl">
+                    <p class="text-[9px] font-bold text-slate-400 uppercase px-1 mb-1">📆 Rekap Bulanan</p>
+                    <button id="btn-sub-net18" onclick="switchNetSubMenu(18)" 
+                            class="w-full py-2.5 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all text-[10px] font-bold bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-200">
+                            <i class="fa-solid fa-calendar-alt text-purple-600 mr-1"></i> 18. REKAP TAGIHAN BULANAN
                     </button>
                 </div>
 
@@ -1422,6 +1427,40 @@
                         <option value="Terbayar">Terbayar</option>
                         <option value="Belum Terbayar">Belum Terbayar</option>
                     </select>
+                </div>
+
+                <!-- FILTER BULAN & TAHUN (khusus sub 18: Rekap Bulanan) -->
+                <div id="net-month-filter-box" class="hidden flex items-center justify-between bg-slate-50 p-3 rounded-xl border border-slate-200 gap-3 flex-wrap">
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <label class="text-[10px] font-bold text-slate-500 uppercase">
+                            <i class="fa-solid fa-calendar text-purple-500 mr-1"></i> Bulan:
+                        </label>
+                        <select id="net-filter-month" onchange="renderInternetData()" 
+                                class="bg-white border border-slate-200 rounded-lg text-xs py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-purple-500/20 cursor-pointer">
+                            <option value="1">Januari</option>
+                            <option value="2">Februari</option>
+                            <option value="3">Maret</option>
+                            <option value="4">April</option>
+                            <option value="5">Mei</option>
+                            <option value="6">Juni</option>
+                            <option value="7">Juli</option>
+                            <option value="8">Agustus</option>
+                            <option value="9">September</option>
+                            <option value="10">Oktober</option>
+                            <option value="11">November</option>
+                            <option value="12">Desember</option>
+                        </select>
+                        <label class="text-[10px] font-bold text-slate-500 uppercase ml-2">
+                            Tahun:
+                        </label>
+                        <input type="number" id="net-filter-year" onchange="renderInternetData()" 
+                               class="w-20 bg-white border border-slate-200 rounded-lg text-xs py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+                               placeholder="2025" value="">
+                    </div>
+                    <button onclick="resetMonthFilter()" 
+                            class="text-[10px] font-bold text-purple-600 hover:text-purple-800 bg-purple-100 hover:bg-purple-200 px-3 py-1.5 rounded-lg transition-all cursor-pointer">
+                        Reset
+                    </button>
                 </div>
 
                 <!-- TOTAL BOX -->
@@ -2744,1054 +2783,196 @@
 
 <!-- ===== RAISYA PRODUCTION → BLOK 12 R4 - RAISYA DECORATION v2.1 - JAVASCRIPT ENGINE PART 2 ===== -->
 <!-- ============================================================
-     BLOK 11 R2 - RAISYA DECORATION v2.1 - JAVASCRIPT PART 1
-     (PWA, Toast, Theme, Multi-User Auth, Navigation, Settings,
-      Backup, Reset, Family CRUD, Database Baru)
-     REVISI: systemCredentials & changeReportPasswords
+     BLOK 12 R2 FINAL - RAISYA DECORATION v2.1 - JAVASCRIPT PART 2
+     (Business CRUD, Internet 18 Sub-Menu, Global Rekap, Export)
+     Role-based Access + Rekap Bulanan
      ============================================================ -->
     <script>
-        // ========== PWA SERVICE WORKER ==========
-        const swCode = `
-            const CACHE_NAME = 'raisya-dec-v4';
-            self.addEventListener('install', e => self.skipWaiting());
-            self.addEventListener('activate', e => e.waitUntil(clients.claim()));
-            self.addEventListener('fetch', e => {
-                e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
-            });
-        `;
-        
-        if ('serviceWorker' in navigator) {
-            const blob = new Blob([swCode], { type: 'text/javascript' });
-            const swUrl = URL.createObjectURL(blob);
-            navigator.serviceWorker.register(swUrl)
-                .then(() => console.log('✅ PWA Service Worker Aktif'))
-                .catch(err => console.error('PWA Gagal:', err));
-        }
+        // ========== JALUR BISNIS ==========
+        function openBizLogin(bizKey) {
+            if (!currentUser) { showToast('⚠️ Silakan login terlebih dahulu.', 'error'); return; }
 
-        // ========== PWA INSTALL ==========
-        let deferredPrompt = null;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            if (!document.getElementById('page-menu').classList.contains('hidden')) {
-                document.getElementById('pwa-install-banner').classList.remove('hidden');
-            }
-        });
+            activeBiz = bizKey;
 
-        function triggerPWAInstall() {
-            if (!deferredPrompt) return;
-            document.getElementById('pwa-install-banner').classList.add('hidden');
-            deferredPrompt.prompt();
-            deferredPrompt.userChoice.then((choiceResult) => {
-                if (choiceResult.outcome === 'accepted') console.log('✅ User install aplikasi');
-                deferredPrompt = null;
-            });
-        }
-
-        window.addEventListener('appinstalled', () => {
-            document.getElementById('pwa-install-banner').classList.add('hidden');
-            deferredPrompt = null;
-            showToast('✅ Aplikasi berhasil terpasang di HP!', 'success');
-        });
-
-        // ========== TOAST NOTIFICATION ==========
-        function showToast(msg, type) {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = 'toast toast-' + (type || 'info');
-            toast.textContent = msg;
-            container.appendChild(toast);
-            requestAnimationFrame(() => toast.classList.add('show'));
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        }
-
-        // ========== TOGGLE PASSWORD VISIBILITY ==========
-        function togglePassVisibility(inputId, btn) {
-            const input = document.getElementById(inputId);
-            const icon = btn.querySelector('i');
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.className = 'fa-solid fa-eye-slash text-xs';
-            } else {
-                input.type = 'password';
-                icon.className = 'fa-solid fa-eye text-xs';
-            }
-        }
-
-        // ========== THEME ==========
-        function setTheme(theme) {
-            const btnLight = document.getElementById('theme-btn-light');
-            const btnDark = document.getElementById('theme-btn-dark');
-            
-            if (theme === 'dark') {
-                document.body.classList.add('dark');
-                localStorage.setItem('raisya_theme', 'dark');
-                if (btnDark) {
-                    btnDark.style.borderColor = '#f43f5e';
-                    btnDark.classList.add('bg-rose-50');
-                }
-                if (btnLight) {
-                    btnLight.style.borderColor = '#e2e8f0';
-                    btnLight.classList.remove('bg-rose-50');
-                }
-            } else {
-                document.body.classList.remove('dark');
-                localStorage.setItem('raisya_theme', 'light');
-                if (btnLight) {
-                    btnLight.style.borderColor = '#f43f5e';
-                    btnLight.classList.add('bg-rose-50');
-                }
-                if (btnDark) {
-                    btnDark.style.borderColor = '#e2e8f0';
-                    btnDark.classList.remove('bg-rose-50');
-                }
-            }
-        }
-
-        function loadTheme() {
-            const saved = localStorage.getItem('raisya_theme');
-            if (saved === 'dark') {
-                document.body.classList.add('dark');
-            } else {
-                document.body.classList.remove('dark');
-            }
-        }
-
-        // ========== MULTI-USER SYSTEM ==========
-        let users = JSON.parse(localStorage.getItem('raisya_users')) || [
-            {
-                username: "Radhika",
-                password: "002886",
-                words: "Raisya",
-                nama: "Radhika",
-                email: "dedesugiono.ai@gmail.com",
-                hp: "081220285226",
-                role: "superadmin",
-                status: "aktif",
-                alamat: "",
-                nomor: "",
-                jabatan: "Superadmin"
-            }
-        ];
-
-        let currentUser = null;
-
-        function saveUsers() {
-            localStorage.setItem('raisya_users', JSON.stringify(users));
-        }
-
-        // ========== KONFIGURASI BISNIS (systemCredentials) ==========
-        let systemCredentials = JSON.parse(localStorage.getItem('raisya_credentials')) || {
-            GHOST: { user: "RumahHantu", pass: "002886", name: "Rumah Hantu", theme: "purple" },
-            PLAYGROUND: { user: "Playground", pass: "002886", name: "Playground", theme: "amber" },
-            RAISYA_DEC: { user: "RaisyaDecoration", pass: "002886", name: "Raisya Decoration", theme: "rose" },
-            INTERNET: { user: "Internet", pass: "002886", name: "Internet", theme: "cyan" },
-            REKAP: { user: "Rekap", pass: "002886", name: "Rekap Semua Laporan", theme: "emerald" }
-        };
-
-        function saveSystemCredentials() {
-            localStorage.setItem('raisya_credentials', JSON.stringify(systemCredentials));
-        }
-
-        // ========== VARIABEL GLOBAL ==========
-        let selectedRole = "";
-        let activeBiz = "";
-        let currentBizTab = "IN";
-        let activeNetSub = 1;
-
-        // ========== DATABASE ==========
-        let reportData = JSON.parse(localStorage.getItem('family_reports')) || [];
-
-        let bizDatabases = {
-            GHOST: {
-                IN: JSON.parse(localStorage.getItem('ghost_inbound')) || [],
-                OUT: JSON.parse(localStorage.getItem('ghost_outbound')) || []
-            },
-            PLAYGROUND: {
-                IN: JSON.parse(localStorage.getItem('play_inbound')) || [],
-                OUT: JSON.parse(localStorage.getItem('play_outbound')) || []
-            },
-            RAISYA_DEC: {
-                IN: JSON.parse(localStorage.getItem('dec_inbound')) || [],
-                OUT: JSON.parse(localStorage.getItem('dec_outbound')) || []
-            }
-        };
-
-        // ========== DATABASE INTERNET V2.1 (10 ARRAY) ==========
-        let netDatabases = {
-            pelanggan: JSON.parse(localStorage.getItem('net_customers')) || [],
-            tagihan: JSON.parse(localStorage.getItem('net_bills')) || [],
-            tunggakan: JSON.parse(localStorage.getItem('net_tunggakan')) || [],
-            masukLain: JSON.parse(localStorage.getItem('net_inc_other')) || [],
-            keluar1: JSON.parse(localStorage.getItem('net_exp_1')) || JSON.parse(localStorage.getItem('net_exp_month')) || [],
-            keluar2: JSON.parse(localStorage.getItem('net_exp_2')) || JSON.parse(localStorage.getItem('net_exp_other')) || [],
-            tagihanMasuk1: JSON.parse(localStorage.getItem('net_tagihan_masuk1')) || [],
-            tagihanMasuk2: JSON.parse(localStorage.getItem('net_tagihan_masuk2')) || [],
-            tagihanKeluar1: JSON.parse(localStorage.getItem('net_tagihan_keluar1')) || [],
-            tagihanKeluar2: JSON.parse(localStorage.getItem('net_tagihan_keluar2')) || []
-        };
-
-        // Migrasi data lama ke baru (jika ada)
-        if (localStorage.getItem('net_exp_month') && !localStorage.getItem('net_exp_1')) {
-            netDatabases.keluar1 = JSON.parse(localStorage.getItem('net_exp_month')) || [];
-            localStorage.setItem('net_exp_1', JSON.stringify(netDatabases.keluar1));
-        }
-        if (localStorage.getItem('net_exp_other') && !localStorage.getItem('net_exp_2')) {
-            netDatabases.keluar2 = JSON.parse(localStorage.getItem('net_exp_other')) || [];
-            localStorage.setItem('net_exp_2', JSON.stringify(netDatabases.keluar2));
-        }
-
-        // ========== NAVIGASI HALAMAN ==========
-        function switchPage(pageId) {
-            const pages = [
-                'page-login', 'page-forgot', 'page-reset', 'page-menu',
-                'page-family-conf', 'page-family-login', 'page-family-report',
-                'page-biz-login', 'page-biz-report',
-                'page-internet-report', 'page-all-rekap'
-            ];
-            pages.forEach(p => {
-                const el = document.getElementById(p);
-                if (el) el.classList.add('hidden');
-            });
-            const target = document.getElementById(pageId);
-            if (target) {
-                target.classList.remove('hidden');
-                target.classList.add('page-transition');
-            }
-
-            if (pageId === 'page-menu' && deferredPrompt) {
-                document.getElementById('pwa-install-banner').classList.remove('hidden');
-            }
-
-            if (pageId === 'page-menu' && currentUser) {
-                const isSuperadmin = currentUser.role === 'superadmin';
-                const isStafInternet = currentUser.role === 'staf_internet';
-                const allBizButtons = [
-                    { key: 'GHOST', selector: "button[onclick=\"openBizLogin('GHOST')\"]" },
-                    { key: 'PLAYGROUND', selector: "button[onclick=\"openBizLogin('PLAYGROUND')\"]" },
-                    { key: 'RAISYA_DEC', selector: "button[onclick=\"openBizLogin('RAISYA_DEC')\"]" },
-                    { key: 'INTERNET', selector: "button[onclick=\"openBizLogin('INTERNET')\"]" },
-                    { key: 'REKAP', selector: "button[onclick=\"openBizLogin('REKAP')\"]" }
-                ];
-                const familyBtn = document.querySelector("button[onclick=\"openFamilyReportConf()\"]");
-
-                if (familyBtn) familyBtn.style.display = '';
-                allBizButtons.forEach(b => {
-                    const el = document.querySelector(b.selector);
-                    if (el) el.style.display = '';
-                });
-
-                if (isStafInternet) {
-                    if (familyBtn) familyBtn.style.display = 'none';
-                    allBizButtons.forEach(b => {
-                        const el = document.querySelector(b.selector);
-                        if (el && b.key !== 'INTERNET') el.style.display = 'none';
-                        else if (el && b.key === 'INTERNET') el.style.display = '';
-                    });
-                }
-            }
-
-            if (pageId === 'page-menu') updateMenuStats();
-
-            const container = document.getElementById('main-container');
-            const widePages = ['page-family-report', 'page-biz-report', 'page-internet-report', 'page-all-rekap'];
-            if (widePages.includes(pageId)) {
-                container.classList.remove('max-w-md');
-                container.classList.add('max-w-xl');
-            } else {
-                container.classList.remove('max-w-xl');
-                container.classList.add('max-w-md');
-            }
-        }
-
-        function updateMenuStats() {
-            document.getElementById('stat-total-family').textContent = reportData.length;
-            let totalBiz = 0;
-            Object.keys(bizDatabases).forEach(k => {
-                totalBiz += bizDatabases[k].IN.length + bizDatabases[k].OUT.length;
-            });
-            document.getElementById('stat-total-biz').textContent = totalBiz;
-            let totalNet = 0;
-            Object.keys(netDatabases).forEach(k => {
-                totalNet += netDatabases[k].length;
-            });
-            document.getElementById('stat-total-internet').textContent = totalNet;
-        }
-
-        // ========== AUTH ==========
-        function handleLogin() {
-            const userInp = document.getElementById('login-user').value.trim();
-            const passInp = document.getElementById('login-pass').value.trim();
-            const wordInp = document.getElementById('login-words').value.trim();
-            const errEl = document.getElementById('login-error');
-            const errText = document.getElementById('login-error-text');
-
-            if (!userInp || !passInp || !wordInp) {
-                errEl.classList.remove('hidden');
-                errText.textContent = 'Semua field wajib diisi!';
-                return;
-            }
-
-            const found = users.find(u => 
-                u.username === userInp && 
-                u.password === passInp && 
-                u.words.toLowerCase() === wordInp.toLowerCase()
-            );
-
-            if (!found) {
-                errEl.classList.remove('hidden');
-                errText.textContent = 'Username, Password, atau Kata Kunci salah!';
-                return;
-            }
-
-            if (found.status === 'suspend') {
-                errEl.classList.remove('hidden');
-                errText.textContent = 'Akun Anda dinonaktifkan. Hubungi Superadmin.';
-                return;
-            }
-
-            currentUser = found;
-            errEl.classList.add('hidden');
-            document.getElementById('login-user').value = '';
-            document.getElementById('login-pass').value = '';
-            document.getElementById('login-words').value = '';
-            switchPage('page-menu');
-            showToast('✅ Selamat datang, ' + currentUser.nama + '!', 'success');
-        }
-
-        function handleForgot() {
-            const val = document.getElementById('forgot-input').value.trim();
-            const errEl = document.getElementById('forgot-error');
-            const errText = document.getElementById('forgot-error-text');
-
-            if (!val) {
-                errEl.classList.remove('hidden');
-                errText.textContent = 'Masukkan email atau nomor HP!';
-                return;
-            }
-
-            const superAdmin = users.find(u => u.role === 'superadmin');
-            if (superAdmin && (val === superAdmin.email || val === superAdmin.hp)) {
-                errEl.classList.add('hidden');
-                document.getElementById('forgot-input').value = '';
-                switchPage('page-reset');
-                showToast('✅ Identitas valid. Silakan buat password baru.', 'success');
-            } else {
-                errEl.classList.remove('hidden');
-                errText.textContent = 'Data tidak cocok dengan akun superadmin!';
-            }
-        }
-
-        function handleReset() {
-            const newPass = document.getElementById('reset-pass').value.trim();
-            const confirmPass = document.getElementById('reset-pass-confirm').value.trim();
-            const errEl = document.getElementById('reset-error');
-            const errText = document.getElementById('reset-error-text');
-
-            if (!newPass || !confirmPass) {
-                errEl.classList.remove('hidden');
-                errText.textContent = 'Semua field wajib diisi!';
-                return;
-            }
-
-            if (newPass.length < 6) {
-                errEl.classList.remove('hidden');
-                errText.textContent = 'Password minimal 6 karakter!';
-                return;
-            }
-
-            if (newPass !== confirmPass) {
-                errEl.classList.remove('hidden');
-                errText.textContent = 'Password tidak cocok!';
-                return;
-            }
-
-            const superAdmin = users.find(u => u.role === 'superadmin');
-            if (superAdmin) {
-                superAdmin.password = newPass;
-                saveUsers();
-            }
-
-            document.getElementById('reset-pass').value = '';
-            document.getElementById('reset-pass-confirm').value = '';
-            errEl.classList.add('hidden');
-            switchPage('page-login');
-            showToast('✅ Password superadmin berhasil diubah! Silakan login.', 'success');
-        }
-
-        function handleLogout() {
-            if (confirm('Apakah Anda yakin ingin keluar?')) {
-                document.getElementById('pwa-install-banner').classList.add('hidden');
-                currentUser = null;
-                switchPage('page-login');
-                showToast('👋 Anda telah logout.', 'info');
-            }
-        }
-
-        // ========== SETTINGS MODAL ==========
-        function openSettingsModal() {
-            if (!currentUser) return;
-            document.getElementById('settingsModal').classList.remove('hidden');
+            const roleMap = {
+                'GHOST': 'staf_rumah_hantu',
+                'PLAYGROUND': 'staf_playground',
+                'RAISYA_DEC': 'staf_raisya_dec',
+                'INTERNET': 'staf_internet'
+            };
+            const requiredRole = roleMap[bizKey];
+            const isStafForBiz = requiredRole && currentUser.role === requiredRole;
             const isSuperadmin = currentUser.role === 'superadmin';
-            document.querySelectorAll('.admin-only').forEach(el => {
-                el.style.display = isSuperadmin ? '' : 'none';
-            });
-            switchSettingsTab('profil');
-            loadSettingsData();
-        }
 
-        function closeSettingsModal() {
-            document.getElementById('settingsModal').classList.add('hidden');
-        }
-
-        function switchSettingsTab(tab) {
-            const tabs = ['profil', 'password', 'tema', 'backup', 'reset', 'manajemen', 'tentang'];
-            tabs.forEach(t => {
-                const btn = document.getElementById('stab-' + t);
-                const content = document.getElementById('stab-content-' + t);
-                if (!btn || !content) return;
-                if (t === tab) {
-                    btn.className = btn.className.replace(/text-slate-500/g, 'text-rose-600').replace(/bg-white/g, 'bg-white');
-                    btn.classList.add('bg-white', 'text-rose-600', 'shadow-sm');
-                    content.classList.remove('hidden');
+            if (isStafForBiz) {
+                if (bizKey === 'INTERNET') {
+                    activeNetSub = 2;
+                    switchNetSubMenu(2);
+                    switchPage('page-internet-report');
                 } else {
-                    btn.className = btn.className.replace(/text-rose-600/g, 'text-slate-500').replace(/bg-white/g, '');
-                    btn.classList.add('text-slate-500', 'hover:text-slate-700');
-                    content.classList.add('hidden');
+                    currentBizTab = 'IN';
+                    applyBizTheme();
+                    switchBizTab('IN');
+                    switchPage('page-biz-report');
                 }
-            });
+                return;
+            }
+
+            let cfg = systemCredentials[bizKey];
+            document.getElementById('biz-login-title').innerHTML = `<i class="fa-solid fa-briefcase mr-1"></i> Otoritas ${cfg.name}`;
+            document.getElementById('biz-login-user').value = '';
+            document.getElementById('biz-login-pass').value = '';
+            document.getElementById('biz-login-error').classList.add('hidden');
+            let btnValidate = document.querySelector('.id-btn-validated');
+            if (btnValidate) btnValidate.className = `w-2/3 id-btn-validated text-white font-bold py-3 rounded-xl text-xs cursor-pointer transition-all active:scale-95 shadow-md flex items-center justify-center gap-1 bg-${cfg.theme}-600 hover:bg-${cfg.theme}-700`;
+            switchPage('page-biz-login');
         }
 
-        function loadSettingsData() {
+        function handleBizLogin() {
             if (!currentUser) return;
-            document.getElementById('sett-nama').value = currentUser.nama || '';
-            document.getElementById('sett-email').value = currentUser.email || '';
-            document.getElementById('sett-hp').value = currentUser.hp || '';
+            const u = document.getElementById('biz-login-user').value.trim();
+            const p = document.getElementById('biz-login-pass').value.trim();
+            let cfg = systemCredentials[activeBiz];
 
-            const staffFields = document.getElementById('staff-extra-fields');
-            if (currentUser.role !== 'superadmin' && staffFields) {
-                staffFields.classList.remove('hidden');
-                document.getElementById('sett-alamat').value = currentUser.alamat || '';
-                document.getElementById('sett-nomor').value = currentUser.nomor || '';
-                document.getElementById('sett-jabatan').value = currentUser.jabatan || '';
-            } else if (staffFields) {
-                staffFields.classList.add('hidden');
-            }
-
-            if (currentUser.role === 'superadmin') {
-                document.getElementById('sett-pass-old').value = '';
-                document.getElementById('sett-pass-new').value = '';
-                document.getElementById('sett-pass-confirm').value = '';
-                document.getElementById('sett-pass-family').value = localStorage.getItem('raisya_familyPassword') || '002886';
-                document.getElementById('sett-pass-biz').value = localStorage.getItem('raisya_bizPassword') || '002886';
-            }
-
-            loadTheme();
-        }
-
-        function saveProfile() {
-            if (!currentUser) return;
-            const nama = document.getElementById('sett-nama').value.trim();
-            const email = document.getElementById('sett-email').value.trim();
-            const hp = document.getElementById('sett-hp').value.trim();
-
-            if (!nama || !email || !hp) {
-                showToast('⚠️ Semua field wajib diisi!', 'error');
+            if (!u || !p) {
+                document.getElementById('biz-login-error').classList.remove('hidden');
+                document.getElementById('biz-login-error-text').innerText = 'Semua field wajib diisi!';
                 return;
             }
 
-            currentUser.nama = nama;
-            currentUser.email = email;
-            currentUser.hp = hp;
+            if (u === cfg.user && p === cfg.pass) {
+                document.getElementById('biz-login-user').value = '';
+                document.getElementById('biz-login-pass').value = '';
+                document.getElementById('biz-login-error').classList.add('hidden');
 
-            if (currentUser.role !== 'superadmin') {
-                currentUser.alamat = document.getElementById('sett-alamat').value.trim();
-                currentUser.nomor = document.getElementById('sett-nomor').value.trim();
-            }
-
-            const idx = users.findIndex(u => u.username === currentUser.username);
-            if (idx !== -1) {
-                users[idx] = { ...currentUser };
-                saveUsers();
-            }
-
-            showToast('✅ Profil berhasil disimpan!', 'success');
-        }
-
-        function changePassword() {
-            if (!currentUser || currentUser.role !== 'superadmin') {
-                showToast('❌ Hanya superadmin yang bisa mengubah password di sini.', 'error');
-                return;
-            }
-            const oldPass = document.getElementById('sett-pass-old').value.trim();
-            const newPass = document.getElementById('sett-pass-new').value.trim();
-            const confirmPass = document.getElementById('sett-pass-confirm').value.trim();
-
-            if (!oldPass || !newPass || !confirmPass) {
-                showToast('⚠️ Semua field wajib diisi!', 'error');
-                return;
-            }
-
-            if (oldPass !== currentUser.password) {
-                showToast('❌ Password saat ini salah!', 'error');
-                return;
-            }
-
-            if (newPass.length < 6) {
-                showToast('⚠️ Password minimal 6 karakter!', 'error');
-                return;
-            }
-
-            if (newPass !== confirmPass) {
-                showToast('⚠️ Password tidak cocok!', 'error');
-                return;
-            }
-
-            const idx = users.findIndex(u => u.username === currentUser.username);
-            if (idx !== -1) {
-                users[idx].password = newPass;
-                saveUsers();
-                currentUser.password = newPass;
-            }
-
-            document.getElementById('sett-pass-old').value = '';
-            document.getElementById('sett-pass-new').value = '';
-            document.getElementById('sett-pass-confirm').value = '';
-            showToast('✅ Password utama berhasil diubah!', 'success');
-        }
-
-        function changeReportPasswords() {
-            if (!currentUser || currentUser.role !== 'superadmin') {
-                showToast('❌ Hanya superadmin yang bisa mengubah password laporan.', 'error');
-                return;
-            }
-            const familyPass = document.getElementById('sett-pass-family').value.trim();
-            const bizPass = document.getElementById('sett-pass-biz').value.trim();
-
-            if (!familyPass || !bizPass) {
-                showToast('⚠️ Password laporan tidak boleh kosong!', 'error');
-                return;
-            }
-
-            localStorage.setItem('raisya_familyPassword', familyPass);
-            localStorage.setItem('raisya_bizPassword', bizPass);
-
-            // Update semua password bisnis di systemCredentials
-            Object.keys(systemCredentials).forEach(key => {
-                systemCredentials[key].pass = bizPass;
-            });
-            saveSystemCredentials();
-
-            showToast('✅ Password laporan berhasil disimpan!', 'success');
-        }
-
-        // ========== MANAJEMEN AKUN (SUPERADMIN ONLY) ==========
-        function saveAkun() {
-            if (!currentUser || currentUser.role !== 'superadmin') {
-                showToast('❌ Tidak diizinkan.', 'error');
-                return;
-            }
-
-            const idx = parseInt(document.getElementById('edit-akun-index').value);
-            const nama = document.getElementById('akun-nama').value.trim();
-            const alamat = document.getElementById('akun-alamat').value.trim();
-            const nomor = document.getElementById('akun-nomor').value.trim();
-            const hp = document.getElementById('akun-hp').value.trim();
-            const jabatan = document.getElementById('akun-jabatan').value.trim();
-            const username = document.getElementById('akun-username').value.trim();
-            const password = document.getElementById('akun-password').value.trim();
-            const words = document.getElementById('akun-words').value.trim();
-            const role = document.getElementById('akun-role').value;
-            const status = document.getElementById('akun-status').value;
-
-            if (!nama || !username || !password) {
-                showToast('⚠️ Nama, Username, dan Password wajib diisi!', 'error');
-                return;
-            }
-
-            const dup = users.find(u => u.username === username && (idx === -1 || users[idx].username !== username));
-            if (dup) {
-                showToast('⚠️ Username sudah digunakan!', 'error');
-                return;
-            }
-
-            const newUser = {
-                username,
-                password,
-                words,
-                nama,
-                email: '',
-                hp,
-                role,
-                status,
-                alamat,
-                nomor,
-                jabatan: role === 'staf_rumah_hantu' ? 'Staf Rumah Hantu' :
-                          role === 'staf_playground' ? 'Staf Playground' :
-                          role === 'staf_raisya_dec' ? 'Staf Raisya Decoration' :
-                          role === 'staf_internet' ? 'Staf Internet' : jabatan
-            };
-
-            if (idx === -1) {
-                users.push(newUser);
-                showToast('✅ Akun baru berhasil ditambahkan!', 'success');
-            } else {
-                users[idx] = newUser;
-                showToast('✅ Akun berhasil diperbarui!', 'success');
-            }
-
-            saveUsers();
-            resetAkunForm();
-            renderAkunList();
-        }
-
-        function editAkun(index) {
-            if (!currentUser || currentUser.role !== 'superadmin') return;
-            const u = users[index];
-            if (!u) return;
-            document.getElementById('edit-akun-index').value = index;
-            document.getElementById('akun-nama').value = u.nama || '';
-            document.getElementById('akun-alamat').value = u.alamat || '';
-            document.getElementById('akun-nomor').value = u.nomor || '';
-            document.getElementById('akun-hp').value = u.hp || '';
-            document.getElementById('akun-jabatan').value = u.jabatan || '';
-            document.getElementById('akun-username').value = u.username || '';
-            document.getElementById('akun-password').value = u.password || '';
-            document.getElementById('akun-words').value = u.words || '';
-            document.getElementById('akun-role').value = u.role;
-            document.getElementById('akun-status').value = u.status;
-            
-            document.getElementById('form-akun-title').innerText = 'Edit Akun';
-            document.getElementById('btn-batal-edit-akun').classList.remove('hidden');
-        }
-
-        function deleteAkun(index) {
-            if (!currentUser || currentUser.role !== 'superadmin') return;
-            const u = users[index];
-            if (!u || u.role === 'superadmin') {
-                showToast('❌ Akun superadmin tidak bisa dihapus!', 'error');
-                return;
-            }
-            if (confirm(`Hapus akun ${u.nama}?`)) {
-                users.splice(index, 1);
-                saveUsers();
-                renderAkunList();
-                showToast('🗑 Akun dihapus!', 'warning');
-            }
-        }
-
-        function toggleSuspendAccount(index) {
-            if (!currentUser || currentUser.role !== 'superadmin') return;
-            const u = users[index];
-            if (!u || u.role === 'superadmin') {
-                showToast('❌ Akun superadmin tidak bisa disuspend!', 'error');
-                return;
-            }
-            u.status = u.status === 'aktif' ? 'suspend' : 'aktif';
-            saveUsers();
-            renderAkunList();
-            showToast(`✅ Akun ${u.nama} ${u.status === 'aktif' ? 'diaktifkan' : 'disuspend'}.`, 'success');
-        }
-
-        function resetAkunForm() {
-            document.getElementById('edit-akun-index').value = '-1';
-            document.getElementById('akun-nama').value = '';
-            document.getElementById('akun-alamat').value = '';
-            document.getElementById('akun-nomor').value = '';
-            document.getElementById('akun-hp').value = '';
-            document.getElementById('akun-jabatan').value = '';
-            document.getElementById('akun-username').value = '';
-            document.getElementById('akun-password').value = '';
-            document.getElementById('akun-words').value = '';
-            document.getElementById('akun-role').value = 'staf_rumah_hantu';
-            document.getElementById('akun-status').value = 'aktif';
-            document.getElementById('form-akun-title').innerText = 'Tambah Akun Baru';
-            document.getElementById('btn-batal-edit-akun').classList.add('hidden');
-        }
-
-        function renderAkunList() {
-            const container = document.getElementById('akun-list-container');
-            if (!container) return;
-            container.innerHTML = '';
-            let count = 0;
-            users.forEach((u, i) => {
-                if (u.role === 'superadmin') return;
-                count++;
-                const statusBadge = u.status === 'aktif' 
-                    ? '<span class="bg-emerald-100 text-emerald-700 text-[9px] font-bold px-1.5 py-0.5 rounded">AKTIF</span>'
-                    : '<span class="bg-red-100 text-red-700 text-[9px] font-bold px-1.5 py-0.5 rounded">SUSPEND</span>';
-                container.innerHTML += `
-                    <div class="bg-white border border-slate-200 p-3 rounded-xl flex justify-between items-center">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 flex-wrap">
-                                <h4 class="text-xs font-bold text-slate-700">${u.nama}</h4>
-                                ${statusBadge}
-                                <span class="text-[9px] text-slate-400">@${u.username}</span>
-                            </div>
-                            <p class="text-[10px] text-slate-400 mt-0.5">${u.jabatan} | ${u.hp || '-'}</p>
-                        </div>
-                        <div class="flex gap-1 ml-2">
-                            <button onclick="editAkun(${i})" class="w-7 h-7 bg-amber-50 hover:bg-amber-100 text-amber-600 rounded-lg text-xs flex items-center justify-center"><i class="fa-solid fa-pen"></i></button>
-                            <button onclick="toggleSuspendAccount(${i})" class="w-7 h-7 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-xs flex items-center justify-center" title="Suspend/Aktifkan"><i class="fa-solid fa-pause"></i></button>
-                            <button onclick="deleteAkun(${i})" class="w-7 h-7 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs flex items-center justify-center"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    </div>`;
-            });
-            document.getElementById('akun-count-badge').textContent = count;
-            if (count === 0) {
-                container.innerHTML = '<div class="text-center text-slate-400 py-4 text-xs italic">Belum ada akun staf.</div>';
-            }
-        }
-
-        // ========== BACKUP & RESTORE ==========
-        function backupAllData() {
-            const allData = {
-                users: users,
-                systemCredentials: systemCredentials,
-                familyReports: reportData,
-                bizDatabases: bizDatabases,
-                netDatabases: netDatabases,
-                backupDate: new Date().toISOString(),
-                version: '2.1'
-            };
-
-            const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'RaisyaDecoration_Backup_' + new Date().toISOString().slice(0, 10) + '.json';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            showToast('✅ Backup berhasil didownload!', 'success');
-        }
-
-        function backupToHTML() {
-            const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-            const blob = new Blob([html], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'RaisyaDecoration_Offline_' + new Date().toISOString().slice(0, 10) + '.html';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            showToast('✅ HTML offline berhasil didownload!', 'success');
-        }
-
-        function backupToDrive() {
-            const allData = {
-                users: users,
-                systemCredentials: systemCredentials,
-                familyReports: reportData,
-                bizDatabases: bizDatabases,
-                netDatabases: netDatabases,
-                backupDate: new Date().toISOString()
-            };
-            const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
-            const fileName = 'RaisyaDecoration_Backup_' + new Date().toISOString().slice(0, 10) + '.json';
-            const file = new File([blob], fileName, { type: 'application/json' });
-
-            if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                navigator.share({
-                    title: 'Backup Raisya Decoration',
-                    text: 'Simpan file backup ke Google Drive atau memori.',
-                    files: [file]
-                }).then(() => showToast('✅ File siap disimpan!', 'success'))
-                  .catch(() => downloadFallback(blob, fileName));
-            } else {
-                downloadFallback(blob, fileName);
-            }
-        }
-
-        function downloadFallback(blob, fileName) {
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = fileName;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            showToast('⬇ File didownload. Simpan ke Google Drive secara manual.', 'success');
-        }
-
-        function restoreAllData(input) {
-            const file = input.files[0];
-            if (!file) return;
-
-            if (!confirm('⚠️ Semua data saat ini akan ditimpa dengan data dari file backup. Lanjutkan?')) {
-                input.value = '';
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const data = JSON.parse(e.target.result);
-                    if (data.users) {
-                        users = data.users;
-                        saveUsers();
-                    }
-                    if (data.systemCredentials) {
-                        systemCredentials = data.systemCredentials;
-                        saveSystemCredentials();
-                    }
-                    if (data.familyReports) {
-                        reportData = data.familyReports;
-                        localStorage.setItem('family_reports', JSON.stringify(reportData));
-                    }
-                    if (data.bizDatabases) {
-                        bizDatabases = data.bizDatabases;
-                        Object.keys(bizDatabases).forEach(k => {
-                            localStorage.setItem(k.toLowerCase() + '_inbound', JSON.stringify(bizDatabases[k].IN));
-                            localStorage.setItem(k.toLowerCase() + '_outbound', JSON.stringify(bizDatabases[k].OUT));
-                        });
-                    }
-                    if (data.netDatabases) {
-                        netDatabases = data.netDatabases;
-                        localStorage.setItem('net_customers', JSON.stringify(netDatabases.pelanggan || []));
-                        localStorage.setItem('net_bills', JSON.stringify(netDatabases.tagihan || []));
-                        localStorage.setItem('net_tunggakan', JSON.stringify(netDatabases.tunggakan || []));
-                        localStorage.setItem('net_inc_other', JSON.stringify(netDatabases.masukLain || []));
-                        localStorage.setItem('net_exp_1', JSON.stringify(netDatabases.keluar1 || []));
-                        localStorage.setItem('net_exp_2', JSON.stringify(netDatabases.keluar2 || []));
-                        localStorage.setItem('net_tagihan_masuk1', JSON.stringify(netDatabases.tagihanMasuk1 || []));
-                        localStorage.setItem('net_tagihan_masuk2', JSON.stringify(netDatabases.tagihanMasuk2 || []));
-                        localStorage.setItem('net_tagihan_keluar1', JSON.stringify(netDatabases.tagihanKeluar1 || []));
-                        localStorage.setItem('net_tagihan_keluar2', JSON.stringify(netDatabases.tagihanKeluar2 || []));
-                    }
-                    showToast('✅ Data berhasil direstore!', 'success');
-                    setTimeout(() => location.reload(), 1500);
-                } catch (ex) {
-                    showToast('❌ Format file tidak valid!', 'error');
+                if (activeBiz === 'INTERNET') {
+                    activeNetSub = 1;
+                    switchNetSubMenu(1);
+                    switchPage('page-internet-report');
+                } else if (activeBiz === 'REKAP') {
+                    calculateAndRenderGlobalRekap();
+                    switchPage('page-all-rekap');
+                } else {
+                    currentBizTab = 'IN';
+                    applyBizTheme();
+                    switchBizTab('IN');
+                    switchPage('page-biz-report');
                 }
-            };
-            reader.readAsText(file);
-            input.value = '';
-        }
-
-        function restoreFromHTML(input) {
-            const file = input.files[0];
-            if (!file) return;
-            if (!confirm('⚠️ Halaman akan diganti dengan file HTML ini. Lanjutkan?')) {
-                input.value = '';
-                return;
-            }
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.open();
-                document.write(e.target.result);
-                document.close();
-                showToast('✅ HTML berhasil direstore! Refresh...', 'success');
-                setTimeout(() => location.reload(), 1500);
-            };
-            reader.readAsText(file);
-            input.value = '';
-        }
-
-        // ========== RESET DATA ==========
-        function resetDataModule(module) {
-            const confirmMsg = {
-                'family': 'Hapus semua data Laporan Keluarga?',
-                'biz': 'Hapus semua data Bisnis (Rumah Hantu, Playground, Raisya Dec)?',
-                'internet': 'Hapus semua data Internet (Pelanggan, Tagihan, dll)?'
-            };
-
-            if (!confirm('⚠️ ' + (confirmMsg[module] || 'Hapus data?') + ' Tindakan ini tidak dapat dibatalkan!')) return;
-
-            if (module === 'family') {
-                reportData = [];
-                localStorage.removeItem('family_reports');
-                showToast('🗑 Data Keluarga direset!', 'warning');
-            } else if (module === 'biz') {
-                bizDatabases = {
-                    GHOST: { IN: [], OUT: [] },
-                    PLAYGROUND: { IN: [], OUT: [] },
-                    RAISYA_DEC: { IN: [], OUT: [] }
-                };
-                localStorage.removeItem('ghost_inbound');
-                localStorage.removeItem('ghost_outbound');
-                localStorage.removeItem('play_inbound');
-                localStorage.removeItem('play_outbound');
-                localStorage.removeItem('dec_inbound');
-                localStorage.removeItem('dec_outbound');
-                showToast('🗑 Data Bisnis direset!', 'warning');
-            } else if (module === 'internet') {
-                netDatabases = {
-                    pelanggan: [], tagihan: [], tunggakan: [], masukLain: [],
-                    keluar1: [], keluar2: [],
-                    tagihanMasuk1: [], tagihanMasuk2: [],
-                    tagihanKeluar1: [], tagihanKeluar2: []
-                };
-                localStorage.removeItem('net_customers');
-                localStorage.removeItem('net_bills');
-                localStorage.removeItem('net_tunggakan');
-                localStorage.removeItem('net_inc_other');
-                localStorage.removeItem('net_exp_1');
-                localStorage.removeItem('net_exp_2');
-                localStorage.removeItem('net_exp_month');
-                localStorage.removeItem('net_exp_other');
-                localStorage.removeItem('net_tagihan_masuk1');
-                localStorage.removeItem('net_tagihan_masuk2');
-                localStorage.removeItem('net_tagihan_keluar1');
-                localStorage.removeItem('net_tagihan_keluar2');
-                showToast('🗑 Data Internet direset!', 'warning');
-            }
-            updateMenuStats();
-        }
-
-        function resetAllData() {
-            if (!confirm('⚠️⚠️⚠️ SEMUA DATA AKAN DIHAPUS PERMANEN!\n\nTermasuk: Pengaturan, Akun Staf, Laporan Keluarga, Bisnis, Internet.\n\nTindakan ini TIDAK BISA DIBATALKAN!')) return;
-
-            const confirmInput = prompt('Ketik "YA" untuk konfirmasi reset semua data:');
-            if (confirmInput !== 'YA') {
-                showToast('❌ Reset dibatalkan.', 'info');
-                return;
-            }
-
-            users = [
-                {
-                    username: "Radhika",
-                    password: "002886",
-                    words: "Raisya",
-                    nama: "Radhika",
-                    email: "dedesugiono.ai@gmail.com",
-                    hp: "081220285226",
-                    role: "superadmin",
-                    status: "aktif",
-                    alamat: "",
-                    nomor: "",
-                    jabatan: "Superadmin"
-                }
-            ];
-            saveUsers();
-
-            systemCredentials = {
-                GHOST: { user: "RumahHantu", pass: "002886", name: "Rumah Hantu", theme: "purple" },
-                PLAYGROUND: { user: "Playground", pass: "002886", name: "Playground", theme: "amber" },
-                RAISYA_DEC: { user: "RaisyaDecoration", pass: "002886", name: "Raisya Decoration", theme: "rose" },
-                INTERNET: { user: "Internet", pass: "002886", name: "Internet", theme: "cyan" },
-                REKAP: { user: "Rekap", pass: "002886", name: "Rekap Semua Laporan", theme: "emerald" }
-            };
-            saveSystemCredentials();
-
-            localStorage.removeItem('family_reports');
-            localStorage.removeItem('ghost_inbound');
-            localStorage.removeItem('ghost_outbound');
-            localStorage.removeItem('play_inbound');
-            localStorage.removeItem('play_outbound');
-            localStorage.removeItem('dec_inbound');
-            localStorage.removeItem('dec_outbound');
-            localStorage.removeItem('net_customers');
-            localStorage.removeItem('net_bills');
-            localStorage.removeItem('net_tunggakan');
-            localStorage.removeItem('net_inc_other');
-            localStorage.removeItem('net_exp_1');
-            localStorage.removeItem('net_exp_2');
-            localStorage.removeItem('net_exp_month');
-            localStorage.removeItem('net_exp_other');
-            localStorage.removeItem('net_tagihan_masuk1');
-            localStorage.removeItem('net_tagihan_masuk2');
-            localStorage.removeItem('net_tagihan_keluar1');
-            localStorage.removeItem('net_tagihan_keluar2');
-
-            reportData = [];
-            bizDatabases = {
-                GHOST: { IN: [], OUT: [] },
-                PLAYGROUND: { IN: [], OUT: [] },
-                RAISYA_DEC: { IN: [], OUT: [] }
-            };
-            netDatabases = {
-                pelanggan: [], tagihan: [], tunggakan: [], masukLain: [],
-                keluar1: [], keluar2: [],
-                tagihanMasuk1: [], tagihanMasuk2: [],
-                tagihanKeluar1: [], tagihanKeluar2: []
-            };
-
-            showToast('⚠️ Semua data telah direset!', 'warning');
-            setTimeout(() => location.reload(), 2000);
-        }
-
-        // ========== JALUR KELUARGA ==========
-        function openFamilyReportConf() { switchPage('page-family-conf'); }
-
-        function selectFamilyRole(role) {
-            selectedRole = role;
-            document.getElementById('family-login-title').innerText = role;
-            document.getElementById('family-login-pass').value = '';
-            document.getElementById('family-login-error').classList.add('hidden');
-            switchPage('page-family-login');
-        }
-
-        function handleFamilyLogin() {
-            const pass = document.getElementById('family-login-pass').value.trim();
-            const familyPass = localStorage.getItem('raisya_familyPassword') || '002886';
-            if (pass === familyPass) {
-                document.getElementById('badge-role').innerText = 'Akses: ' + selectedRole;
-                document.getElementById('family-login-pass').value = '';
-                document.getElementById('family-login-error').classList.add('hidden');
-                renderFamilyData();
-                switchPage('page-family-report');
             } else {
-                document.getElementById('family-login-error').classList.remove('hidden');
-                document.getElementById('family-login-error-text').innerText = 'Password laporan keluarga salah!';
+                document.getElementById('biz-login-error').classList.remove('hidden');
+                document.getElementById('biz-login-error-text').innerText = 'Username atau Password bisnis salah!';
             }
         }
 
-        function renderFamilyData() {
-            const container = document.getElementById('container-list');
+        function applyBizTheme() {
+            let cfg = systemCredentials[activeBiz];
+            document.getElementById('biz-report-head').innerText = 'Laporan ' + cfg.name;
+            let badge = document.getElementById('biz-report-badge');
+            badge.className = `px-2 py-0.5 text-[9px] font-extrabold rounded-full uppercase tracking-wider bg-${cfg.theme}-100 text-${cfg.theme}-600`;
+            let totalBox = document.getElementById('biz-total-box');
+            if (activeBiz === 'GHOST') totalBox.className = 'bg-gradient-to-r from-purple-900 to-indigo-950 text-white p-5 rounded-2xl flex justify-between items-center shadow-lg';
+            else if (activeBiz === 'PLAYGROUND') totalBox.className = 'bg-gradient-to-r from-amber-600 to-amber-800 text-white p-5 rounded-2xl flex justify-between items-center shadow-lg';
+            else totalBox.className = 'bg-gradient-to-r from-rose-600 to-pink-700 text-white p-5 rounded-2xl flex justify-between items-center shadow-lg';
+            document.getElementById('biz-total-lbl').className = `text-[10px] font-semibold text-${cfg.theme}-200 uppercase tracking-wider`;
+        }
+
+        function switchBizTab(tab) {
+            currentBizTab = tab;
+            let cfg = systemCredentials[activeBiz];
+            const tabIn = document.getElementById('tab-in');
+            const tabOut = document.getElementById('tab-out');
+
+            if (tab === 'IN') {
+                tabIn.className = `w-1/2 text-center py-2.5 text-xs font-bold rounded-lg transition-all bg-white text-${cfg.theme}-600 shadow-sm`;
+                tabOut.className = 'w-1/2 text-center py-2.5 text-xs font-bold rounded-lg transition-all text-slate-500 hover:text-slate-700';
+                document.getElementById('biz-total-lbl').innerText = 'Total Anggaran Masuk';
+                document.getElementById('biz-list-title').innerHTML = '<i class="fa-solid fa-circle-down text-green-500 mr-1"></i> Daftar Anggaran Masuk';
+            } else {
+                tabOut.className = `w-1/2 text-center py-2.5 text-xs font-bold rounded-lg transition-all bg-white text-${cfg.theme}-600 shadow-sm`;
+                tabIn.className = 'w-1/2 text-center py-2.5 text-xs font-bold rounded-lg transition-all text-slate-500 hover:text-slate-700';
+                document.getElementById('biz-total-lbl').innerText = 'Total Anggaran Pengeluaran';
+                document.getElementById('biz-list-title').innerHTML = '<i class="fa-solid fa-circle-up text-red-500 mr-1"></i> Daftar Anggaran Pengeluaran';
+            }
+            resetBizForm();
+            renderBizData();
+        }
+
+        function isStafModeForBiz(bizKey) {
+            if (!currentUser) return false;
+            const roleMap = {
+                'GHOST': 'staf_rumah_hantu',
+                'PLAYGROUND': 'staf_playground',
+                'RAISYA_DEC': 'staf_raisya_dec',
+                'INTERNET': 'staf_internet'
+            };
+            return currentUser.role === roleMap[bizKey];
+        }
+
+        function renderBizData() {
+            const container = document.getElementById('biz-container-list');
             container.innerHTML = '';
             let total = 0;
+            let targetData = bizDatabases[activeBiz][currentBizTab];
+            let cfg = systemCredentials[activeBiz];
+            const stafMode = isStafModeForBiz(activeBiz);
 
-            if (reportData.length === 0) {
-                document.getElementById('family-empty-state').classList.remove('hidden');
+            if (targetData.length === 0) {
+                document.getElementById('biz-empty-state').classList.remove('hidden');
             } else {
-                document.getElementById('family-empty-state').classList.add('hidden');
+                document.getElementById('biz-empty-state').classList.add('hidden');
             }
 
-            reportData.forEach((item, index) => {
+            targetData.forEach((item, index) => {
                 total += parseInt(item.jumlah || 0);
+                let actionButtons = '';
+                if (!stafMode) {
+                    actionButtons = `
+                        <div class="flex space-x-1 ml-2">
+                            <button onclick="editBizData(${index})" 
+                                    class="w-7 h-7 bg-amber-50 hover:bg-amber-100 text-amber-600 rounded-lg text-xs cursor-pointer transition-all flex items-center justify-center">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button onclick="deleteBizData(${index})" 
+                                    class="w-7 h-7 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs cursor-pointer transition-all flex items-center justify-center">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>`;
+                }
                 container.innerHTML += `
                     <div class="bg-white border border-slate-200 p-3 rounded-xl flex justify-between items-center shadow-sm hover:shadow-md transition-all">
                         <div class="flex-1">
                             <h4 class="text-xs font-bold text-slate-700">${item.nama}</h4>
                             <p class="text-[10px] text-slate-400 mt-0.5">
                                 <i class="fa-regular fa-calendar mr-1"></i>${item.tanggal} | 
-                                <i>${item.keterangan || '-'}</i>
+                                <span class="italic">${item.keterangan || '-'}</span>
                             </p>
-                            <p class="text-xs font-bold text-rose-500 mt-1">Rp ${parseInt(item.jumlah).toLocaleString('id-ID')}</p>
+                            <p class="text-xs font-bold text-${cfg.theme}-600 mt-1">Rp ${parseInt(item.jumlah).toLocaleString('id-ID')}</p>
                         </div>
-                        <div class="flex space-x-1 ml-2">
-                            <button onclick="editFamilyData(${index})" 
-                                    class="w-7 h-7 bg-amber-50 hover:bg-amber-100 text-amber-600 rounded-lg text-xs cursor-pointer transition-all flex items-center justify-center">
-                                <i class="fa-solid fa-pen"></i>
-                            </button>
-                            <button onclick="deleteFamilyData(${index})" 
-                                    class="w-7 h-7 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs cursor-pointer transition-all flex items-center justify-center">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </div>
+                        ${actionButtons}
                     </div>`;
             });
 
-            document.getElementById('txt-total').innerText = 'Rp ' + total.toLocaleString('id-ID');
-            document.getElementById('txt-total-items').textContent = reportData.length + ' item';
-            document.getElementById('count-badge').textContent = reportData.length;
-            localStorage.setItem('family_reports', JSON.stringify(reportData));
+            document.getElementById('b-txt-total').innerText = 'Rp ' + total.toLocaleString('id-ID');
+            document.getElementById('b-txt-total-items').textContent = targetData.length + ' item';
+            document.getElementById('biz-count-badge').textContent = targetData.length;
+
+            const keyMap = {
+                GHOST: { IN: 'ghost_inbound', OUT: 'ghost_outbound' },
+                PLAYGROUND: { IN: 'play_inbound', OUT: 'play_outbound' },
+                RAISYA_DEC: { IN: 'dec_inbound', OUT: 'dec_outbound' }
+            };
+            if (keyMap[activeBiz]) {
+                localStorage.setItem(keyMap[activeBiz].IN, JSON.stringify(bizDatabases[activeBiz].IN));
+                localStorage.setItem(keyMap[activeBiz].OUT, JSON.stringify(bizDatabases[activeBiz].OUT));
+            }
         }
 
-        function saveData() {
-            const idx = parseInt(document.getElementById('edit-index').value);
-            const nama = document.getElementById('inp-nama').value.trim();
-            const tanggal = document.getElementById('inp-tanggal').value;
-            const jumlah = document.getElementById('inp-jumlah').value.trim();
-            const keterangan = document.getElementById('inp-keterangan').value.trim();
+        function saveBizData() {
+            const idx = parseInt(document.getElementById('biz-edit-index').value);
+            const nama = document.getElementById('b-inp-nama').value.trim();
+            const tanggal = document.getElementById('b-inp-tanggal').value;
+            const jumlah = document.getElementById('b-inp-jumlah').value.trim();
+            const keterangan = document.getElementById('b-inp-keterangan').value.trim();
 
             if (!nama || !tanggal || !jumlah) {
                 showToast('⚠️ Nama, Tanggal, dan Jumlah wajib diisi!', 'error');
@@ -3799,87 +2980,930 @@
             }
 
             const itemObj = { nama, tanggal, jumlah: parseInt(jumlah), keterangan };
-            if (idx === -1) {
-                reportData.push(itemObj);
-                showToast('✅ Data berhasil ditambahkan!', 'success');
-            } else {
-                reportData[idx] = itemObj;
-                showToast('✅ Data berhasil diupdate!', 'success');
+            let targetData = bizDatabases[activeBiz][currentBizTab];
+            const stafMode = isStafModeForBiz(activeBiz);
+            if (stafMode) {
+                targetData.push(itemObj);
+                showToast('✅ Anggaran berhasil ditambahkan!', 'success');
+                resetBizForm();
+                renderBizData();
+                return;
             }
-            resetFamilyForm();
-            renderFamilyData();
+
+            if (idx === -1) {
+                targetData.push(itemObj);
+                showToast('✅ Anggaran berhasil ditambahkan!', 'success');
+            } else {
+                targetData[idx] = itemObj;
+                showToast('✅ Anggaran berhasil diupdate!', 'success');
+            }
+            resetBizForm();
+            renderBizData();
         }
 
-        function editFamilyData(index) {
-            const item = reportData[index];
-            document.getElementById('edit-index').value = index;
-            document.getElementById('inp-nama').value = item.nama;
-            document.getElementById('inp-tanggal').value = item.tanggal;
-            document.getElementById('inp-jumlah').value = item.jumlah;
-            document.getElementById('inp-keterangan').value = item.keterangan || '';
-            document.getElementById('form-title').innerHTML = '<i class="fa-solid fa-pen-to-square text-amber-500"></i> Mode Edit Pengeluaran';
-            document.getElementById('btn-simpan').className = 'flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 rounded-xl text-xs transition-all active:scale-95 cursor-pointer shadow-md flex items-center justify-center gap-1';
-            document.getElementById('btn-batal-edit').classList.remove('hidden');
-            document.getElementById('inp-nama').focus();
+        function editBizData(index) {
+            if (isStafModeForBiz(activeBiz)) return;
+            let targetData = bizDatabases[activeBiz][currentBizTab];
+            const item = targetData[index];
+            document.getElementById('biz-edit-index').value = index;
+            document.getElementById('b-inp-nama').value = item.nama;
+            document.getElementById('b-inp-tanggal').value = item.tanggal;
+            document.getElementById('b-inp-jumlah').value = item.jumlah;
+            document.getElementById('b-inp-keterangan').value = item.keterangan || '';
+            document.getElementById('biz-form-title').innerHTML = '<i class="fa-solid fa-pen-to-square text-amber-500"></i> Mode Edit Anggaran';
+            document.getElementById('b-btn-simpan').className = 'flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 rounded-xl text-xs transition-all active:scale-95 cursor-pointer shadow-md flex items-center justify-center gap-1';
+            document.getElementById('b-btn-batal').classList.remove('hidden');
         }
 
-        function deleteFamilyData(index) {
-            if (confirm('Hapus pengeluaran ini?')) {
-                reportData.splice(index, 1);
-                renderFamilyData();
+        function deleteBizData(index) {
+            if (isStafModeForBiz(activeBiz)) return;
+            if (confirm('Hapus anggaran ini?')) {
+                bizDatabases[activeBiz][currentBizTab].splice(index, 1);
+                renderBizData();
                 showToast('🗑 Data dihapus!', 'warning');
             }
         }
 
-        function resetFamilyForm() {
-            document.getElementById('edit-index').value = '-1';
-            document.getElementById('inp-nama').value = '';
-            document.getElementById('inp-tanggal').value = '';
-            document.getElementById('inp-jumlah').value = '';
-            document.getElementById('inp-keterangan').value = '';
-            document.getElementById('form-title').innerHTML = '<i class="fa-solid fa-pen-to-square text-rose-500"></i> Tambah Pengeluaran Baru';
-            document.getElementById('btn-simpan').className = 'flex-1 bg-rose-500 hover:bg-rose-600 text-white font-bold py-2.5 rounded-xl text-xs transition-all active:scale-95 cursor-pointer shadow-md flex items-center justify-center gap-1';
-            document.getElementById('btn-batal-edit').classList.add('hidden');
+        function resetBizForm() {
+            let cfg = systemCredentials[activeBiz];
+            if (!cfg) return;
+            document.getElementById('biz-edit-index').value = '-1';
+            document.getElementById('b-inp-nama').value = '';
+            document.getElementById('b-inp-tanggal').value = '';
+            document.getElementById('b-inp-jumlah').value = '';
+            document.getElementById('b-inp-keterangan').value = '';
+            const title = (currentBizTab === 'IN') ? 'Tambah Anggaran Masuk Baru' : 'Tambah Anggaran Pengeluaran Baru';
+            document.getElementById('biz-form-title').innerHTML = '<i class="fa-solid fa-pen-to-square text-' + cfg.theme + '-500"></i> ' + title;
+            document.getElementById('b-btn-simpan').className = `flex-1 bg-${cfg.theme}-600 hover:bg-${cfg.theme}-700 text-white font-bold py-2.5 rounded-xl text-xs transition-all active:scale-95 cursor-pointer shadow-md flex items-center justify-center gap-1`;
+            document.getElementById('b-btn-batal').classList.add('hidden');
         }
 
-        function exportToExcel() {
-            if (reportData.length === 0) {
-                showToast('⚠️ Tidak ada data untuk diekspor!', 'warning');
+        function exportBizToExcel() {
+            let targetData = bizDatabases[activeBiz][currentBizTab];
+            let labelTipe = (currentBizTab === 'IN') ? 'ANGGARAN MASUK' : 'ANGGARAN PENGELUARAN';
+            let cfg = systemCredentials[activeBiz];
+            if (targetData.length === 0) {
+                showToast('⚠️ Tidak ada data!', 'warning');
                 return;
             }
-            let rows = [
-                ['RAISYA DECORATION - LAPORAN KEUANGAN KELUARGA'],
-                ['Otoritas:', selectedRole],
-                ['Tanggal Cetak:', new Date().toLocaleDateString('id-ID')],
-                [],
-                ['No', 'Nama Pengeluaran', 'Tanggal', 'Jumlah (Rp)', 'Keterangan']
-            ];
+            let rows = [[`RAISYA DECORATION - LAPORAN BISNIS ${cfg.name.toUpperCase()}`], ['Kategori:', labelTipe, 'Tanggal:', new Date().toLocaleDateString('id-ID')], [], ['No', 'Nama', 'Tanggal', 'Jumlah (Rp)', 'Keterangan']];
             let tot = 0;
-            reportData.forEach((item, idx) => {
+            targetData.forEach((item, idx) => {
                 tot += item.jumlah;
                 rows.push([idx + 1, item.nama, item.tanggal, item.jumlah, item.keterangan]);
             });
-            rows.push([], ['', 'TOTAL PENGELUARAN', '', tot, '']);
+            rows.push([], ['', 'TOTAL', '', tot, '']);
             const ws = XLSX.utils.aoa_to_sheet(rows);
             const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Keluarga');
-            XLSX.writeFile(wb, 'Laporan_Keuangan_Keluarga.xlsx');
+            XLSX.utils.book_append_sheet(wb, ws, 'Laporan');
+            XLSX.writeFile(wb, `Laporan_${cfg.name.replace(/ /g, '_')}.xlsx`);
             showToast('✅ Excel berhasil didownload!', 'success');
         }
 
-        // ========== INIT ==========
-        (function init() {
-            loadTheme();
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
-            if (!localStorage.getItem('raisya_familyPassword')) localStorage.setItem('raisya_familyPassword', '002886');
-            if (!localStorage.getItem('raisya_bizPassword')) localStorage.setItem('raisya_bizPassword', '002886');
-            if (!localStorage.getItem('raisya_credentials')) {
-                saveSystemCredentials(); // Simpan default jika belum ada
+        // ========== JALUR INTERNET (18 SUB-MENU) ==========
+        function switchNetSubMenu(subNo) {
+            activeNetSub = subNo;
+            const subs = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18];
+
+            const isStafInternet = currentUser && currentUser.role === 'staf_internet';
+            const allowedSubs = isStafInternet ? [2,3,11,12] : subs;
+
+            subs.forEach(s => {
+                const btn = document.getElementById('btn-sub-net' + s);
+                if (btn) {
+                    if (!allowedSubs.includes(s)) {
+                        btn.style.display = 'none';
+                    } else {
+                        btn.style.display = '';
+                        if (s === subNo) {
+                            btn.className = btn.className.includes('w-full') 
+                                ? 'w-full py-2.5 rounded-lg text-center cursor-pointer bg-white text-cyan-600 shadow-sm transition-all text-[10px] font-bold'
+                                : 'py-2 rounded-lg text-center cursor-pointer bg-white text-cyan-600 shadow-sm transition-all text-[10px] font-bold';
+                        } else {
+                            btn.className = btn.className.includes('w-full')
+                                ? 'w-full py-2.5 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all text-[10px] font-bold'
+                                : 'py-2 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all text-[10px] font-bold';
+                        }
+                    }
+                }
+            });
+
+            document.getElementById('net-filter-box').classList.add('hidden');
+            document.getElementById('net-status-filter-box').classList.add('hidden');
+            document.getElementById('net-month-filter-box').classList.add('hidden');
+            document.getElementById('net-subrekap-box').classList.add('hidden');
+            document.getElementById('net-form-container').classList.remove('hidden');
+
+            if (subNo === 1) {
+                document.getElementById('net-filter-box').classList.remove('hidden');
+            } else if (subNo === 11 || subNo === 12 || subNo === 13 || subNo === 14) {
+                document.getElementById('net-filter-box').classList.remove('hidden');
+                if (subNo !== 13 && subNo !== 14) document.getElementById('net-status-filter-box').classList.remove('hidden');
+                document.getElementById('net-form-container').classList.add('hidden');
+            } else if (subNo === 15 || subNo === 16 || subNo === 17) {
+                document.getElementById('net-form-container').classList.add('hidden');
+            } else if (subNo === 2 || subNo === 3) {
+                document.getElementById('net-subrekap-box').classList.remove('hidden');
+            } else if (subNo === 18) {
+                document.getElementById('net-form-container').classList.add('hidden');
+                document.getElementById('net-month-filter-box').classList.remove('hidden');
+                document.getElementById('net-subrekap-box').classList.remove('hidden');
+                // Set default bulan dan tahun saat ini
+                const now = new Date();
+                if (!document.getElementById('net-filter-month').value) {
+                    document.getElementById('net-filter-month').value = now.getMonth() + 1;
+                    document.getElementById('net-filter-year').value = now.getFullYear();
+                }
             }
-            console.log('✅ Raisya Decoration v2.1 - Part 1 Siap!');
-            console.log('👤 Multi-User System Active');
-            console.log('💾 Database: 10 Array Internet');
-            console.log('📱 PWA, Auth, Settings, Backup, Family CRUD loaded');
-        })();
+
+            resetNetForm();
+            if (subNo <= 10 && allowedSubs.includes(subNo)) renderInternetFields();
+            renderInternetData();
+        }
+
+        function resetMonthFilter() {
+            const now = new Date();
+            document.getElementById('net-filter-month').value = now.getMonth() + 1;
+            document.getElementById('net-filter-year').value = now.getFullYear();
+            renderInternetData();
+        }
+
+        function renderInternetFields() {
+            const container = document.getElementById('net-fields-container');
+            container.innerHTML = '';
+
+            if (activeNetSub === 2 || activeNetSub === 3) {
+                const label = activeNetSub === 2 ? '2. Input Tagihan Masuk Internet' : '3. Input Tagihan Tunggakan';
+                const icon = activeNetSub === 2 ? 'fa-file-invoice' : 'fa-clock';
+                document.getElementById('net-form-title').innerHTML = `<i class="fa-solid ${icon}"></i> ${label}`;
+                let opts = "<option value=''>-- Pilih Pelanggan --</option>";
+                netDatabases.pelanggan.forEach(p => {
+                    opts += `<option value="${p.nama}" data-tagihan="${p.tagihan}" data-tunggakan="${p.tunggakan || 0}">${p.nama} (Rp ${parseInt(p.tagihan).toLocaleString('id-ID')})</option>`;
+                });
+                container.innerHTML = `
+                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Pelanggan</label><select id="net-f2-nama" onchange="autoFillNetInvoice()" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none">${opts}</select></div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tanggal</label><input type="date" id="net-f2-tanggal" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">${activeNetSub === 2 ? 'Tagihan (Rp)' : 'Tunggakan (Rp)'}</label><input type="number" id="net-f2-tagihan" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Petugas</label><select id="net-f2-petugas" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"><option value="Dede S">Dede S</option><option value="Petugas 2">Petugas 2</option></select></div>
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Metode</label><select id="net-f2-metode" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"><option value="Cash">Cash</option><option value="Transfer">Transfer</option></select></div>
+                    </div>
+                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Status</label><select id="net-f2-status" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"><option value="Terbayar">Terbayar</option><option value="Belum Terbayar">Belum Terbayar</option></select></div>`;
+            } else if (activeNetSub === 1) {
+                document.getElementById('net-form-title').innerHTML = '<i class="fa-solid fa-users"></i> 1. Tambah Data Pelanggan';
+                container.innerHTML = `
+                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Nama Pelanggan *</label><input type="text" id="net-f1-nama" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-cyan-500/20" placeholder="Nama lengkap"></div>
+                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Alamat</label><input type="text" id="net-f1-alamat" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-cyan-500/20" placeholder="Alamat rumah"></div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">No. HP</label><input type="text" id="net-f1-hp" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-cyan-500/20" placeholder="08xxx"></div>
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Siklus Tagihan</label><select id="net-f1-siklus" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"><option value="05">05</option><option value="10">10</option><option value="15">15</option><option value="20">20</option><option value="25">25</option><option value="30">30</option></select></div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tagihan Bulanan (Rp)</label><input type="number" id="net-f1-tagihan" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-cyan-500/20" placeholder="50000"></div>
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tunggakan (Rp)</label><input type="number" id="net-f1-tunggakan" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-amber-500/20" placeholder="0"></div>
+                    </div>
+                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Keterangan Paket</label><input type="text" id="net-f1-ket" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-cyan-500/20" placeholder="Contoh: 10Mbps"></div>`;
+            } else if (activeNetSub === 4) {
+                document.getElementById('net-form-title').innerHTML = '<i class="fa-solid fa-circle-down"></i> 4. Input Tagihan Masuk Lainnya';
+                container.innerHTML = `
+                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Nama</label><input type="text" id="net-f3-nama" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tanggal</label><input type="date" id="net-f3-tanggal" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Jumlah (Rp)</label><input type="number" id="net-f3-jumlah" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
+                    </div>
+                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Keterangan</label><input type="text" id="net-f3-ket" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>`;
+            } else if (activeNetSub === 5 || activeNetSub === 6) {
+                const label = activeNetSub === 5 ? '5. Input Anggaran Keluar 1' : '6. Input Anggaran Keluar Lainnya';
+                document.getElementById('net-form-title').innerHTML = `<i class="fa-solid fa-calendar-check"></i> ${label}`;
+                const statusField = activeNetSub === 5 
+                    ? `<div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Status</label><select id="net-f45-status" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"><option value="Terbayar">Terbayar</option><option value="Belum Terbayar">Belum Terbayar</option></select></div>`
+                    : `<div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Keterangan</label><input type="text" id="net-f45-ket" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>`;
+                container.innerHTML = `
+                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Nama Pengeluaran</label><input type="text" id="net-f45-nama" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tanggal</label><input type="date" id="net-f45-tanggal" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Jumlah (Rp)</label><input type="number" id="net-f45-jumlah" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
+                    </div>
+                    ${statusField}`;
+            } else if (activeNetSub === 7 || activeNetSub === 8) {
+                const label = activeNetSub === 7 ? '7. Input Tagihan Masuk 1' : '8. Input Tagihan Masuk 2';
+                document.getElementById('net-form-title').innerHTML = `<i class="fa-solid fa-circle-down"></i> ${label}`;
+                container.innerHTML = `
+                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Nama Tagihan</label><input type="text" id="net-f78-nama" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tanggal</label><input type="date" id="net-f78-tanggal" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Jumlah (Rp)</label><input type="number" id="net-f78-jumlah" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
+                    </div>
+                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Keterangan</label><input type="text" id="net-f78-ket" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>`;
+            } else if (activeNetSub === 9 || activeNetSub === 10) {
+                const label = activeNetSub === 9 ? '9. Input Tagihan Keluar 1' : '10. Input Tagihan Keluar 2';
+                document.getElementById('net-form-title').innerHTML = `<i class="fa-solid fa-circle-up"></i> ${label}`;
+                container.innerHTML = `
+                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Nama Pengeluaran</label><input type="text" id="net-f910-nama" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tanggal</label><input type="date" id="net-f910-tanggal" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Jumlah (Rp)</label><input type="number" id="net-f910-jumlah" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
+                    </div>
+                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Keterangan</label><input type="text" id="net-f910-ket" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>`;
+            }
+        }
+
+        function autoFillNetInvoice() {
+            const sel = document.getElementById('net-f2-nama');
+            if (!sel) return;
+            const opt = sel.options[sel.selectedIndex];
+            if (!opt.value) return;
+            document.getElementById('net-f2-tagihan').value = activeNetSub === 3 
+                ? opt.getAttribute('data-tunggakan') 
+                : opt.getAttribute('data-tagihan');
+        }
+
+        function renderInternetData() {
+            const container = document.getElementById('net-container-list');
+            container.innerHTML = '';
+            let total = 0, paid = 0, unpaid = 0, tunggakan = 0;
+            let data = [];
+            const filterSiklus = document.getElementById('net-filter-date') ? document.getElementById('net-filter-date').value : 'ALL';
+            const filterStatus = document.getElementById('net-filter-status') ? document.getElementById('net-filter-status').value : 'ALL';
+            const isStafInternet = currentUser && currentUser.role === 'staf_internet';
+
+            // Sub 18: Rekap Bulanan
+            if (activeNetSub === 18) {
+                const month = parseInt(document.getElementById('net-filter-month').value);
+                const year = parseInt(document.getElementById('net-filter-year').value);
+                // Filter data tagihan dan tunggakan pada bulan/tahun
+                data = [
+                    ...netDatabases.tagihan.filter(d => {
+                        if (!d.tanggal) return false;
+                        const dDate = new Date(d.tanggal);
+                        return dDate.getFullYear() === year && (dDate.getMonth() + 1) === month;
+                    }),
+                    ...netDatabases.tunggakan.filter(d => {
+                        if (!d.tanggal) return false;
+                        const dDate = new Date(d.tanggal);
+                        return dDate.getFullYear() === year && (dDate.getMonth() + 1) === month;
+                    })
+                ];
+                // Tambahkan juga data masuk lain, keluar, dll? Permintaan hanya "rekap laporan tagihan bulanan", fokus ke tagihan dan tunggakan.
+                // Tapi bisa juga semua pemasukan/pengeluaran. Biarkan sesuai kebutuhan: hanya tagihan dan tunggakan.
+                document.getElementById('net-lbl-t1').innerText = 'Rekap Tagihan Bulan ' + month + '/' + year;
+            } else if (activeNetSub === 1) {
+                data = netDatabases.pelanggan.filter(p => filterSiklus === 'ALL' || p.siklus === filterSiklus);
+                document.getElementById('net-lbl-t1').innerText = 'Total Potensial Tagihan';
+            } else if (activeNetSub === 2) {
+                data = netDatabases.tagihan;
+                document.getElementById('net-lbl-t1').innerText = 'Total Tagihan Masuk Internet';
+            } else if (activeNetSub === 3) {
+                data = netDatabases.tunggakan;
+                document.getElementById('net-lbl-t1').innerText = 'Total Tagihan Tunggakan';
+            } else if (activeNetSub === 4) {
+                data = netDatabases.masukLain;
+                document.getElementById('net-lbl-t1').innerText = 'Total Masuk Lainnya';
+            } else if (activeNetSub === 5) {
+                data = netDatabases.keluar1;
+                document.getElementById('net-lbl-t1').innerText = 'Total Anggaran Keluar 1';
+            } else if (activeNetSub === 6) {
+                data = netDatabases.keluar2;
+                document.getElementById('net-lbl-t1').innerText = 'Total Anggaran Keluar Lainnya';
+            } else if (activeNetSub === 7) {
+                data = netDatabases.tagihanMasuk1;
+                document.getElementById('net-lbl-t1').innerText = 'Total Tagihan Masuk 1';
+            } else if (activeNetSub === 8) {
+                data = netDatabases.tagihanMasuk2;
+                document.getElementById('net-lbl-t1').innerText = 'Total Tagihan Masuk 2';
+            } else if (activeNetSub === 9) {
+                data = netDatabases.tagihanKeluar1;
+                document.getElementById('net-lbl-t1').innerText = 'Total Tagihan Keluar 1';
+            } else if (activeNetSub === 10) {
+                data = netDatabases.tagihanKeluar2;
+                document.getElementById('net-lbl-t1').innerText = 'Total Tagihan Keluar 2';
+            } else if (activeNetSub === 11) {
+                let allData = [...netDatabases.tagihan, ...netDatabases.tunggakan];
+                data = allData.filter(d => {
+                    const pelanggan = netDatabases.pelanggan.find(p => p.nama === d.nama);
+                    const matchSiklus = filterSiklus === 'ALL' || (pelanggan && pelanggan.siklus === filterSiklus);
+                    return matchSiklus && d.status === 'Terbayar';
+                });
+                document.getElementById('net-lbl-t1').innerText = 'Total Data Terbayar';
+            } else if (activeNetSub === 12) {
+                let allData = [...netDatabases.tagihan, ...netDatabases.tunggakan];
+                data = allData.filter(d => {
+                    const pelanggan = netDatabases.pelanggan.find(p => p.nama === d.nama);
+                    const matchSiklus = filterSiklus === 'ALL' || (pelanggan && pelanggan.siklus === filterSiklus);
+                    return matchSiklus && d.status === 'Belum Terbayar';
+                });
+                document.getElementById('net-lbl-t1').innerText = 'Total Data Belum Terbayar';
+            } else if (activeNetSub === 13) {
+                data = netDatabases.tunggakan.filter(d => {
+                    const pelanggan = netDatabases.pelanggan.find(p => p.nama === d.nama);
+                    return filterSiklus === 'ALL' || (pelanggan && pelanggan.siklus === filterSiklus);
+                });
+                document.getElementById('net-lbl-t1').innerText = 'Total Data Tunggakan';
+            } else if (activeNetSub === 14) {
+                data = netDatabases.tunggakan.filter(d => d.status === 'Belum Terbayar');
+                document.getElementById('net-lbl-t1').innerText = 'Total Tunggakan Belum Terbayar';
+            } else if (activeNetSub === 15) {
+                data = [
+                    ...netDatabases.tagihan.filter(d => d.status === 'Terbayar'),
+                    ...netDatabases.masukLain,
+                    ...netDatabases.tagihanMasuk1,
+                    ...netDatabases.tagihanMasuk2
+                ];
+                document.getElementById('net-lbl-t1').innerText = 'Total Semua Tagihan Masuk';
+            } else if (activeNetSub === 16) {
+                data = [
+                    ...netDatabases.keluar1,
+                    ...netDatabases.keluar2,
+                    ...netDatabases.tagihanKeluar1,
+                    ...netDatabases.tagihanKeluar2,
+                    ...netDatabases.tunggakan.filter(d => d.status === 'Terbayar')
+                ];
+                document.getElementById('net-lbl-t1').innerText = 'Total Semua Tagihan Keluar';
+            } else if (activeNetSub === 17) {
+                renderAllPelangganData();
+                return;
+            }
+
+            // Hitung total
+            data.forEach(item => {
+                const amt = parseInt(item.tagihan || item.jumlah || 0);
+                total += amt;
+                if (item.status === 'Terbayar') paid += amt;
+                else if (item.status === 'Belum Terbayar') unpaid += amt;
+            });
+
+            // Untuk sub 18, kita juga tampilkan tunggakan yang belum dibayar dari bulan itu
+            if (activeNetSub === 18) {
+                // paid/unpaid sudah dihitung dari data
+                // tunggakan dari data tunggakan yang belum dibayar
+                tunggakan = data.filter(d => d.status === 'Belum Terbayar' && netDatabases.tunggakan.some(t => t.nama === d.nama && t.tanggal === d.tanggal))
+                               .reduce((acc, d) => acc + parseInt(d.tagihan || 0), 0);
+            } else {
+                // Default tunggakan total
+                netDatabases.tunggakan.forEach(item => {
+                    tunggakan += parseInt(item.tagihan || 0);
+                });
+            }
+
+            if (data.length === 0) {
+                document.getElementById('net-empty-state').classList.remove('hidden');
+            } else {
+                document.getElementById('net-empty-state').classList.add('hidden');
+            }
+
+            // Render item
+            data.forEach((item, i) => {
+                const amt = parseInt(item.tagihan || item.jumlah || 0);
+                const pelanggan = netDatabases.pelanggan.find(p => p.nama === item.nama);
+                let label = '';
+                if (item.status === 'Terbayar') label = '<span class="bg-emerald-100 text-emerald-700 text-[9px] font-bold px-1.5 py-0.5 rounded">TERBAYAR</span>';
+                else if (item.status === 'Belum Terbayar') label = '<span class="bg-red-100 text-red-700 text-[9px] font-bold px-1.5 py-0.5 rounded">BELUM</span>';
+                if (pelanggan && pelanggan.siklus) label += ` <span class="bg-cyan-100 text-cyan-700 text-[9px] font-bold px-1.5 py-0.5 rounded">Tgl ${pelanggan.siklus}</span>`;
+
+                const showActions = !isStafInternet && activeNetSub <= 10;
+                const actionButtons = showActions ? `
+                    <div class="flex space-x-1 ml-2">
+                        <button onclick="editNetData(${i})" class="w-6 h-6 bg-amber-50 text-amber-600 rounded-lg text-[10px] cursor-pointer flex items-center justify-center"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="deleteNetData(${i})" class="w-6 h-6 bg-red-50 text-red-600 rounded-lg text-[10px] cursor-pointer flex items-center justify-center"><i class="fa-solid fa-trash"></i></button>
+                    </div>` : '';
+
+                container.innerHTML += `
+                    <div class="bg-white border border-slate-200 p-2.5 rounded-xl flex justify-between items-center text-xs">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <h4 class="font-bold text-slate-700">${item.nama}</h4>
+                                ${label}
+                            </div>
+                            <p class="text-[10px] text-slate-400 mt-0.5">${item.tanggal || ''} ${item.alamat ? '| ' + item.alamat : ''} ${item.petugas ? '| ' + item.petugas : ''} ${item.ket ? '| ' + item.ket : ''} ${item.keterangan ? '| ' + item.keterangan : ''}</p>
+                            <p class="text-cyan-600 font-extrabold mt-0.5">Rp ${amt.toLocaleString('id-ID')}</p>
+                        </div>
+                        ${actionButtons}
+                    </div>`;
+            });
+
+            document.getElementById('net-txt-t1').innerText = 'Rp ' + total.toLocaleString('id-ID');
+            document.getElementById('net-txt-items').textContent = data.length + ' item';
+            document.getElementById('net-count-badge').textContent = data.length;
+            document.getElementById('net-txt-paid').innerText = 'Rp ' + paid.toLocaleString('id-ID');
+            document.getElementById('net-txt-unpaid').innerText = 'Rp ' + unpaid.toLocaleString('id-ID');
+            document.getElementById('net-txt-tunggakan').innerText = 'Rp ' + tunggakan.toLocaleString('id-ID');
+
+            saveAllNetData();
+        }
+
+        function renderAllPelangganData() {
+            const container = document.getElementById('net-container-list');
+            container.innerHTML = '';
+            document.getElementById('net-lbl-t1').innerText = 'Data Pelanggan Lengkap';
+            document.getElementById('net-empty-state').classList.add('hidden');
+
+            if (netDatabases.pelanggan.length === 0) {
+                document.getElementById('net-empty-state').classList.remove('hidden');
+                document.getElementById('net-txt-t1').innerText = 'Rp 0';
+                document.getElementById('net-txt-items').textContent = '0 item';
+                document.getElementById('net-count-badge').textContent = '0';
+                document.getElementById('net-txt-paid').innerText = 'Rp 0';
+                document.getElementById('net-txt-unpaid').innerText = 'Rp 0';
+                document.getElementById('net-txt-tunggakan').innerText = 'Rp 0';
+                return;
+            }
+
+            let totalTagihan = 0, totalTunggakan = 0;
+            netDatabases.pelanggan.forEach(p => {
+                const tagihanPelanggan = netDatabases.tagihan.filter(t => t.nama === p.nama);
+                const tunggakanPelanggan = netDatabases.tunggakan.filter(t => t.nama === p.nama);
+                const lastTagihan = tagihanPelanggan[tagihanPelanggan.length - 1];
+                const lastTunggakan = tunggakanPelanggan[tunggakanPelanggan.length - 1];
+                
+                const statusTagihan = lastTagihan ? lastTagihan.status : 'Belum Ada';
+                const statusTunggakan = lastTunggakan ? lastTunggakan.status : 'Tidak Ada';
+                
+                totalTagihan += parseInt(p.tagihan || 0);
+                totalTunggakan += parseInt(p.tunggakan || 0);
+
+                const statusColor = statusTagihan === 'Terbayar' ? 'text-emerald-600' : statusTagihan === 'Belum Terbayar' ? 'text-red-600' : 'text-slate-400';
+                const tunggakanColor = statusTunggakan === 'Terbayar' ? 'text-emerald-600' : statusTunggakan === 'Belum Terbayar' ? 'text-red-600' : 'text-slate-400';
+
+                container.innerHTML += `
+                    <div class="bg-white border border-slate-200 p-3 rounded-xl text-xs">
+                        <div class="flex justify-between items-start">
+                            <div class="flex-1">
+                                <h4 class="font-bold text-slate-700">${p.nama} <span class="bg-cyan-100 text-cyan-700 text-[9px] font-bold px-1.5 py-0.5 rounded">Tgl ${p.siklus}</span></h4>
+                                <p class="text-[10px] text-slate-400 mt-0.5">${p.alamat || '-'} | ${p.hp || '-'} | ${p.ket || '-'}</p>
+                                <div class="grid grid-cols-2 gap-2 mt-2">
+                                    <div>
+                                        <span class="text-[9px] text-slate-400">Tagihan/bln</span>
+                                        <p class="font-bold text-cyan-600">Rp ${parseInt(p.tagihan).toLocaleString('id-ID')}</p>
+                                    </div>
+                                    <div>
+                                        <span class="text-[9px] text-slate-400">Tunggakan</span>
+                                        <p class="font-bold text-amber-600">Rp ${parseInt(p.tunggakan || 0).toLocaleString('id-ID')}</p>
+                                    </div>
+                                    <div>
+                                        <span class="text-[9px] text-slate-400">Status Tagihan</span>
+                                        <p class="font-bold ${statusColor}">${statusTagihan}</p>
+                                    </div>
+                                    <div>
+                                        <span class="text-[9px] text-slate-400">Status Tunggakan</span>
+                                        <p class="font-bold ${tunggakanColor}">${statusTunggakan}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+
+            document.getElementById('net-txt-t1').innerText = 'Rp ' + totalTagihan.toLocaleString('id-ID');
+            document.getElementById('net-txt-items').textContent = netDatabases.pelanggan.length + ' pelanggan';
+            document.getElementById('net-count-badge').textContent = netDatabases.pelanggan.length;
+            document.getElementById('net-txt-paid').innerText = 'Rp 0';
+            document.getElementById('net-txt-unpaid').innerText = 'Rp 0';
+            document.getElementById('net-txt-tunggakan').innerText = 'Rp ' + totalTunggakan.toLocaleString('id-ID');
+        }
+
+        function saveAllNetData() {
+            localStorage.setItem('net_customers', JSON.stringify(netDatabases.pelanggan));
+            localStorage.setItem('net_bills', JSON.stringify(netDatabases.tagihan));
+            localStorage.setItem('net_tunggakan', JSON.stringify(netDatabases.tunggakan));
+            localStorage.setItem('net_inc_other', JSON.stringify(netDatabases.masukLain));
+            localStorage.setItem('net_exp_1', JSON.stringify(netDatabases.keluar1));
+            localStorage.setItem('net_exp_2', JSON.stringify(netDatabases.keluar2));
+            localStorage.setItem('net_tagihan_masuk1', JSON.stringify(netDatabases.tagihanMasuk1));
+            localStorage.setItem('net_tagihan_masuk2', JSON.stringify(netDatabases.tagihanMasuk2));
+            localStorage.setItem('net_tagihan_keluar1', JSON.stringify(netDatabases.tagihanKeluar1));
+            localStorage.setItem('net_tagihan_keluar2', JSON.stringify(netDatabases.tagihanKeluar2));
+        }
+
+        function saveNetData() {
+            const idx = parseInt(document.getElementById('net-edit-index').value);
+            let targetArr, getObj;
+
+            if (activeNetSub === 1) {
+                targetArr = netDatabases.pelanggan;
+                getObj = () => ({
+                    nama: document.getElementById('net-f1-nama').value.trim(),
+                    alamat: document.getElementById('net-f1-alamat').value.trim(),
+                    hp: document.getElementById('net-f1-hp').value.trim(),
+                    siklus: document.getElementById('net-f1-siklus').value,
+                    tagihan: parseInt(document.getElementById('net-f1-tagihan').value) || 0,
+                    tunggakan: parseInt(document.getElementById('net-f1-tunggakan').value) || 0,
+                    ket: document.getElementById('net-f1-ket').value.trim()
+                });
+            } else if (activeNetSub === 2) {
+                targetArr = netDatabases.tagihan;
+                getObj = () => ({
+                    nama: document.getElementById('net-f2-nama').value,
+                    tanggal: document.getElementById('net-f2-tanggal').value,
+                    tagihan: parseInt(document.getElementById('net-f2-tagihan').value) || 0,
+                    petugas: document.getElementById('net-f2-petugas').value,
+                    metode: document.getElementById('net-f2-metode').value,
+                    status: document.getElementById('net-f2-status').value
+                });
+            } else if (activeNetSub === 3) {
+                targetArr = netDatabases.tunggakan;
+                getObj = () => ({
+                    nama: document.getElementById('net-f2-nama').value,
+                    tanggal: document.getElementById('net-f2-tanggal').value,
+                    tagihan: parseInt(document.getElementById('net-f2-tagihan').value) || 0,
+                    petugas: document.getElementById('net-f2-petugas').value,
+                    metode: document.getElementById('net-f2-metode').value,
+                    status: document.getElementById('net-f2-status').value
+                });
+            } else if (activeNetSub === 4) {
+                targetArr = netDatabases.masukLain;
+                getObj = () => ({
+                    nama: document.getElementById('net-f3-nama').value.trim(),
+                    tanggal: document.getElementById('net-f3-tanggal').value,
+                    jumlah: parseInt(document.getElementById('net-f3-jumlah').value) || 0,
+                    ket: document.getElementById('net-f3-ket').value.trim()
+                });
+            } else if (activeNetSub === 5 || activeNetSub === 6) {
+                targetArr = activeNetSub === 5 ? netDatabases.keluar1 : netDatabases.keluar2;
+                getObj = () => {
+                    const obj = {
+                        nama: document.getElementById('net-f45-nama').value.trim(),
+                        tanggal: document.getElementById('net-f45-tanggal').value,
+                        jumlah: parseInt(document.getElementById('net-f45-jumlah').value) || 0
+                    };
+                    if (activeNetSub === 5) obj.status = document.getElementById('net-f45-status').value;
+                    else obj.ket = document.getElementById('net-f45-ket').value.trim();
+                    return obj;
+                };
+            } else if (activeNetSub === 7 || activeNetSub === 8) {
+                targetArr = activeNetSub === 7 ? netDatabases.tagihanMasuk1 : netDatabases.tagihanMasuk2;
+                getObj = () => ({
+                    nama: document.getElementById('net-f78-nama').value.trim(),
+                    tanggal: document.getElementById('net-f78-tanggal').value,
+                    jumlah: parseInt(document.getElementById('net-f78-jumlah').value) || 0,
+                    keterangan: document.getElementById('net-f78-ket').value.trim()
+                });
+            } else if (activeNetSub === 9 || activeNetSub === 10) {
+                targetArr = activeNetSub === 9 ? netDatabases.tagihanKeluar1 : netDatabases.tagihanKeluar2;
+                getObj = () => ({
+                    nama: document.getElementById('net-f910-nama').value.trim(),
+                    tanggal: document.getElementById('net-f910-tanggal').value,
+                    jumlah: parseInt(document.getElementById('net-f910-jumlah').value) || 0,
+                    keterangan: document.getElementById('net-f910-ket').value.trim()
+                });
+            } else {
+                return;
+            }
+
+            const obj = getObj();
+            if (!obj.nama) { showToast('⚠️ Nama wajib diisi!', 'error'); return; }
+            if (idx === -1) targetArr.push(obj);
+            else targetArr[idx] = obj;
+
+            resetNetForm();
+            renderInternetData();
+            showToast('✅ Data berhasil disimpan!', 'success');
+        }
+
+        function editNetData(index) {
+            if (currentUser && currentUser.role === 'staf_internet') return;
+            document.getElementById('net-edit-index').value = index;
+            document.getElementById('net-btn-batal').classList.remove('hidden');
+
+            if (activeNetSub === 1) {
+                const d = netDatabases.pelanggan[index];
+                if (d) {
+                    document.getElementById('net-f1-nama').value = d.nama || '';
+                    document.getElementById('net-f1-alamat').value = d.alamat || '';
+                    document.getElementById('net-f1-hp').value = d.hp || '';
+                    document.getElementById('net-f1-siklus').value = d.siklus || '05';
+                    document.getElementById('net-f1-tagihan').value = d.tagihan || 0;
+                    document.getElementById('net-f1-tunggakan').value = d.tunggakan || 0;
+                    document.getElementById('net-f1-ket').value = d.ket || '';
+                }
+            } else if (activeNetSub === 2 || activeNetSub === 3) {
+                const arr = activeNetSub === 2 ? netDatabases.tagihan : netDatabases.tunggakan;
+                const d = arr[index];
+                if (d) {
+                    document.getElementById('net-f2-nama').value = d.nama || '';
+                    document.getElementById('net-f2-tanggal').value = d.tanggal || '';
+                    document.getElementById('net-f2-tagihan').value = d.tagihan || 0;
+                    document.getElementById('net-f2-petugas').value = d.petugas || 'Dede S';
+                    document.getElementById('net-f2-metode').value = d.metode || 'Cash';
+                    document.getElementById('net-f2-status').value = d.status || 'Terbayar';
+                }
+            } else if (activeNetSub === 4) {
+                const d = netDatabases.masukLain[index];
+                if (d) {
+                    document.getElementById('net-f3-nama').value = d.nama || '';
+                    document.getElementById('net-f3-tanggal').value = d.tanggal || '';
+                    document.getElementById('net-f3-jumlah').value = d.jumlah || 0;
+                    document.getElementById('net-f3-ket').value = d.ket || '';
+                }
+            } else if (activeNetSub === 5 || activeNetSub === 6) {
+                const arr = activeNetSub === 5 ? netDatabases.keluar1 : netDatabases.keluar2;
+                const d = arr[index];
+                if (d) {
+                    document.getElementById('net-f45-nama').value = d.nama || '';
+                    document.getElementById('net-f45-tanggal').value = d.tanggal || '';
+                    document.getElementById('net-f45-jumlah').value = d.jumlah || 0;
+                    if (activeNetSub === 5) document.getElementById('net-f45-status').value = d.status || 'Terbayar';
+                    else document.getElementById('net-f45-ket').value = d.ket || '';
+                }
+            } else if (activeNetSub === 7 || activeNetSub === 8) {
+                const arr = activeNetSub === 7 ? netDatabases.tagihanMasuk1 : netDatabases.tagihanMasuk2;
+                const d = arr[index];
+                if (d) {
+                    document.getElementById('net-f78-nama').value = d.nama || '';
+                    document.getElementById('net-f78-tanggal').value = d.tanggal || '';
+                    document.getElementById('net-f78-jumlah').value = d.jumlah || 0;
+                    document.getElementById('net-f78-ket').value = d.keterangan || '';
+                }
+            } else if (activeNetSub === 9 || activeNetSub === 10) {
+                const arr = activeNetSub === 9 ? netDatabases.tagihanKeluar1 : netDatabases.tagihanKeluar2;
+                const d = arr[index];
+                if (d) {
+                    document.getElementById('net-f910-nama').value = d.nama || '';
+                    document.getElementById('net-f910-tanggal').value = d.tanggal || '';
+                    document.getElementById('net-f910-jumlah').value = d.jumlah || 0;
+                    document.getElementById('net-f910-ket').value = d.keterangan || '';
+                }
+            }
+        }
+
+        function deleteNetData(index) {
+            if (currentUser && currentUser.role === 'staf_internet') return;
+            if (!confirm('Hapus data ini?')) return;
+            const map = {
+                1: netDatabases.pelanggan, 2: netDatabases.tagihan, 3: netDatabases.tunggakan,
+                4: netDatabases.masukLain, 5: netDatabases.keluar1, 6: netDatabases.keluar2,
+                7: netDatabases.tagihanMasuk1, 8: netDatabases.tagihanMasuk2,
+                9: netDatabases.tagihanKeluar1, 10: netDatabases.tagihanKeluar2
+            };
+            if (map[activeNetSub]) {
+                map[activeNetSub].splice(index, 1);
+                renderInternetData();
+                showToast('🗑 Data dihapus!', 'warning');
+            }
+        }
+
+        function resetNetForm() {
+            document.getElementById('net-edit-index').value = '-1';
+            document.getElementById('net-btn-batal').classList.add('hidden');
+            if (activeNetSub <= 10 && 
+                (!currentUser || currentUser.role !== 'staf_internet' || (activeNetSub === 2 || activeNetSub === 3))) {
+                renderInternetFields();
+            }
+        }
+
+        function exportNetToExcel() {
+            let sheetName = 'Internet', fileName = 'Laporan_Internet.xlsx';
+            const titles = [
+                'Data Pelanggan', 'Tagihan Masuk Internet', 'Tagihan Tunggakan', 'Masuk Lainnya',
+                'Anggaran Keluar 1', 'Anggaran Keluar Lainnya', 'Tagihan Masuk 1', 'Tagihan Masuk 2',
+                'Tagihan Keluar 1', 'Tagihan Keluar 2', 'Data Terbayar', 'Belum Terbayar',
+                'Data Tunggakan', 'Tunggakan Belum', 'Hitung Semua Masuk', 'Hitung Semua Keluar',
+                'Semua Data Pelanggan', 'Rekap Bulanan'
+            ];
+
+            let rows = [['RAISYA DECORATION - BISNIS INTERNET'], [titles[activeNetSub - 1]], [], ['No', 'Nama', 'Detail', 'Jumlah (Rp)']];
+            
+            if (activeNetSub === 17) {
+                rows = [['RAISYA DECORATION - DATA PELANGGAN LENGKAP'], [], ['No', 'Nama', 'Alamat', 'HP', 'Siklus', 'Tagihan', 'Tunggakan', 'Status Tagihan', 'Status Tunggakan']];
+                netDatabases.pelanggan.forEach((p, i) => {
+                    const lastT = netDatabases.tagihan.filter(t => t.nama === p.nama).pop();
+                    const lastTg = netDatabases.tunggakan.filter(t => t.nama === p.nama).pop();
+                    rows.push([i+1, p.nama, p.alamat, p.hp, p.siklus, p.tagihan, p.tunggakan || 0, lastT ? lastT.status : '-', lastTg ? lastTg.status : '-']);
+                });
+                const ws = XLSX.utils.aoa_to_sheet(rows);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, 'Pelanggan');
+                XLSX.writeFile(wb, 'Data_Pelanggan_Lengkap.xlsx');
+                showToast('✅ Excel berhasil didownload!', 'success');
+                return;
+            }
+
+            if (activeNetSub === 18) {
+                const month = document.getElementById('net-filter-month').value;
+                const year = document.getElementById('net-filter-year').value;
+                const data = [
+                    ...netDatabases.tagihan.filter(d => {
+                        if (!d.tanggal) return false;
+                        const dDate = new Date(d.tanggal);
+                        return dDate.getFullYear() == year && (dDate.getMonth() + 1) == month;
+                    }),
+                    ...netDatabases.tunggakan.filter(d => {
+                        if (!d.tanggal) return false;
+                        const dDate = new Date(d.tanggal);
+                        return dDate.getFullYear() == year && (dDate.getMonth() + 1) == month;
+                    })
+                ];
+                let total = 0;
+                rows = [['RAISYA DECORATION - REKAP BULANAN'], [`Bulan: ${month}/${year}`], [], ['No', 'Nama', 'Tanggal', 'Status', 'Jumlah (Rp)']];
+                data.forEach((d, i) => {
+                    const amt = parseInt(d.tagihan || 0);
+                    total += amt;
+                    rows.push([i+1, d.nama, d.tanggal, d.status || '', amt]);
+                });
+                rows.push([], ['', 'TOTAL', '', total]);
+                const ws = XLSX.utils.aoa_to_sheet(rows);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, 'Rekap Bulanan');
+                XLSX.writeFile(wb, `Rekap_Bulanan_${month}_${year}.xlsx`);
+                showToast('✅ Excel berhasil didownload!', 'success');
+                return;
+            }
+
+            let sourceData = [];
+            if (activeNetSub === 1) sourceData = netDatabases.pelanggan;
+            else if (activeNetSub === 2) sourceData = netDatabases.tagihan;
+            else if (activeNetSub === 3) sourceData = netDatabases.tunggakan;
+            else if (activeNetSub === 4) sourceData = netDatabases.masukLain;
+            else if (activeNetSub === 5) sourceData = netDatabases.keluar1;
+            else if (activeNetSub === 6) sourceData = netDatabases.keluar2;
+            else if (activeNetSub === 7) sourceData = netDatabases.tagihanMasuk1;
+            else if (activeNetSub === 8) sourceData = netDatabases.tagihanMasuk2;
+            else if (activeNetSub === 9) sourceData = netDatabases.tagihanKeluar1;
+            else if (activeNetSub === 10) sourceData = netDatabases.tagihanKeluar2;
+            else if (activeNetSub === 15) sourceData = [...netDatabases.tagihan.filter(d => d.status === 'Terbayar'), ...netDatabases.masukLain, ...netDatabases.tagihanMasuk1, ...netDatabases.tagihanMasuk2];
+            else if (activeNetSub === 16) sourceData = [...netDatabases.keluar1, ...netDatabases.keluar2, ...netDatabases.tagihanKeluar1, ...netDatabases.tagihanKeluar2];
+            else {
+                const filterSiklus = document.getElementById('net-filter-date') ? document.getElementById('net-filter-date').value : 'ALL';
+                if (activeNetSub === 11 || activeNetSub === 12) {
+                    let allData = [...netDatabases.tagihan, ...netDatabases.tunggakan];
+                    sourceData = allData.filter(d => {
+                        const pelanggan = netDatabases.pelanggan.find(p => p.nama === d.nama);
+                        const matchSiklus = filterSiklus === 'ALL' || (pelanggan && pelanggan.siklus === filterSiklus);
+                        return matchSiklus && (activeNetSub === 11 ? d.status === 'Terbayar' : d.status === 'Belum Terbayar');
+                    });
+                } else if (activeNetSub === 13 || activeNetSub === 14) {
+                    sourceData = netDatabases.tunggakan.filter(d => {
+                        if (activeNetSub === 14) return d.status === 'Belum Terbayar';
+                        const pelanggan = netDatabases.pelanggan.find(p => p.nama === d.nama);
+                        return filterSiklus === 'ALL' || (pelanggan && pelanggan.siklus === filterSiklus);
+                    });
+                }
+            }
+
+            if (sourceData.length === 0) { showToast('⚠️ Tidak ada data!', 'warning'); return; }
+            let tot = 0;
+            sourceData.forEach((d, i) => {
+                const amt = parseInt(d.tagihan || d.jumlah || 0);
+                tot += amt;
+                rows.push([i+1, d.nama, `${d.tanggal || ''} ${d.petugas ? '| '+d.petugas : ''} ${d.status ? '| '+d.status : ''} ${d.ket || d.keterangan || ''}`, amt]);
+            });
+            rows.push([], ['', 'TOTAL', '', tot]);
+            
+            const ws = XLSX.utils.aoa_to_sheet(rows);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, sheetName);
+            XLSX.writeFile(wb, fileName);
+            showToast('✅ Excel berhasil didownload!', 'success');
+        }
+
+        // ========== GLOBAL REKAP ==========
+        let globalCalculatedValues = { masuk: 0, keluar: 0, laba: 0 };
+
+        function calculateAndRenderGlobalRekap() {
+            let totalMasuk = 0, totalKeluar = 0, itemCount = 0;
+            const container = document.getElementById('rekap-items-container');
+            container.innerHTML = '';
+
+            Object.keys(bizDatabases).forEach(key => {
+                let cfg = systemCredentials[key];
+                bizDatabases[key].IN.forEach(item => {
+                    let amt = parseInt(item.jumlah || 0);
+                    totalMasuk += amt; itemCount++;
+                    container.innerHTML += `<div class="bg-white border border-slate-200/60 p-2.5 rounded-xl flex justify-between items-center text-xs"><div><span class="bg-${cfg.theme}-100 text-${cfg.theme}-700 text-[8px] font-black px-1.5 py-0.5 rounded uppercase">${cfg.name}</span><h4 class="font-bold text-slate-700 mt-1">${item.nama}</h4><p class="text-[9px] text-slate-400">Masuk | ${item.tanggal}</p></div><span class="text-emerald-600 font-extrabold">+Rp ${amt.toLocaleString('id-ID')}</span></div>`;
+                });
+                bizDatabases[key].OUT.forEach(item => {
+                    let amt = parseInt(item.jumlah || 0);
+                    totalKeluar += amt; itemCount++;
+                    container.innerHTML += `<div class="bg-white border border-slate-200/60 p-2.5 rounded-xl flex justify-between items-center text-xs"><div><span class="bg-${cfg.theme}-100 text-${cfg.theme}-700 text-[8px] font-black px-1.5 py-0.5 rounded uppercase">${cfg.name}</span><h4 class="font-bold text-slate-700 mt-1">${item.nama}</h4><p class="text-[9px] text-slate-400">Keluar | ${item.tanggal}</p></div><span class="text-rose-600 font-extrabold">-Rp ${amt.toLocaleString('id-ID')}</span></div>`;
+                });
+            });
+
+            // ... (sisa kode rekap global tidak berubah)
+            [...netDatabases.tagihan.filter(d => d.status === 'Terbayar'), ...netDatabases.masukLain, ...netDatabases.tagihanMasuk1, ...netDatabases.tagihanMasuk2].forEach(item => {
+                let amt = parseInt(item.tagihan || item.jumlah || 0);
+                totalMasuk += amt; itemCount++;
+                container.innerHTML += `<div class="bg-white border border-slate-200/60 p-2.5 rounded-xl flex justify-between items-center text-xs"><div><span class="bg-cyan-100 text-cyan-700 text-[8px] font-black px-1.5 py-0.5 rounded uppercase">Internet</span><h4 class="font-bold text-slate-700 mt-1">${item.nama}</h4><p class="text-[9px] text-slate-400">Masuk | ${item.tanggal || ''}</p></div><span class="text-emerald-600 font-extrabold">+Rp ${amt.toLocaleString('id-ID')}</span></div>`;
+            });
+
+            [...netDatabases.keluar1, ...netDatabases.keluar2, ...netDatabases.tagihanKeluar1, ...netDatabases.tagihanKeluar2, ...netDatabases.tunggakan.filter(d => d.status === 'Terbayar')].forEach(item => {
+                let amt = parseInt(item.tagihan || item.jumlah || 0);
+                totalKeluar += amt; itemCount++;
+                container.innerHTML += `<div class="bg-white border border-slate-200/60 p-2.5 rounded-xl flex justify-between items-center text-xs"><div><span class="bg-cyan-100 text-cyan-700 text-[8px] font-black px-1.5 py-0.5 rounded uppercase">Internet</span><h4 class="font-bold text-slate-700 mt-1">${item.nama}</h4><p class="text-[9px] text-slate-400">Keluar | ${item.tanggal || ''}</p></div><span class="text-rose-600 font-extrabold">-Rp ${amt.toLocaleString('id-ID')}</span></div>`;
+            });
+
+            reportData.forEach(item => {
+                let amt = parseInt(item.jumlah || 0);
+                totalKeluar += amt; itemCount++;
+                container.innerHTML += `<div class="bg-white border border-slate-200/60 p-2.5 rounded-xl flex justify-between items-center text-xs"><div><span class="bg-blue-100 text-blue-700 text-[8px] font-black px-1.5 py-0.5 rounded uppercase">Keluarga</span><h4 class="font-bold text-slate-700 mt-1">${item.nama}</h4><p class="text-[9px] text-slate-400">Keluar | ${item.tanggal}</p></div><span class="text-rose-600 font-extrabold">-Rp ${amt.toLocaleString('id-ID')}</span></div>`;
+            });
+
+            if (container.innerHTML.trim() === '') {
+                container.innerHTML = '<div class="text-center text-slate-400 py-6 text-xs italic">Belum ada data transaksi.</div>';
+            }
+
+            let totalLaba = totalMasuk - totalKeluar;
+            globalCalculatedValues = { masuk: totalMasuk, keluar: totalKeluar, laba: totalLaba };
+
+            document.getElementById('rekap-mini-masuk').innerText = 'Rp ' + totalMasuk.toLocaleString('id-ID');
+            document.getElementById('rekap-mini-keluar').innerText = 'Rp ' + totalKeluar.toLocaleString('id-ID');
+            document.getElementById('rekap-mini-laba').innerText = 'Rp ' + totalLaba.toLocaleString('id-ID');
+            document.getElementById('rekap-total-masuk').innerText = 'Rp ' + totalMasuk.toLocaleString('id-ID');
+            document.getElementById('rekap-total-keluar').innerText = 'Rp ' + totalKeluar.toLocaleString('id-ID');
+            document.getElementById('rekap-total-laba').innerText = 'Rp ' + totalLaba.toLocaleString('id-ID');
+            document.getElementById('rekap-item-count').textContent = itemCount;
+
+            const labaBox = document.getElementById('rekap-laba-box');
+            labaBox.className = totalLaba >= 0 
+                ? 'bg-gradient-to-r from-emerald-500 to-teal-600 p-5 rounded-2xl text-white shadow-lg flex items-center justify-between'
+                : 'bg-gradient-to-r from-red-500 to-orange-600 p-5 rounded-2xl text-white shadow-lg flex items-center justify-between';
+        }
+
+        function exportGlobalRekapToExcel() {
+            let rows = [
+                ['RAISYA DECORATION - LAPORAN REKAP EKSEKUTIF GLOBAL'],
+                ['Tanggal:', new Date().toLocaleDateString('id-ID')],
+                [],
+                ['RINGKASAN', 'NILAI (Rp)'],
+                ['Total Anggaran Masuk', globalCalculatedValues.masuk],
+                ['Total Anggaran Keluar', globalCalculatedValues.keluar],
+                [],
+                ['LABA BERSIH', globalCalculatedValues.laba]
+            ];
+            const ws = XLSX.utils.aoa_to_sheet(rows);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Rekap');
+            XLSX.writeFile(wb, 'Rekap_Semua_Laporan.xlsx');
+            showToast('✅ Excel berhasil didownload!', 'success');
+        }
+
+        console.log('✅ Raisya Decoration v2.1 - Part 2 Siap!');
+        console.log('📊 Bisnis, Internet 18 Sub-Menu, Rekap Bulanan, Export loaded');
+        console.log('🔒 Role-based access: Staf hanya tambah, tanpa edit/hapus');
     </script>
-<!-- END BLOK 11 R2 -->
+
+</body>
+</html>
+<!-- END BLOK 12 R2 FINAL -->
+
+
+<!-- ===== KETERANGAN APLIKASI → 48 ===== -->
+48
+
+
+<!-- ===== KETERANGAN APLIKASI → Bagian - Bagian ===== -->
+No Fitur yang Diminta Sudah di Blok Status
+1 Tutorial semua role 474 ✅
+2 Cara pesan produk & ojek 241-260, 474 ✅
+3 Chat berfungsi, simpan ID, grup chat 19-20, 137-139, 411 ✅
+4 Menu hasil chat massal superadmin 139 ✅
+5 Hello Friends menu 371-430 ✅
+6 Jasa Ojek - maps, ukur jarak, urut terdekat 141, 210, 241-260 ✅
+7 Pelanggan chat langsung ojek 208, 241-260 ✅
+8 Simpan kontak ID 278, 411 ✅
+9 Hubungi Admin → Hubungi CS 99, 355-370 ✅
+10 Superadmin tambah akun CS 134 ✅
+11 Menu Keinginan halaman bersama 147-148, 206-207 ✅
+12 Pelanggan aktifkan offline/online 220, 241-260 ✅
+13 Tombol kembali direktori tidak logout 84, 109 ✅
+14 Ojek online tetap meski keluar aplikasi 228 ✅
+15 Ojek lihat order terdekat + profil + ongkos 221-224 ✅
+16 Ojek tawarkan diri + chat 223, 226 ✅
+17 Ojek riwayat harian 224 ✅
+18 Toko tambah produk via barcode kamera 189-190, 209-210 ✅
+19 Toko kategori & satuan produk 191-192, 211-212 ✅
+20 Anggaran modal cash & belanja 194-195, 213-214 ✅
+21 Dasbor toko tampilkan foto produk 181 ✅
+22 Kasir hanya 3 menu 183-187, 204-206 ✅
+23 Pemeriksaan stok + kerugian 185-186, 205-206 ✅
+24 Laporan harian/mingguan/bulanan + Excel 196-198, 207-208, 216 ✅
+25 Laporan otomatis 207-208 ✅
+26 Konfirmasi pembelian via WA 182-183, 219 ✅
+27 Filter SARA/judi/porno di chat & keinginan 32 ✅
+28 Hello Friends live, gift, follower 391-410 ✅
+29 Gift harga diedit superadmin 163, 274, 283 ✅
+30 Streamer jual kembali gift 274 ✅
+31 Semua akun bisa live 272, 282 ✅
+32 Video call & telpon (WebRTC) 276-277, 411-420 ✅
+33 Upload media ke Cloudinary/Firebase 38, 281, 411-420 ✅
+34 Logo Hello Friends diatur superadmin 283, 421-430 ✅
+35 Suspend akun Hello Friends terpisah 282 ✅
+36 Edit profil lengkap pelanggan 211 ✅
+37 Tagihan pemakaian jasa app tukang ojek 22-23, 281-310 ✅
+38 Tagihan pemakaian jasa app akun toko 22-23, 221-240 ✅
+39 Tagihan fee dari penjualan produk 22-23, 33, 221-240 ✅
+40 Laporan tagihan di superadmin 161-180 ✅
+41 Kirim tagihan otomatis tgl 5 36-37, 431-432 ✅
+42 Auto nonaktif jika tgl 10 belum bayar 37, 433-434 ✅
+43 Form tagihan ojek tiap bulan otomatis 36, 281-310 ✅
+44 Riwayat jasa antar COD & jemput 288, 304-308 ✅
+45 Form tagihan toko (total produk × fee% + biaya pemakaian) 33, 221-240 ✅
+46 Superadmin edit harga tagihan 163, 172 ✅
+47 Laporan keuangan superadmin lengkap 168-180, 441-470 ✅
+48 Menu pendapatan fee detail satu per satu 164-167, 441-450 ✅
+49 COD semua masuk rekening superadmin 39, 461-470 ✅
+50 Staf kirim laporan transfer ke superadmin 341-354 ✅
+51 Superadmin teruskan transfer ke toko & ojek 39, 169-170 ✅
+52 Menu tagihan sudah dilanjutkan 169-170 ✅
+53 COD bayar cash, ojek transfer ke superadmin 304-308, 461-470 ✅
+54 Staf tindak lanjut ojek belum transfer 341-354 ✅
