@@ -3798,7 +3798,7 @@
                 else if (item.status === 'Belum Terbayar') label = '<span class="bg-red-100 text-red-700 text-[9px] font-bold px-1.5 py-0.5 rounded">BELUM</span>';
                 if (pelanggan && pelanggan.siklus) label += ` <span class="bg-cyan-100 text-cyan-700 text-[9px] font-bold px-1.5 py-0.5 rounded">Tgl ${pelanggan.siklus}</span>`;
 
-                const showActions = isSuperadmin && (activeNetSub === 2 || activeNetSub === 19);
+                const showActions = isSuperadmin && (activeNetSub === 1 || activeNetSub === 2 || activeNetSub === 3 || activeNetSub === 4 || activeNetSub === 5 || activeNetSub === 6 || activeNetSub === 7 || activeNetSub === 8 || activeNetSub === 9 || activeNetSub === 10 || activeNetSub === 19);
                 const actionButtons = showActions ? `
                     <div class="flex space-x-1 ml-2">
                         <button onclick="editNetData(${i})" class="w-6 h-6 bg-amber-50 text-amber-600 rounded-lg text-[10px] cursor-pointer flex items-center justify-center"><i class="fa-solid fa-pen"></i></button>
