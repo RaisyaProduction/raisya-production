@@ -1125,10 +1125,14 @@
 <!-- END BLOK 8 -->
 
 
-<!-- ===== RAISYA PRODUCTION → BLOK 9 - RAISYA DECORATION v2.0 - INTERNET REPORT PAGE ===== -->
+<!-- ===== RAISYA PRODUCTION → BLOK 9 R2 - RAISYA DECORATION v2.1 - INTERNET REPORT PAGE ===== -->
 <!-- ============================================================
-     BLOK 9 - RAISYA DECORATION v2.0 - INTERNET REPORT PAGE
-     (5 Sub-Menu: Pelanggan, Tagihan, Masuk Lain, Keluar Bulan, Keluar Lain)
+     BLOK 9 R2 - RAISYA DECORATION v2.1 - INTERNET REPORT PAGE
+     (17 Sub-Menu: Pelanggan, Tagihan Masuk, Tunggakan, 
+      Masuk Lain, Keluar 1, Keluar 2, Tagihan Masuk 1-2,
+      Tagihan Keluar 1-2, Terbayar, Belum, Tunggakan,
+      Tunggakan Belum, Hitung Masuk, Hitung Keluar,
+      Semua Data Pelanggan)
      ============================================================ -->
             <div id="page-internet-report" class="hidden space-y-4 page-transition">
                 
@@ -1146,32 +1150,109 @@
                     </button>
                 </div>
 
-                <!-- 5 SUB-MENU BUTTONS -->
-                <div class="grid grid-cols-2 gap-1.5 bg-slate-100 p-1.5 rounded-xl text-[10px] font-bold text-slate-600">
-                    <button id="btn-sub-net1" onclick="switchNetSubMenu(1)" 
-                            class="py-2 rounded-lg text-center cursor-pointer bg-white text-cyan-600 shadow-sm transition-all">
-                            <i class="fa-solid fa-users mr-1"></i> 1. DATA PELANGGAN
-                    </button>
-                    <button id="btn-sub-net2" onclick="switchNetSubMenu(2)" 
-                            class="py-2 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all">
-                            <i class="fa-solid fa-file-invoice mr-1"></i> 2. TAGIHAN
-                    </button>
-                    <button id="btn-sub-net3" onclick="switchNetSubMenu(3)" 
-                            class="py-2 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all">
-                            <i class="fa-solid fa-circle-down mr-1"></i> 3. MASUK LAIN
-                    </button>
-                    <button id="btn-sub-net4" onclick="switchNetSubMenu(4)" 
-                            class="py-2 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all">
-                            <i class="fa-solid fa-calendar-check mr-1"></i> 4. KELUAR BULAN
-                    </button>
-                    <button id="btn-sub-net5" onclick="switchNetSubMenu(5)" 
-                            class="py-2 rounded-lg text-center cursor-pointer col-span-2 text-slate-500 hover:bg-slate-200/50 transition-all">
-                            <i class="fa-solid fa-circle-up mr-1"></i> 5. KELUAR LAINNYA
+                <!-- SUB-MENU BARIS 1: INPUT DATA (6 tombol - grid 2 kolom) -->
+                <div class="bg-slate-100 p-1.5 rounded-xl">
+                    <p class="text-[9px] font-bold text-slate-400 uppercase px-1 mb-1">📥 Input Data</p>
+                    <div class="grid grid-cols-2 gap-1.5 text-[10px] font-bold text-slate-600">
+                        <button id="btn-sub-net1" onclick="switchNetSubMenu(1)" 
+                                class="py-2 rounded-lg text-center cursor-pointer bg-white text-cyan-600 shadow-sm transition-all">
+                                <i class="fa-solid fa-users mr-1"></i> 1. DATA PELANGGAN
+                        </button>
+                        <button id="btn-sub-net2" onclick="switchNetSubMenu(2)" 
+                                class="py-2 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all">
+                                <i class="fa-solid fa-file-invoice mr-1"></i> 2. TAGIHAN MASUK
+                        </button>
+                        <button id="btn-sub-net3" onclick="switchNetSubMenu(3)" 
+                                class="py-2 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all">
+                                <i class="fa-solid fa-clock mr-1"></i> 3. TAGIHAN TUNGGAKAN
+                        </button>
+                        <button id="btn-sub-net4" onclick="switchNetSubMenu(4)" 
+                                class="py-2 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all">
+                                <i class="fa-solid fa-circle-down mr-1"></i> 4. MASUK LAINNYA
+                        </button>
+                        <button id="btn-sub-net5" onclick="switchNetSubMenu(5)" 
+                                class="py-2 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all">
+                                <i class="fa-solid fa-calendar-check mr-1"></i> 5. KELUAR 1
+                        </button>
+                        <button id="btn-sub-net6" onclick="switchNetSubMenu(6)" 
+                                class="py-2 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all">
+                                <i class="fa-solid fa-circle-up mr-1"></i> 6. KELUAR LAINNYA
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SUB-MENU BARIS 2: INPUT TAMBAHAN (4 tombol - grid 2 kolom) -->
+                <div class="bg-slate-100 p-1.5 rounded-xl">
+                    <p class="text-[9px] font-bold text-slate-400 uppercase px-1 mb-1">📥 Input Tambahan</p>
+                    <div class="grid grid-cols-2 gap-1.5 text-[10px] font-bold text-slate-600">
+                        <button id="btn-sub-net7" onclick="switchNetSubMenu(7)" 
+                                class="py-2 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all">
+                                <i class="fa-solid fa-circle-down mr-1"></i> 7. TAGIHAN MASUK 1
+                        </button>
+                        <button id="btn-sub-net8" onclick="switchNetSubMenu(8)" 
+                                class="py-2 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all">
+                                <i class="fa-solid fa-circle-down mr-1"></i> 8. TAGIHAN MASUK 2
+                        </button>
+                        <button id="btn-sub-net9" onclick="switchNetSubMenu(9)" 
+                                class="py-2 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all">
+                                <i class="fa-solid fa-circle-up mr-1"></i> 9. TAGIHAN KELUAR 1
+                        </button>
+                        <button id="btn-sub-net10" onclick="switchNetSubMenu(10)" 
+                                class="py-2 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all">
+                                <i class="fa-solid fa-circle-up mr-1"></i> 10. TAGIHAN KELUAR 2
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SUB-MENU BARIS 3: TAMPILKAN DATA (3 tombol - full width) -->
+                <div class="bg-slate-100 p-1.5 rounded-xl">
+                    <p class="text-[9px] font-bold text-slate-400 uppercase px-1 mb-1">👁 Tampilkan Data</p>
+                    <div class="space-y-1.5 text-[10px] font-bold text-slate-600">
+                        <button id="btn-sub-net11" onclick="switchNetSubMenu(11)" 
+                                class="w-full py-2 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all">
+                                <i class="fa-solid fa-check-circle text-emerald-500 mr-1"></i> 11. DATA TERBAYAR
+                        </button>
+                        <button id="btn-sub-net12" onclick="switchNetSubMenu(12)" 
+                                class="w-full py-2 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all">
+                                <i class="fa-solid fa-xmark-circle text-red-500 mr-1"></i> 12. BELUM TERBAYAR
+                        </button>
+                        <button id="btn-sub-net13" onclick="switchNetSubMenu(13)" 
+                                class="w-full py-2 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all">
+                                <i class="fa-solid fa-clock text-amber-500 mr-1"></i> 13. DATA TUNGGAKAN
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SUB-MENU BARIS 4: TAMPILAN & HITUNG (3 tombol - full width) -->
+                <div class="bg-slate-100 p-1.5 rounded-xl">
+                    <p class="text-[9px] font-bold text-slate-400 uppercase px-1 mb-1">📊 Laporan & Hitung</p>
+                    <div class="space-y-1.5 text-[10px] font-bold text-slate-600">
+                        <button id="btn-sub-net14" onclick="switchNetSubMenu(14)" 
+                                class="w-full py-2 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all">
+                                <i class="fa-solid fa-clock text-red-500 mr-1"></i> 14. TUNGGAKAN BELUM TERBAYAR
+                        </button>
+                        <button id="btn-sub-net15" onclick="switchNetSubMenu(15)" 
+                                class="w-full py-2 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all">
+                                <i class="fa-solid fa-calculator text-blue-500 mr-1"></i> 15. HITUNG SEMUA MASUK
+                        </button>
+                        <button id="btn-sub-net16" onclick="switchNetSubMenu(16)" 
+                                class="w-full py-2 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all">
+                                <i class="fa-solid fa-calculator text-orange-500 mr-1"></i> 16. HITUNG SEMUA KELUAR
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SUB-MENU BARIS 5: DATA PELANGGAN LENGKAP (1 tombol) -->
+                <div class="bg-slate-100 p-1.5 rounded-xl">
+                    <p class="text-[9px] font-bold text-slate-400 uppercase px-1 mb-1">👥 Data Pelanggan</p>
+                    <button id="btn-sub-net17" onclick="switchNetSubMenu(17)" 
+                            class="w-full py-2.5 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all text-[10px] font-bold bg-gradient-to-r from-cyan-50 to-blue-50 border border-cyan-200">
+                            <i class="fa-solid fa-address-book text-cyan-600 mr-1"></i> 17. SEMUA DATA PELANGGAN LENGKAP
                     </button>
                 </div>
 
                 <!-- FORM INPUT (DINAMIS) -->
-                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3" id="net-form-container">
                     <h3 id="net-form-title" class="text-xs font-bold text-cyan-600 uppercase flex items-center gap-2">
                         <i class="fa-solid fa-pen-to-square"></i> Input Data
                     </h3>
@@ -1189,7 +1270,7 @@
                     </div>
                 </div>
 
-                <!-- FILTER TANGGAL (hanya sub 1) -->
+                <!-- FILTER SIKLUS (untuk sub 1, 11, 12, 13, 17) -->
                 <div id="net-filter-box" class="hidden flex items-center justify-between bg-slate-50 p-3 rounded-xl border border-slate-200 gap-3 flex-wrap">
                     <label class="text-[10px] font-bold text-slate-500 uppercase flex items-center gap-1">
                         <i class="fa-solid fa-filter text-cyan-500"></i> Filter Siklus:
@@ -1206,6 +1287,19 @@
                     </select>
                 </div>
 
+                <!-- FILTER STATUS (untuk sub 11, 12, 13, 14) -->
+                <div id="net-status-filter-box" class="hidden flex items-center justify-between bg-slate-50 p-3 rounded-xl border border-slate-200 gap-3 flex-wrap">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase flex items-center gap-1">
+                        <i class="fa-solid fa-filter text-cyan-500"></i> Filter Status:
+                    </label>
+                    <select id="net-filter-status" onchange="renderInternetData()" 
+                            class="bg-white border border-slate-200 rounded-lg text-xs py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 cursor-pointer">
+                        <option value="ALL">Semua Status</option>
+                        <option value="Terbayar">Terbayar</option>
+                        <option value="Belum Terbayar">Belum Terbayar</option>
+                    </select>
+                </div>
+
                 <!-- TOTAL BOX -->
                 <div id="net-total-box" class="bg-gradient-to-r from-cyan-700 to-slate-900 text-white p-5 rounded-2xl space-y-2 shadow-lg">
                     <div class="flex justify-between items-center">
@@ -1219,7 +1313,7 @@
                             <i class="fa-solid fa-file-excel text-sm"></i> Export Excel
                         </button>
                     </div>
-                    <!-- SUB REKAP (sub 2 & 4) -->
+                    <!-- SUB REKAP -->
                     <div id="net-subrekap-box" class="hidden grid grid-cols-2 gap-3 border-t border-white/10 pt-3 text-[11px] text-slate-300 font-semibold">
                         <div class="flex items-center gap-1.5">
                             <span class="w-2.5 h-2.5 bg-emerald-400 rounded-full"></span>
@@ -1228,6 +1322,10 @@
                         <div class="flex items-center gap-1.5">
                             <span class="w-2.5 h-2.5 bg-rose-400 rounded-full"></span>
                             Belum: <span id="net-txt-unpaid" class="text-rose-400 font-bold">Rp 0</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 col-span-2">
+                            <span class="w-2.5 h-2.5 bg-amber-400 rounded-full"></span>
+                            Tunggakan: <span id="net-txt-tunggakan" class="text-amber-400 font-bold">Rp 0</span>
                         </div>
                     </div>
                 </div>
@@ -1238,7 +1336,7 @@
                         <i class="fa-solid fa-list text-cyan-400"></i> Daftar Rekaman Data
                         <span id="net-count-badge" class="bg-cyan-100 text-cyan-600 px-2 py-0.5 rounded-full text-[9px]">0</span>
                     </h3>
-                    <div id="net-container-list" class="space-y-2 max-h-[200px] overflow-y-auto pr-1"></div>
+                    <div id="net-container-list" class="space-y-2 max-h-[300px] overflow-y-auto pr-1"></div>
                     
                     <div id="net-empty-state" class="text-center py-8 hidden">
                         <div class="text-4xl mb-2">📭</div>
@@ -1247,7 +1345,7 @@
                     </div>
                 </div>
             </div>
-<!-- END BLOK 9 -->
+<!-- END BLOK 9 R2 -->
 
 
 <!-- ===== RAISYA PRODUCTION → BLOK 10 - RAISYA DECORATION v2.0 - REKAP ALL REPORTS ===== -->
@@ -2186,10 +2284,10 @@
 <!-- END BLOK 11 -->
 
 
-<!-- ===== RAISYA PRODUCTION → BLOK 12 - RAISYA DECORATION v2.0 - JAVASCRIPT ENGINE PART 2 ===== -->
+<!-- ===== RAISYA PRODUCTION → BLOK 12 R2 - RAISYA DECORATION v2.1 - JAVASCRIPT ENGINE PART 2 ===== -->
 <!-- ============================================================
-     BLOK 12 - RAISYA DECORATION v2.0 - JAVASCRIPT ENGINE PART 2
-     (Business CRUD, Internet CRUD, Global Rekap, Export All)
+     BLOK 12 R2 - RAISYA DECORATION v2.1 - JAVASCRIPT ENGINE PART 2
+     (Business CRUD, Internet 17 Sub-Menu CRUD, Global Rekap, Export)
      ============================================================ -->
     <script>
         // ========== JALUR BISNIS ==========
@@ -2315,7 +2413,6 @@
             document.getElementById('b-txt-total-items').textContent = targetData.length + ' item';
             document.getElementById('biz-count-badge').textContent = targetData.length;
 
-            // Save to localStorage
             const keyMap = {
                 GHOST: { IN: 'ghost_inbound', OUT: 'ghost_outbound' },
                 PLAYGROUND: { IN: 'play_inbound', OUT: 'play_outbound' },
@@ -2409,24 +2506,53 @@
             showToast('✅ Excel berhasil didownload!', 'success');
         }
 
-        // ========== JALUR INTERNET ==========
+        // ========== JALUR INTERNET (17 SUB-MENU) ==========
         function switchNetSubMenu(subNo) {
             activeNetSub = subNo;
-            const subs = [1, 2, 3, 4, 5];
+            const subs = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];
             subs.forEach(s => {
                 const btn = document.getElementById('btn-sub-net' + s);
-                if (s === subNo) {
-                    btn.className = 'py-2 rounded-lg text-center cursor-pointer bg-white text-cyan-600 shadow-sm transition-all text-[10px] font-bold';
-                } else {
-                    btn.className = 'py-2 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all text-[10px] font-bold';
+                if (btn) {
+                    if (s === subNo) {
+                        btn.className = btn.className.includes('w-full') 
+                            ? 'w-full py-2.5 rounded-lg text-center cursor-pointer bg-white text-cyan-600 shadow-sm transition-all text-[10px] font-bold'
+                            : 'py-2 rounded-lg text-center cursor-pointer bg-white text-cyan-600 shadow-sm transition-all text-[10px] font-bold';
+                    } else {
+                        btn.className = btn.className.includes('w-full')
+                            ? 'w-full py-2.5 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all text-[10px] font-bold'
+                            : 'py-2 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all text-[10px] font-bold';
+                    }
                 }
             });
+
+            // Reset filter boxes
             document.getElementById('net-filter-box').classList.add('hidden');
+            document.getElementById('net-status-filter-box').classList.add('hidden');
             document.getElementById('net-subrekap-box').classList.add('hidden');
-            if (subNo === 1) document.getElementById('net-filter-box').classList.remove('hidden');
-            if (subNo === 2 || subNo === 4) document.getElementById('net-subrekap-box').classList.remove('hidden');
+            document.getElementById('net-form-container').classList.remove('hidden');
+
+            // Tampilkan filter & form sesuai sub-menu
+            // Sub 1: Data Pelanggan (form + filter siklus)
+            if (subNo === 1) {
+                document.getElementById('net-filter-box').classList.remove('hidden');
+            }
+            // Sub 11,12,13,14: Tampilkan data (filter siklus + status, no form)
+            else if (subNo === 11 || subNo === 12 || subNo === 13 || subNo === 14) {
+                document.getElementById('net-filter-box').classList.remove('hidden');
+                if (subNo !== 13 && subNo !== 14) document.getElementById('net-status-filter-box').classList.remove('hidden');
+                document.getElementById('net-form-container').classList.add('hidden');
+            }
+            // Sub 15,16,17: Hitung & data pelanggan (no form, no filter)
+            else if (subNo === 15 || subNo === 16 || subNo === 17) {
+                document.getElementById('net-form-container').classList.add('hidden');
+            }
+            // Sub 2,3: Tagihan & Tunggakan (subrekap)
+            else if (subNo === 2 || subNo === 3) {
+                document.getElementById('net-subrekap-box').classList.remove('hidden');
+            }
+
             resetNetForm();
-            renderInternetFields();
+            if (subNo <= 10) renderInternetFields();
             renderInternetData();
         }
 
@@ -2435,35 +2561,43 @@
             container.innerHTML = '';
 
             if (activeNetSub === 1) {
+                // DATA PELANGGAN
                 document.getElementById('net-form-title').innerHTML = '<i class="fa-solid fa-users"></i> 1. Tambah Data Pelanggan';
                 container.innerHTML = `
-                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Nama Pelanggan</label><input type="text" id="net-f1-nama" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-cyan-500/20"></div>
-                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Alamat</label><input type="text" id="net-f1-alamat" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-cyan-500/20"></div>
+                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Nama Pelanggan *</label><input type="text" id="net-f1-nama" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-cyan-500/20" placeholder="Nama lengkap"></div>
+                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Alamat</label><input type="text" id="net-f1-alamat" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-cyan-500/20" placeholder="Alamat rumah"></div>
                     <div class="grid grid-cols-2 gap-2">
-                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">No. HP</label><input type="text" id="net-f1-hp" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-cyan-500/20"></div>
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">No. HP</label><input type="text" id="net-f1-hp" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-cyan-500/20" placeholder="08xxx"></div>
                         <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Siklus Tagihan</label><select id="net-f1-siklus" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"><option value="05">05</option><option value="10">10</option><option value="15">15</option><option value="20">20</option><option value="25">25</option><option value="30">30</option></select></div>
                     </div>
-                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tagihan Bulanan (Rp)</label><input type="number" id="net-f1-tagihan" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-cyan-500/20"></div>
-                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Keterangan Paket</label><input type="text" id="net-f1-ket" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-cyan-500/20"></div>`;
-            } else if (activeNetSub === 2) {
-                document.getElementById('net-form-title').innerHTML = '<i class="fa-solid fa-file-invoice"></i> 2. Input Pembayaran Tagihan';
+                    <div class="grid grid-cols-2 gap-2">
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tagihan Bulanan (Rp)</label><input type="number" id="net-f1-tagihan" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-cyan-500/20" placeholder="50000"></div>
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tunggakan (Rp)</label><input type="number" id="net-f1-tunggakan" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-amber-500/20" placeholder="0"></div>
+                    </div>
+                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Keterangan Paket</label><input type="text" id="net-f1-ket" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-cyan-500/20" placeholder="Contoh: 10Mbps"></div>`;
+            } else if (activeNetSub === 2 || activeNetSub === 3) {
+                // TAGIHAN MASUK INTERNET / TAGIHAN TUNGGAKAN
+                const label = activeNetSub === 2 ? '2. Input Tagihan Masuk Internet' : '3. Input Tagihan Tunggakan';
+                const icon = activeNetSub === 2 ? 'fa-file-invoice' : 'fa-clock';
+                document.getElementById('net-form-title').innerHTML = `<i class="fa-solid ${icon}"></i> ${label}`;
                 let opts = "<option value=''>-- Pilih Pelanggan --</option>";
                 netDatabases.pelanggan.forEach(p => {
-                    opts += `<option value="${p.nama}" data-tagihan="${p.tagihan}">${p.nama} (Rp ${parseInt(p.tagihan).toLocaleString('id-ID')})</option>`;
+                    opts += `<option value="${p.nama}" data-tagihan="${p.tagihan}" data-tunggakan="${p.tunggakan || 0}">${p.nama} (Rp ${parseInt(p.tagihan).toLocaleString('id-ID')})</option>`;
                 });
                 container.innerHTML = `
                     <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Pelanggan</label><select id="net-f2-nama" onchange="autoFillNetInvoice()" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none">${opts}</select></div>
                     <div class="grid grid-cols-2 gap-2">
                         <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tanggal</label><input type="date" id="net-f2-tanggal" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
-                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tagihan (Rp)</label><input type="number" id="net-f2-tagihan" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">${activeNetSub === 2 ? 'Tagihan (Rp)' : 'Tunggakan (Rp)'}</label><input type="number" id="net-f2-tagihan" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
                     </div>
                     <div class="grid grid-cols-2 gap-2">
                         <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Petugas</label><select id="net-f2-petugas" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"><option value="Dede S">Dede S</option><option value="Petugas 2">Petugas 2</option></select></div>
                         <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Metode</label><select id="net-f2-metode" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"><option value="Cash">Cash</option><option value="Transfer">Transfer</option></select></div>
                     </div>
                     <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Status</label><select id="net-f2-status" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"><option value="Terbayar">Terbayar</option><option value="Belum Terbayar">Belum Terbayar</option></select></div>`;
-            } else if (activeNetSub === 3) {
-                document.getElementById('net-form-title').innerHTML = '<i class="fa-solid fa-circle-down"></i> 3. Input Masuk Lainnya';
+            } else if (activeNetSub === 4) {
+                // MASUK LAINNYA
+                document.getElementById('net-form-title').innerHTML = '<i class="fa-solid fa-circle-down"></i> 4. Input Tagihan Masuk Lainnya';
                 container.innerHTML = `
                     <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Nama</label><input type="text" id="net-f3-nama" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
                     <div class="grid grid-cols-2 gap-2">
@@ -2471,58 +2605,165 @@
                         <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Jumlah (Rp)</label><input type="number" id="net-f3-jumlah" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
                     </div>
                     <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Keterangan</label><input type="text" id="net-f3-ket" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>`;
-            } else if (activeNetSub === 4) {
-                document.getElementById('net-form-title').innerHTML = '<i class="fa-solid fa-calendar-check"></i> 4. Input Keluar Bulanan';
+            } else if (activeNetSub === 5 || activeNetSub === 6) {
+                // KELUAR 1 / KELUAR LAINNYA
+                const label = activeNetSub === 5 ? '5. Input Anggaran Keluar 1' : '6. Input Anggaran Keluar Lainnya';
+                document.getElementById('net-form-title').innerHTML = `<i class="fa-solid fa-calendar-check"></i> ${label}`;
+                const statusField = activeNetSub === 5 
+                    ? `<div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Status</label><select id="net-f45-status" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"><option value="Terbayar">Terbayar</option><option value="Belum Terbayar">Belum Terbayar</option></select></div>`
+                    : `<div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Keterangan</label><input type="text" id="net-f45-ket" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>`;
                 container.innerHTML = `
                     <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Nama Pengeluaran</label><input type="text" id="net-f45-nama" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
                     <div class="grid grid-cols-2 gap-2">
                         <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tanggal</label><input type="date" id="net-f45-tanggal" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
                         <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Jumlah (Rp)</label><input type="number" id="net-f45-jumlah" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
                     </div>
-                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Status</label><select id="net-f45-status" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"><option value="Terbayar">Terbayar</option><option value="Belum Terbayar">Belum Terbayar</option></select></div>`;
-            } else if (activeNetSub === 5) {
-                document.getElementById('net-form-title').innerHTML = '<i class="fa-solid fa-circle-up"></i> 5. Input Keluar Lainnya';
+                    ${statusField}`;
+            } else if (activeNetSub === 7 || activeNetSub === 8) {
+                // TAGIHAN MASUK 1 / 2
+                const label = activeNetSub === 7 ? '7. Input Tagihan Masuk 1' : '8. Input Tagihan Masuk 2';
+                document.getElementById('net-form-title').innerHTML = `<i class="fa-solid fa-circle-down"></i> ${label}`;
                 container.innerHTML = `
-                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Nama Pengeluaran</label><input type="text" id="net-f45-nama" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
+                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Nama Tagihan</label><input type="text" id="net-f78-nama" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
                     <div class="grid grid-cols-2 gap-2">
-                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tanggal</label><input type="date" id="net-f45-tanggal" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
-                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Jumlah (Rp)</label><input type="number" id="net-f45-jumlah" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tanggal</label><input type="date" id="net-f78-tanggal" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Jumlah (Rp)</label><input type="number" id="net-f78-jumlah" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
                     </div>
-                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Keterangan</label><input type="text" id="net-f45-ket" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>`;
+                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Keterangan</label><input type="text" id="net-f78-ket" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>`;
+            } else if (activeNetSub === 9 || activeNetSub === 10) {
+                // TAGIHAN KELUAR 1 / 2
+                const label = activeNetSub === 9 ? '9. Input Tagihan Keluar 1' : '10. Input Tagihan Keluar 2';
+                document.getElementById('net-form-title').innerHTML = `<i class="fa-solid fa-circle-up"></i> ${label}`;
+                container.innerHTML = `
+                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Nama Pengeluaran</label><input type="text" id="net-f910-nama" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tanggal</label><input type="date" id="net-f910-tanggal" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
+                        <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Jumlah (Rp)</label><input type="number" id="net-f910-jumlah" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>
+                    </div>
+                    <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Keterangan</label><input type="text" id="net-f910-ket" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none"></div>`;
             }
         }
 
         function autoFillNetInvoice() {
             const sel = document.getElementById('net-f2-nama');
+            if (!sel) return;
             const opt = sel.options[sel.selectedIndex];
             if (!opt.value) return;
-            document.getElementById('net-f2-tagihan').value = opt.getAttribute('data-tagihan');
+            document.getElementById('net-f2-tagihan').value = activeNetSub === 3 
+                ? opt.getAttribute('data-tunggakan') 
+                : opt.getAttribute('data-tagihan');
         }
 
         function renderInternetData() {
             const container = document.getElementById('net-container-list');
             container.innerHTML = '';
-            let total = 0, paid = 0, unpaid = 0;
+            let total = 0, paid = 0, unpaid = 0, tunggakan = 0;
             let data = [];
+            const filterSiklus = document.getElementById('net-filter-date') ? document.getElementById('net-filter-date').value : 'ALL';
+            const filterStatus = document.getElementById('net-filter-status') ? document.getElementById('net-filter-status').value : 'ALL';
 
+            // Tentukan data source berdasarkan sub-menu
             if (activeNetSub === 1) {
-                const filter = document.getElementById('net-filter-date').value;
-                data = netDatabases.pelanggan.filter(p => filter === 'ALL' || p.siklus === filter);
+                data = netDatabases.pelanggan.filter(p => filterSiklus === 'ALL' || p.siklus === filterSiklus);
                 document.getElementById('net-lbl-t1').innerText = 'Total Potensial Tagihan';
             } else if (activeNetSub === 2) {
                 data = netDatabases.tagihan;
-                document.getElementById('net-lbl-t1').innerText = 'Total Semua Tagihan';
+                document.getElementById('net-lbl-t1').innerText = 'Total Tagihan Masuk Internet';
             } else if (activeNetSub === 3) {
+                data = netDatabases.tunggakan;
+                document.getElementById('net-lbl-t1').innerText = 'Total Tagihan Tunggakan';
+            } else if (activeNetSub === 4) {
                 data = netDatabases.masukLain;
                 document.getElementById('net-lbl-t1').innerText = 'Total Masuk Lainnya';
-            } else if (activeNetSub === 4) {
-                data = netDatabases.keluarBulan;
-                document.getElementById('net-lbl-t1').innerText = 'Total Keluar Bulanan';
             } else if (activeNetSub === 5) {
-                data = netDatabases.keluarLain;
-                document.getElementById('net-lbl-t1').innerText = 'Total Keluar Lainnya';
+                data = netDatabases.keluar1;
+                document.getElementById('net-lbl-t1').innerText = 'Total Anggaran Keluar 1';
+            } else if (activeNetSub === 6) {
+                data = netDatabases.keluar2;
+                document.getElementById('net-lbl-t1').innerText = 'Total Anggaran Keluar Lainnya';
+            } else if (activeNetSub === 7) {
+                data = netDatabases.tagihanMasuk1;
+                document.getElementById('net-lbl-t1').innerText = 'Total Tagihan Masuk 1';
+            } else if (activeNetSub === 8) {
+                data = netDatabases.tagihanMasuk2;
+                document.getElementById('net-lbl-t1').innerText = 'Total Tagihan Masuk 2';
+            } else if (activeNetSub === 9) {
+                data = netDatabases.tagihanKeluar1;
+                document.getElementById('net-lbl-t1').innerText = 'Total Tagihan Keluar 1';
+            } else if (activeNetSub === 10) {
+                data = netDatabases.tagihanKeluar2;
+                document.getElementById('net-lbl-t1').innerText = 'Total Tagihan Keluar 2';
+            } else if (activeNetSub === 11) {
+                // DATA TERBAYAR - gabung dari tagihan + tunggakan
+                let allData = [...netDatabases.tagihan, ...netDatabases.tunggakan];
+                data = allData.filter(d => {
+                    const matchSiklus = filterSiklus === 'ALL' || d.siklus === filterSiklus || 
+                        (netDatabases.pelanggan.find(p => p.nama === d.nama) || {}).siklus === filterSiklus;
+                    const matchStatus = d.status === 'Terbayar';
+                    return matchSiklus && matchStatus;
+                });
+                document.getElementById('net-lbl-t1').innerText = 'Total Data Terbayar';
+            } else if (activeNetSub === 12) {
+                // BELUM TERBAYAR
+                let allData = [...netDatabases.tagihan, ...netDatabases.tunggakan];
+                data = allData.filter(d => {
+                    const matchSiklus = filterSiklus === 'ALL' || d.siklus === filterSiklus || 
+                        (netDatabases.pelanggan.find(p => p.nama === d.nama) || {}).siklus === filterSiklus;
+                    const matchStatus = d.status === 'Belum Terbayar';
+                    return matchSiklus && matchStatus;
+                });
+                document.getElementById('net-lbl-t1').innerText = 'Total Data Belum Terbayar';
+            } else if (activeNetSub === 13) {
+                // DATA TUNGGAKAN
+                data = netDatabases.tunggakan.filter(d => {
+                    const matchSiklus = filterSiklus === 'ALL' || d.siklus === filterSiklus || 
+                        (netDatabases.pelanggan.find(p => p.nama === d.nama) || {}).siklus === filterSiklus;
+                    return matchSiklus;
+                });
+                document.getElementById('net-lbl-t1').innerText = 'Total Data Tunggakan';
+            } else if (activeNetSub === 14) {
+                // TUNGGAKAN BELUM TERBAYAR
+                data = netDatabases.tunggakan.filter(d => d.status === 'Belum Terbayar');
+                document.getElementById('net-lbl-t1').innerText = 'Total Tunggakan Belum Terbayar';
+            } else if (activeNetSub === 15) {
+                // HITUNG SEMUA MASUK
+                data = [
+                    ...netDatabases.tagihan.filter(d => d.status === 'Terbayar'),
+                    ...netDatabases.masukLain,
+                    ...netDatabases.tagihanMasuk1,
+                    ...netDatabases.tagihanMasuk2
+                ];
+                document.getElementById('net-lbl-t1').innerText = 'Total Semua Tagihan Masuk';
+            } else if (activeNetSub === 16) {
+                // HITUNG SEMUA KELUAR
+                data = [
+                    ...netDatabases.keluar1,
+                    ...netDatabases.keluar2,
+                    ...netDatabases.tagihanKeluar1,
+                    ...netDatabases.tagihanKeluar2,
+                    ...netDatabases.tunggakan.filter(d => d.status === 'Terbayar')
+                ];
+                document.getElementById('net-lbl-t1').innerText = 'Total Semua Tagihan Keluar';
+            } else if (activeNetSub === 17) {
+                // SEMUA DATA PELANGGAN LENGKAP
+                renderAllPelangganData();
+                return;
             }
 
+            // Hitung total
+            data.forEach(item => {
+                const amt = parseInt(item.tagihan || item.jumlah || 0);
+                total += amt;
+                if (item.status === 'Terbayar') paid += amt;
+                else if (item.status === 'Belum Terbayar') unpaid += amt;
+            });
+
+            // Hitung tunggakan terpisah
+            netDatabases.tunggakan.forEach(item => {
+                tunggakan += parseInt(item.tagihan || 0);
+            });
+
+            // Render list
             if (data.length === 0) {
                 document.getElementById('net-empty-state').classList.remove('hidden');
             } else {
@@ -2531,32 +2772,26 @@
 
             data.forEach((item, i) => {
                 const amt = parseInt(item.tagihan || item.jumlah || 0);
-                total += amt;
-                if (item.status === 'Terbayar') paid += amt;
-                else if (item.status === 'Belum Terbayar') unpaid += amt;
-
                 let label = '';
-                if (activeNetSub === 1) label = `<span class="bg-cyan-100 text-cyan-700 text-[9px] font-bold px-1.5 py-0.5 rounded">Siklus: ${item.siklus}</span>`;
-                else if (activeNetSub === 2 || activeNetSub === 4) {
-                    label = item.status === 'Terbayar'
-                        ? '<span class="bg-emerald-100 text-emerald-700 text-[9px] font-bold px-1.5 py-0.5 rounded">TERBAYAR</span>'
-                        : '<span class="bg-red-100 text-red-700 text-[9px] font-bold px-1.5 py-0.5 rounded">BELUM</span>';
-                }
+                if (item.status === 'Terbayar') label = '<span class="bg-emerald-100 text-emerald-700 text-[9px] font-bold px-1.5 py-0.5 rounded">TERBAYAR</span>';
+                else if (item.status === 'Belum Terbayar') label = '<span class="bg-red-100 text-red-700 text-[9px] font-bold px-1.5 py-0.5 rounded">BELUM</span>';
+                if (item.siklus) label += ` <span class="bg-cyan-100 text-cyan-700 text-[9px] font-bold px-1.5 py-0.5 rounded">Tgl ${item.siklus}</span>`;
 
                 container.innerHTML += `
                     <div class="bg-white border border-slate-200 p-2.5 rounded-xl flex justify-between items-center text-xs">
                         <div class="flex-1">
-                            <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-2 flex-wrap">
                                 <h4 class="font-bold text-slate-700">${item.nama}</h4>
                                 ${label}
                             </div>
-                            <p class="text-[10px] text-slate-400 mt-0.5">${item.tanggal || ''} ${item.alamat ? '| ' + item.alamat : ''} ${item.petugas ? '| ' + item.petugas : ''}</p>
+                            <p class="text-[10px] text-slate-400 mt-0.5">${item.tanggal || ''} ${item.alamat ? '| ' + item.alamat : ''} ${item.petugas ? '| ' + item.petugas : ''} ${item.ket ? '| ' + item.ket : ''} ${item.keterangan ? '| ' + item.keterangan : ''}</p>
                             <p class="text-cyan-600 font-extrabold mt-0.5">Rp ${amt.toLocaleString('id-ID')}</p>
                         </div>
+                        ${activeNetSub <= 10 ? `
                         <div class="flex space-x-1 ml-2">
                             <button onclick="editNetData(${i})" class="w-6 h-6 bg-amber-50 text-amber-600 rounded-lg text-[10px] cursor-pointer flex items-center justify-center"><i class="fa-solid fa-pen"></i></button>
                             <button onclick="deleteNetData(${i})" class="w-6 h-6 bg-red-50 text-red-600 rounded-lg text-[10px] cursor-pointer flex items-center justify-center"><i class="fa-solid fa-trash"></i></button>
-                        </div>
+                        </div>` : ''}
                     </div>`;
             });
 
@@ -2565,13 +2800,90 @@
             document.getElementById('net-count-badge').textContent = data.length;
             document.getElementById('net-txt-paid').innerText = 'Rp ' + paid.toLocaleString('id-ID');
             document.getElementById('net-txt-unpaid').innerText = 'Rp ' + unpaid.toLocaleString('id-ID');
+            document.getElementById('net-txt-tunggakan').innerText = 'Rp ' + tunggakan.toLocaleString('id-ID');
 
             // Save to localStorage
-            if (activeNetSub === 1) localStorage.setItem('net_customers', JSON.stringify(netDatabases.pelanggan));
-            else if (activeNetSub === 2) localStorage.setItem('net_bills', JSON.stringify(netDatabases.tagihan));
-            else if (activeNetSub === 3) localStorage.setItem('net_inc_other', JSON.stringify(netDatabases.masukLain));
-            else if (activeNetSub === 4) localStorage.setItem('net_exp_month', JSON.stringify(netDatabases.keluarBulan));
-            else if (activeNetSub === 5) localStorage.setItem('net_exp_other', JSON.stringify(netDatabases.keluarLain));
+            saveAllNetData();
+        }
+
+        function renderAllPelangganData() {
+            const container = document.getElementById('net-container-list');
+            container.innerHTML = '';
+            document.getElementById('net-lbl-t1').innerText = 'Data Pelanggan Lengkap';
+            document.getElementById('net-empty-state').classList.add('hidden');
+
+            if (netDatabases.pelanggan.length === 0) {
+                document.getElementById('net-empty-state').classList.remove('hidden');
+                document.getElementById('net-txt-t1').innerText = 'Rp 0';
+                document.getElementById('net-txt-items').textContent = '0 item';
+                document.getElementById('net-count-badge').textContent = '0';
+                return;
+            }
+
+            let totalTagihan = 0;
+            netDatabases.pelanggan.forEach(p => {
+                // Cari status pembayaran terakhir
+                const tagihanPelanggan = netDatabases.tagihan.filter(t => t.nama === p.nama);
+                const tunggakanPelanggan = netDatabases.tunggakan.filter(t => t.nama === p.nama);
+                const lastTagihan = tagihanPelanggan[tagihanPelanggan.length - 1];
+                const lastTunggakan = tunggakanPelanggan[tunggakanPelanggan.length - 1];
+                
+                const statusTagihan = lastTagihan ? lastTagihan.status : 'Belum Ada';
+                const statusTunggakan = lastTunggakan ? lastTunggakan.status : 'Tidak Ada';
+                
+                totalTagihan += parseInt(p.tagihan || 0);
+
+                const statusColor = statusTagihan === 'Terbayar' ? 'text-emerald-600' : statusTagihan === 'Belum Terbayar' ? 'text-red-600' : 'text-slate-400';
+                const tunggakanColor = statusTunggakan === 'Terbayar' ? 'text-emerald-600' : statusTunggakan === 'Belum Terbayar' ? 'text-red-600' : 'text-slate-400';
+
+                container.innerHTML += `
+                    <div class="bg-white border border-slate-200 p-3 rounded-xl text-xs">
+                        <div class="flex justify-between items-start">
+                            <div class="flex-1">
+                                <h4 class="font-bold text-slate-700">${p.nama} <span class="bg-cyan-100 text-cyan-700 text-[9px] font-bold px-1.5 py-0.5 rounded">Tgl ${p.siklus}</span></h4>
+                                <p class="text-[10px] text-slate-400 mt-0.5">${p.alamat || '-'} | ${p.hp || '-'} | ${p.ket || '-'}</p>
+                                <div class="grid grid-cols-2 gap-2 mt-2">
+                                    <div>
+                                        <span class="text-[9px] text-slate-400">Tagihan/bln</span>
+                                        <p class="font-bold text-cyan-600">Rp ${parseInt(p.tagihan).toLocaleString('id-ID')}</p>
+                                    </div>
+                                    <div>
+                                        <span class="text-[9px] text-slate-400">Tunggakan</span>
+                                        <p class="font-bold text-amber-600">Rp ${parseInt(p.tunggakan || 0).toLocaleString('id-ID')}</p>
+                                    </div>
+                                    <div>
+                                        <span class="text-[9px] text-slate-400">Status Tagihan</span>
+                                        <p class="font-bold ${statusColor}">${statusTagihan}</p>
+                                    </div>
+                                    <div>
+                                        <span class="text-[9px] text-slate-400">Status Tunggakan</span>
+                                        <p class="font-bold ${tunggakanColor}">${statusTunggakan}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+
+            document.getElementById('net-txt-t1').innerText = 'Rp ' + totalTagihan.toLocaleString('id-ID');
+            document.getElementById('net-txt-items').textContent = netDatabases.pelanggan.length + ' pelanggan';
+            document.getElementById('net-count-badge').textContent = netDatabases.pelanggan.length;
+            document.getElementById('net-txt-paid').innerText = 'Rp 0';
+            document.getElementById('net-txt-unpaid').innerText = 'Rp 0';
+            document.getElementById('net-txt-tunggakan').innerText = 'Rp ' + netDatabases.pelanggan.reduce((s, p) => s + parseInt(p.tunggakan || 0), 0).toLocaleString('id-ID');
+        }
+
+        function saveAllNetData() {
+            localStorage.setItem('net_customers', JSON.stringify(netDatabases.pelanggan));
+            localStorage.setItem('net_bills', JSON.stringify(netDatabases.tagihan));
+            localStorage.setItem('net_tunggakan', JSON.stringify(netDatabases.tunggakan));
+            localStorage.setItem('net_inc_other', JSON.stringify(netDatabases.masukLain));
+            localStorage.setItem('net_exp_1', JSON.stringify(netDatabases.keluar1));
+            localStorage.setItem('net_exp_2', JSON.stringify(netDatabases.keluar2));
+            localStorage.setItem('net_tagihan_masuk1', JSON.stringify(netDatabases.tagihanMasuk1));
+            localStorage.setItem('net_tagihan_masuk2', JSON.stringify(netDatabases.tagihanMasuk2));
+            localStorage.setItem('net_tagihan_keluar1', JSON.stringify(netDatabases.tagihanKeluar1));
+            localStorage.setItem('net_tagihan_keluar2', JSON.stringify(netDatabases.tagihanKeluar2));
         }
 
         function saveNetData() {
@@ -2586,6 +2898,7 @@
                     hp: document.getElementById('net-f1-hp').value.trim(),
                     siklus: document.getElementById('net-f1-siklus').value,
                     tagihan: parseInt(document.getElementById('net-f1-tagihan').value) || 0,
+                    tunggakan: parseInt(document.getElementById('net-f1-tunggakan').value) || 0,
                     ket: document.getElementById('net-f1-ket').value.trim()
                 });
             } else if (activeNetSub === 2) {
@@ -2596,9 +2909,21 @@
                     tagihan: parseInt(document.getElementById('net-f2-tagihan').value) || 0,
                     petugas: document.getElementById('net-f2-petugas').value,
                     metode: document.getElementById('net-f2-metode').value,
-                    status: document.getElementById('net-f2-status').value
+                    status: document.getElementById('net-f2-status').value,
+                    siklus: (netDatabases.pelanggan.find(p => p.nama === document.getElementById('net-f2-nama').value) || {}).siklus || ''
                 });
             } else if (activeNetSub === 3) {
+                targetArr = netDatabases.tunggakan;
+                getObj = () => ({
+                    nama: document.getElementById('net-f2-nama').value,
+                    tanggal: document.getElementById('net-f2-tanggal').value,
+                    tagihan: parseInt(document.getElementById('net-f2-tagihan').value) || 0,
+                    petugas: document.getElementById('net-f2-petugas').value,
+                    metode: document.getElementById('net-f2-metode').value,
+                    status: document.getElementById('net-f2-status').value,
+                    siklus: (netDatabases.pelanggan.find(p => p.nama === document.getElementById('net-f2-nama').value) || {}).siklus || ''
+                });
+            } else if (activeNetSub === 4) {
                 targetArr = netDatabases.masukLain;
                 getObj = () => ({
                     nama: document.getElementById('net-f3-nama').value.trim(),
@@ -2606,18 +2931,36 @@
                     jumlah: parseInt(document.getElementById('net-f3-jumlah').value) || 0,
                     ket: document.getElementById('net-f3-ket').value.trim()
                 });
-            } else if (activeNetSub === 4 || activeNetSub === 5) {
-                targetArr = activeNetSub === 4 ? netDatabases.keluarBulan : netDatabases.keluarLain;
+            } else if (activeNetSub === 5 || activeNetSub === 6) {
+                targetArr = activeNetSub === 5 ? netDatabases.keluar1 : netDatabases.keluar2;
                 getObj = () => {
                     const obj = {
                         nama: document.getElementById('net-f45-nama').value.trim(),
                         tanggal: document.getElementById('net-f45-tanggal').value,
                         jumlah: parseInt(document.getElementById('net-f45-jumlah').value) || 0
                     };
-                    if (activeNetSub === 4) obj.status = document.getElementById('net-f45-status').value;
+                    if (activeNetSub === 5) obj.status = document.getElementById('net-f45-status').value;
                     else obj.ket = document.getElementById('net-f45-ket').value.trim();
                     return obj;
                 };
+            } else if (activeNetSub === 7 || activeNetSub === 8) {
+                targetArr = activeNetSub === 7 ? netDatabases.tagihanMasuk1 : netDatabases.tagihanMasuk2;
+                getObj = () => ({
+                    nama: document.getElementById('net-f78-nama').value.trim(),
+                    tanggal: document.getElementById('net-f78-tanggal').value,
+                    jumlah: parseInt(document.getElementById('net-f78-jumlah').value) || 0,
+                    keterangan: document.getElementById('net-f78-ket').value.trim()
+                });
+            } else if (activeNetSub === 9 || activeNetSub === 10) {
+                targetArr = activeNetSub === 9 ? netDatabases.tagihanKeluar1 : netDatabases.tagihanKeluar2;
+                getObj = () => ({
+                    nama: document.getElementById('net-f910-nama').value.trim(),
+                    tanggal: document.getElementById('net-f910-tanggal').value,
+                    jumlah: parseInt(document.getElementById('net-f910-jumlah').value) || 0,
+                    keterangan: document.getElementById('net-f910-ket').value.trim()
+                });
+            } else {
+                return;
             }
 
             const obj = getObj();
@@ -2636,68 +2979,123 @@
 
             if (activeNetSub === 1) {
                 const d = netDatabases.pelanggan[index];
-                document.getElementById('net-f1-nama').value = d.nama;
-                document.getElementById('net-f1-alamat').value = d.alamat;
-                document.getElementById('net-f1-hp').value = d.hp;
-                document.getElementById('net-f1-siklus').value = d.siklus;
-                document.getElementById('net-f1-tagihan').value = d.tagihan;
-                document.getElementById('net-f1-ket').value = d.ket;
-            } else if (activeNetSub === 2) {
-                const d = netDatabases.tagihan[index];
-                document.getElementById('net-f2-nama').value = d.nama;
-                document.getElementById('net-f2-tanggal').value = d.tanggal;
-                document.getElementById('net-f2-tagihan').value = d.tagihan;
-                document.getElementById('net-f2-petugas').value = d.petugas;
-                document.getElementById('net-f2-metode').value = d.metode;
-                document.getElementById('net-f2-status').value = d.status;
-            } else if (activeNetSub === 3) {
+                document.getElementById('net-f1-nama').value = d.nama || '';
+                document.getElementById('net-f1-alamat').value = d.alamat || '';
+                document.getElementById('net-f1-hp').value = d.hp || '';
+                document.getElementById('net-f1-siklus').value = d.siklus || '05';
+                document.getElementById('net-f1-tagihan').value = d.tagihan || 0;
+                document.getElementById('net-f1-tunggakan').value = d.tunggakan || 0;
+                document.getElementById('net-f1-ket').value = d.ket || '';
+            } else if (activeNetSub === 2 || activeNetSub === 3) {
+                const d = (activeNetSub === 2 ? netDatabases.tagihan : netDatabases.tunggakan)[index];
+                document.getElementById('net-f2-nama').value = d.nama || '';
+                document.getElementById('net-f2-tanggal').value = d.tanggal || '';
+                document.getElementById('net-f2-tagihan').value = d.tagihan || 0;
+                document.getElementById('net-f2-petugas').value = d.petugas || 'Dede S';
+                document.getElementById('net-f2-metode').value = d.metode || 'Cash';
+                document.getElementById('net-f2-status').value = d.status || 'Terbayar';
+            } else if (activeNetSub === 4) {
                 const d = netDatabases.masukLain[index];
-                document.getElementById('net-f3-nama').value = d.nama;
-                document.getElementById('net-f3-tanggal').value = d.tanggal;
-                document.getElementById('net-f3-jumlah').value = d.jumlah;
-                document.getElementById('net-f3-ket').value = d.ket;
-            } else if (activeNetSub === 4 || activeNetSub === 5) {
-                const d = (activeNetSub === 4 ? netDatabases.keluarBulan : netDatabases.keluarLain)[index];
-                document.getElementById('net-f45-nama').value = d.nama;
-                document.getElementById('net-f45-tanggal').value = d.tanggal;
-                document.getElementById('net-f45-jumlah').value = d.jumlah;
-                if (activeNetSub === 4) document.getElementById('net-f45-status').value = d.status;
+                document.getElementById('net-f3-nama').value = d.nama || '';
+                document.getElementById('net-f3-tanggal').value = d.tanggal || '';
+                document.getElementById('net-f3-jumlah').value = d.jumlah || 0;
+                document.getElementById('net-f3-ket').value = d.ket || '';
+            } else if (activeNetSub === 5 || activeNetSub === 6) {
+                const d = (activeNetSub === 5 ? netDatabases.keluar1 : netDatabases.keluar2)[index];
+                document.getElementById('net-f45-nama').value = d.nama || '';
+                document.getElementById('net-f45-tanggal').value = d.tanggal || '';
+                document.getElementById('net-f45-jumlah').value = d.jumlah || 0;
+                if (activeNetSub === 5) document.getElementById('net-f45-status').value = d.status || 'Terbayar';
                 else document.getElementById('net-f45-ket').value = d.ket || '';
+            } else if (activeNetSub === 7 || activeNetSub === 8) {
+                const d = (activeNetSub === 7 ? netDatabases.tagihanMasuk1 : netDatabases.tagihanMasuk2)[index];
+                document.getElementById('net-f78-nama').value = d.nama || '';
+                document.getElementById('net-f78-tanggal').value = d.tanggal || '';
+                document.getElementById('net-f78-jumlah').value = d.jumlah || 0;
+                document.getElementById('net-f78-ket').value = d.keterangan || '';
+            } else if (activeNetSub === 9 || activeNetSub === 10) {
+                const d = (activeNetSub === 9 ? netDatabases.tagihanKeluar1 : netDatabases.tagihanKeluar2)[index];
+                document.getElementById('net-f910-nama').value = d.nama || '';
+                document.getElementById('net-f910-tanggal').value = d.tanggal || '';
+                document.getElementById('net-f910-jumlah').value = d.jumlah || 0;
+                document.getElementById('net-f910-ket').value = d.keterangan || '';
             }
         }
 
         function deleteNetData(index) {
             if (!confirm('Hapus data ini?')) return;
-            if (activeNetSub === 1) netDatabases.pelanggan.splice(index, 1);
-            else if (activeNetSub === 2) netDatabases.tagihan.splice(index, 1);
-            else if (activeNetSub === 3) netDatabases.masukLain.splice(index, 1);
-            else if (activeNetSub === 4) netDatabases.keluarBulan.splice(index, 1);
-            else if (activeNetSub === 5) netDatabases.keluarLain.splice(index, 1);
-            renderInternetData();
-            showToast('🗑 Data dihapus!', 'warning');
+            const map = {
+                1: netDatabases.pelanggan, 2: netDatabases.tagihan, 3: netDatabases.tunggakan,
+                4: netDatabases.masukLain, 5: netDatabases.keluar1, 6: netDatabases.keluar2,
+                7: netDatabases.tagihanMasuk1, 8: netDatabases.tagihanMasuk2,
+                9: netDatabases.tagihanKeluar1, 10: netDatabases.tagihanKeluar2
+            };
+            if (map[activeNetSub]) {
+                map[activeNetSub].splice(index, 1);
+                renderInternetData();
+                showToast('🗑 Data dihapus!', 'warning');
+            }
         }
 
         function resetNetForm() {
             document.getElementById('net-edit-index').value = '-1';
             document.getElementById('net-btn-batal').classList.add('hidden');
-            renderInternetFields();
+            if (activeNetSub <= 10) renderInternetFields();
         }
 
         function exportNetToExcel() {
-            let rows = [['RAISYA DECORATION - BISNIS INTERNET']], sheetName = 'Internet', fileName = 'Laporan_Internet.xlsx';
-            const titles = ['Data Pelanggan', 'Anggaran Tagihan', 'Masuk Lainnya', 'Keluar Bulanan', 'Keluar Lainnya'];
-            rows.push([titles[activeNetSub - 1]], [], ['No', 'Nama', 'Detail', 'Jumlah (Rp)']);
-            let data = [];
-            if (activeNetSub === 1) data = netDatabases.pelanggan.map((d, i) => [i + 1, d.nama, `Siklus: ${d.siklus} | ${d.alamat}`, d.tagihan]);
-            else if (activeNetSub === 2) data = netDatabases.tagihan.map((d, i) => [i + 1, d.nama, `${d.tanggal} | ${d.petugas} | ${d.status}`, d.tagihan]);
-            else if (activeNetSub === 3) data = netDatabases.masukLain.map((d, i) => [i + 1, d.nama, d.tanggal + ' | ' + (d.ket || '-'), d.jumlah]);
-            else if (activeNetSub === 4) data = netDatabases.keluarBulan.map((d, i) => [i + 1, d.nama, d.tanggal + ' | ' + d.status, d.jumlah]);
-            else if (activeNetSub === 5) data = netDatabases.keluarLain.map((d, i) => [i + 1, d.nama, d.tanggal + ' | ' + (d.ket || '-'), d.jumlah]);
+            let data = [], sheetName = 'Internet', fileName = 'Laporan_Internet.xlsx';
+            const titles = [
+                'Data Pelanggan', 'Tagihan Masuk Internet', 'Tagihan Tunggakan', 'Masuk Lainnya',
+                'Anggaran Keluar 1', 'Anggaran Keluar Lainnya', 'Tagihan Masuk 1', 'Tagihan Masuk 2',
+                'Tagihan Keluar 1', 'Tagihan Keluar 2', 'Data Terbayar', 'Belum Terbayar',
+                'Data Tunggakan', 'Tunggakan Belum', 'Hitung Semua Masuk', 'Hitung Semua Keluar',
+                'Semua Data Pelanggan'
+            ];
 
-            if (data.length === 0) { showToast('⚠️ Tidak ada data!', 'warning'); return; }
+            let rows = [['RAISYA DECORATION - BISNIS INTERNET'], [titles[activeNetSub - 1]], [], ['No', 'Nama', 'Detail', 'Jumlah (Rp)']];
+            
+            // Dapatkan data sesuai render
+            const filterSiklus = document.getElementById('net-filter-date') ? document.getElementById('net-filter-date').value : 'ALL';
+            let sourceData = [];
+
+            if (activeNetSub === 1) sourceData = netDatabases.pelanggan;
+            else if (activeNetSub === 2) sourceData = netDatabases.tagihan;
+            else if (activeNetSub === 3) sourceData = netDatabases.tunggakan;
+            else if (activeNetSub === 4) sourceData = netDatabases.masukLain;
+            else if (activeNetSub === 5) sourceData = netDatabases.keluar1;
+            else if (activeNetSub === 6) sourceData = netDatabases.keluar2;
+            else if (activeNetSub === 7) sourceData = netDatabases.tagihanMasuk1;
+            else if (activeNetSub === 8) sourceData = netDatabases.tagihanMasuk2;
+            else if (activeNetSub === 9) sourceData = netDatabases.tagihanKeluar1;
+            else if (activeNetSub === 10) sourceData = netDatabases.tagihanKeluar2;
+            else if (activeNetSub === 15) sourceData = [...netDatabases.tagihan.filter(d => d.status === 'Terbayar'), ...netDatabases.masukLain, ...netDatabases.tagihanMasuk1, ...netDatabases.tagihanMasuk2];
+            else if (activeNetSub === 16) sourceData = [...netDatabases.keluar1, ...netDatabases.keluar2, ...netDatabases.tagihanKeluar1, ...netDatabases.tagihanKeluar2];
+            else if (activeNetSub === 17) {
+                // Export data pelanggan lengkap
+                rows = [['RAISYA DECORATION - DATA PELANGGAN LENGKAP'], [], ['No', 'Nama', 'Alamat', 'HP', 'Siklus', 'Tagihan', 'Tunggakan', 'Status Tagihan', 'Status Tunggakan']];
+                netDatabases.pelanggan.forEach((p, i) => {
+                    const lastT = netDatabases.tagihan.filter(t => t.nama === p.nama).pop();
+                    const lastTg = netDatabases.tunggakan.filter(t => t.nama === p.nama).pop();
+                    rows.push([i+1, p.nama, p.alamat, p.hp, p.siklus, p.tagihan, p.tunggakan || 0, lastT ? lastT.status : '-', lastTg ? lastTg.status : '-']);
+                });
+                const ws = XLSX.utils.aoa_to_sheet(rows);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, 'Pelanggan');
+                XLSX.writeFile(wb, 'Data_Pelanggan_Lengkap.xlsx');
+                showToast('✅ Excel berhasil didownload!', 'success');
+                return;
+            }
+
+            if (sourceData.length === 0) { showToast('⚠️ Tidak ada data!', 'warning'); return; }
             let tot = 0;
-            data.forEach(r => { rows.push(r); tot += r[3]; });
+            sourceData.forEach((d, i) => {
+                const amt = parseInt(d.tagihan || d.jumlah || 0);
+                tot += amt;
+                rows.push([i+1, d.nama, `${d.tanggal || ''} ${d.petugas ? '| '+d.petugas : ''} ${d.status ? '| '+d.status : ''} ${d.ket || d.keterangan || ''}`, amt]);
+            });
             rows.push([], ['', 'TOTAL', '', tot]);
+            
             const ws = XLSX.utils.aoa_to_sheet(rows);
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, sheetName);
@@ -2746,50 +3144,26 @@
                 });
             });
 
-            // Internet
-            netDatabases.tagihan.forEach(item => {
-                if (item.status === 'Terbayar') {
-                    let amt = parseInt(item.tagihan || 0);
-                    totalMasuk += amt;
-                    itemCount++;
-                    container.innerHTML += `
-                        <div class="bg-white border border-slate-200/60 p-2.5 rounded-xl flex justify-between items-center text-xs">
-                            <div>
-                                <span class="bg-cyan-100 text-cyan-700 text-[8px] font-black px-1.5 py-0.5 rounded uppercase">Internet</span>
-                                <h4 class="font-bold text-slate-700 mt-1">${item.nama}</h4>
-                                <p class="text-[9px] text-slate-400">Tagihan | ${item.tanggal}</p>
-                            </div>
-                            <span class="text-emerald-600 font-extrabold">+Rp ${amt.toLocaleString('id-ID')}</span>
-                        </div>`;
-                }
-            });
-            netDatabases.masukLain.forEach(item => {
-                let amt = parseInt(item.jumlah || 0);
+            // Internet - semua masuk
+            [...netDatabases.tagihan.filter(d => d.status === 'Terbayar'), ...netDatabases.masukLain, ...netDatabases.tagihanMasuk1, ...netDatabases.tagihanMasuk2].forEach(item => {
+                let amt = parseInt(item.tagihan || item.jumlah || 0);
                 totalMasuk += amt;
                 itemCount++;
                 container.innerHTML += `
                     <div class="bg-white border border-slate-200/60 p-2.5 rounded-xl flex justify-between items-center text-xs">
-                        <div><span class="bg-cyan-100 text-cyan-700 text-[8px] font-black px-1.5 py-0.5 rounded uppercase">Internet</span><h4 class="font-bold text-slate-700 mt-1">${item.nama}</h4><p class="text-[9px] text-slate-400">Masuk | ${item.tanggal}</p></div>
+                        <div><span class="bg-cyan-100 text-cyan-700 text-[8px] font-black px-1.5 py-0.5 rounded uppercase">Internet</span><h4 class="font-bold text-slate-700 mt-1">${item.nama}</h4><p class="text-[9px] text-slate-400">Masuk | ${item.tanggal || ''}</p></div>
                         <span class="text-emerald-600 font-extrabold">+Rp ${amt.toLocaleString('id-ID')}</span>
                     </div>`;
             });
-            netDatabases.keluarBulan.forEach(item => {
-                let amt = parseInt(item.jumlah || 0);
+
+            // Internet - semua keluar
+            [...netDatabases.keluar1, ...netDatabases.keluar2, ...netDatabases.tagihanKeluar1, ...netDatabases.tagihanKeluar2, ...netDatabases.tunggakan.filter(d => d.status === 'Terbayar')].forEach(item => {
+                let amt = parseInt(item.tagihan || item.jumlah || 0);
                 totalKeluar += amt;
                 itemCount++;
                 container.innerHTML += `
                     <div class="bg-white border border-slate-200/60 p-2.5 rounded-xl flex justify-between items-center text-xs">
-                        <div><span class="bg-cyan-100 text-cyan-700 text-[8px] font-black px-1.5 py-0.5 rounded uppercase">Internet</span><h4 class="font-bold text-slate-700 mt-1">${item.nama}</h4><p class="text-[9px] text-slate-400">Keluar | ${item.tanggal}</p></div>
-                        <span class="text-rose-600 font-extrabold">-Rp ${amt.toLocaleString('id-ID')}</span>
-                    </div>`;
-            });
-            netDatabases.keluarLain.forEach(item => {
-                let amt = parseInt(item.jumlah || 0);
-                totalKeluar += amt;
-                itemCount++;
-                container.innerHTML += `
-                    <div class="bg-white border border-slate-200/60 p-2.5 rounded-xl flex justify-between items-center text-xs">
-                        <div><span class="bg-cyan-100 text-cyan-700 text-[8px] font-black px-1.5 py-0.5 rounded uppercase">Internet</span><h4 class="font-bold text-slate-700 mt-1">${item.nama}</h4><p class="text-[9px] text-slate-400">Keluar | ${item.tanggal}</p></div>
+                        <div><span class="bg-cyan-100 text-cyan-700 text-[8px] font-black px-1.5 py-0.5 rounded uppercase">Internet</span><h4 class="font-bold text-slate-700 mt-1">${item.nama}</h4><p class="text-[9px] text-slate-400">Keluar | ${item.tanggal || ''}</p></div>
                         <span class="text-rose-600 font-extrabold">-Rp ${amt.toLocaleString('id-ID')}</span>
                     </div>`;
             });
@@ -2847,10 +3221,10 @@
             showToast('✅ Excel berhasil didownload!', 'success');
         }
 
-        console.log('✅ Raisya Decoration v2.0 - Part 2 Siap!');
-        console.log('📊 Bisnis, Internet, Rekap, Export loaded');
+        console.log('✅ Raisya Decoration v2.1 - Part 2 Siap!');
+        console.log('📊 Bisnis, Internet 17 Sub-Menu, Rekap, Export loaded');
     </script>
 
 </body>
 </html>
-<!-- END BLOK 12 - RAISYA DECORATION v2.0 COMPLETE -->
+<!-- END BLOK 12 R2 - RAISYA DECORATION v2.1 COMPLETE -->
