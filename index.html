@@ -1639,6 +1639,7 @@
      BLOK 11 R2 - RAISYA DECORATION v2.1 - JAVASCRIPT PART 1
      (PWA, Toast, Theme, Multi-User Auth, Navigation, Settings,
       Backup, Reset, Family CRUD, Database Baru)
+     REVISI: systemCredentials & changeReportPasswords
      ============================================================ -->
     <script>
         // ========== PWA SERVICE WORKER ==========
@@ -1752,9 +1753,6 @@
         }
 
         // ========== MULTI-USER SYSTEM ==========
-        // Struktur user: username, password, words, nama, email, hp, role, status, alamat?, nomor?, jabatan?
-        // Role: 'superadmin', 'staf_rumah_hantu', 'staf_playground', 'staf_raisya_dec', 'staf_internet'
-        // Default: 1 superadmin
         let users = JSON.parse(localStorage.getItem('raisya_users')) || [
             {
                 username: "Radhika",
@@ -1771,10 +1769,23 @@
             }
         ];
 
-        let currentUser = null; // akan diisi saat login
+        let currentUser = null;
 
         function saveUsers() {
             localStorage.setItem('raisya_users', JSON.stringify(users));
+        }
+
+        // ========== KONFIGURASI BISNIS (systemCredentials) ==========
+        let systemCredentials = JSON.parse(localStorage.getItem('raisya_credentials')) || {
+            GHOST: { user: "RumahHantu", pass: "002886", name: "Rumah Hantu", theme: "purple" },
+            PLAYGROUND: { user: "Playground", pass: "002886", name: "Playground", theme: "amber" },
+            RAISYA_DEC: { user: "RaisyaDecoration", pass: "002886", name: "Raisya Decoration", theme: "rose" },
+            INTERNET: { user: "Internet", pass: "002886", name: "Internet", theme: "cyan" },
+            REKAP: { user: "Rekap", pass: "002886", name: "Rekap Semua Laporan", theme: "emerald" }
+        };
+
+        function saveSystemCredentials() {
+            localStorage.setItem('raisya_credentials', JSON.stringify(systemCredentials));
         }
 
         // ========== VARIABEL GLOBAL ==========
@@ -1847,16 +1858,9 @@
                 document.getElementById('pwa-install-banner').classList.remove('hidden');
             }
 
-            // Role-based menu access
             if (pageId === 'page-menu' && currentUser) {
-                // Semua menu bisnis + internet + rekap + keluarga bisa diakses, tapi untuk staf internet, 
-                // kita batasi agar hanya menu Internet yang muncul, sesuai permintaan.
-                // Kita bisa sembunyikan tombol-tombol yang tidak sesuai role.
                 const isSuperadmin = currentUser.role === 'superadmin';
                 const isStafInternet = currentUser.role === 'staf_internet';
-                // Menu: Keluarga (family), Bisnis (ghost, playground, raisya), Internet, Rekap
-                // Untuk staf internet, hanya Internet yang boleh diakses. 
-                // Tapi struktur HTML Blok 4 tidak dikirim ulang, jadi kita atur visibility tombol di sini.
                 const allBizButtons = [
                     { key: 'GHOST', selector: "button[onclick=\"openBizLogin('GHOST')\"]" },
                     { key: 'PLAYGROUND', selector: "button[onclick=\"openBizLogin('PLAYGROUND')\"]" },
@@ -1867,24 +1871,20 @@
                 const familyBtn = document.querySelector("button[onclick=\"openFamilyReportConf()\"]");
                 const internetBtn = document.querySelector("button[onclick=\"openBizLogin('INTERNET')\"]");
                 
-                // Tampilkan semua dulu
                 if (familyBtn) familyBtn.style.display = '';
                 allBizButtons.forEach(b => {
                     const el = document.querySelector(b.selector);
                     if (el) el.style.display = '';
                 });
 
-                // Jika staf internet, sembunyikan selain Internet
                 if (isStafInternet) {
                     if (familyBtn) familyBtn.style.display = 'none';
                     allBizButtons.forEach(b => {
                         const el = document.querySelector(b.selector);
                         if (el && b.key !== 'INTERNET') el.style.display = 'none';
-                        else if (el && b.key === 'INTERNET') el.style.display = ''; // pastikan muncul
+                        else if (el && b.key === 'INTERNET') el.style.display = '';
                     });
                 }
-                // Untuk role staf bisnis lain (rumah hantu, playground, raisya) mungkin hanya bisa akses bisnis terkait, 
-                // tetapi permintaan fokus ke staf internet, jadi kita biarkan saja dulu (superadmin bisa semua).
             }
 
             if (pageId === 'page-menu') updateMenuStats();
@@ -1946,7 +1946,6 @@
                 return;
             }
 
-            // Login sukses
             currentUser = found;
             errEl.classList.add('hidden');
             document.getElementById('login-user').value = '';
@@ -1967,9 +1966,6 @@
                 return;
             }
 
-            // Cari user dengan email atau hp yang cocok, hanya superadmin yang bisa reset?
-            // Permintaan: lupa password hanya untuk superadmin (default Radhika). 
-            // Kita cari superadmin yang email/hp sesuai.
             const superAdmin = users.find(u => u.role === 'superadmin');
             if (superAdmin && (val === superAdmin.email || val === superAdmin.hp)) {
                 errEl.classList.add('hidden');
@@ -2006,7 +2002,6 @@
                 return;
             }
 
-            // Update password superadmin
             const superAdmin = users.find(u => u.role === 'superadmin');
             if (superAdmin) {
                 superAdmin.password = newPass;
@@ -2033,14 +2028,10 @@
         function openSettingsModal() {
             if (!currentUser) return;
             document.getElementById('settingsModal').classList.remove('hidden');
-            // Sesuaikan tab visibility berdasarkan role
             const isSuperadmin = currentUser.role === 'superadmin';
             document.querySelectorAll('.admin-only').forEach(el => {
                 el.style.display = isSuperadmin ? '' : 'none';
             });
-            // Untuk staf, tampilkan hanya profil, tema, tentang (tab password, backup, reset, manajemen tidak muncul)
-            // Karena kita sudah set display none, otomatis tab tersebut hilang. 
-            // Pastikan tab yang aktif adalah 'profil'
             switchSettingsTab('profil');
             loadSettingsData();
         }
@@ -2073,7 +2064,6 @@
             document.getElementById('sett-email').value = currentUser.email || '';
             document.getElementById('sett-hp').value = currentUser.hp || '';
 
-            // Field tambahan untuk staf
             const staffFields = document.getElementById('staff-extra-fields');
             if (currentUser.role !== 'superadmin' && staffFields) {
                 staffFields.classList.remove('hidden');
@@ -2084,14 +2074,10 @@
                 staffFields.classList.add('hidden');
             }
 
-            // Password (hanya untuk superadmin)
             if (currentUser.role === 'superadmin') {
                 document.getElementById('sett-pass-old').value = '';
                 document.getElementById('sett-pass-new').value = '';
                 document.getElementById('sett-pass-confirm').value = '';
-                // Password laporan masih disimpan di localStorage khusus? 
-                // Kita simpan di localStorage terpisah, atau gunakan nilai default. 
-                // Sementara kita set dari localStorage 'familyPassword' dan 'bizPassword'
                 document.getElementById('sett-pass-family').value = localStorage.getItem('raisya_familyPassword') || '002886';
                 document.getElementById('sett-pass-biz').value = localStorage.getItem('raisya_bizPassword') || '002886';
             }
@@ -2110,7 +2096,6 @@
                 return;
             }
 
-            // Update currentUser dan juga di array users
             currentUser.nama = nama;
             currentUser.email = email;
             currentUser.hp = hp;
@@ -2118,10 +2103,8 @@
             if (currentUser.role !== 'superadmin') {
                 currentUser.alamat = document.getElementById('sett-alamat').value.trim();
                 currentUser.nomor = document.getElementById('sett-nomor').value.trim();
-                // jabatan readonly, tidak diubah
             }
 
-            // Update di array users
             const idx = users.findIndex(u => u.username === currentUser.username);
             if (idx !== -1) {
                 users[idx] = { ...currentUser };
@@ -2160,7 +2143,6 @@
                 return;
             }
 
-            // Update di array
             const idx = users.findIndex(u => u.username === currentUser.username);
             if (idx !== -1) {
                 users[idx].password = newPass;
@@ -2187,12 +2169,14 @@
                 return;
             }
 
-            // Simpan di localStorage (untuk digunakan di handleFamilyLogin dan handleBizLogin)
             localStorage.setItem('raisya_familyPassword', familyPass);
             localStorage.setItem('raisya_bizPassword', bizPass);
 
-            // Update semua akun bisnis dengan password yang sama (jika diperlukan)
-            // ...
+            // Update semua password bisnis di systemCredentials
+            Object.keys(systemCredentials).forEach(key => {
+                systemCredentials[key].pass = bizPass;
+            });
+            saveSystemCredentials();
 
             showToast('✅ Password laporan berhasil disimpan!', 'success');
         }
@@ -2221,7 +2205,6 @@
                 return;
             }
 
-            // Cek duplikasi username (kecuali saat edit username yang sama)
             const dup = users.find(u => u.username === username && (idx === -1 || users[idx].username !== username));
             if (dup) {
                 showToast('⚠️ Username sudah digunakan!', 'error');
@@ -2233,7 +2216,7 @@
                 password,
                 words,
                 nama,
-                email: '', // staf mungkin tidak perlu email
+                email: '',
                 hp,
                 role,
                 status,
@@ -2328,7 +2311,7 @@
             container.innerHTML = '';
             let count = 0;
             users.forEach((u, i) => {
-                if (u.role === 'superadmin') return; // jangan tampilkan superadmin di daftar
+                if (u.role === 'superadmin') return;
                 count++;
                 const statusBadge = u.status === 'aktif' 
                     ? '<span class="bg-emerald-100 text-emerald-700 text-[9px] font-bold px-1.5 py-0.5 rounded">AKTIF</span>'
@@ -2360,6 +2343,7 @@
         function backupAllData() {
             const allData = {
                 users: users,
+                systemCredentials: systemCredentials,
                 familyReports: reportData,
                 bizDatabases: bizDatabases,
                 netDatabases: netDatabases,
@@ -2396,6 +2380,7 @@
         function backupToDrive() {
             const allData = {
                 users: users,
+                systemCredentials: systemCredentials,
                 familyReports: reportData,
                 bizDatabases: bizDatabases,
                 netDatabases: netDatabases,
@@ -2445,6 +2430,10 @@
                     if (data.users) {
                         users = data.users;
                         saveUsers();
+                    }
+                    if (data.systemCredentials) {
+                        systemCredentials = data.systemCredentials;
+                        saveSystemCredentials();
                     }
                     if (data.familyReports) {
                         reportData = data.familyReports;
@@ -2559,7 +2548,6 @@
                 return;
             }
 
-            // Reset users ke default superadmin saja
             users = [
                 {
                     username: "Radhika",
@@ -2577,7 +2565,15 @@
             ];
             saveUsers();
 
-            // Reset databases
+            systemCredentials = {
+                GHOST: { user: "RumahHantu", pass: "002886", name: "Rumah Hantu", theme: "purple" },
+                PLAYGROUND: { user: "Playground", pass: "002886", name: "Playground", theme: "amber" },
+                RAISYA_DEC: { user: "RaisyaDecoration", pass: "002886", name: "Raisya Decoration", theme: "rose" },
+                INTERNET: { user: "Internet", pass: "002886", name: "Internet", theme: "cyan" },
+                REKAP: { user: "Rekap", pass: "002886", name: "Rekap Semua Laporan", theme: "emerald" }
+            };
+            saveSystemCredentials();
+
             localStorage.removeItem('family_reports');
             localStorage.removeItem('ghost_inbound');
             localStorage.removeItem('ghost_outbound');
@@ -2628,7 +2624,6 @@
 
         function handleFamilyLogin() {
             const pass = document.getElementById('family-login-pass').value.trim();
-            // Ambil password dari localStorage atau default
             const familyPass = localStorage.getItem('raisya_familyPassword') || '002886';
             if (pass === familyPass) {
                 document.getElementById('badge-role').innerText = 'Akses: ' + selectedRole;
@@ -2769,9 +2764,11 @@
         (function init() {
             loadTheme();
             document.getElementById('currentYear').textContent = new Date().getFullYear();
-            // Pastikan password laporan tersimpan di localStorage jika belum
             if (!localStorage.getItem('raisya_familyPassword')) localStorage.setItem('raisya_familyPassword', '002886');
             if (!localStorage.getItem('raisya_bizPassword')) localStorage.setItem('raisya_bizPassword', '002886');
+            if (!localStorage.getItem('raisya_credentials')) {
+                saveSystemCredentials();
+            }
             console.log('✅ Raisya Decoration v2.1 - Part 1 Siap!');
             console.log('👤 Multi-User System Active');
             console.log('💾 Database: 10 Array Internet');
