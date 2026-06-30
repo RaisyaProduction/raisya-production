@@ -346,8 +346,8 @@
 
 <!-- ===== RAISYA PRODUCTION → BLOK 4 - RAISYA DECORATION v2.0 - MAIN MENU PAGE ===== -->
 <!-- ============================================================
-     BLOK 4 - RAISYA DECORATION v2.0 - MAIN MENU PAGE
-     (User Info, PWA Banner, 6 Menu Utama, Navigasi)
+     BLOK 4 - RAISYA DECORATION v2.1 - MAIN MENU PAGE
+     (User Info, PWA Banner, 6 Menu Utama + Chat, Navigasi)
      ============================================================ -->
             <div id="page-menu" class="hidden space-y-5 page-transition">
                 
@@ -489,6 +489,24 @@
                             <div class="text-[10px] text-slate-400 font-medium">Dashboard eksekutif global</div>
                         </div>
                         <i class="fa-solid fa-chevron-right text-slate-300 group-hover:text-emerald-400 text-[10px]"></i>
+                    </button>
+                </div>
+
+                <!-- MENU KOMUNIKASI -->
+                <div class="space-y-1.5">
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-1">Komunikasi</p>
+                    
+                    <!-- 7. CHAT STAF -->
+                    <button onclick="openChatList()" 
+                            class="group w-full flex items-center p-3.5 bg-slate-50 hover:bg-indigo-50/40 border border-slate-200 hover:border-indigo-300 rounded-xl transition-all text-left cursor-pointer active:scale-[0.98]">
+                        <div class="w-9 h-9 rounded-xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform shadow-sm">
+                            <i class="fa-solid fa-comments"></i>
+                        </div>
+                        <div class="ml-3 flex-1">
+                            <div class="font-semibold text-slate-700 group-hover:text-indigo-600 text-xs uppercase tracking-wide">Chat Staf</div>
+                            <div class="text-[10px] text-slate-400 font-medium">Pesan dengan staf & superadmin</div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-slate-300 group-hover:text-indigo-400 text-[10px]"></i>
                     </button>
                 </div>
 
@@ -4147,3 +4165,551 @@
 </body>
 </html>
 <!-- END BLOK 14 -->
+
+
+<!-- ===== RAISYA PRODUCTION → BLOK 15 - RAISYA DECORATION v2.1 - HALAMAN DAFTAR CHAT ===== -->
+<!-- ============================================================
+     BLOK 15 - RAISYA DECORATION v2.1 - HALAMAN DAFTAR CHAT
+     (Daftar Kontak Chat untuk Superadmin & Staf)
+     ============================================================ -->
+            <div id="page-chat-list" class="hidden space-y-4 page-transition">
+                
+                <!-- HEADER -->
+                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                    <div>
+                        <span class="px-2 py-0.5 text-[9px] font-extrabold bg-indigo-100 text-indigo-700 rounded-full uppercase tracking-wider">
+                            <i class="fa-solid fa-comments mr-1"></i> Komunikasi
+                        </span>
+                        <h2 class="text-md font-bold text-slate-700 mt-0.5 flex items-center gap-2">
+                            <i class="fa-solid fa-comments text-indigo-500"></i> Chat Staf
+                        </h2>
+                    </div>
+                    <button onclick="switchPage('page-menu')" 
+                            class="text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-1.5 rounded-lg transition-all cursor-pointer">
+                        <i class="fa-solid fa-house mr-1"></i> Menu
+                    </button>
+                </div>
+
+                <!-- FILTER BISNIS (KHUSUS SUPERADMIN) -->
+                <div id="chat-biz-filter" class="hidden bg-slate-100 p-1.5 rounded-xl">
+                    <p class="text-[9px] font-bold text-slate-400 uppercase px-1 mb-1">Filter Bisnis</p>
+                    <div class="flex gap-1.5 flex-wrap">
+                        <button onclick="filterChatList('all')" id="chat-filter-all"
+                                class="px-3 py-1.5 rounded-lg text-[10px] font-bold bg-white text-indigo-600 shadow-sm transition-all cursor-pointer">
+                            Semua
+                        </button>
+                        <button onclick="filterChatList('GHOST')" id="chat-filter-ghost"
+                                class="px-3 py-1.5 rounded-lg text-[10px] font-bold text-slate-500 hover:bg-slate-200/50 transition-all cursor-pointer">
+                            <i class="fa-solid fa-ghost mr-1"></i> Rumah Hantu
+                        </button>
+                        <button onclick="filterChatList('PLAYGROUND')" id="chat-filter-playground"
+                                class="px-3 py-1.5 rounded-lg text-[10px] font-bold text-slate-500 hover:bg-slate-200/50 transition-all cursor-pointer">
+                            <i class="fa-solid fa-gamepad mr-1"></i> Playground
+                        </button>
+                        <button onclick="filterChatList('RAISYA_DEC')" id="chat-filter-dec"
+                                class="px-3 py-1.5 rounded-lg text-[10px] font-bold text-slate-500 hover:bg-slate-200/50 transition-all cursor-pointer">
+                            <i class="fa-solid fa-paint-roller mr-1"></i> Raisya Dec
+                        </button>
+                        <button onclick="filterChatList('INTERNET')" id="chat-filter-internet"
+                                class="px-3 py-1.5 rounded-lg text-[10px] font-bold text-slate-500 hover:bg-slate-200/50 transition-all cursor-pointer">
+                            <i class="fa-solid fa-wifi mr-1"></i> Internet
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TOMBOL CHAT MASSAL (KHUSUS SUPERADMIN) -->
+                <div id="chat-massal-container" class="hidden">
+                    <button onclick="openMassalChat()" 
+                            class="w-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md shadow-indigo-500/20 active:scale-[0.97] transition-all cursor-pointer flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-bullhorn"></i> Kirim Pesan Massal ke Semua Staf
+                    </button>
+                </div>
+
+                <!-- DAFTAR KONTAK -->
+                <div class="space-y-1.5">
+                    <h3 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider flex items-center gap-2 px-1">
+                        <i class="fa-solid fa-address-book text-indigo-400"></i> Daftar Kontak
+                        <span id="chat-contact-count" class="bg-indigo-100 text-indigo-600 px-2 py-0.5 rounded-full text-[9px]">0</span>
+                    </h3>
+                    <div id="chat-contact-list" class="space-y-1.5 max-h-[400px] overflow-y-auto pr-1">
+                        <div class="text-center text-slate-400 py-6 text-xs italic">Memuat kontak...</div>
+                    </div>
+                    
+                    <div id="chat-empty-state" class="text-center py-8 hidden">
+                        <div class="text-4xl mb-2">💬</div>
+                        <p class="text-xs text-slate-400 font-medium">Belum ada kontak chat</p>
+                        <p class="text-[10px] text-slate-400 mt-1">Staf akan muncul di sini</p>
+                    </div>
+                </div>
+            </div>
+<!-- END BLOK 15 -->
+
+
+<!-- ===== RAISYA PRODUCTION → BLOK 16 - RAISYA DECORATION v2.1 - HALAMAN PERCAKAPAN CHAT ===== -->
+<!-- ============================================================
+     BLOK 16 - RAISYA DECORATION v2.1 - HALAMAN PERCAKAPAN CHAT
+     (Bubble Chat, Input Pesan, Kirim)
+     ============================================================ -->
+            <div id="page-chat-conversation" class="hidden space-y-4 page-transition">
+                
+                <!-- HEADER -->
+                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                    <div class="flex items-center gap-3">
+                        <button onclick="backToChatList()" 
+                                class="w-8 h-8 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg flex items-center justify-center cursor-pointer transition-all">
+                            <i class="fa-solid fa-arrow-left text-xs"></i>
+                        </button>
+                        <div>
+                            <h2 id="chat-contact-name" class="text-sm font-bold text-slate-700">Nama Kontak</h2>
+                            <p id="chat-contact-id" class="text-[10px] text-slate-400">ID: ---</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <!-- INDIKATOR ONLINE -->
+                        <span class="w-2 h-2 bg-emerald-500 rounded-full" title="Online"></span>
+                        <span class="text-[10px] text-slate-400">Online</span>
+                    </div>
+                </div>
+
+                <!-- AREA PERCAKAPAN -->
+                <div id="chat-messages-container" class="space-y-3 max-h-[350px] overflow-y-auto pr-1 bg-slate-50 rounded-2xl p-4 border border-slate-100" style="min-height: 300px;">
+                    <div class="text-center text-slate-400 py-6 text-xs italic">Belum ada pesan</div>
+                </div>
+
+                <!-- INPUT PESAN -->
+                <div class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-2xl p-2">
+                    <input type="text" id="chat-message-input" 
+                           class="flex-1 bg-transparent border-none outline-none text-xs px-2 py-2"
+                           placeholder="Ketik pesan..."
+                           onkeydown="if(event.key==='Enter')sendChatMessage()">
+                    <button onclick="sendChatMessage()" 
+                            class="w-9 h-9 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl flex items-center justify-center cursor-pointer transition-all active:scale-90 shadow-md">
+                        <i class="fa-solid fa-paper-plane text-xs"></i>
+                    </button>
+                </div>
+
+                <!-- INFO CHAT -->
+                <p class="text-[9px] text-slate-400 text-center">
+                    <i class="fa-solid fa-shield-halved mr-1"></i> 
+                    Pesan tersimpan aman di perangkat Anda
+                </p>
+            </div>
+<!-- END BLOK 16 -->
+
+
+<!-- ===== RAISYA PRODUCTION → BLOK 17 - RAISYA DECORATION v2.1 - JAVASCRIPT CHAT ===== -->
+<!-- ============================================================
+     BLOK 17 - RAISYA DECORATION v2.1 - JAVASCRIPT CHAT
+     (Database Chat, Render Daftar, Render Percakapan, Kirim Pesan)
+     ============================================================ -->
+    <script>
+        // ========== DATABASE CHAT ==========
+        let chatDatabase = JSON.parse(localStorage.getItem('raisya_chats')) || {};
+
+        function saveChatDatabase() {
+            localStorage.setItem('raisya_chats', JSON.stringify(chatDatabase));
+        }
+
+        // ========== GENERATE ID STAF ==========
+        function generateStaffId(user) {
+            if (!user || user.role === 'superadmin') return 'SA-001';
+            const prefixMap = {
+                'staf_rumah_hantu': 'RH',
+                'staf_playground': 'PG',
+                'staf_raisya_dec': 'RD',
+                'staf_internet': 'IN'
+            };
+            const prefix = prefixMap[user.role] || 'ST';
+            const usersWithSameRole = users.filter(u => u.role === user.role);
+            const index = usersWithSameRole.findIndex(u => u.username === user.username);
+            const number = String(index + 1).padStart(3, '0');
+            return prefix + '-' + number;
+        }
+
+        function getUserByStaffId(staffId) {
+            return users.find(u => generateStaffId(u) === staffId);
+        }
+
+        // ========== AMBIL DAFTAR KONTAK BERDASARKAN ROLE ==========
+        function getContactsForCurrentUser() {
+            if (!currentUser) return [];
+            
+            const isSuperadmin = currentUser.role === 'superadmin';
+            const contacts = [];
+            
+            if (isSuperadmin) {
+                // Superadmin bisa chat dengan semua staf
+                users.forEach(u => {
+                    if (u.role !== 'superadmin') {
+                        contacts.push({
+                            username: u.username,
+                            nama: u.nama,
+                            staffId: generateStaffId(u),
+                            role: u.role,
+                            jabatan: u.jabatan || '',
+                            bisnis: getBisnisFromRole(u.role),
+                            status: u.status
+                        });
+                    }
+                });
+            } else {
+                // Staf bisa chat dengan Superadmin dan staf lain dalam bisnis yang sama
+                const currentBisnis = getBisnisFromRole(currentUser.role);
+                
+                // Tambahkan Superadmin
+                const superAdmin = users.find(u => u.role === 'superadmin');
+                if (superAdmin) {
+                    contacts.push({
+                        username: superAdmin.username,
+                        nama: superAdmin.nama,
+                        staffId: generateStaffId(superAdmin),
+                        role: superAdmin.role,
+                        jabatan: 'Superadmin',
+                        bisnis: 'all',
+                        status: superAdmin.status
+                    });
+                }
+                
+                // Tambahkan staf lain dalam bisnis yang sama
+                users.forEach(u => {
+                    if (u.username !== currentUser.username && u.role !== 'superadmin') {
+                        const bisnis = getBisnisFromRole(u.role);
+                        if (bisnis === currentBisnis) {
+                            contacts.push({
+                                username: u.username,
+                                nama: u.nama,
+                                staffId: generateStaffId(u),
+                                role: u.role,
+                                jabatan: u.jabatan || '',
+                                bisnis: bisnis,
+                                status: u.status
+                            });
+                        }
+                    }
+                });
+            }
+            
+            return contacts;
+        }
+
+        function getBisnisFromRole(role) {
+            const map = {
+                'staf_rumah_hantu': 'GHOST',
+                'staf_playground': 'PLAYGROUND',
+                'staf_raisya_dec': 'RAISYA_DEC',
+                'staf_internet': 'INTERNET'
+            };
+            return map[role] || '';
+        }
+
+        function getBisnisName(bisnisKey) {
+            const map = {
+                'GHOST': 'Rumah Hantu',
+                'PLAYGROUND': 'Playground',
+                'RAISYA_DEC': 'Raisya Decoration',
+                'INTERNET': 'Internet'
+            };
+            return map[bisnisKey] || bisnisKey;
+        }
+
+        // ========== KUNCI CHAT ==========
+        function getChatKey(user1, user2) {
+            const sorted = [user1, user2].sort();
+            return sorted[0] + '___' + sorted[1];
+        }
+
+        function getMessages(contactUsername) {
+            if (!currentUser) return [];
+            const chatKey = getChatKey(currentUser.username, contactUsername);
+            return chatDatabase[chatKey] || [];
+        }
+
+        function saveMessage(contactUsername, senderUsername, text) {
+            const chatKey = getChatKey(currentUser.username, contactUsername);
+            if (!chatDatabase[chatKey]) {
+                chatDatabase[chatKey] = [];
+            }
+            chatDatabase[chatKey].push({
+                sender: senderUsername,
+                text: text,
+                timestamp: new Date().toISOString()
+            });
+            saveChatDatabase();
+        }
+
+        function getLastMessage(contactUsername) {
+            const messages = getMessages(contactUsername);
+            if (messages.length === 0) return null;
+            return messages[messages.length - 1];
+        }
+
+        function getUnreadCount(contactUsername) {
+            // Untuk penyederhanaan, hitung semua pesan dari kontak sebagai "belum dibaca"
+            // Bisa dikembangkan dengan sistem read receipt
+            const messages = getMessages(contactUsername);
+            return messages.filter(m => m.sender === contactUsername).length;
+        }
+
+        // ========== VARIABEL CHAT AKTIF ==========
+        let activeChatContact = null;
+        let chatFilterBisnis = 'all';
+
+        // ========== BUKA DAFTAR CHAT ==========
+        function openChatList() {
+            if (!currentUser) return;
+            switchPage('page-chat-list');
+            
+            const isSuperadmin = currentUser.role === 'superadmin';
+            const filterContainer = document.getElementById('chat-biz-filter');
+            const massalContainer = document.getElementById('chat-massal-container');
+            
+            if (filterContainer) {
+                filterContainer.style.display = isSuperadmin ? '' : 'none';
+            }
+            if (massalContainer) {
+                massalContainer.style.display = isSuperadmin ? '' : 'none';
+            }
+            
+            chatFilterBisnis = 'all';
+            updateChatFilterButtons();
+            renderChatContactList();
+        }
+
+        function filterChatList(bisnis) {
+            chatFilterBisnis = bisnis;
+            updateChatFilterButtons();
+            renderChatContactList();
+        }
+
+        function updateChatFilterButtons() {
+            const filterIds = ['all', 'GHOST', 'PLAYGROUND', 'RAISYA_DEC', 'INTERNET'];
+            filterIds.forEach(id => {
+                const btn = document.getElementById('chat-filter-' + id.toLowerCase().replace('_', '-').replace('_dec', '-dec'));
+                if (!btn) return;
+                const cleanId = id === 'all' ? 'all' : id;
+                if (chatFilterBisnis === cleanId) {
+                    btn.className = 'px-3 py-1.5 rounded-lg text-[10px] font-bold bg-white text-indigo-600 shadow-sm transition-all cursor-pointer';
+                } else {
+                    btn.className = 'px-3 py-1.5 rounded-lg text-[10px] font-bold text-slate-500 hover:bg-slate-200/50 transition-all cursor-pointer';
+                }
+            });
+        }
+
+        function renderChatContactList() {
+            const container = document.getElementById('chat-contact-list');
+            if (!container) return;
+            container.innerHTML = '';
+            
+            const contacts = getContactsForCurrentUser();
+            
+            // Filter berdasarkan bisnis jika superadmin
+            let filteredContacts = contacts;
+            if (currentUser && currentUser.role === 'superadmin' && chatFilterBisnis !== 'all') {
+                filteredContacts = contacts.filter(c => c.bisnis === chatFilterBisnis);
+            }
+            
+            const emptyState = document.getElementById('chat-empty-state');
+            if (filteredContacts.length === 0) {
+                if (emptyState) emptyState.classList.remove('hidden');
+                document.getElementById('chat-contact-count').textContent = '0';
+                return;
+            }
+            
+            if (emptyState) emptyState.classList.add('hidden');
+            
+            filteredContacts.forEach(contact => {
+                const lastMsg = getLastMessage(contact.username);
+                const unread = getUnreadCount(contact.username);
+                const lastMsgText = lastMsg ? (lastMsg.text.length > 30 ? lastMsg.text.substring(0, 30) + '...' : lastMsg.text) : 'Belum ada pesan';
+                const lastMsgTime = lastMsg ? formatChatTime(new Date(lastMsg.timestamp)) : '';
+                const isOnline = contact.status === 'aktif';
+                const bisnisName = contact.bisnis !== 'all' ? getBisnisName(contact.bisnis) : 'Semua';
+                
+                container.innerHTML += `
+                    <div onclick="openConversation('${contact.username}')" 
+                         class="bg-white border border-slate-200 p-3 rounded-xl cursor-pointer hover:bg-indigo-50/30 transition-all flex items-center gap-3">
+                        <div class="relative">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm shadow-sm">
+                                ${contact.nama.charAt(0).toUpperCase()}
+                            </div>
+                            ${isOnline ? '<span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white"></span>' : ''}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between items-center">
+                                <h4 class="text-xs font-bold text-slate-700 truncate">${contact.nama}</h4>
+                                <span class="text-[9px] text-slate-400">${lastMsgTime}</span>
+                            </div>
+                            <p class="text-[10px] text-slate-400 truncate mt-0.5">${lastMsgText}</p>
+                            <div class="flex items-center gap-2 mt-1">
+                                <span class="text-[9px] font-bold text-indigo-500 bg-indigo-50 px-1.5 py-0.5 rounded">${contact.staffId}</span>
+                                <span class="text-[9px] text-slate-400">${bisnisName}</span>
+                            </div>
+                        </div>
+                        ${unread > 0 ? `<span class="bg-red-500 text-white text-[9px] font-bold w-5 h-5 rounded-full flex items-center justify-center">${unread}</span>` : ''}
+                    </div>`;
+            });
+            
+            document.getElementById('chat-contact-count').textContent = filteredContacts.length;
+        }
+
+        function formatChatTime(date) {
+            const now = new Date();
+            const diff = now - date;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+            
+            if (minutes < 1) return 'Baru saja';
+            if (minutes < 60) return minutes + ' mnt';
+            if (hours < 24) return hours + ' jam';
+            if (days < 7) return days + ' hari';
+            
+            return date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
+        }
+
+        // ========== BUKA PERCAKAPAN ==========
+        function openConversation(contactUsername) {
+            if (!currentUser) return;
+            activeChatContact = contactUsername;
+            
+            const contact = users.find(u => u.username === contactUsername);
+            if (!contact) return;
+            
+            switchPage('page-chat-conversation');
+            
+            document.getElementById('chat-contact-name').innerText = contact.nama;
+            document.getElementById('chat-contact-id').innerText = 'ID: ' + generateStaffId(contact);
+            
+            renderChatMessages();
+            document.getElementById('chat-message-input').focus();
+        }
+
+        function backToChatList() {
+            activeChatContact = null;
+            switchPage('page-chat-list');
+            renderChatContactList();
+        }
+
+        // ========== RENDER PESAN ==========
+        function renderChatMessages() {
+            const container = document.getElementById('chat-messages-container');
+            if (!container) return;
+            container.innerHTML = '';
+            
+            if (!activeChatContact) return;
+            
+            const messages = getMessages(activeChatContact);
+            
+            if (messages.length === 0) {
+                container.innerHTML = '<div class="text-center text-slate-400 py-6 text-xs italic">Belum ada pesan. Mulai percakapan sekarang.</div>';
+                return;
+            }
+            
+            messages.forEach(msg => {
+                const isMe = msg.sender === currentUser.username;
+                const sender = users.find(u => u.username === msg.sender);
+                const senderName = sender ? sender.nama : msg.sender;
+                const senderId = sender ? generateStaffId(sender) : '';
+                const time = new Date(msg.timestamp);
+                const timeStr = time.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+                
+                if (isMe) {
+                    container.innerHTML += `
+                        <div class="flex justify-end">
+                            <div class="max-w-[75%] bg-indigo-500 text-white p-3 rounded-2xl rounded-br-md shadow-sm">
+                                <p class="text-xs">${msg.text}</p>
+                                <p class="text-[9px] text-indigo-200 text-right mt-1">${timeStr}</p>
+                            </div>
+                        </div>`;
+                } else {
+                    container.innerHTML += `
+                        <div class="flex justify-start">
+                            <div class="max-w-[75%] bg-white border border-slate-200 p-3 rounded-2xl rounded-bl-md shadow-sm">
+                                <p class="text-[10px] font-bold text-indigo-600">${senderName} <span class="text-[9px] text-slate-400 font-normal">${senderId}</span></p>
+                                <p class="text-xs text-slate-700 mt-1">${msg.text}</p>
+                                <p class="text-[9px] text-slate-400 text-right mt-1">${timeStr}</p>
+                            </div>
+                        </div>`;
+                }
+            });
+            
+            // Scroll ke bawah
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // ========== KIRIM PESAN ==========
+        function sendChatMessage() {
+            if (!currentUser || !activeChatContact) return;
+            
+            const input = document.getElementById('chat-message-input');
+            if (!input) return;
+            
+            const text = input.value.trim();
+            if (!text) return;
+            
+            saveMessage(activeChatContact, currentUser.username, text);
+            input.value = '';
+            renderChatMessages();
+            
+            // Auto-scroll
+            const container = document.getElementById('chat-messages-container');
+            if (container) {
+                container.scrollTop = container.scrollHeight;
+            }
+        }
+
+        // ========== CHAT MASSAL (SUPERADMIN) ==========
+        function openMassalChat() {
+            if (!currentUser || currentUser.role !== 'superadmin') return;
+            
+            // Pilih bisnis untuk chat massal
+            const bisnisOptions = [
+                { key: 'GHOST', name: 'Rumah Hantu' },
+                { key: 'PLAYGROUND', name: 'Playground' },
+                { key: 'RAISYA_DEC', name: 'Raisya Decoration' },
+                { key: 'INTERNET', name: 'Internet' },
+                { key: 'all', name: 'Semua Bisnis' }
+            ];
+            
+            let optionsText = 'Pilih bisnis untuk chat massal:\n\n';
+            bisnisOptions.forEach((opt, i) => {
+                optionsText += (i + 1) + '. ' + opt.name + '\n';
+            });
+            optionsText += '\nKetik nomor pilihan:';
+            
+            const choice = prompt(optionsText);
+            if (!choice) return;
+            
+            const index = parseInt(choice) - 1;
+            if (index < 0 || index >= bisnisOptions.length) {
+                showToast('⚠️ Pilihan tidak valid!', 'error');
+                return;
+            }
+            
+            const selectedBisnis = bisnisOptions[index];
+            const message = prompt('Ketik pesan massal untuk ' + selectedBisnis.name + ':');
+            if (!message || !message.trim()) return;
+            
+            // Kirim ke semua staf dalam bisnis yang dipilih
+            const contacts = getContactsForCurrentUser();
+            const targetContacts = selectedBisnis.key === 'all' 
+                ? contacts 
+                : contacts.filter(c => c.bisnis === selectedBisnis.key);
+            
+            if (targetContacts.length === 0) {
+                showToast('⚠️ Tidak ada staf dalam bisnis ini!', 'warning');
+                return;
+            }
+            
+            targetContacts.forEach(contact => {
+                saveMessage(contact.username, currentUser.username, message.trim());
+            });
+            
+            showToast('✅ Pesan massal terkirim ke ' + targetContacts.length + ' staf!', 'success');
+            renderChatContactList();
+        }
+
+        console.log('✅ Blok 17 – Sistem Chat siap');
+        console.log('💬 Chat Staf, Chat Massal, ID Staf, Filter Bisnis');
+    </script>
+<!-- END BLOK 17 -->
