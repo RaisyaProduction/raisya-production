@@ -1253,7 +1253,7 @@
 <!-- ===== RAISYA PRODUCTION → BLOK 9 R2 - RAISYA DECORATION v2.1 - INTERNET REPORT PAGE ===== -->
 <!-- ============================================================
      BLOK 9 R2 - RAISYA DECORATION v2.1 - INTERNET REPORT PAGE
-     (17 Sub-Menu + 18 Rekap Bulanan)
+     (19 Sub-Menu lengkap: 1-19 termasuk Tampilkan Penagihan)
      ============================================================ -->
             <div id="page-internet-report" class="hidden space-y-4 page-transition">
                 
@@ -1271,7 +1271,7 @@
                     </button>
                 </div>
 
-                <!-- SUB-MENU BARIS 1: INPUT DATA (6 tombol) -->
+                <!-- SUB-MENU BARIS 1: INPUT DATA (6 tombol - grid 2 kolom) -->
                 <div class="bg-slate-100 p-1.5 rounded-xl">
                     <p class="text-[9px] font-bold text-slate-400 uppercase px-1 mb-1">📥 Input Data</p>
                     <div class="grid grid-cols-2 gap-1.5 text-[10px] font-bold text-slate-600">
@@ -1302,7 +1302,7 @@
                     </div>
                 </div>
 
-                <!-- SUB-MENU BARIS 2: INPUT TAMBAHAN (4 tombol) -->
+                <!-- SUB-MENU BARIS 2: INPUT TAMBAHAN (4 tombol - grid 2 kolom) -->
                 <div class="bg-slate-100 p-1.5 rounded-xl">
                     <p class="text-[9px] font-bold text-slate-400 uppercase px-1 mb-1">📥 Input Tambahan</p>
                     <div class="grid grid-cols-2 gap-1.5 text-[10px] font-bold text-slate-600">
@@ -1325,7 +1325,7 @@
                     </div>
                 </div>
 
-                <!-- SUB-MENU BARIS 3: TAMPILKAN DATA (3 tombol) -->
+                <!-- SUB-MENU BARIS 3: TAMPILKAN DATA (3 tombol - full width) -->
                 <div class="bg-slate-100 p-1.5 rounded-xl">
                     <p class="text-[9px] font-bold text-slate-400 uppercase px-1 mb-1">👁 Tampilkan Data</p>
                     <div class="space-y-1.5 text-[10px] font-bold text-slate-600">
@@ -1344,7 +1344,7 @@
                     </div>
                 </div>
 
-                <!-- SUB-MENU BARIS 4: TAMPILAN & HITUNG (3 tombol) -->
+                <!-- SUB-MENU BARIS 4: TAMPILAN & HITUNG (3 tombol - full width) -->
                 <div class="bg-slate-100 p-1.5 rounded-xl">
                     <p class="text-[9px] font-bold text-slate-400 uppercase px-1 mb-1">📊 Laporan & Hitung</p>
                     <div class="space-y-1.5 text-[10px] font-bold text-slate-600">
@@ -1372,12 +1372,21 @@
                     </button>
                 </div>
 
-                <!-- SUB-MENU BARIS 6: REKAP BULANAN (1 tombol) - BARU -->
+                <!-- SUB-MENU BARIS 6: REKAP BULANAN (1 tombol) -->
                 <div class="bg-slate-100 p-1.5 rounded-xl">
                     <p class="text-[9px] font-bold text-slate-400 uppercase px-1 mb-1">📆 Rekap Bulanan</p>
                     <button id="btn-sub-net18" onclick="switchNetSubMenu(18)" 
                             class="w-full py-2.5 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all text-[10px] font-bold bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-200">
                             <i class="fa-solid fa-calendar-alt text-purple-600 mr-1"></i> 18. REKAP TAGIHAN BULANAN
+                    </button>
+                </div>
+
+                <!-- SUB-MENU BARIS 7: TAMPILKAN PENAGIHAN (1 tombol) -->
+                <div class="bg-slate-100 p-1.5 rounded-xl">
+                    <p class="text-[9px] font-bold text-slate-400 uppercase px-1 mb-1">📋 Penagihan</p>
+                    <button id="btn-sub-net19" onclick="switchNetSubMenu(19)" 
+                            class="w-full py-2.5 rounded-lg text-center cursor-pointer text-slate-500 hover:bg-slate-200/50 transition-all text-[10px] font-bold bg-gradient-to-r from-teal-50 to-cyan-50 border border-teal-200">
+                            <i class="fa-solid fa-file-invoice-dollar text-teal-600 mr-1"></i> 19. TAMPILKAN PENAGIHAN
                     </button>
                 </div>
 
@@ -1400,7 +1409,7 @@
                     </div>
                 </div>
 
-                <!-- FILTER SIKLUS (untuk sub 1, 11, 12, 13, 17) -->
+                <!-- FILTER SIKLUS -->
                 <div id="net-filter-box" class="hidden flex items-center justify-between bg-slate-50 p-3 rounded-xl border border-slate-200 gap-3 flex-wrap">
                     <label class="text-[10px] font-bold text-slate-500 uppercase flex items-center gap-1">
                         <i class="fa-solid fa-filter text-cyan-500"></i> Filter Siklus:
@@ -1417,7 +1426,7 @@
                     </select>
                 </div>
 
-                <!-- FILTER STATUS (untuk sub 11, 12, 13, 14) -->
+                <!-- FILTER STATUS -->
                 <div id="net-status-filter-box" class="hidden flex items-center justify-between bg-slate-50 p-3 rounded-xl border border-slate-200 gap-3 flex-wrap">
                     <label class="text-[10px] font-bold text-slate-500 uppercase flex items-center gap-1">
                         <i class="fa-solid fa-filter text-cyan-500"></i> Filter Status:
@@ -1430,7 +1439,7 @@
                     </select>
                 </div>
 
-                <!-- FILTER BULAN & TAHUN (khusus sub 18: Rekap Bulanan) -->
+                <!-- FILTER BULAN & TAHUN -->
                 <div id="net-month-filter-box" class="hidden flex items-center justify-between bg-slate-50 p-3 rounded-xl border border-slate-200 gap-3 flex-wrap">
                     <div class="flex items-center gap-2 flex-wrap">
                         <label class="text-[10px] font-bold text-slate-500 uppercase">
@@ -1640,60 +1649,54 @@
      BLOK 11 R2 - RAISYA DECORATION v2.1 - JAVASCRIPT PART 1
      (PWA, Toast, Theme, Multi-User Auth, Navigation, Settings,
       Backup, Reset, Family CRUD, Database Baru)
-     REVISI FINAL: systemCredentials, changeReportPasswords, 
-     jabatan manual (tanpa auto-fill)
+     REVISI FINAL: Service Worker Offline, systemCredentials,
+     changeReportPasswords, Jabatan Manual
      ============================================================ -->
     <script>
-        // ========== PWA SERVICE WORKER ==========
+        // ========== PWA SERVICE WORKER (OFFLINE CACHE) ==========
         const swCode = `
-    const CACHE_NAME = 'raisya-dec-v5';
-    const ASSETS_TO_CACHE = [
-        '/',  // halaman utama
-        'https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4',
-        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
-        'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js'
-    ];
+            const CACHE_NAME = 'raisya-dec-v5';
+            const ASSETS_TO_CACHE = [
+                '/',
+                'https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4',
+                'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
+                'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js'
+            ];
 
-    // Saat service worker terpasang, langsung cache semua aset penting
-    self.addEventListener('install', (e) => {
-        e.waitUntil(
-            caches.open(CACHE_NAME).then(cache => {
-                return cache.addAll(ASSETS_TO_CACHE);
-            })
-        );
-        self.skipWaiting();
-    });
+            self.addEventListener('install', (e) => {
+                e.waitUntil(
+                    caches.open(CACHE_NAME).then(cache => {
+                        return cache.addAll(ASSETS_TO_CACHE);
+                    })
+                );
+                self.skipWaiting();
+            });
 
-    self.addEventListener('activate', (e) => {
-        e.waitUntil(clients.claim());
-    });
+            self.addEventListener('activate', (e) => {
+                e.waitUntil(clients.claim());
+            });
 
-    // Strategi: ambil dari cache dulu, kalau tidak ada baru fetch (jika online)
-    self.addEventListener('fetch', (e) => {
-        e.respondWith(
-            caches.match(e.request).then(cachedResponse => {
-                if (cachedResponse) {
-                    // Kembalikan dari cache
-                    return cachedResponse;
-                }
-                // Jika tidak ada di cache, coba ambil dari jaringan
-                return fetch(e.request).then(response => {
-                    // Simpan ke cache untuk penggunaan offline berikutnya
-                    if (response && response.status === 200) {
-                        const responseClone = response.clone();
-                        caches.open(CACHE_NAME).then(cache => {
-                            cache.put(e.request, responseClone);
+            self.addEventListener('fetch', (e) => {
+                e.respondWith(
+                    caches.match(e.request).then(cachedResponse => {
+                        if (cachedResponse) {
+                            return cachedResponse;
+                        }
+                        return fetch(e.request).then(response => {
+                            if (response && response.status === 200) {
+                                const responseClone = response.clone();
+                                caches.open(CACHE_NAME).then(cache => {
+                                    cache.put(e.request, responseClone);
+                                });
+                            }
+                            return response;
+                        }).catch(() => {
+                            // Fallback jika offline dan tidak ada di cache
                         });
-                    }
-                    return response;
-                }).catch(() => {
-                    // Jika offline dan tidak ada di cache, bisa tampilkan halaman fallback
-                    // Tapi untuk data JSON/XHR, kita biarkan gagal (toast akan muncul)
-                });
-            })
-        );
-    });
-`;
+                    })
+                );
+            });
+        `;
         
         if ('serviceWorker' in navigator) {
             const blob = new Blob([swCode], { type: 'text/javascript' });
@@ -2813,6 +2816,7 @@
             console.log('👤 Multi-User System Active');
             console.log('💾 Database: 10 Array Internet');
             console.log('📱 PWA, Auth, Settings, Backup, Family CRUD loaded');
+            console.log('📦 Service Worker Offline Cache Ready');
         })();
     </script>
 <!-- END BLOK 11 R2 -->
@@ -3131,15 +3135,17 @@
 <!-- ===== RAISYA PRODUCTION → BLOK 13 - RAISYA DECORATION v2.1 - JAVASCRIPT PART 2b ===== -->
 <!-- ============================================================
      BLOK 13 - RAISYA DECORATION v2.1 - JAVASCRIPT PART 2b
-     (Internet 18 Sub-Menu, Global Rekap, Export)
+     (Internet 19 Sub-Menu, Global Rekap, Export)
+     Sub-menu 19: Tampilkan Penagihan (akses staf & superadmin)
      ============================================================ -->
     <script>
-        // ========== JALUR INTERNET (18 SUB-MENU) ==========
+        // ========== JALUR INTERNET (19 SUB-MENU) ==========
         function switchNetSubMenu(subNo) {
             activeNetSub = subNo;
-            const subs = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18];
+            const subs = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19];
             const isStafInternet = currentUser && currentUser.role === 'staf_internet';
-            const allowedSubs = isStafInternet ? [2,3,11,12] : subs;
+            // Staf internet bisa akses sub 2,3,11,12,19
+            const allowedSubs = isStafInternet ? [2,3,11,12,19] : subs;
 
             subs.forEach(s => {
                 const btn = document.getElementById('btn-sub-net' + s);
@@ -3191,6 +3197,12 @@
                 const yearEl = document.getElementById('net-filter-year');
                 if (monthEl && !monthEl.value) monthEl.value = now.getMonth() + 1;
                 if (yearEl && !yearEl.value) yearEl.value = now.getFullYear();
+            } else if (subNo === 19) {
+                // Tampilkan Penagihan: gabungan tagihan & tunggakan, filter siklus & status
+                if (formContainer) formContainer.classList.add('hidden');
+                if (filterBox) filterBox.classList.remove('hidden');
+                if (statusFilterBox) statusFilterBox.classList.remove('hidden');
+                if (subrekapBox) subrekapBox.classList.remove('hidden');
             }
 
             resetNetForm();
@@ -3409,6 +3421,16 @@
             } else if (activeNetSub === 17) {
                 renderAllPelangganData();
                 return;
+            } else if (activeNetSub === 19) {
+                // Gabungan tagihan + tunggakan, filter siklus & status
+                let allData = [...netDatabases.tagihan, ...netDatabases.tunggakan];
+                data = allData.filter(d => {
+                    const pelanggan = netDatabases.pelanggan.find(p => p.nama === d.nama);
+                    const matchSiklus = filterSiklus === 'ALL' || (pelanggan && pelanggan.siklus === filterSiklus);
+                    const matchStatus = filterStatus === 'ALL' || d.status === filterStatus;
+                    return matchSiklus && matchStatus;
+                });
+                document.getElementById('net-lbl-t1').innerText = 'Total Penagihan';
             }
 
             data.forEach(item => {
@@ -3739,7 +3761,7 @@
                 'Anggaran Keluar 1', 'Anggaran Keluar Lainnya', 'Tagihan Masuk 1', 'Tagihan Masuk 2',
                 'Tagihan Keluar 1', 'Tagihan Keluar 2', 'Data Terbayar', 'Belum Terbayar',
                 'Data Tunggakan', 'Tunggakan Belum', 'Hitung Semua Masuk', 'Hitung Semua Keluar',
-                'Semua Data Pelanggan', 'Rekap Bulanan'
+                'Semua Data Pelanggan', 'Rekap Bulanan', 'Tampilkan Penagihan'
             ];
 
             let rows = [['RAISYA DECORATION - BISNIS INTERNET'], [titles[activeNetSub - 1]], [], ['No', 'Nama', 'Detail', 'Jumlah (Rp)']];
@@ -3786,6 +3808,33 @@
                 const wb = XLSX.utils.book_new();
                 XLSX.utils.book_append_sheet(wb, ws, 'Rekap Bulanan');
                 XLSX.writeFile(wb, `Rekap_Bulanan_${month}_${year}.xlsx`);
+                showToast('✅ Excel berhasil didownload!', 'success');
+                return;
+            }
+
+            if (activeNetSub === 19) {
+                const filterSiklus = (document.getElementById('net-filter-date') && document.getElementById('net-filter-date').value) ? document.getElementById('net-filter-date').value : 'ALL';
+                const filterStatus = (document.getElementById('net-filter-status') && document.getElementById('net-filter-status').value) ? document.getElementById('net-filter-status').value : 'ALL';
+                let allData = [...netDatabases.tagihan, ...netDatabases.tunggakan];
+                let sourceData = allData.filter(d => {
+                    const pelanggan = netDatabases.pelanggan.find(p => p.nama === d.nama);
+                    const matchSiklus = filterSiklus === 'ALL' || (pelanggan && pelanggan.siklus === filterSiklus);
+                    const matchStatus = filterStatus === 'ALL' || d.status === filterStatus;
+                    return matchSiklus && matchStatus;
+                });
+                if (sourceData.length === 0) { showToast('⚠️ Tidak ada data!', 'warning'); return; }
+                let total = 0;
+                rows = [['RAISYA DECORATION - LAPORAN PENAGIHAN'], [], ['No', 'Nama', 'Tanggal', 'Status', 'Jumlah (Rp)']];
+                sourceData.forEach((d, i) => {
+                    const amt = parseInt(d.tagihan || 0);
+                    total += amt;
+                    rows.push([i+1, d.nama, d.tanggal, d.status, amt]);
+                });
+                rows.push([], ['', 'TOTAL', '', total]);
+                const ws = XLSX.utils.aoa_to_sheet(rows);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, 'Penagihan');
+                XLSX.writeFile(wb, 'Laporan_Penagihan.xlsx');
                 showToast('✅ Excel berhasil didownload!', 'success');
                 return;
             }
@@ -3919,6 +3968,6 @@
             showToast('✅ Excel berhasil didownload!', 'success');
         }
 
-        console.log('✅ Blok 13 – Internet & Rekap Global siap');
+        console.log('✅ Blok 13 – Internet & Rekap Global siap (dengan sub-menu 19)');
     </script>
 <!-- END BLOK 13 -->
