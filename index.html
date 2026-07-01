@@ -347,7 +347,7 @@
 <!-- ===== RAISYA PRODUCTION → BLOK 4 - RAISYA DECORATION v2.0 - MAIN MENU PAGE ===== -->
 <!-- ============================================================
      BLOK 4 - RAISYA DECORATION v2.1 - MAIN MENU PAGE
-     (User Info, PWA Banner, 6 Menu Utama + Chat, Navigasi)
+     (User Info, PWA Banner, Role-Based Menu, Papan Informasi)
      ============================================================ -->
             <div id="page-menu" class="hidden space-y-5 page-transition">
                 
@@ -366,9 +366,9 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-2">
-                        <!-- TOMBOL PENGATURAN -->
+                        <!-- TOMBOL PENGATURAN (hanya superadmin) -->
                         <button onclick="openSettingsModal()" 
-                                class="w-9 h-9 bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-700 rounded-xl flex items-center justify-center cursor-pointer transition-all active:scale-90"
+                                class="admin-only-element w-9 h-9 bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-700 rounded-xl flex items-center justify-center cursor-pointer transition-all active:scale-90"
                                 title="Pengaturan">
                             <i class="fa-solid fa-gear text-sm"></i>
                         </button>
@@ -393,8 +393,31 @@
                     </button>
                 </div>
 
-                <!-- SHORTCUT STATS -->
-                <div class="grid grid-cols-3 gap-3">
+                <!-- PAPAN INFORMASI (HANYA UNTUK PELANGGAN & CUSTOMER SERVICE) -->
+                <div id="section-papan-info" class="space-y-3 hidden">
+                    <!-- PAPAN INFORMASI MASAL -->
+                    <div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-4">
+                        <h3 class="text-xs font-extrabold text-amber-700 uppercase flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-bullhorn text-amber-500"></i> Informasi Penting
+                        </h3>
+                        <div id="info-masal-content" class="text-xs text-slate-600 leading-relaxed whitespace-pre-line">
+                            Tidak ada informasi.
+                        </div>
+                    </div>
+
+                    <!-- PAPAN INFORMASI PRIBADI -->
+                    <div class="bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 rounded-2xl p-4">
+                        <h3 class="text-xs font-extrabold text-blue-700 uppercase flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-envelope text-blue-500"></i> Pesan Untuk Anda
+                        </h3>
+                        <div id="info-pribadi-content" class="text-xs text-slate-600 leading-relaxed whitespace-pre-line">
+                            Tidak ada pesan pribadi.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SHORTCUT STATS (hanya untuk superadmin & staf) -->
+                <div id="section-stats" class="grid grid-cols-3 gap-3">
                     <div class="bg-slate-50 rounded-xl p-3 text-center border border-slate-100">
                         <div class="text-lg font-bold text-rose-500" id="stat-total-family">0</div>
                         <div class="text-[9px] font-semibold text-slate-400 uppercase">Keluarga</div>
@@ -409,8 +432,8 @@
                     </div>
                 </div>
 
-                <!-- MENU UTAMA -->
-                <div class="space-y-1.5">
+                <!-- MENU LAPORAN (hanya untuk superadmin & staf) -->
+                <div id="section-menu-laporan" class="space-y-1.5">
                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-1">Menu Laporan</p>
                     
                     <!-- 1. LAPORAN KELUARGA -->
@@ -492,19 +515,32 @@
                     </button>
                 </div>
 
-                <!-- MENU KOMUNIKASI -->
-                <div class="space-y-1.5">
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-1">Komunikasi</p>
+                <!-- MENU PELANGGAN & CUSTOMER SERVICE (hanya untuk role tersebut) -->
+                <div id="section-menu-cs" class="space-y-1.5 hidden">
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-1">Menu Layanan</p>
                     
-                    <!-- 7. CHAT STAF -->
-                    <button onclick="openChatList()" 
-                            class="group w-full flex items-center p-3.5 bg-slate-50 hover:bg-indigo-50/40 border border-slate-200 hover:border-indigo-300 rounded-xl transition-all text-left cursor-pointer active:scale-[0.98]">
-                        <div class="w-9 h-9 rounded-xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform shadow-sm">
-                            <i class="fa-solid fa-comments"></i>
+                    <!-- KENDALA INTERNET -->
+                    <button onclick="switchPage('page-kendala')" 
+                            class="group w-full flex items-center p-3.5 bg-slate-50 hover:bg-red-50/40 border border-slate-200 hover:border-red-300 rounded-xl transition-all text-left cursor-pointer active:scale-[0.98]">
+                        <div class="w-9 h-9 rounded-xl bg-red-500/10 text-red-600 flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform shadow-sm">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
                         </div>
                         <div class="ml-3 flex-1">
-                            <div class="font-semibold text-slate-700 group-hover:text-indigo-600 text-xs uppercase tracking-wide">Chat Staf</div>
-                            <div class="text-[10px] text-slate-400 font-medium">Pesan dengan staf & superadmin</div>
+                            <div class="font-semibold text-slate-700 group-hover:text-red-600 text-xs uppercase tracking-wide">Kendala Internet</div>
+                            <div class="text-[10px] text-slate-400 font-medium">Laporkan masalah internet</div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-slate-300 group-hover:text-red-400 text-[10px]"></i>
+                    </button>
+                    
+                    <!-- CHAT CUST SERVICE -->
+                    <button onclick="switchPage('page-cust-chat-list')" 
+                            class="group w-full flex items-center p-3.5 bg-slate-50 hover:bg-indigo-50/40 border border-slate-200 hover:border-indigo-300 rounded-xl transition-all text-left cursor-pointer active:scale-[0.98]">
+                        <div class="w-9 h-9 rounded-xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform shadow-sm">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+                        <div class="ml-3 flex-1">
+                            <div class="font-semibold text-slate-700 group-hover:text-indigo-600 text-xs uppercase tracking-wide">Chat Cust Service</div>
+                            <div class="text-[10px] text-slate-400 font-medium">Hubungi tim support</div>
                         </div>
                         <i class="fa-solid fa-chevron-right text-slate-300 group-hover:text-indigo-400 text-[10px]"></i>
                     </button>
@@ -524,8 +560,9 @@
 <!-- ===== RAISYA PRODUCTION → BLOK 5 - RAISYA DECORATION v2.0 - PANEL ADMIN / PENGATURAN ===== -->
 <!-- ============================================================
      BLOK 5 R2 – RAISYA DECORATION v2.1 – PANEL ADMIN / PENGATURAN
-     (Modal: Profil, Password, Tema, Backup, Reset, Manajemen Akun, Tentang)
-     REVISI: Role Pelanggan & Customer Service
+     (Modal: Profil, Password, Tema, Backup, Reset, Manajemen Akun,
+      Kelola Informasi, Tentang)
+     SUPER LENGKAP – Role Pelanggan & CS, Tab Informasi
      ============================================================ -->
 
 <!-- MODAL PENGATURAN -->
@@ -540,7 +577,7 @@
                 </div>
                 <div>
                     <h3 class="font-bold text-base">Panel Pengaturan</h3>
-                    <p class="text-[10px] text-slate-300">Kelola profil, backup, akun, dan sistem</p>
+                    <p class="text-[10px] text-slate-300">Kelola profil, akun, informasi, dan sistem</p>
                 </div>
             </div>
             <button onclick="closeSettingsModal()" class="w-8 h-8 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center cursor-pointer transition-all text-white">
@@ -587,6 +624,12 @@
                 <button onclick="switchSettingsTab('manajemen')" id="stab-manajemen" 
                         class="flex-1 text-center py-2 text-[11px] font-bold rounded-lg transition-all text-slate-500 hover:text-slate-700 admin-only">
                     <i class="fa-solid fa-users-gear mr-1"></i> Akun
+                </button>
+                
+                <!-- Tab Kelola Informasi (hanya superadmin) -->
+                <button onclick="switchSettingsTab('info')" id="stab-info" 
+                        class="flex-1 text-center py-2 text-[11px] font-bold rounded-lg transition-all text-slate-500 hover:text-slate-700 admin-only">
+                    <i class="fa-solid fa-bullhorn mr-1"></i> Info
                 </button>
                 
                 <!-- Tab Tentang (selalu ada) -->
@@ -849,9 +892,47 @@
                         <i class="fa-solid fa-list-ul text-indigo-500"></i> Daftar Akun
                         <span id="akun-count-badge" class="bg-indigo-100 text-indigo-600 px-2 py-0.5 rounded-full text-[9px]">0</span>
                     </h4>
-                    <div id="akun-list-container" class="space-y-2 max-h-[300px] overflow-y-auto pr-1">
+                    <!-- TAB FILTER ROLE -->
+                    <div class="flex bg-slate-100 rounded-lg p-1 mb-2">
+                        <button onclick="renderAkunList('all')" id="filter-akun-all" class="flex-1 text-center py-1.5 text-[10px] font-bold rounded-md bg-white text-indigo-600 shadow-sm">Semua</button>
+                        <button onclick="renderAkunList('pelanggan')" id="filter-akun-pelanggan" class="flex-1 text-center py-1.5 text-[10px] font-bold text-slate-500 hover:bg-slate-200/50 rounded-md">Pelanggan</button>
+                        <button onclick="renderAkunList('customer_service')" id="filter-akun-cs" class="flex-1 text-center py-1.5 text-[10px] font-bold text-slate-500 hover:bg-slate-200/50 rounded-md">CS</button>
+                        <button onclick="renderAkunList('staf_internet')" id="filter-akun-staf" class="flex-1 text-center py-1.5 text-[10px] font-bold text-slate-500 hover:bg-slate-200/50 rounded-md">Staf</button>
+                    </div>
+                    <div id="akun-list-container" class="space-y-2 max-h-[250px] overflow-y-auto pr-1">
                         <div class="text-center text-slate-400 py-4 text-xs italic">Memuat data akun...</div>
                     </div>
+                </div>
+            </div>
+
+            <!-- TAB: KELOLA INFORMASI (hanya superadmin) -->
+            <div id="stab-content-info" class="hidden space-y-4 animate-fadeIn">
+                <!-- Edit Informasi Masal -->
+                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-3">
+                    <h4 class="text-xs font-bold text-slate-500 uppercase flex items-center gap-2">
+                        <i class="fa-solid fa-bullhorn text-amber-500"></i> Informasi Masal (Semua Pelanggan & CS)
+                    </h4>
+                    <textarea id="admin-info-masal" rows="4" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 resize-none" placeholder="Tulis informasi masal..."></textarea>
+                    <button onclick="saveInfoMasal()" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer transition-all active:scale-95">
+                        <i class="fa-solid fa-floppy-disk mr-1"></i> Simpan Informasi Masal
+                    </button>
+                </div>
+
+                <!-- Edit Informasi Pribadi per Pengguna -->
+                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-3">
+                    <h4 class="text-xs font-bold text-slate-500 uppercase flex items-center gap-2">
+                        <i class="fa-solid fa-envelope text-blue-500"></i> Informasi Pribadi (End-to-End per Pengguna)
+                    </h4>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Pilih Pengguna</label>
+                        <select id="admin-select-pelanggan" onchange="loadInfoPribadiForAdmin()" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
+                            <option value="">-- Pilih Pengguna --</option>
+                        </select>
+                    </div>
+                    <textarea id="admin-info-pribadi" rows="4" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 resize-none" placeholder="Tulis pesan pribadi..."></textarea>
+                    <button onclick="saveInfoPribadi()" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer transition-all active:scale-95">
+                        <i class="fa-solid fa-floppy-disk mr-1"></i> Simpan Pesan Pribadi
+                    </button>
                 </div>
             </div>
 
@@ -1678,7 +1759,7 @@
      BLOK 11 - RAISYA DECORATION v2.1 - JAVASCRIPT PART 1
      (PWA, Toast, Theme, Multi-User Auth, Navigation, Settings,
       Backup, Reset, Family CRUD, Database, Manajemen Akun)
-     SUPER LENGKAP + DATA DEFAULT + ROLE BARU (PELANGGAN & CS)
+     SUPER LENGKAP + DATA DEFAULT + ROLE BARU (PELANGGAN, CS, ADMIN_INTERNET2)
      ============================================================ -->
     <script>
         // ========== PWA SERVICE WORKER (OFFLINE CACHE) ==========
@@ -1862,7 +1943,17 @@
             if (target) { target.classList.remove('hidden'); target.classList.add('page-transition'); }
             if (pageId === 'page-menu' && deferredPrompt) document.getElementById('pwa-install-banner').classList.remove('hidden');
             if (pageId === 'page-menu' && currentUser) {
+                const isSuperadmin = currentUser.role === 'superadmin' || currentUser.role === 'admin_internet2';
                 const isStafInternet = currentUser.role === 'staf_internet';
+                const isPelangganOrCS = currentUser.role === 'pelanggan' || currentUser.role === 'customer_service';
+
+                // Tampilkan/sembunyikan section berdasarkan role
+                document.getElementById('section-stats').style.display = (isSuperadmin || currentUser.role.startsWith('staf_')) ? '' : 'none';
+                document.getElementById('section-menu-laporan').style.display = (isSuperadmin || currentUser.role.startsWith('staf_')) ? '' : 'none';
+                document.getElementById('section-menu-cs').style.display = isPelangganOrCS ? '' : 'none';
+                document.getElementById('section-papan-info').style.display = (isPelangganOrCS || currentUser.role.startsWith('staf_')) ? '' : 'none';
+
+                // Role-based menu visibility untuk tombol individual
                 const allBizButtons = [
                     { key: 'GHOST', selector: "button[onclick=\"openBizLogin('GHOST')\"]" },
                     { key: 'PLAYGROUND', selector: "button[onclick=\"openBizLogin('PLAYGROUND')\"]" },
@@ -1871,8 +1962,11 @@
                     { key: 'REKAP', selector: "button[onclick=\"openBizLogin('REKAP')\"]" }
                 ];
                 const familyBtn = document.querySelector("button[onclick=\"openFamilyReportConf()\"]");
-                if (familyBtn) familyBtn.style.display = '';
-                allBizButtons.forEach(b => { const el = document.querySelector(b.selector); if (el) el.style.display = ''; });
+                
+                if (isSuperadmin || currentUser.role.startsWith('staf_')) {
+                    if (familyBtn) familyBtn.style.display = '';
+                    allBizButtons.forEach(b => { const el = document.querySelector(b.selector); if (el) el.style.display = ''; });
+                }
                 if (isStafInternet) {
                     if (familyBtn) familyBtn.style.display = 'none';
                     allBizButtons.forEach(b => {
@@ -1881,26 +1975,33 @@
                         else if (el && b.key === 'INTERNET') el.style.display = '';
                     });
                 }
-                // Menu untuk pelanggan & customer service
-                const isPelangganOrCS = currentUser && (currentUser.role === 'pelanggan' || currentUser.role === 'customer_service');
-                const kendalaBtn = document.querySelector("button[onclick=\"switchPage('page-kendala')\"]");
-                const custChatBtn = document.querySelector("button[onclick=\"switchPage('page-cust-chat-list')\"]");
                 if (isPelangganOrCS) {
                     if (familyBtn) familyBtn.style.display = 'none';
                     allBizButtons.forEach(b => { const el = document.querySelector(b.selector); if (el) el.style.display = 'none'; });
-                    if (kendalaBtn) kendalaBtn.style.display = '';
-                    if (custChatBtn) custChatBtn.style.display = '';
                 }
-            }
-            if (pageId === 'page-menu') {
-                updateMenuStats();
-                if (currentUser && (currentUser.role === 'pelanggan' || currentUser.role === 'customer_service')) loadPapanInfo();
+
+                // Papan informasi: load konten
+                if (document.getElementById('section-papan-info').style.display !== 'none') {
+                    loadPapanInfo();
+                }
+
+                // Tombol pengaturan hanya untuk superadmin (bukan admin_internet2)
+                const settingsBtn = document.querySelector("button[onclick=\"openSettingsModal()\"]");
+                if (settingsBtn) {
+                    settingsBtn.style.display = (currentUser.role === 'superadmin') ? '' : 'none';
+                }
+
+                // Update stats
+                if (document.getElementById('section-stats').style.display !== 'none') {
+                    updateMenuStats();
+                }
             }
             const container = document.getElementById('main-container');
             const widePages = ['page-family-report','page-biz-report','page-internet-report','page-all-rekap'];
             if (widePages.includes(pageId)) { container.classList.remove('max-w-md'); container.classList.add('max-w-xl'); }
             else { container.classList.remove('max-w-xl'); container.classList.add('max-w-md'); }
         }
+
         function updateMenuStats() {
             document.getElementById('stat-total-family').textContent = reportData.length;
             let totalBiz = 0; Object.keys(bizDatabases).forEach(k => { totalBiz += bizDatabases[k].IN.length + bizDatabases[k].OUT.length; });
@@ -1959,17 +2060,33 @@
         }
 
         // ========== SETTINGS MODAL ==========
-        function openSettingsModal() { if (!currentUser) return; document.getElementById('settingsModal').classList.remove('hidden'); const isSuperadmin = currentUser.role === 'superadmin'; document.querySelectorAll('.admin-only').forEach(el => { el.style.display = isSuperadmin ? '' : 'none'; }); switchSettingsTab('profil'); loadSettingsData(); }
+        function openSettingsModal() {
+            if (!currentUser || currentUser.role !== 'superadmin') return; // Hanya superadmin
+            document.getElementById('settingsModal').classList.remove('hidden');
+            document.querySelectorAll('.admin-only').forEach(el => { el.style.display = ''; });
+            switchSettingsTab('profil');
+            loadSettingsData();
+        }
         function closeSettingsModal() { document.getElementById('settingsModal').classList.add('hidden'); }
         function switchSettingsTab(tab) {
-            const tabs = ['profil','password','tema','backup','reset','manajemen','tentang'];
+            const tabs = ['profil','password','tema','backup','reset','manajemen','info','tentang'];
             tabs.forEach(t => {
                 const btn = document.getElementById('stab-'+t); const content = document.getElementById('stab-content-'+t);
                 if (!btn || !content) return;
                 if (t === tab) { btn.className = btn.className.replace(/text-slate-500/g,'text-rose-600').replace(/bg-white/g,'bg-white'); btn.classList.add('bg-white','text-rose-600','shadow-sm'); content.classList.remove('hidden'); }
                 else { btn.className = btn.className.replace(/text-rose-600/g,'text-slate-500').replace(/bg-white/g,''); btn.classList.add('text-slate-500','hover:text-slate-700'); content.classList.add('hidden'); }
             });
-            if (tab === 'manajemen') renderAkunList();
+            if (tab === 'manajemen') renderAkunList('all');
+            if (tab === 'info') {
+                // Isi dropdown pengguna untuk info pribadi
+                const select = document.getElementById('admin-select-pelanggan');
+                if (select) {
+                    const allUsers = users.filter(u => u.role === 'pelanggan' || u.role === 'customer_service' || u.role.startsWith('staf_'));
+                    select.innerHTML = '<option value="">-- Pilih Pengguna --</option>' + allUsers.map(u => `<option value="${u.username}">${u.nama} (${u.role})</option>`).join('');
+                }
+                // Load info masal
+                document.getElementById('admin-info-masal').value = papanInfo?.masal || '';
+            }
         }
         function loadSettingsData() {
             if (!currentUser) return;
@@ -2048,11 +2165,12 @@
                           role === 'staf_raisya_dec' ? 'Staf Raisya Decoration' :
                           role === 'staf_internet' ? 'Staf Internet' :
                           role === 'pelanggan' ? 'Pelanggan' :
-                          role === 'customer_service' ? 'Customer Service' : jabatan
+                          role === 'customer_service' ? 'Customer Service' :
+                          role === 'admin_internet2' ? 'Admin Internet 2' : jabatan
             };
             if (idx === -1) { users.push(newUser); showToast('✅ Akun baru berhasil ditambahkan!','success'); }
             else { users[idx] = newUser; showToast('✅ Akun berhasil diperbarui!','success'); }
-            saveUsers(); resetAkunForm(); renderAkunList();
+            saveUsers(); resetAkunForm(); renderAkunList('all');
         }
         function editAkun(index) {
             if (!currentUser || currentUser.role !== 'superadmin') return;
@@ -2076,14 +2194,14 @@
             if (!currentUser || currentUser.role !== 'superadmin') return;
             const u = users[index];
             if (!u || u.role === 'superadmin') { showToast('❌ Akun superadmin tidak bisa dihapus!','error'); return; }
-            if (confirm(`Hapus akun ${u.nama}?`)) { users.splice(index, 1); saveUsers(); renderAkunList(); showToast('🗑 Akun dihapus!','warning'); }
+            if (confirm(`Hapus akun ${u.nama}?`)) { users.splice(index, 1); saveUsers(); renderAkunList('all'); showToast('🗑 Akun dihapus!','warning'); }
         }
         function toggleSuspendAccount(index) {
             if (!currentUser || currentUser.role !== 'superadmin') return;
             const u = users[index];
             if (!u || u.role === 'superadmin') { showToast('❌ Akun superadmin tidak bisa disuspend!','error'); return; }
             u.status = u.status === 'aktif' ? 'suspend' : 'aktif';
-            saveUsers(); renderAkunList();
+            saveUsers(); renderAkunList('all');
             showToast(`✅ Akun ${u.nama} ${u.status === 'aktif' ? 'diaktifkan' : 'disuspend'}.`,'success');
         }
         function resetAkunForm() {
@@ -2101,13 +2219,14 @@
             document.getElementById('form-akun-title').innerText = 'Tambah Akun Baru';
             document.getElementById('btn-batal-edit-akun').classList.add('hidden');
         }
-        function renderAkunList() {
+        function renderAkunList(filterRole = 'all') {
             const container = document.getElementById('akun-list-container');
             if (!container) return;
             container.innerHTML = '';
             let count = 0;
             users.forEach((u, i) => {
                 if (u.role === 'superadmin') return;
+                if (filterRole !== 'all' && u.role !== filterRole) return;
                 count++;
                 const statusBadge = u.status === 'aktif' 
                     ? '<span class="bg-emerald-100 text-emerald-700 text-[9px] font-bold px-1.5 py-0.5 rounded">AKTIF</span>'
@@ -2120,7 +2239,7 @@
                                 ${statusBadge}
                                 <span class="text-[9px] text-slate-400">@${u.username}</span>
                             </div>
-                            <p class="text-[10px] text-slate-400 mt-0.5">${u.jabatan} | ${u.hp || '-'}</p>
+                            <p class="text-[10px] text-slate-400 mt-0.5">${u.jabatan} | ${u.role} | ${u.hp || '-'}</p>
                         </div>
                         <div class="flex gap-1 ml-2">
                             <button onclick="editAkun(${i})" class="w-7 h-7 bg-amber-50 hover:bg-amber-100 text-amber-600 rounded-lg text-xs flex items-center justify-center"><i class="fa-solid fa-pen"></i></button>
@@ -2130,7 +2249,7 @@
                     </div>`;
             });
             document.getElementById('akun-count-badge').textContent = count;
-            if (count === 0) container.innerHTML = '<div class="text-center text-slate-400 py-4 text-xs italic">Belum ada akun staf.</div>';
+            if (count === 0) container.innerHTML = '<div class="text-center text-slate-400 py-4 text-xs italic">Belum ada akun.</div>';
         }
 
         // ========== BACKUP & RESTORE ==========
@@ -2277,6 +2396,40 @@
             }
         }
 
+        // ========== PAPAN INFORMASI (dari Blok 19) ==========
+        let papanInfo = JSON.parse(localStorage.getItem('raisya_papan_info')) || { masal: '', pribadi: {} };
+        function savePapanInfo() { localStorage.setItem('raisya_papan_info', JSON.stringify(papanInfo)); }
+        function loadPapanInfo() {
+            if (!currentUser) return;
+            const masalEl = document.getElementById('info-masal-content');
+            const pribadiEl = document.getElementById('info-pribadi-content');
+            if (masalEl) masalEl.textContent = papanInfo.masal || 'Tidak ada informasi.';
+            if (pribadiEl) pribadiEl.textContent = (papanInfo.pribadi && papanInfo.pribadi[currentUser.username]) || 'Tidak ada pesan pribadi.';
+        }
+        function loadInfoPribadiForAdmin() {
+            const select = document.getElementById('admin-select-pelanggan');
+            if (!select) return;
+            const username = select.value;
+            document.getElementById('admin-info-pribadi').value = (papanInfo.pribadi && papanInfo.pribadi[username]) || '';
+        }
+        function saveInfoMasal() {
+            const textarea = document.getElementById('admin-info-masal');
+            if (!textarea) return;
+            papanInfo.masal = textarea.value;
+            savePapanInfo();
+            showToast('✅ Informasi masal disimpan!', 'success');
+        }
+        function saveInfoPribadi() {
+            const select = document.getElementById('admin-select-pelanggan');
+            if (!select) return;
+            const username = select.value;
+            if (!username) { showToast('⚠️ Pilih pengguna dulu!', 'error'); return; }
+            if (!papanInfo.pribadi) papanInfo.pribadi = {};
+            papanInfo.pribadi[username] = document.getElementById('admin-info-pribadi').value;
+            savePapanInfo();
+            showToast('✅ Pesan pribadi disimpan!', 'success');
+        }
+
         // ========== INIT ==========
         (function init() {
             loadTheme();
@@ -2319,10 +2472,9 @@
                 ];
                 localStorage.setItem('net_bills', JSON.stringify(netDatabases.tagihan));
             }
-            // ========== AKHIR DATA DEFAULT ==========
 
             console.log('✅ Raisya Decoration v2.1 - Part 1 Siap!');
-            console.log('👤 Multi-User System Active (Superadmin, Staf, Pelanggan, CS)');
+            console.log('👤 Multi-User: Superadmin, Admin Internet2, Staf, Pelanggan, CS');
             console.log('💾 Database: 10 Array Internet + Data Default');
             console.log('📱 PWA, Auth, Settings, Backup, Family CRUD loaded');
         })();
@@ -3949,10 +4101,12 @@
 
 <!-- ===== RAISYA PRODUCTION → =================      BLOK 18 - RAISYA DECORATION v2.1 - PAPAN INFORMASI + ADMIN ===== -->
 <!-- ============================================================
-     BLOK 18 - RAISYA DECORATION v2.1 - PAPAN INFORMASI + ADMIN
+     BLOK 18 - RAISYA DECORATION v2.1 - PAPAN INFORMASI + ADMIN KELOLA
+     (Informasi Masal, Informasi Pribadi End-to-End,
+      Admin Internet 2 Menu Laporan Lengkap)
      ============================================================ -->
-            <!-- BAGIAN INFORMASI DI HALAMAN MENU PELANGGAN -->
-            <div id="section-papan-info" class="space-y-4 pt-2">
+            <!-- ========== PAPAN INFORMASI DI HALAMAN MENU (HANYA PELANGGAN/CS/STAF) ========== -->
+            <div id="section-papan-info" class="space-y-3 hidden">
                 <!-- PAPAN INFORMASI MASAL -->
                 <div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-4">
                     <h3 class="text-xs font-extrabold text-amber-700 uppercase flex items-center gap-2 mb-2">
@@ -3963,7 +4117,7 @@
                     </div>
                 </div>
 
-                <!-- PAPAN INFORMASI PRIBADI -->
+                <!-- PAPAN INFORMASI PRIBADI (END-TO-END) -->
                 <div class="bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 rounded-2xl p-4">
                     <h3 class="text-xs font-extrabold text-blue-700 uppercase flex items-center gap-2 mb-2">
                         <i class="fa-solid fa-envelope text-blue-500"></i> Pesan Untuk Anda
@@ -3974,8 +4128,9 @@
                 </div>
             </div>
 
-            <!-- HALAMAN ADMIN UNTUK KELOLA PAPAN INFORMASI -->
+            <!-- ========== HALAMAN ADMIN KELOLA INFORMASI (SUPERADMIN) ========== -->
             <div id="page-admin-info" class="hidden space-y-4 page-transition">
+                <!-- HEADER -->
                 <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                     <div>
                         <span class="px-2 py-0.5 text-[9px] font-extrabold bg-amber-100 text-amber-700 rounded-full uppercase tracking-wider">Admin</span>
@@ -3988,41 +4143,65 @@
                     </button>
                 </div>
 
-                <!-- Edit Informasi Masal -->
+                <!-- EDIT INFORMASI MASAL -->
                 <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 space-y-3">
                     <h4 class="text-xs font-bold text-slate-500 uppercase flex items-center gap-2">
-                        <i class="fa-solid fa-bullhorn text-amber-500"></i> Informasi Masal (Semua Pelanggan)
+                        <i class="fa-solid fa-bullhorn text-amber-500"></i> Informasi Masal (Semua Pelanggan, CS, & Staf)
                     </h4>
-                    <textarea id="admin-info-masal" rows="4" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 resize-none" placeholder="Tulis informasi masal..."></textarea>
-                    <button onclick="saveInfoMasal()" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer transition-all active:scale-95">
-                        <i class="fa-solid fa-floppy-disk mr-1"></i> Simpan Informasi Masal
-                    </button>
+                    <textarea id="admin-info-masal" rows="5" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 resize-none" placeholder="Tulis informasi masal..."></textarea>
+                    <div class="flex space-x-2">
+                        <button onclick="saveInfoMasal()" class="w-1/2 bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer transition-all active:scale-95 shadow-md">
+                            <i class="fa-solid fa-floppy-disk mr-1"></i> Simpan
+                        </button>
+                        <button onclick="deleteInfoMasal()" class="w-1/2 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer transition-all active:scale-95 shadow-md">
+                            <i class="fa-solid fa-trash mr-1"></i> Hapus Informasi Masal
+                        </button>
+                    </div>
                 </div>
 
-                <!-- Edit Informasi Pribadi per Pelanggan -->
+                <!-- EDIT INFORMASI PRIBADI PER PENGGUNA -->
                 <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 space-y-3">
                     <h4 class="text-xs font-bold text-slate-500 uppercase flex items-center gap-2">
-                        <i class="fa-solid fa-envelope text-blue-500"></i> Informasi Pribadi (Per Pelanggan)
+                        <i class="fa-solid fa-envelope text-blue-500"></i> Informasi Pribadi (End-to-End per Pengguna)
                     </h4>
                     <div>
-                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Pilih Pelanggan</label>
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Pilih Pengguna</label>
                         <select id="admin-select-pelanggan" onchange="loadInfoPribadiForAdmin()" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
-                            <option value="">-- Pilih Pelanggan --</option>
+                            <option value="">-- Pilih Pengguna --</option>
                         </select>
                     </div>
-                    <textarea id="admin-info-pribadi" rows="4" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 resize-none" placeholder="Tulis pesan pribadi..."></textarea>
-                    <button onclick="saveInfoPribadi()" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer transition-all active:scale-95">
-                        <i class="fa-solid fa-floppy-disk mr-1"></i> Simpan Pesan Pribadi
+                    <textarea id="admin-info-pribadi" rows="5" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 resize-none" placeholder="Tulis pesan pribadi..."></textarea>
+                    <div class="flex space-x-2">
+                        <button onclick="saveInfoPribadi()" class="w-1/2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer transition-all active:scale-95 shadow-md">
+                            <i class="fa-solid fa-floppy-disk mr-1"></i> Simpan
+                        </button>
+                        <button onclick="deleteInfoPribadi()" class="w-1/2 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer transition-all active:scale-95 shadow-md">
+                            <i class="fa-solid fa-trash mr-1"></i> Hapus Pesan Pribadi
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TOMBOL COPY HTML -->
+                <div style="text-align:center;margin:30px 0;">
+                    <button class="btn btn-lg" style="background:var(--accent-primary);color:#fff;" onclick="downloadCurrentPage('raisya_admin_info.html')">
+                        ⬇️ Copy HTML (Download Halaman)
                     </button>
+                    <p style="font-size:0.8rem;color:var(--text-muted);margin-top:8px;">Simpan halaman ini sebagai file .html untuk offline.</p>
                 </div>
             </div>
+
+            <!-- ========== MENU LAPORAN BISNIS LENGKAP (ADMIN INTERNET 2) ========== -->
+            <!-- Menu ini sama persis dengan superadmin, berdiri sendiri -->
+            <!-- Tidak perlu HTML terpisah karena menggunakan section-menu-laporan yang sama -->
+            <!-- Yang membedakan adalah role 'admin_internet2' di Blok 11 -->
 <!-- END BLOK 18 -->
 
 
 <!-- ===== RAISYA PRODUCTION → BLOK 19 - RAISYA DECORATION v2.1 - JAVASCRIPT FITUR BARU ===== -->
 <!-- ============================================================
      BLOK 19 - RAISYA DECORATION v2.1 - JAVASCRIPT FITUR BARU
-     (Kendala, Cust Service Chat, Papan Informasi, Notifikasi)
+     (Kendala, Cust Service Chat, Notifikasi, Papan Informasi,
+      Admin Internet 2)
      ============================================================ -->
 <script>
     // ========== DATABASE FITUR BARU ==========
@@ -4030,7 +4209,7 @@
     let custChatData = JSON.parse(localStorage.getItem('raisya_cust_chats')) || {};
     let papanInfo = JSON.parse(localStorage.getItem('raisya_papan_info')) || {
         masal: '',
-        pribadi: {}   // { "username": "pesan untuk dia" }
+        pribadi: {}
     };
 
     function saveKendala() { localStorage.setItem('raisya_kendala', JSON.stringify(kendalaData)); }
@@ -4057,7 +4236,7 @@
     }
 
     // ========== KENDALA INTERNET ==========
-    let kendalaFotoData = null; // base64
+    let kendalaFotoData = null;
 
     function previewKendalaFoto(input) {
         const file = input.files[0];
@@ -4125,8 +4304,7 @@
     let activeCustContact = null;
 
     function getCustContacts() {
-        // Tampilkan admin + staf yang aktif
-        return users.filter(u => u.role === 'superadmin' || (u.role !== 'superadmin' && u.status === 'aktif'));
+        return users.filter(u => u.role === 'superadmin' || u.role === 'admin_internet2' || u.role === 'customer_service' || (u.role.startsWith('staf_') && u.status === 'aktif'));
     }
 
     function renderCustContactList() {
@@ -4145,7 +4323,7 @@
                 <div onclick="openCustConversation('${c.username}')" class="bg-white border border-slate-200 p-3 rounded-xl cursor-pointer hover:bg-indigo-50/30 flex items-center gap-3">
                     <div class="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold">${c.nama.charAt(0)}</div>
                     <div class="flex-1">
-                        <h4 class="text-xs font-bold text-slate-700">${c.nama} <span class="text-[9px] text-slate-400">${c.role === 'superadmin' ? 'Admin' : (c.jabatan || 'Staf')}</span></h4>
+                        <h4 class="text-xs font-bold text-slate-700">${c.nama} <span class="text-[9px] text-slate-400">${c.role === 'superadmin' ? 'Admin' : (c.role === 'admin_internet2' ? 'Admin Internet 2' : (c.jabatan || 'Staf'))}</span></h4>
                         <p class="text-[10px] text-slate-400">${last ? last.text.substring(0, 30) : 'Belum ada pesan'}</p>
                     </div>
                 </div>
@@ -4157,7 +4335,7 @@
         activeCustContact = username;
         const contact = users.find(u => u.username === username);
         document.getElementById('cust-contact-name').textContent = contact ? contact.nama : username;
-        document.getElementById('cust-contact-id').textContent = contact ? 'ID: ' + (contact.jabatan || 'Staf') : '';
+        document.getElementById('cust-contact-id').textContent = contact ? 'ID: ' + (contact.jabatan || contact.role) : '';
         switchPage('page-cust-conversation');
         renderCustMessages();
     }
@@ -4199,7 +4377,7 @@
         input.value = '';
         renderCustMessages();
 
-        // 🔔 Notifikasi ke lawan bicara
+        // Notifikasi ke lawan bicara
         if (activeCustContact !== currentUser.username) {
             notifyNewMessage(currentUser.nama, text);
         }
@@ -4223,10 +4401,10 @@
         }
     }
 
-    // Untuk admin
     function loadInfoPribadiForAdmin() {
         const select = document.getElementById('admin-select-pelanggan');
-        const username = select ? select.value : '';
+        if (!select) return;
+        const username = select.value;
         const textarea = document.getElementById('admin-info-pribadi');
         if (textarea) textarea.value = (papanInfo.pribadi && papanInfo.pribadi[username]) || '';
     }
@@ -4239,10 +4417,20 @@
         showToast('✅ Informasi masal disimpan!', 'success');
     }
 
+    function deleteInfoMasal() {
+        if (confirm('Hapus semua informasi masal?')) {
+            papanInfo.masal = '';
+            savePapanInfo();
+            document.getElementById('admin-info-masal').value = '';
+            showToast('🗑 Informasi masal dihapus!', 'warning');
+        }
+    }
+
     function saveInfoPribadi() {
         const select = document.getElementById('admin-select-pelanggan');
-        const username = select ? select.value : '';
-        if (!username) { showToast('⚠️ Pilih pelanggan dulu!', 'error'); return; }
+        if (!select) return;
+        const username = select.value;
+        if (!username) { showToast('⚠️ Pilih pengguna dulu!', 'error'); return; }
         if (!papanInfo.pribadi) papanInfo.pribadi = {};
         const textarea = document.getElementById('admin-info-pribadi');
         if (textarea) papanInfo.pribadi[username] = textarea.value;
@@ -4250,34 +4438,44 @@
         showToast('✅ Pesan pribadi disimpan!', 'success');
     }
 
-    // Panggil loadPapanInfo saat buka halaman menu (opsional, bisa ditambahkan di pageInit)
-    // Untuk sekarang, akan dipanggil di switchPage jika diperlukan.
+    function deleteInfoPribadi() {
+        const select = document.getElementById('admin-select-pelanggan');
+        if (!select) return;
+        const username = select.value;
+        if (!username) { showToast('⚠️ Pilih pengguna dulu!', 'error'); return; }
+        if (confirm('Hapus pesan pribadi untuk ' + username + '?')) {
+            if (papanInfo.pribadi) delete papanInfo.pribadi[username];
+            savePapanInfo();
+            document.getElementById('admin-info-pribadi').value = '';
+            showToast('🗑 Pesan pribadi dihapus!', 'warning');
+        }
+    }
+
     // ========== OVERRIDE switchPage UNTUK HALAMAN BARU ==========
     const originalSwitchPage = switchPage;
     switchPage = function(pageId, ...args) {
-        // Panggil fungsi asli
         originalSwitchPage(pageId, ...args);
         
-        // Render konten sesuai halaman baru
         if (pageId === 'page-kendala') {
             renderRiwayatKendala();
         } else if (pageId === 'page-cust-chat-list') {
             renderCustContactList();
         } else if (pageId === 'page-cust-conversation') {
-            // sudah diatur oleh openCustConversation
+            // Sudah diatur oleh openCustConversation
         } else if (pageId === 'page-admin-info') {
-            // Isi dropdown pelanggan
             const select = document.getElementById('admin-select-pelanggan');
             if (select) {
-                const pelanggan = users.filter(u => u.role !== 'superadmin' && u.role !== 'staf_internet' && u.role !== 'staf_rumah_hantu' && u.role !== 'staf_playground' && u.role !== 'staf_raisya_dec');
-                select.innerHTML = '<option value="">-- Pilih Pelanggan --</option>' + 
-                    pelanggan.map(p => `<option value="${p.username}">${p.nama} (${p.username})</option>`).join('');
+                const allUsers = users.filter(u => u.role === 'pelanggan' || u.role === 'customer_service' || u.role.startsWith('staf_'));
+                select.innerHTML = '<option value="">-- Pilih Pengguna --</option>' + allUsers.map(u => `<option value="${u.username}">${u.nama} (${u.role})</option>`).join('');
             }
+            document.getElementById('admin-info-masal').value = papanInfo.masal || '';
         } else if (pageId === 'page-menu') {
-            loadPapanInfo();
+            if (currentUser && (currentUser.role === 'pelanggan' || currentUser.role === 'customer_service' || currentUser.role.startsWith('staf_'))) {
+                loadPapanInfo();
+            }
         }
     };
 
-    console.log('✅ Blok 19 – Fitur baru (Kendala, Cust Service Chat, Papan Informasi) siap.');
+    console.log('✅ Blok 19 – Fitur baru (Kendala, Cust Service Chat, Notifikasi, Papan Informasi, Admin Internet 2) siap.');
 </script>
 <!-- END BLOK 19 -->
