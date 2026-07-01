@@ -4160,43 +4160,23 @@
 <!-- END BLOK 17 -->
 
 
-<!-- ===== RAISYA PRODUCTION → =================      BLOK 18 - RAISYA DECORATION v2.1 - PAPAN INFORMASI + ADMIN ===== -->
+<!-- ===== RAISYA PRODUCTION → BLOK 18 - RAISYA DECORATION v2.1 - HALAMAN-HALAMAN BARU ===== -->
 <!-- ============================================================
-     BLOK 18 - RAISYA DECORATION v2.1 - PAPAN INFORMASI + ADMIN KELOLA
-     (Informasi Masal, Informasi Pribadi End-to-End,
-      Admin Internet 2 Menu Laporan Lengkap)
+     BLOK 18 - RAISYA DECORATION v2.1 - HALAMAN-HALAMAN BARU
+     (Profil Pelanggan, Edit Profil, Komplain WiFi 3 Foto,
+      Admin Kelola Komplain, Menu Internet 1, Papan Informasi)
      ============================================================ -->
-            <!-- ========== PAPAN INFORMASI DI HALAMAN MENU (HANYA PELANGGAN/CS/STAF) ========== -->
-            <div id="section-papan-info" class="space-y-3 hidden">
-                <!-- PAPAN INFORMASI MASAL -->
-                <div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-4">
-                    <h3 class="text-xs font-extrabold text-amber-700 uppercase flex items-center gap-2 mb-2">
-                        <i class="fa-solid fa-bullhorn text-amber-500"></i> Informasi Penting
-                    </h3>
-                    <div id="info-masal-content" class="text-xs text-slate-600 leading-relaxed whitespace-pre-line">
-                        Tidak ada informasi.
-                    </div>
-                </div>
 
-                <!-- PAPAN INFORMASI PRIBADI (END-TO-END) -->
-                <div class="bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 rounded-2xl p-4">
-                    <h3 class="text-xs font-extrabold text-blue-700 uppercase flex items-center gap-2 mb-2">
-                        <i class="fa-solid fa-envelope text-blue-500"></i> Pesan Untuk Anda
-                    </h3>
-                    <div id="info-pribadi-content" class="text-xs text-slate-600 leading-relaxed whitespace-pre-line">
-                        Tidak ada pesan pribadi.
-                    </div>
-                </div>
-            </div>
-
-            <!-- ========== HALAMAN ADMIN KELOLA INFORMASI (SUPERADMIN) ========== -->
-            <div id="page-admin-info" class="hidden space-y-4 page-transition">
+            <!-- ========================================== -->
+            <!-- HALAMAN PROFIL PELANGGAN (LIHAT SAJA)      -->
+            <!-- ========================================== -->
+            <div id="page-profil-pelanggan" class="hidden space-y-4 page-transition">
                 <!-- HEADER -->
                 <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                     <div>
-                        <span class="px-2 py-0.5 text-[9px] font-extrabold bg-amber-100 text-amber-700 rounded-full uppercase tracking-wider">Admin</span>
+                        <span class="px-2 py-0.5 text-[9px] font-extrabold bg-blue-100 text-blue-700 rounded-full uppercase tracking-wider">Profil</span>
                         <h2 class="text-md font-bold text-slate-700 mt-0.5 flex items-center gap-2">
-                            <i class="fa-solid fa-bullhorn text-amber-500"></i> Kelola Papan Informasi
+                            <i class="fa-solid fa-id-card text-blue-500"></i> Profil Saya
                         </h2>
                     </div>
                     <button onclick="switchPage('page-menu')" class="text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-1.5 rounded-lg transition-all cursor-pointer">
@@ -4204,72 +4184,245 @@
                     </button>
                 </div>
 
-                <!-- EDIT INFORMASI MASAL -->
-                <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 space-y-3">
-                    <h4 class="text-xs font-bold text-slate-500 uppercase flex items-center gap-2">
-                        <i class="fa-solid fa-bullhorn text-amber-500"></i> Informasi Masal (Semua Pelanggan, CS, & Staf)
-                    </h4>
-                    <textarea id="admin-info-masal" rows="5" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 resize-none" placeholder="Tulis informasi masal..."></textarea>
-                    <div class="flex space-x-2">
-                        <button onclick="saveInfoMasal()" class="w-1/2 bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer transition-all active:scale-95 shadow-md">
-                            <i class="fa-solid fa-floppy-disk mr-1"></i> Simpan
-                        </button>
-                        <button onclick="deleteInfoMasal()" class="w-1/2 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer transition-all active:scale-95 shadow-md">
-                            <i class="fa-solid fa-trash mr-1"></i> Hapus Informasi Masal
-                        </button>
+                <!-- KARTU PROFIL -->
+                <div class="bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-200 rounded-2xl p-5 space-y-3">
+                    <div class="text-center">
+                        <div class="w-16 h-16 mx-auto rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-2xl shadow-lg" id="profil-avatar">👤</div>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 space-y-3 border border-blue-100">
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Nama Lengkap</label>
+                            <div id="profil-pelanggan-nama" class="text-sm font-bold text-slate-700">-</div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Nomor HP</label>
+                            <div id="profil-pelanggan-hp" class="text-sm font-bold text-slate-700">-</div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tagihan Bulanan</label>
+                            <div id="profil-pelanggan-tagihan" class="text-sm font-bold text-rose-600">Rp 0</div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tanggal Tagihan</label>
+                            <div id="profil-pelanggan-tgl" class="text-sm font-bold text-slate-700">-</div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- EDIT INFORMASI PRIBADI PER PENGGUNA -->
-                <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 space-y-3">
-                    <h4 class="text-xs font-bold text-slate-500 uppercase flex items-center gap-2">
-                        <i class="fa-solid fa-envelope text-blue-500"></i> Informasi Pribadi (End-to-End per Pengguna)
-                    </h4>
+                <!-- TOMBOL COPY HTML -->
+                <div style="text-align:center;margin:20px 0;">
+                    <button class="btn btn-lg" style="background:var(--accent-primary);color:#fff;" onclick="downloadCurrentPage('raisya_profil_pelanggan.html')">
+                        ⬇️ Copy HTML (Download Halaman)
+                    </button>
+                </div>
+            </div>
+
+            <!-- ========================================== -->
+            <!-- HALAMAN EDIT PROFIL PELANGGAN (SUPERADMIN)  -->
+            <!-- ========================================== -->
+            <div id="page-edit-profil-pelanggan" class="hidden space-y-4 page-transition">
+                <!-- HEADER -->
+                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                     <div>
-                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Pilih Pengguna</label>
-                        <select id="admin-select-pelanggan" onchange="loadInfoPribadiForAdmin()" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
-                            <option value="">-- Pilih Pengguna --</option>
+                        <span class="px-2 py-0.5 text-[9px] font-extrabold bg-indigo-100 text-indigo-700 rounded-full uppercase tracking-wider">Admin</span>
+                        <h2 class="text-md font-bold text-slate-700 mt-0.5 flex items-center gap-2">
+                            <i class="fa-solid fa-user-pen text-indigo-500"></i> Edit Profil Pelanggan
+                        </h2>
+                    </div>
+                    <button onclick="switchPage('page-menu')" class="text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-1.5 rounded-lg transition-all cursor-pointer">
+                        <i class="fa-solid fa-house mr-1"></i> Menu
+                    </button>
+                </div>
+
+                <!-- FORM EDIT -->
+                <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 space-y-3">
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Pilih Pelanggan</label>
+                        <select id="admin-select-pelanggan-edit" onchange="loadPelangganForEdit()" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500">
+                            <option value="">-- Pilih Pelanggan --</option>
                         </select>
                     </div>
-                    <textarea id="admin-info-pribadi" rows="5" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 resize-none" placeholder="Tulis pesan pribadi..."></textarea>
-                    <div class="flex space-x-2">
-                        <button onclick="saveInfoPribadi()" class="w-1/2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer transition-all active:scale-95 shadow-md">
-                            <i class="fa-solid fa-floppy-disk mr-1"></i> Simpan
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Nama Lengkap *</label>
+                        <input type="text" id="edit-pelanggan-nama" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500" placeholder="Nama lengkap">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Nomor HP *</label>
+                        <input type="text" id="edit-pelanggan-hp" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500" placeholder="08xxx">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tagihan Bulanan (Rp)</label>
+                        <input type="number" id="edit-pelanggan-tagihan" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500" placeholder="0">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tanggal Tagihan</label>
+                        <input type="date" id="edit-pelanggan-tgl" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500">
+                    </div>
+                    <div class="flex space-x-2 pt-1">
+                        <button onclick="deletePelangganData()" class="w-1/3 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer transition-all active:scale-95">
+                            <i class="fa-solid fa-trash mr-1"></i> Hapus
                         </button>
-                        <button onclick="deleteInfoPribadi()" class="w-1/2 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer transition-all active:scale-95 shadow-md">
-                            <i class="fa-solid fa-trash mr-1"></i> Hapus Pesan Pribadi
+                        <button onclick="saveEditPelanggan()" class="w-2/3 bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer transition-all active:scale-95 shadow-md">
+                            <i class="fa-solid fa-floppy-disk mr-1"></i> Simpan
                         </button>
                     </div>
                 </div>
 
                 <!-- TOMBOL COPY HTML -->
-                <div style="text-align:center;margin:30px 0;">
-                    <button class="btn btn-lg" style="background:var(--accent-primary);color:#fff;" onclick="downloadCurrentPage('raisya_admin_info.html')">
+                <div style="text-align:center;margin:20px 0;">
+                    <button class="btn btn-lg" style="background:var(--accent-primary);color:#fff;" onclick="downloadCurrentPage('raisya_edit_profil_pelanggan.html')">
                         ⬇️ Copy HTML (Download Halaman)
                     </button>
-                    <p style="font-size:0.8rem;color:var(--text-muted);margin-top:8px;">Simpan halaman ini sebagai file .html untuk offline.</p>
                 </div>
             </div>
 
-            <!-- ========== MENU LAPORAN BISNIS LENGKAP (ADMIN INTERNET 2) ========== -->
-            <!-- Menu ini sama persis dengan superadmin, berdiri sendiri -->
-            <!-- Tidak perlu HTML terpisah karena menggunakan section-menu-laporan yang sama -->
-            <!-- Yang membedakan adalah role 'admin_internet2' di Blok 11 -->
+            <!-- ========================================== -->
+            <!-- HALAMAN KOMPLAIN WIFI (PELANGGAN)           -->
+            <!-- ========================================== -->
+            <div id="page-komplain-wifi" class="hidden space-y-4 page-transition">
+                <!-- HEADER -->
+                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                    <div>
+                        <span class="px-2 py-0.5 text-[9px] font-extrabold bg-orange-100 text-orange-700 rounded-full uppercase tracking-wider">Komplain</span>
+                        <h2 class="text-md font-bold text-slate-700 mt-0.5 flex items-center gap-2">
+                            <i class="fa-solid fa-wifi text-orange-500"></i> Komplain WiFi
+                        </h2>
+                    </div>
+                    <button onclick="switchPage('page-menu')" class="text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-1.5 rounded-lg transition-all cursor-pointer">
+                        <i class="fa-solid fa-house mr-1"></i> Menu
+                    </button>
+                </div>
+
+                <!-- FORM KOMPLAIN -->
+                <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 space-y-3">
+                    <h3 class="text-xs font-bold text-slate-500 uppercase flex items-center gap-2">
+                        <i class="fa-solid fa-pen-to-square text-orange-500"></i> Form Komplain
+                    </h3>
+                    
+                    <!-- KETERANGAN -->
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Keluhan Anda *</label>
+                        <textarea id="komplain-text" rows="4" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all resize-none" placeholder="Jelaskan keluhan WiFi Anda..."></textarea>
+                    </div>
+
+                    <!-- UPLOAD 3 FOTO -->
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Lampirkan Foto (Maks 3)</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <div class="text-center">
+                                <input type="file" id="komplain-foto1" accept="image/*" onchange="previewKomplainFoto(this, 1)" class="w-full text-[10px] text-slate-500 file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-orange-50 file:text-orange-600 hover:file:bg-orange-100 transition-all">
+                                <img id="preview-komplain1" class="mt-2 rounded-lg hidden max-h-24 mx-auto border border-slate-200">
+                                <button onclick="removeKomplainFoto(1)" id="btn-remove-foto1" class="hidden mt-1 text-[9px] text-red-500 hover:text-red-700 cursor-pointer">
+                                    <i class="fa-solid fa-xmark mr-1"></i> Hapus
+                                </button>
+                            </div>
+                            <div class="text-center">
+                                <input type="file" id="komplain-foto2" accept="image/*" onchange="previewKomplainFoto(this, 2)" class="w-full text-[10px] text-slate-500 file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-orange-50 file:text-orange-600 hover:file:bg-orange-100 transition-all">
+                                <img id="preview-komplain2" class="mt-2 rounded-lg hidden max-h-24 mx-auto border border-slate-200">
+                                <button onclick="removeKomplainFoto(2)" id="btn-remove-foto2" class="hidden mt-1 text-[9px] text-red-500 hover:text-red-700 cursor-pointer">
+                                    <i class="fa-solid fa-xmark mr-1"></i> Hapus
+                                </button>
+                            </div>
+                            <div class="text-center">
+                                <input type="file" id="komplain-foto3" accept="image/*" onchange="previewKomplainFoto(this, 3)" class="w-full text-[10px] text-slate-500 file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-orange-50 file:text-orange-600 hover:file:bg-orange-100 transition-all">
+                                <img id="preview-komplain3" class="mt-2 rounded-lg hidden max-h-24 mx-auto border border-slate-200">
+                                <button onclick="removeKomplainFoto(3)" id="btn-remove-foto3" class="hidden mt-1 text-[9px] text-red-500 hover:text-red-700 cursor-pointer">
+                                    <i class="fa-solid fa-xmark mr-1"></i> Hapus
+                                </button>
+                            </div>
+                        </div>
+                        <p class="text-[9px] text-slate-400 mt-1">
+                            <i class="fa-solid fa-circle-info mr-1"></i> Maksimal 3 foto, masing-masing ≤ 2MB.
+                        </p>
+                    </div>
+
+                    <!-- TOMBOL KIRIM -->
+                    <button onclick="kirimKomplainWifi()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 rounded-xl text-xs transition-all active:scale-95 cursor-pointer shadow-md flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> Kirim Komplain
+                    </button>
+                </div>
+
+                <!-- RIWAYAT KOMPLAIN -->
+                <div class="pt-2 border-t border-slate-200">
+                    <h4 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-clock-rotate-left text-orange-400"></i> Riwayat Komplain Saya
+                        <span id="komplain-count-badge" class="bg-orange-100 text-orange-600 px-2 py-0.5 rounded-full text-[9px]">0</span>
+                    </h4>
+                    <div id="riwayat-komplain" class="space-y-2 max-h-[300px] overflow-y-auto pr-1">
+                        <div class="text-center text-slate-400 py-4 text-xs italic">Belum ada komplain.</div>
+                    </div>
+                </div>
+
+                <!-- TOMBOL COPY HTML -->
+                <div style="text-align:center;margin:20px 0;">
+                    <button class="btn btn-lg" style="background:var(--accent-primary);color:#fff;" onclick="downloadCurrentPage('raisya_komplain_wifi.html')">
+                        ⬇️ Copy HTML (Download Halaman)
+                    </button>
+                </div>
+            </div>
+
+            <!-- ========================================== -->
+            <!-- HALAMAN ADMIN KELOLA KOMPLAIN               -->
+            <!-- ========================================== -->
+            <div id="page-admin-komplain" class="hidden space-y-4 page-transition">
+                <!-- HEADER -->
+                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                    <div>
+                        <span class="px-2 py-0.5 text-[9px] font-extrabold bg-orange-100 text-orange-700 rounded-full uppercase tracking-wider">Admin</span>
+                        <h2 class="text-md font-bold text-slate-700 mt-0.5 flex items-center gap-2">
+                            <i class="fa-solid fa-headset text-orange-500"></i> Kelola Komplain WiFi
+                        </h2>
+                    </div>
+                    <button onclick="switchPage('page-menu')" class="text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-1.5 rounded-lg transition-all cursor-pointer">
+                        <i class="fa-solid fa-house mr-1"></i> Menu
+                    </button>
+                </div>
+
+                <!-- DAFTAR KOMPLAIN -->
+                <div class="space-y-1.5">
+                    <h3 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider flex items-center gap-2 px-1">
+                        <i class="fa-solid fa-list-check text-orange-400"></i> Daftar Komplain
+                        <span id="admin-komplain-count" class="bg-orange-100 text-orange-600 px-2 py-0.5 rounded-full text-[9px]">0</span>
+                    </h3>
+                    <div id="admin-komplain-list" class="space-y-3 max-h-[400px] overflow-y-auto pr-1">
+                        <div class="text-center text-slate-400 py-6 text-xs italic">Belum ada komplain masuk.</div>
+                    </div>
+                </div>
+
+                <!-- TOMBOL COPY HTML -->
+                <div style="text-align:center;margin:20px 0;">
+                    <button class="btn btn-lg" style="background:var(--accent-primary);color:#fff;" onclick="downloadCurrentPage('raisya_admin_komplain.html')">
+                        ⬇️ Copy HTML (Download Halaman)
+                    </button>
+                </div>
+            </div>
+
+            <!-- ========================================== -->
+            <!-- MENU INTERNET 1 (ADMIN INTERNET 1)          -->
+            <!-- Menggunakan halaman yang sama dengan        -->
+            <!-- page-internet-report (Blok 9)               -->
+            <!-- Tidak perlu HTML terpisah                   -->
+            <!-- ========================================== -->
 <!-- END BLOK 18 -->
 
 
 <!-- ===== RAISYA PRODUCTION → BLOK 19 - RAISYA DECORATION v2.1 - JAVASCRIPT FITUR BARU ===== -->
 <!-- ============================================================
      BLOK 19 - RAISYA DECORATION v2.1 - JAVASCRIPT FITUR BARU
-     (Kendala Internet, Chat Cust Service, Notifikasi)
+     (Komplain WiFi 3 Foto, Profil Pelanggan, Chat Cust Service,
+      Papan Informasi, Notifikasi, Admin Internet 1)
      ============================================================ -->
 <script>
     // ========== DATABASE FITUR BARU ==========
-    let kendalaData = JSON.parse(localStorage.getItem('raisya_kendala')) || [];
+    let komplainData = JSON.parse(localStorage.getItem('raisya_komplain')) || [];
+    let pelangganData = JSON.parse(localStorage.getItem('raisya_pelanggan_data')) || {};
     let custChatData = JSON.parse(localStorage.getItem('raisya_cust_chats')) || {};
+    let papanInfo = JSON.parse(localStorage.getItem('raisya_papan_info')) || { masal: '', pribadi: {} };
 
-    function saveKendala() { localStorage.setItem('raisya_kendala', JSON.stringify(kendalaData)); }
+    function saveKomplain() { localStorage.setItem('raisya_komplain', JSON.stringify(komplainData)); }
+    function savePelangganData() { localStorage.setItem('raisya_pelanggan_data', JSON.stringify(pelangganData)); }
     function saveCustChatData() { localStorage.setItem('raisya_cust_chats', JSON.stringify(custChatData)); }
+    function savePapanInfo() { localStorage.setItem('raisya_papan_info', JSON.stringify(papanInfo)); }
 
     // ========== NOTIFIKASI & GETAR ==========
     function notifyNewMessage(fromName, text) {
@@ -4279,87 +4432,135 @@
                 icon: 'https://cdn-icons-png.flaticon.com/512/3068/3068321.png'
             });
         }
-        if (navigator.vibrate) {
-            navigator.vibrate(200);
-        }
+        if (navigator.vibrate) navigator.vibrate(200);
     }
 
-    // ========== KENDALA INTERNET ==========
-    let kendalaFotoData = null;
+    // ========== PROFIL PELANGGAN ==========
+    function loadProfilPelanggan() {
+        if (!currentUser || currentUser.role !== 'pelanggan') return;
+        const data = pelangganData[currentUser.username] || {};
+        document.getElementById('profil-pelanggan-nama').textContent = data.nama || currentUser.nama;
+        document.getElementById('profil-pelanggan-hp').textContent = data.hp || currentUser.hp;
+        document.getElementById('profil-pelanggan-tagihan').textContent = 'Rp ' + (data.tagihan || 0).toLocaleString('id-ID');
+        document.getElementById('profil-pelanggan-tgl').textContent = data.tglTagihan || '-';
+    }
 
-    function previewKendalaFoto(input) {
+    function loadPelangganForEdit() {
+        const select = document.getElementById('admin-select-pelanggan-edit');
+        if (!select) return;
+        const username = select.value;
+        const data = pelangganData[username] || {};
+        const user = users.find(u => u.username === username);
+        document.getElementById('edit-pelanggan-nama').value = data.nama || (user ? user.nama : '');
+        document.getElementById('edit-pelanggan-hp').value = data.hp || (user ? user.hp : '');
+        document.getElementById('edit-pelanggan-tagihan').value = data.tagihan || 0;
+        document.getElementById('edit-pelanggan-tgl').value = data.tglTagihan || '';
+    }
+
+    function saveEditPelanggan() {
+        if (!currentUser || currentUser.role !== 'superadmin') { showToast('❌ Hanya superadmin!', 'error'); return; }
+        const select = document.getElementById('admin-select-pelanggan-edit');
+        if (!select || !select.value) { showToast('⚠️ Pilih pelanggan!', 'error'); return; }
+        const username = select.value;
+        pelangganData[username] = {
+            nama: document.getElementById('edit-pelanggan-nama').value.trim(),
+            hp: document.getElementById('edit-pelanggan-hp').value.trim(),
+            tagihan: parseInt(document.getElementById('edit-pelanggan-tagihan').value) || 0,
+            tglTagihan: document.getElementById('edit-pelanggan-tgl').value
+        };
+        savePelangganData();
+        showToast('✅ Profil pelanggan disimpan!', 'success');
+    }
+
+    // ========== KOMPLAIN WIFI (3 FOTO) ==========
+    let komplainFotos = [null, null, null];
+
+    function previewKomplainFoto(input, index) {
         const file = input.files[0];
         if (!file) return;
-        if (file.size > 2 * 1024 * 1024) { showToast('⚠️ Ukuran foto maksimal 2MB!', 'error'); return; }
+        if (file.size > 2 * 1024 * 1024) { showToast('⚠️ Maks 2MB!', 'error'); return; }
         const reader = new FileReader();
         reader.onload = function(e) {
-            kendalaFotoData = e.target.result;
-            document.getElementById('kendala-preview-img').src = kendalaFotoData;
-            document.getElementById('kendala-preview').classList.remove('hidden');
+            komplainFotos[index-1] = e.target.result;
+            const img = document.getElementById('preview-komplain' + index);
+            if (img) { img.src = e.target.result; img.classList.remove('hidden'); }
         };
         reader.readAsDataURL(file);
     }
 
-    function removeKendalaFoto() {
-        kendalaFotoData = null;
-        document.getElementById('kendala-foto').value = '';
-        document.getElementById('kendala-preview').classList.add('hidden');
-    }
-
-    function kirimKendala() {
-        const text = document.getElementById('kendala-text').value.trim();
-        if (!text) { showToast('⚠️ Isi kendala terlebih dahulu!', 'error'); return; }
-        if (!currentUser) { showToast('⚠️ Anda harus login!', 'error'); return; }
-
-        const laporan = {
+    function kirimKomplainWifi() {
+        const text = document.getElementById('komplain-text').value.trim();
+        if (!text && !komplainFotos.some(f => f)) { showToast('⚠️ Isi keluhan atau upload foto!', 'error'); return; }
+        if (!currentUser) { showToast('⚠️ Login dulu!', 'error'); return; }
+        komplainData.unshift({
             id: Date.now(),
             username: currentUser.username,
             nama: currentUser.nama,
-            text: text,
-            foto: kendalaFotoData || '',
+            text,
+            foto1: komplainFotos[0] || '',
+            foto2: komplainFotos[1] || '',
+            foto3: komplainFotos[2] || '',
             timestamp: new Date().toISOString(),
-            status: 'baru'
-        };
-        kendalaData.unshift(laporan);
-        saveKendala();
-        document.getElementById('kendala-text').value = '';
-        removeKendalaFoto();
-        renderRiwayatKendala();
-        showToast('✅ Pengaduan berhasil dikirim!', 'success');
+            status: 'baru',
+            balasan: ''
+        });
+        saveKomplain();
+        document.getElementById('komplain-text').value = '';
+        komplainFotos = [null, null, null];
+        ['preview-komplain1','preview-komplain2','preview-komplain3'].forEach(id => {
+            const el = document.getElementById(id); if (el) el.classList.add('hidden');
+        });
+        renderRiwayatKomplain();
+        showToast('✅ Komplain terkirim!', 'success');
     }
 
-    function renderRiwayatKendala() {
-        const container = document.getElementById('riwayat-kendala');
+    function renderRiwayatKomplain() {
+        const container = document.getElementById('riwayat-komplain');
         if (!container || !currentUser) return;
-        const milikSaya = kendalaData.filter(k => k.username === currentUser.username);
-        document.getElementById('kendala-count-badge').textContent = milikSaya.length;
-        if (milikSaya.length === 0) {
-            container.innerHTML = '<div class="text-center text-slate-400 py-4 text-xs italic">Belum ada pengaduan.</div>';
-            return;
-        }
-        container.innerHTML = milikSaya.map(k => `
+        const milikSaya = komplainData.filter(k => k.username === currentUser.username);
+        container.innerHTML = milikSaya.length === 0 ? '<div class="text-center text-slate-400 py-4 text-xs italic">Belum ada komplain.</div>' : milikSaya.map(k => `
             <div class="bg-white border border-slate-200 p-3 rounded-xl text-xs">
-                <div class="flex justify-between">
-                    <span class="font-bold text-slate-700">${new Date(k.timestamp).toLocaleString('id-ID')}</span>
-                    <span class="px-2 py-0.5 rounded-full text-[9px] font-bold ${k.status === 'baru' ? 'bg-red-100 text-red-600' : 'bg-emerald-100 text-emerald-600'}">${k.status}</span>
-                </div>
-                <p class="mt-1 text-slate-600">${k.text}</p>
-                ${k.foto ? `<img src="${k.foto}" class="mt-2 rounded-lg max-h-32">` : ''}
+                <div class="flex justify-between"><span class="font-bold">${new Date(k.timestamp).toLocaleString('id-ID')}</span><span class="badge">${k.status}</span></div>
+                <p class="mt-1">${k.text}</p>
+                ${k.foto1 ? `<img src="${k.foto1}" class="mt-1 rounded-lg max-h-20">` : ''}
+                ${k.foto2 ? `<img src="${k.foto2}" class="mt-1 rounded-lg max-h-20">` : ''}
+                ${k.foto3 ? `<img src="${k.foto3}" class="mt-1 rounded-lg max-h-20">` : ''}
+                ${k.balasan ? `<div class="mt-2 bg-green-50 p-2 rounded-lg"><strong>Admin:</strong> ${k.balasan}</div>` : ''}
             </div>
         `).join('');
     }
 
-    // ========== CUST SERVICE CHAT ==========
+    function renderAdminKomplainList() {
+        const container = document.getElementById('admin-komplain-list');
+        if (!container) return;
+        container.innerHTML = komplainData.length === 0 ? '<div class="text-center text-slate-400 py-4 text-xs italic">Belum ada komplain.</div>' : komplainData.map((k, i) => `
+            <div class="bg-white border border-slate-200 p-3 rounded-xl text-xs">
+                <div class="flex justify-between"><span class="font-bold">${k.nama} (${k.username})</span><span>${new Date(k.timestamp).toLocaleString('id-ID')}</span></div>
+                <p class="mt-1">${k.text}</p>
+                ${k.foto1 ? `<img src="${k.foto1}" class="mt-1 rounded-lg max-h-20">` : ''}
+                ${k.foto2 ? `<img src="${k.foto2}" class="mt-1 rounded-lg max-h-20">` : ''}
+                ${k.foto3 ? `<img src="${k.foto3}" class="mt-1 rounded-lg max-h-20">` : ''}
+                <textarea id="balas-komplain-${i}" class="w-full px-2 py-1.5 mt-2 bg-slate-50 border rounded-lg text-xs" placeholder="Balas komplain...">${k.balasan || ''}</textarea>
+                <button onclick="balasKomplain(${i})" class="mt-1 bg-green-500 hover:bg-green-600 text-white font-bold py-1.5 px-3 rounded-lg text-xs">Kirim Balasan</button>
+            </div>
+        `).join('');
+    }
+
+    function balasKomplain(index) {
+        const balasan = document.getElementById('balas-komplain-' + index).value.trim();
+        if (!balasan) { showToast('⚠️ Isi balasan!', 'error'); return; }
+        komplainData[index].balasan = balasan;
+        komplainData[index].status = 'dibalas';
+        saveKomplain();
+        renderAdminKomplainList();
+        showToast('✅ Balasan terkirim!', 'success');
+    }
+
+    // ========== CUST SERVICE CHAT (LENGKAP) ==========
     let activeCustContact = null;
 
     function getCustContacts() {
-        return users.filter(u => 
-            u.role === 'superadmin' || 
-            u.role === 'admin_internet1' || 
-            u.role === 'admin_internet2' || 
-            u.role === 'customer_service' || 
-            (u.role.startsWith('staf_') && u.status === 'aktif')
-        );
+        return users.filter(u => u.role === 'superadmin' || u.role === 'admin_internet1' || u.role === 'admin_internet2' || u.role === 'customer_service' || (u.role.startsWith('staf_') && u.status === 'aktif'));
     }
 
     function renderCustContactList() {
@@ -4367,10 +4568,7 @@
         if (!container) return;
         const contacts = getCustContacts();
         document.getElementById('cust-contact-count').textContent = contacts.length;
-        if (contacts.length === 0) {
-            document.getElementById('cust-empty-state').classList.remove('hidden');
-            return;
-        }
+        if (contacts.length === 0) { document.getElementById('cust-empty-state').classList.remove('hidden'); return; }
         document.getElementById('cust-empty-state').classList.add('hidden');
         container.innerHTML = contacts.map(c => {
             const last = getLastCustMessage(c.username);
@@ -4406,11 +4604,7 @@
         if (!container || !activeCustContact) return;
         const key = [currentUser.username, activeCustContact].sort().join('___');
         const msgs = custChatData[key] || [];
-        if (msgs.length === 0) {
-            container.innerHTML = '<div class="text-center text-slate-400 py-6 text-xs italic">Belum ada pesan</div>';
-            return;
-        }
-        container.innerHTML = msgs.map(m => {
+        container.innerHTML = msgs.length === 0 ? '<div class="text-center text-slate-400 py-6 text-xs italic">Belum ada pesan</div>' : msgs.map(m => {
             const isMe = m.from === currentUser.username;
             return isMe
                 ? `<div class="flex justify-end"><div class="max-w-[75%] bg-indigo-500 text-white p-3 rounded-2xl rounded-br-md"><p class="text-xs">${m.text}</p><p class="text-[9px] text-indigo-200 text-right mt-1">${new Date(m.time).toLocaleTimeString('id-ID', {hour:'2-digit',minute:'2-digit'})}</p></div></div>`
@@ -4424,18 +4618,13 @@
         const input = document.getElementById('cust-message-input');
         const text = input.value.trim();
         if (!text) return;
-
         const key = [currentUser.username, activeCustContact].sort().join('___');
         if (!custChatData[key]) custChatData[key] = [];
         custChatData[key].push({ from: currentUser.username, text, time: new Date().toISOString() });
         saveCustChatData();
         input.value = '';
         renderCustMessages();
-
-        // Notifikasi ke lawan bicara
-        if (activeCustContact !== currentUser.username) {
-            notifyNewMessage(currentUser.nama, text);
-        }
+        if (activeCustContact !== currentUser.username) notifyNewMessage(currentUser.nama, text);
     }
 
     function getLastCustMessage(username) {
@@ -4444,29 +4633,32 @@
         return msgs[msgs.length - 1];
     }
 
+    // ========== PAPAN INFORMASI ==========
+    function loadPapanInfo() {
+        if (!currentUser) return;
+        const masalEl = document.getElementById('info-masal-content');
+        const pribadiEl = document.getElementById('info-pribadi-content');
+        if (masalEl) masalEl.textContent = papanInfo.masal || 'Tidak ada informasi.';
+        if (pribadiEl) pribadiEl.textContent = (papanInfo.pribadi && papanInfo.pribadi[currentUser.username]) || 'Tidak ada pesan pribadi.';
+    }
+
     // ========== OVERRIDE switchPage UNTUK HALAMAN BARU ==========
     const originalSwitchPage = switchPage;
     switchPage = function(pageId, ...args) {
         originalSwitchPage(pageId, ...args);
-        
-        if (pageId === 'page-kendala') {
-            renderRiwayatKendala();
-        } else if (pageId === 'page-cust-chat-list') {
-            renderCustContactList();
-        } else if (pageId === 'page-cust-conversation') {
-            // Sudah diatur oleh openCustConversation
-        } else if (pageId === 'page-admin-info') {
-            const select = document.getElementById('admin-select-pelanggan');
+        if (pageId === 'page-profil-pelanggan') loadProfilPelanggan();
+        if (pageId === 'page-komplain-wifi') renderRiwayatKomplain();
+        if (pageId === 'page-admin-komplain') renderAdminKomplainList();
+        if (pageId === 'page-cust-chat-list') renderCustContactList();
+        if (pageId === 'page-edit-profil-pelanggan') {
+            const select = document.getElementById('admin-select-pelanggan-edit');
             if (select) {
-                const allUsers = users.filter(u => u.role === 'pelanggan' || u.role === 'customer_service' || u.role.startsWith('staf_'));
-                select.innerHTML = '<option value="">-- Pilih Pengguna --</option>' + allUsers.map(u => `<option value="${u.username}">${u.nama} (${u.role})</option>`).join('');
+                const pelangganUsers = users.filter(u => u.role === 'pelanggan');
+                select.innerHTML = '<option value="">-- Pilih --</option>' + pelangganUsers.map(u => `<option value="${u.username}">${u.nama}</option>`).join('');
             }
-            document.getElementById('admin-info-masal').value = (typeof papanInfo !== 'undefined' && papanInfo.masal) ? papanInfo.masal : '';
-        } else if (pageId === 'page-menu') {
-            // Papan informasi akan dimuat oleh Blok 11 (section papan info)
         }
     };
 
-    console.log('✅ Blok 19 – Fitur baru (Kendala, Cust Service Chat, Notifikasi) siap.');
+    console.log('✅ Blok 19 – Fitur Komplain WiFi, Profil Pelanggan, Chat, Papan Informasi siap.');
 </script>
 <!-- END BLOK 19 -->
