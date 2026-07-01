@@ -1676,7 +1676,7 @@
      BLOK 11 - RAISYA DECORATION v2.1 - JAVASCRIPT PART 1
      (PWA, Toast, Theme, Multi-User Auth, Navigation, Settings,
       Backup, Reset, Family CRUD, Database, Manajemen Akun)
-     SUPER LENGKAP - Semua fungsi CRUD staf & renderAkunList
+     SUPER LENGKAP - renderAkunList dipanggil saat buka tab Akun
      ============================================================ -->
     <script>
         // ========== PWA SERVICE WORKER (OFFLINE CACHE) ==========
@@ -1945,6 +1945,8 @@
         // ========== SETTINGS MODAL ==========
         function openSettingsModal() { if (!currentUser) return; document.getElementById('settingsModal').classList.remove('hidden'); const isSuperadmin = currentUser.role === 'superadmin'; document.querySelectorAll('.admin-only').forEach(el => { el.style.display = isSuperadmin ? '' : 'none'; }); switchSettingsTab('profil'); loadSettingsData(); }
         function closeSettingsModal() { document.getElementById('settingsModal').classList.add('hidden'); }
+
+        // 🔥 REVISI: Panggil renderAkunList saat tab 'manajemen' dipilih
         function switchSettingsTab(tab) {
             const tabs = ['profil','password','tema','backup','reset','manajemen','tentang'];
             tabs.forEach(t => {
@@ -1953,7 +1955,12 @@
                 if (t === tab) { btn.className = btn.className.replace(/text-slate-500/g,'text-rose-600').replace(/bg-white/g,'bg-white'); btn.classList.add('bg-white','text-rose-600','shadow-sm'); content.classList.remove('hidden'); }
                 else { btn.className = btn.className.replace(/text-rose-600/g,'text-slate-500').replace(/bg-white/g,''); btn.classList.add('text-slate-500','hover:text-slate-700'); content.classList.add('hidden'); }
             });
+            // 🔥 Tambahan: Render daftar akun jika tab Manajemen dipilih
+            if (tab === 'manajemen') {
+                renderAkunList();
+            }
         }
+
         function loadSettingsData() {
             if (!currentUser) return;
             document.getElementById('sett-nama').value = currentUser.nama || '';
