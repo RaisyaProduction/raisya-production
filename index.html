@@ -696,7 +696,8 @@
      BLOK 5 R2 – RAISYA DECORATION v2.1 – PANEL ADMIN / PENGATURAN
      (Modal: Profil, Password, Tema, Backup, Reset, Manajemen Akun,
       Kelola Informasi, Tentang)
-     SUPER LENGKAP – Role Pelanggan, CS, Admin Internet 1 & 2
+     SUPER LENGKAP – Role Pelanggan, CS, Admin Internet 1 & 2,
+     Filter Akun, Tombol Copy HTML
      ============================================================ -->
 
 <!-- MODAL PENGATURAN -->
@@ -724,56 +725,48 @@
             
             <!-- TAB NAVIGASI -->
             <div id="settings-tabs-container" class="flex bg-slate-100 rounded-xl p-1 gap-1 flex-wrap">
-                <!-- Tab Profil (selalu ada) -->
                 <button onclick="switchSettingsTab('profil')" id="stab-profil" 
                         class="flex-1 text-center py-2 text-[11px] font-bold rounded-lg transition-all bg-white text-rose-600 shadow-sm">
                     <i class="fa-solid fa-user mr-1"></i> Profil
                 </button>
                 
-                <!-- Tab Password (hanya superadmin) -->
                 <button onclick="switchSettingsTab('password')" id="stab-password" 
                         class="flex-1 text-center py-2 text-[11px] font-bold rounded-lg transition-all text-slate-500 hover:text-slate-700 admin-only">
                     <i class="fa-solid fa-lock mr-1"></i> Password
                 </button>
                 
-                <!-- Tab Tema (selalu ada) -->
                 <button onclick="switchSettingsTab('tema')" id="stab-tema" 
                         class="flex-1 text-center py-2 text-[11px] font-bold rounded-lg transition-all text-slate-500 hover:text-slate-700">
                     <i class="fa-solid fa-palette mr-1"></i> Tema
                 </button>
                 
-                <!-- Tab Backup (hanya superadmin) -->
                 <button onclick="switchSettingsTab('backup')" id="stab-backup" 
                         class="flex-1 text-center py-2 text-[11px] font-bold rounded-lg transition-all text-slate-500 hover:text-slate-700 admin-only">
                     <i class="fa-solid fa-database mr-1"></i> Backup
                 </button>
                 
-                <!-- Tab Reset (hanya superadmin) -->
                 <button onclick="switchSettingsTab('reset')" id="stab-reset" 
                         class="flex-1 text-center py-2 text-[11px] font-bold rounded-lg transition-all text-slate-500 hover:text-slate-700 admin-only">
                     <i class="fa-solid fa-rotate-left mr-1"></i> Reset
                 </button>
                 
-                <!-- Tab Manajemen Akun (hanya superadmin) -->
                 <button onclick="switchSettingsTab('manajemen')" id="stab-manajemen" 
                         class="flex-1 text-center py-2 text-[11px] font-bold rounded-lg transition-all text-slate-500 hover:text-slate-700 admin-only">
                     <i class="fa-solid fa-users-gear mr-1"></i> Akun
                 </button>
                 
-                <!-- Tab Kelola Informasi (hanya superadmin) -->
                 <button onclick="switchSettingsTab('info')" id="stab-info" 
                         class="flex-1 text-center py-2 text-[11px] font-bold rounded-lg transition-all text-slate-500 hover:text-slate-700 admin-only">
                     <i class="fa-solid fa-bullhorn mr-1"></i> Info
                 </button>
                 
-                <!-- Tab Tentang (selalu ada) -->
                 <button onclick="switchSettingsTab('tentang')" id="stab-tentang" 
                         class="flex-1 text-center py-2 text-[11px] font-bold rounded-lg transition-all text-slate-500 hover:text-slate-700">
                     <i class="fa-solid fa-circle-info mr-1"></i> Tentang
                 </button>
             </div>
 
-            <!-- TAB: PROFIL -->
+            <!-- ========== TAB: PROFIL ========== -->
             <div id="stab-content-profil" class="space-y-3 animate-fadeIn">
                 <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-3">
                     <h4 class="text-xs font-bold text-slate-500 uppercase flex items-center gap-2">
@@ -791,7 +784,6 @@
                         <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Nomor HP</label>
                         <input type="text" id="sett-hp" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500">
                     </div>
-                    <!-- Field tambahan untuk staf -->
                     <div id="staff-extra-fields" class="hidden space-y-3">
                         <div>
                             <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Alamat</label>
@@ -814,7 +806,7 @@
                 </div>
             </div>
 
-            <!-- TAB: PASSWORD (hanya superadmin) -->
+            <!-- ========== TAB: PASSWORD ========== -->
             <div id="stab-content-password" class="hidden space-y-3 animate-fadeIn">
                 <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-3">
                     <h4 class="text-xs font-bold text-slate-500 uppercase flex items-center gap-2">
@@ -855,7 +847,7 @@
                 </div>
             </div>
 
-            <!-- TAB: TEMA -->
+            <!-- ========== TAB: TEMA ========== -->
             <div id="stab-content-tema" class="hidden space-y-3 animate-fadeIn">
                 <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-4">
                     <h4 class="text-xs font-bold text-slate-500 uppercase flex items-center gap-2">
@@ -881,7 +873,7 @@
                 </div>
             </div>
 
-            <!-- TAB: BACKUP (hanya superadmin) -->
+            <!-- ========== TAB: BACKUP ========== -->
             <div id="stab-content-backup" class="hidden space-y-3 animate-fadeIn">
                 <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-3">
                     <h4 class="text-xs font-bold text-slate-500 uppercase flex items-center gap-2">
@@ -916,7 +908,7 @@
                 </div>
             </div>
 
-            <!-- TAB: RESET (hanya superadmin) -->
+            <!-- ========== TAB: RESET ========== -->
             <div id="stab-content-reset" class="hidden space-y-3 animate-fadeIn">
                 <div class="bg-red-50 rounded-xl p-4 border border-red-200 space-y-3">
                     <h4 class="text-xs font-bold text-red-600 uppercase flex items-center gap-2">
@@ -941,9 +933,9 @@
                 </div>
             </div>
 
-            <!-- TAB: MANAJEMEN AKUN (hanya superadmin) -->
+            <!-- ========== TAB: MANAJEMEN AKUN ========== -->
             <div id="stab-content-manajemen" class="hidden space-y-4 animate-fadeIn">
-                <!-- Form Tambah/Edit Akun Staf -->
+                <!-- Form Tambah/Edit Akun -->
                 <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-3">
                     <h4 class="text-xs font-bold text-slate-500 uppercase flex items-center gap-2">
                         <i class="fa-solid fa-user-plus text-indigo-500"></i> 
@@ -1042,12 +1034,11 @@
                 </div>
             </div>
 
-            <!-- TAB: KELOLA INFORMASI (hanya superadmin) -->
+            <!-- ========== TAB: KELOLA INFORMASI ========== -->
             <div id="stab-content-info" class="hidden space-y-4 animate-fadeIn">
-                <!-- Edit Informasi Masal -->
                 <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-3">
                     <h4 class="text-xs font-bold text-slate-500 uppercase flex items-center gap-2">
-                        <i class="fa-solid fa-bullhorn text-amber-500"></i> Informasi Masal (Semua Pelanggan, CS, & Staf)
+                        <i class="fa-solid fa-bullhorn text-amber-500"></i> Informasi Masal
                     </h4>
                     <textarea id="admin-info-masal" rows="4" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 resize-none" placeholder="Tulis informasi masal..."></textarea>
                     <button onclick="saveInfoMasal()" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer transition-all active:scale-95">
@@ -1055,10 +1046,9 @@
                     </button>
                 </div>
 
-                <!-- Edit Informasi Pribadi per Pengguna -->
                 <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-3">
                     <h4 class="text-xs font-bold text-slate-500 uppercase flex items-center gap-2">
-                        <i class="fa-solid fa-envelope text-blue-500"></i> Informasi Pribadi (End-to-End per Pengguna)
+                        <i class="fa-solid fa-envelope text-blue-500"></i> Informasi Pribadi
                     </h4>
                     <div>
                         <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Pilih Pengguna</label>
@@ -1073,7 +1063,7 @@
                 </div>
             </div>
 
-            <!-- TAB: TENTANG -->
+            <!-- ========== TAB: TENTANG ========== -->
             <div id="stab-content-tentang" class="hidden space-y-3 animate-fadeIn">
                 <div class="bg-slate-50 rounded-xl p-5 border border-slate-100 text-center space-y-3">
                     <div class="text-5xl">🏠</div>
@@ -1103,7 +1093,16 @@
         </div>
     </div>
 </div>
+
+<!-- TOMBOL COPY HTML -->
+<div style="text-align:center;margin:20px 0;">
+    <button class="btn btn-lg" style="background:#f43f5e;color:#fff;padding:10px 20px;border-radius:12px;border:none;font-weight:bold;cursor:pointer;" onclick="downloadCurrentPage('raisya_pengaturan.html')">
+        ⬇️ Copy HTML (Download Halaman)
+    </button>
+    <p style="font-size:0.8rem;color:#94a3b8;margin-top:8px;">Simpan halaman ini sebagai file .html untuk offline.</p>
+</div>
 <!-- END BLOK 5 R2 -->
+
 
 
 <!-- ===== RAISYA PRODUCTION → BLOK 6 - RAISYA DECORATION v2.0 - FAMILY CONFIRMATION & LOGIN ===== -->
@@ -1895,9 +1894,8 @@
 <!-- ============================================================
      BLOK 11 - RAISYA DECORATION v2.1 - JAVASCRIPT PART 1
      (PWA, Toast, Theme, Multi-User Auth, Navigation, Settings,
-      Backup, Reset, Family CRUD, Database, Manajemen Akun,
-      downloadCurrentPage, requestNotifPermission)
-     SUPER LENGKAP + REVISI FINAL
+      Backup, Reset, Family CRUD, Database, Manajemen Akun)
+     SUPER LENGKAP + DATA DEFAULT + ROLE BARU + RENDER AKUN LIST
      ============================================================ -->
     <script>
         // ========== PWA SERVICE WORKER (OFFLINE CACHE) ==========
@@ -2196,8 +2194,29 @@
             switchPage('page-menu');
             showToast('✅ Selamat datang, ' + currentUser.nama + '!', 'success');
         }
-        function handleForgot() { /* ... */ }
-        function handleReset() { /* ... */ }
+        function handleForgot() {
+            const val = document.getElementById('forgot-input').value.trim();
+            const errEl = document.getElementById('forgot-error');
+            const errText = document.getElementById('forgot-error-text');
+            if (!val) { errEl.classList.remove('hidden'); errText.textContent = 'Masukkan email atau nomor HP!'; return; }
+            const superAdmin = users.find(u => u.role === 'superadmin');
+            if (superAdmin && (val === superAdmin.email || val === superAdmin.hp)) { errEl.classList.add('hidden'); document.getElementById('forgot-input').value = ''; switchPage('page-reset'); showToast('✅ Identitas valid. Silakan buat password baru.', 'success'); }
+            else { errEl.classList.remove('hidden'); errText.textContent = 'Data tidak cocok dengan akun superadmin!'; }
+        }
+        function handleReset() {
+            const newPass = document.getElementById('reset-pass').value.trim();
+            const confirmPass = document.getElementById('reset-pass-confirm').value.trim();
+            const errEl = document.getElementById('reset-error');
+            const errText = document.getElementById('reset-error-text');
+            if (!newPass || !confirmPass) { errEl.classList.remove('hidden'); errText.textContent = 'Semua field wajib diisi!'; return; }
+            if (newPass.length < 6) { errEl.classList.remove('hidden'); errText.textContent = 'Password minimal 6 karakter!'; return; }
+            if (newPass !== confirmPass) { errEl.classList.remove('hidden'); errText.textContent = 'Password tidak cocok!'; return; }
+            const superAdmin = users.find(u => u.role === 'superadmin');
+            if (superAdmin) { superAdmin.password = newPass; saveUsers(); }
+            document.getElementById('reset-pass').value = ''; document.getElementById('reset-pass-confirm').value = '';
+            errEl.classList.add('hidden'); switchPage('page-login');
+            showToast('✅ Password superadmin berhasil diubah! Silakan login.', 'success');
+        }
         function handleLogout() {
             if (confirm('Apakah Anda yakin ingin keluar?')) {
                 document.getElementById('pwa-install-banner').classList.add('hidden');
@@ -2249,7 +2268,21 @@
                 staffFields.classList.add('hidden');
             }
         }
-        function saveProfile() { /* ... */ }
+        function saveProfile() {
+            if (!currentUser) return;
+            const nama = document.getElementById('sett-nama').value.trim();
+            const email = document.getElementById('sett-email').value.trim();
+            const hp = document.getElementById('sett-hp').value.trim();
+            if (!nama || !email || !hp) { showToast('⚠️ Semua field wajib diisi!','error'); return; }
+            currentUser.nama = nama; currentUser.email = email; currentUser.hp = hp;
+            if (currentUser.role !== 'superadmin') {
+                currentUser.alamat = document.getElementById('sett-alamat').value.trim();
+                currentUser.nomor = document.getElementById('sett-nomor').value.trim();
+            }
+            const idx = users.findIndex(u => u.username === currentUser.username);
+            if (idx !== -1) { users[idx] = { ...currentUser }; saveUsers(); }
+            showToast('✅ Profil berhasil disimpan!','success');
+        }
         function changePassword() { /* ... */ }
         function changeReportPasswords() { /* ... */ }
 
@@ -2258,49 +2291,192 @@
             if (!currentUser || currentUser.role !== 'superadmin') { showToast('❌ Tidak diizinkan.','error'); return; }
             const idx = parseInt(document.getElementById('edit-akun-index').value);
             const nama = document.getElementById('akun-nama').value.trim();
+            const alamat = document.getElementById('akun-alamat').value.trim();
+            const nomor = document.getElementById('akun-nomor').value.trim();
+            const hp = document.getElementById('akun-hp').value.trim();
+            const jabatan = document.getElementById('akun-jabatan').value.trim();
             const username = document.getElementById('akun-username').value.trim();
             const password = document.getElementById('akun-password').value.trim();
             const words = document.getElementById('akun-words').value.trim();
             const role = document.getElementById('akun-role').value;
             const status = document.getElementById('akun-status').value;
-            if (!nama || !username || !password) { showToast('⚠️ Wajib isi!','error'); return; }
+            if (!nama || !username || !password) { showToast('⚠️ Nama, Username, Password wajib!','error'); return; }
             const dup = users.find(u => u.username === username && (idx === -1 || users[idx].username !== username));
-            if (dup) { showToast('⚠️ Username sudah dipakai!','error'); return; }
+            if (dup) { showToast('⚠️ Username sudah digunakan!','error'); return; }
             const roleMap = {
                 'staf_rumah_hantu':'Staf Rumah Hantu','staf_playground':'Staf Playground','staf_raisya_dec':'Staf Raisya Decoration',
                 'staf_internet':'Staf Internet','pelanggan':'Pelanggan','customer_service':'Customer Service',
                 'admin_internet1':'Admin Internet 1','admin_internet2':'Admin Internet 2'
             };
-            const newUser = { username, password, words, nama, email:'', hp:document.getElementById('akun-hp').value.trim(), role, status, alamat:document.getElementById('akun-alamat').value.trim(), nomor:document.getElementById('akun-nomor').value.trim(), jabatan: roleMap[role] || document.getElementById('akun-jabatan').value.trim() };
-            if (idx === -1) users.push(newUser); else users[idx] = newUser;
+            const newUser = { username, password, words, nama, email:'', hp, role, status, alamat, nomor, jabatan: roleMap[role] || jabatan };
+            if (idx === -1) users.push(newUser);
+            else users[idx] = newUser;
             saveUsers(); resetAkunForm(); renderAkunList('all');
-            showToast('✅ Akun disimpan!','success');
+            showToast('✅ Akun berhasil disimpan!','success');
         }
-        function editAkun(index) { /* ... */ }
-        function deleteAkun(index) { /* ... */ }
-        function toggleSuspendAccount(index) { /* ... */ }
-        function resetAkunForm() { /* ... */ }
+        function editAkun(index) {
+            if (!currentUser || currentUser.role !== 'superadmin') return;
+            const u = users[index];
+            if (!u || u.role === 'superadmin') { showToast('❌ Gunakan menu Password untuk superadmin.','error'); return; }
+            document.getElementById('edit-akun-index').value = index;
+            document.getElementById('akun-nama').value = u.nama || '';
+            document.getElementById('akun-alamat').value = u.alamat || '';
+            document.getElementById('akun-nomor').value = u.nomor || '';
+            document.getElementById('akun-hp').value = u.hp || '';
+            document.getElementById('akun-jabatan').value = u.jabatan || '';
+            document.getElementById('akun-username').value = u.username || '';
+            document.getElementById('akun-password').value = u.password || '';
+            document.getElementById('akun-words').value = u.words || '';
+            document.getElementById('akun-role').value = u.role;
+            document.getElementById('akun-status').value = u.status;
+            document.getElementById('form-akun-title').innerText = 'Edit Akun';
+            document.getElementById('btn-batal-edit-akun').classList.remove('hidden');
+        }
+        function deleteAkun(index) {
+            if (!currentUser || currentUser.role !== 'superadmin') return;
+            const u = users[index];
+            if (!u || u.role === 'superadmin') { showToast('❌ Superadmin tidak bisa dihapus!','error'); return; }
+            if (confirm(`Hapus akun ${u.nama}?`)) { users.splice(index, 1); saveUsers(); renderAkunList('all'); showToast('🗑 Akun dihapus!','warning'); }
+        }
+        function toggleSuspendAccount(index) {
+            if (!currentUser || currentUser.role !== 'superadmin') return;
+            const u = users[index];
+            if (!u || u.role === 'superadmin') { showToast('❌ Superadmin tidak bisa disuspend!','error'); return; }
+            u.status = u.status === 'aktif' ? 'suspend' : 'aktif';
+            saveUsers(); renderAkunList('all');
+            showToast(`✅ Akun ${u.nama} ${u.status === 'aktif' ? 'diaktifkan' : 'disuspend'}.`,'success');
+        }
+        function resetAkunForm() {
+            document.getElementById('edit-akun-index').value = '-1';
+            ['akun-nama','akun-alamat','akun-nomor','akun-hp','akun-jabatan','akun-username','akun-password','akun-words'].forEach(id => { document.getElementById(id).value = ''; });
+            document.getElementById('akun-role').value = 'staf_rumah_hantu';
+            document.getElementById('akun-status').value = 'aktif';
+            document.getElementById('form-akun-title').innerText = 'Tambah Akun Baru';
+            document.getElementById('btn-batal-edit-akun').classList.add('hidden');
+        }
         function renderAkunList(filterRole = 'all') {
             const container = document.getElementById('akun-list-container');
             if (!container) return;
             container.innerHTML = '';
             let count = 0;
+            // Update active filter button
+            const filterButtons = ['all','pelanggan','customer_service','staf_internet','admin_internet1'];
+            filterButtons.forEach(f => {
+                const btn = document.getElementById('filter-akun-' + f);
+                if (btn) {
+                    if (filterRole === f) {
+                        btn.className = 'flex-1 text-center py-1.5 text-[10px] font-bold rounded-md bg-white text-indigo-600 shadow-sm';
+                    } else {
+                        btn.className = 'flex-1 text-center py-1.5 text-[10px] font-bold text-slate-500 hover:bg-slate-200/50 rounded-md';
+                    }
+                }
+            });
+            // Render list
             users.forEach((u, i) => {
                 if (u.role === 'superadmin') return;
                 if (filterRole !== 'all' && u.role !== filterRole) return;
                 count++;
-                const statusBadge = u.status === 'aktif' ? '<span class="bg-emerald-100 text-emerald-700 text-[9px] font-bold px-1.5 py-0.5 rounded">AKTIF</span>' : '<span class="bg-red-100 text-red-700 text-[9px] font-bold px-1.5 py-0.5 rounded">SUSPEND</span>';
-                container.innerHTML += `<div class="bg-white border border-slate-200 p-3 rounded-xl flex justify-between items-center"><div class="flex-1"><h4 class="text-xs font-bold text-slate-700">${u.nama} ${statusBadge}</h4><p class="text-[10px] text-slate-400 mt-0.5">@${u.username} | ${u.jabatan} | ${u.role}</p></div><div class="flex gap-1"><button onclick="editAkun(${i})" class="w-7 h-7 bg-amber-50 text-amber-600 rounded-lg text-xs flex items-center justify-center"><i class="fa-solid fa-pen"></i></button><button onclick="toggleSuspendAccount(${i})" class="w-7 h-7 bg-slate-100 text-slate-600 rounded-lg text-xs flex items-center justify-center"><i class="fa-solid fa-pause"></i></button><button onclick="deleteAkun(${i})" class="w-7 h-7 bg-red-50 text-red-600 rounded-lg text-xs flex items-center justify-center"><i class="fa-solid fa-trash"></i></button></div></div>`;
+                const statusBadge = u.status === 'aktif' 
+                    ? '<span class="bg-emerald-100 text-emerald-700 text-[9px] font-bold px-1.5 py-0.5 rounded">AKTIF</span>'
+                    : '<span class="bg-red-100 text-red-700 text-[9px] font-bold px-1.5 py-0.5 rounded">SUSPEND</span>';
+                container.innerHTML += `
+                    <div class="bg-white border border-slate-200 p-3 rounded-xl flex justify-between items-center">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <h4 class="text-xs font-bold text-slate-700">${u.nama}</h4>
+                                ${statusBadge}
+                                <span class="text-[9px] text-slate-400">@${u.username}</span>
+                            </div>
+                            <p class="text-[10px] text-slate-400 mt-0.5">${u.jabatan} | ${u.role} | ${u.hp || '-'}</p>
+                        </div>
+                        <div class="flex gap-1 ml-2">
+                            <button onclick="editAkun(${i})" class="w-7 h-7 bg-amber-50 text-amber-600 rounded-lg text-xs flex items-center justify-center"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="toggleSuspendAccount(${i})" class="w-7 h-7 bg-slate-100 text-slate-600 rounded-lg text-xs flex items-center justify-center"><i class="fa-solid fa-pause"></i></button>
+                            <button onclick="deleteAkun(${i})" class="w-7 h-7 bg-red-50 text-red-600 rounded-lg text-xs flex items-center justify-center"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>`;
             });
             document.getElementById('akun-count-badge').textContent = count;
             if (count === 0) container.innerHTML = '<div class="text-center text-slate-400 py-4 text-xs italic">Belum ada akun.</div>';
         }
 
-        // ========== BACKUP/RESTORE ==========
-        function backupAllData() { /* ... */ }
-        function backupToHTML() { /* ... */ }
+        // ========== BACKUP & RESTORE ==========
+        function backupAllData() {
+            const allData = {
+                users: users,
+                systemCredentials: systemCredentials,
+                familyReports: reportData,
+                bizDatabases: bizDatabases,
+                netDatabases: netDatabases,
+                backupDate: new Date().toISOString(),
+                version: '2.1'
+            };
+            const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'RaisyaDecoration_Backup_' + new Date().toISOString().slice(0, 10) + '.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('✅ Backup berhasil didownload!', 'success');
+        }
+        function backupToHTML() {
+            const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+            const blob = new Blob([html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'RaisyaDecoration_Offline_' + new Date().toISOString().slice(0, 10) + '.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('✅ HTML offline berhasil didownload!', 'success');
+        }
+        function backupToDrive() {
+            const allData = {
+                users: users,
+                systemCredentials: systemCredentials,
+                familyReports: reportData,
+                bizDatabases: bizDatabases,
+                netDatabases: netDatabases,
+                backupDate: new Date().toISOString()
+            };
+            const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
+            const fileName = 'RaisyaDecoration_Backup_' + new Date().toISOString().slice(0, 10) + '.json';
+            const file = new File([blob], fileName, { type: 'application/json' });
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                navigator.share({
+                    title: 'Backup Raisya Decoration',
+                    text: 'Simpan file backup ke Google Drive atau memori.',
+                    files: [file]
+                }).then(() => showToast('✅ File siap disimpan!', 'success'))
+                  .catch(() => downloadFallback(blob, fileName));
+            } else {
+                downloadFallback(blob, fileName);
+            }
+        }
+        function downloadFallback(blob, fileName) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('⬇ File didownload. Simpan ke Google Drive secara manual.', 'success');
+        }
+        function restoreAllData(input) { /* ... */ }
+        function restoreFromHTML(input) { /* ... */ }
 
-        // ========== FAMILY CRUD ==========
+        // ========== RESET DATA ==========
+        function resetDataModule(module) { /* ... */ }
+        function resetAllData() { /* ... */ }
+
+        // ========== JALUR KELUARGA ==========
         function openFamilyReportConf() { switchPage('page-family-conf'); }
         function selectFamilyRole(role) { selectedRole = role; document.getElementById('family-login-title').innerText = role; switchPage('page-family-login'); }
         function handleFamilyLogin() { /* ... */ }
@@ -2314,6 +2490,10 @@
             if (!localStorage.getItem('raisya_bizPassword')) localStorage.setItem('raisya_bizPassword', '002886');
             if (!localStorage.getItem('raisya_credentials')) saveSystemCredentials();
             console.log('✅ Raisya Decoration v2.1 Siap!');
+            console.log('👤 Multi-User: Superadmin, Admin Internet 1/2, Staf, Pelanggan, CS');
+            console.log('💾 Database: 10 Array Internet');
+            console.log('📱 PWA, Auth, Settings, Backup, Family CRUD loaded');
+            console.log('📋 Manajemen Akun dengan Filter Role siap');
         })();
     </script>
 <!-- END BLOK 11 -->
