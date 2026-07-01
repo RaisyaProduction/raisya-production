@@ -1676,7 +1676,7 @@
      BLOK 11 - RAISYA DECORATION v2.1 - JAVASCRIPT PART 1
      (PWA, Toast, Theme, Multi-User Auth, Navigation, Settings,
       Backup, Reset, Family CRUD, Database, Manajemen Akun)
-     SUPER LENGKAP - renderAkunList dipanggil saat buka tab Akun
+     SUPER LENGKAP + DATA DEFAULT AGAR TIDAK KOSONG
      ============================================================ -->
     <script>
         // ========== PWA SERVICE WORKER (OFFLINE CACHE) ==========
@@ -1945,8 +1945,6 @@
         // ========== SETTINGS MODAL ==========
         function openSettingsModal() { if (!currentUser) return; document.getElementById('settingsModal').classList.remove('hidden'); const isSuperadmin = currentUser.role === 'superadmin'; document.querySelectorAll('.admin-only').forEach(el => { el.style.display = isSuperadmin ? '' : 'none'; }); switchSettingsTab('profil'); loadSettingsData(); }
         function closeSettingsModal() { document.getElementById('settingsModal').classList.add('hidden'); }
-
-        // 🔥 REVISI: Panggil renderAkunList saat tab 'manajemen' dipilih
         function switchSettingsTab(tab) {
             const tabs = ['profil','password','tema','backup','reset','manajemen','tentang'];
             tabs.forEach(t => {
@@ -1955,12 +1953,8 @@
                 if (t === tab) { btn.className = btn.className.replace(/text-slate-500/g,'text-rose-600').replace(/bg-white/g,'bg-white'); btn.classList.add('bg-white','text-rose-600','shadow-sm'); content.classList.remove('hidden'); }
                 else { btn.className = btn.className.replace(/text-rose-600/g,'text-slate-500').replace(/bg-white/g,''); btn.classList.add('text-slate-500','hover:text-slate-700'); content.classList.add('hidden'); }
             });
-            // 🔥 Tambahan: Render daftar akun jika tab Manajemen dipilih
-            if (tab === 'manajemen') {
-                renderAkunList();
-            }
+            if (tab === 'manajemen') renderAkunList();
         }
-
         function loadSettingsData() {
             if (!currentUser) return;
             document.getElementById('sett-nama').value = currentUser.nama || '';
@@ -2122,9 +2116,74 @@
         }
 
         // ========== BACKUP & RESTORE ==========
-        function backupAllData() { /* ... */ }
-        function backupToHTML() { /* ... */ }
-        function backupToDrive() { /* ... */ }
+        function backupAllData() {
+            const allData = {
+                users: users,
+                systemCredentials: systemCredentials,
+                familyReports: reportData,
+                bizDatabases: bizDatabases,
+                netDatabases: netDatabases,
+                backupDate: new Date().toISOString(),
+                version: '2.1'
+            };
+            const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'RaisyaDecoration_Backup_' + new Date().toISOString().slice(0, 10) + '.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('✅ Backup berhasil didownload!', 'success');
+        }
+        function backupToHTML() {
+            const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+            const blob = new Blob([html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'RaisyaDecoration_Offline_' + new Date().toISOString().slice(0, 10) + '.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('✅ HTML offline berhasil didownload!', 'success');
+        }
+        function backupToDrive() {
+            const allData = {
+                users: users,
+                systemCredentials: systemCredentials,
+                familyReports: reportData,
+                bizDatabases: bizDatabases,
+                netDatabases: netDatabases,
+                backupDate: new Date().toISOString()
+            };
+            const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
+            const fileName = 'RaisyaDecoration_Backup_' + new Date().toISOString().slice(0, 10) + '.json';
+            const file = new File([blob], fileName, { type: 'application/json' });
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                navigator.share({
+                    title: 'Backup Raisya Decoration',
+                    text: 'Simpan file backup ke Google Drive atau memori.',
+                    files: [file]
+                }).then(() => showToast('✅ File siap disimpan!', 'success'))
+                  .catch(() => downloadFallback(blob, fileName));
+            } else {
+                downloadFallback(blob, fileName);
+            }
+        }
+        function downloadFallback(blob, fileName) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('⬇ File didownload. Simpan ke Google Drive secara manual.', 'success');
+        }
         function restoreAllData(input) { /* ... */ }
         function restoreFromHTML(input) { /* ... */ }
 
@@ -2135,8 +2194,58 @@
         // ========== JALUR KELUARGA ==========
         function openFamilyReportConf() { switchPage('page-family-conf'); }
         function selectFamilyRole(role) { selectedRole = role; document.getElementById('family-login-title').innerText = role; document.getElementById('family-login-pass').value = ''; document.getElementById('family-login-error').classList.add('hidden'); switchPage('page-family-login'); }
-        function handleFamilyLogin() { /* ... */ }
-        function renderFamilyData() { /* ... */ }
+        function handleFamilyLogin() {
+            const pass = document.getElementById('family-login-pass').value.trim();
+            const familyPass = localStorage.getItem('raisya_familyPassword') || '002886';
+            if (pass === familyPass) {
+                document.getElementById('badge-role').innerText = 'Akses: ' + selectedRole;
+                document.getElementById('family-login-pass').value = '';
+                document.getElementById('family-login-error').classList.add('hidden');
+                renderFamilyData();
+                switchPage('page-family-report');
+            } else {
+                document.getElementById('family-login-error').classList.remove('hidden');
+                document.getElementById('family-login-error-text').innerText = 'Password laporan keluarga salah!';
+            }
+        }
+        function renderFamilyData() {
+            const container = document.getElementById('container-list');
+            container.innerHTML = '';
+            let total = 0;
+            if (reportData.length === 0) {
+                document.getElementById('family-empty-state').classList.remove('hidden');
+            } else {
+                document.getElementById('family-empty-state').classList.add('hidden');
+            }
+            reportData.forEach((item, index) => {
+                total += parseInt(item.jumlah || 0);
+                container.innerHTML += `
+                    <div class="bg-white border border-slate-200 p-3 rounded-xl flex justify-between items-center shadow-sm hover:shadow-md transition-all">
+                        <div class="flex-1">
+                            <h4 class="text-xs font-bold text-slate-700">${item.nama}</h4>
+                            <p class="text-[10px] text-slate-400 mt-0.5">
+                                <i class="fa-regular fa-calendar mr-1"></i>${item.tanggal} | 
+                                <i>${item.keterangan || '-'}</i>
+                            </p>
+                            <p class="text-xs font-bold text-rose-500 mt-1">Rp ${parseInt(item.jumlah).toLocaleString('id-ID')}</p>
+                        </div>
+                        <div class="flex space-x-1 ml-2">
+                            <button onclick="editFamilyData(${index})" 
+                                    class="w-7 h-7 bg-amber-50 hover:bg-amber-100 text-amber-600 rounded-lg text-xs cursor-pointer transition-all flex items-center justify-center">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button onclick="deleteFamilyData(${index})" 
+                                    class="w-7 h-7 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs cursor-pointer transition-all flex items-center justify-center">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>`;
+            });
+            document.getElementById('txt-total').innerText = 'Rp ' + total.toLocaleString('id-ID');
+            document.getElementById('txt-total-items').textContent = reportData.length + ' item';
+            document.getElementById('count-badge').textContent = reportData.length;
+            localStorage.setItem('family_reports', JSON.stringify(reportData));
+        }
         function saveData() { /* ... */ }
         function editFamilyData(index) { /* ... */ }
         function deleteFamilyData(index) { /* ... */ }
@@ -2150,9 +2259,46 @@
             if (!localStorage.getItem('raisya_familyPassword')) localStorage.setItem('raisya_familyPassword', '002886');
             if (!localStorage.getItem('raisya_bizPassword')) localStorage.setItem('raisya_bizPassword', '002886');
             if (!localStorage.getItem('raisya_credentials')) saveSystemCredentials();
+
+            // ========== ISI DATA DEFAULT JIKA DATABASE KOSONG ==========
+            if (reportData.length === 0) {
+                reportData = [
+                    { nama: "Belanja Bulanan", tanggal: "2025-01-05", jumlah: 500000, keterangan: "Kebutuhan rumah tangga" },
+                    { nama: "Bayar Listrik", tanggal: "2025-01-10", jumlah: 250000, keterangan: "Token listrik" }
+                ];
+                localStorage.setItem('family_reports', JSON.stringify(reportData));
+            }
+            Object.keys(bizDatabases).forEach(key => {
+                if (bizDatabases[key].IN.length === 0 && bizDatabases[key].OUT.length === 0) {
+                    bizDatabases[key].IN = [
+                        { nama: "Pemasukan " + systemCredentials[key].name, tanggal: "2025-01-01", jumlah: 1000000, keterangan: "Pendapatan awal" }
+                    ];
+                    bizDatabases[key].OUT = [
+                        { nama: "Pengeluaran " + systemCredentials[key].name, tanggal: "2025-01-02", jumlah: 300000, keterangan: "Biaya operasional" }
+                    ];
+                    localStorage.setItem(key.toLowerCase() + '_inbound', JSON.stringify(bizDatabases[key].IN));
+                    localStorage.setItem(key.toLowerCase() + '_outbound', JSON.stringify(bizDatabases[key].OUT));
+                }
+            });
+            if (netDatabases.pelanggan.length === 0) {
+                netDatabases.pelanggan = [
+                    { nama: "Budi Santoso", alamat: "Jl. Mawar No. 1", hp: "08123456789", siklus: "05", tagihan: 150000, tunggakan: 0, ket: "Paket 10Mbps" },
+                    { nama: "Siti Aminah", alamat: "Jl. Melati No. 5", hp: "08765432100", siklus: "10", tagihan: 200000, tunggakan: 50000, ket: "Paket 20Mbps" }
+                ];
+                localStorage.setItem('net_customers', JSON.stringify(netDatabases.pelanggan));
+            }
+            if (netDatabases.tagihan.length === 0) {
+                netDatabases.tagihan = [
+                    { nama: "Budi Santoso", tanggal: "2025-01-05", tagihan: 150000, petugas: "Dede S", metode: "Cash", status: "Terbayar", ket: "" },
+                    { nama: "Siti Aminah", tanggal: "2025-01-10", tagihan: 200000, petugas: "Petugas 2", metode: "Transfer", status: "Belum Terbayar", ket: "Menunggak" }
+                ];
+                localStorage.setItem('net_bills', JSON.stringify(netDatabases.tagihan));
+            }
+            // ========== AKHIR DATA DEFAULT ==========
+
             console.log('✅ Raisya Decoration v2.1 - Part 1 Siap!');
             console.log('👤 Multi-User System Active');
-            console.log('💾 Database: 10 Array Internet');
+            console.log('💾 Database: 10 Array Internet + Data Default');
             console.log('📱 PWA, Auth, Settings, Backup, Family CRUD loaded');
         })();
     </script>
