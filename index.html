@@ -1,223 +1,193 @@
 <!-- ===== RAISYA PRODUCTION → BLOK 1 - RAISYA DECORATION v2.0 - HEAD, META, PWA, STYLE ===== -->
 <!-- ============================================================
-     BLOK 4 - RAISYA DECORATION v2.1 - MAIN MENU PAGE
-     (User Info, PWA Banner, Role-Based Menu, Papan Informasi,
-      Tombol Copy HTML)
+     BLOK 1 - RAISYA DECORATION v2.1 - HEAD, META, PWA, STYLE
+     (PWA Enhanced - Instalasi Langsung dari Sistem HP)
      ============================================================ -->
-            <div id="page-menu" class="hidden space-y-5 page-transition">
-                
-                <!-- USER INFO & HEADER -->
-                <div class="flex justify-between items-center border-b border-slate-100 pb-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center text-white font-bold text-sm shadow-md shadow-rose-500/20">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div>
-                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Selamat Datang</span>
-                            <h2 class="text-sm font-bold text-slate-700 flex items-center gap-1">
-                                Radhika
-                                <span class="w-2 h-2 bg-emerald-500 rounded-full inline-block" title="Online"></span>
-                            </h2>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <!-- TOMBOL PENGATURAN (hanya superadmin) -->
-                        <button onclick="openSettingsModal()" 
-                                class="w-9 h-9 bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-700 rounded-xl flex items-center justify-center cursor-pointer transition-all active:scale-90"
-                                title="Pengaturan">
-                            <i class="fa-solid fa-gear text-sm"></i>
-                        </button>
-                        <!-- TOMBOL KELUAR -->
-                        <button onclick="handleLogout()" 
-                                class="text-xs font-semibold bg-slate-100 hover:bg-red-50 hover:text-red-600 text-slate-500 px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center gap-1">
-                            <i class="fa-solid fa-right-from-bracket text-[10px]"></i> Keluar
-                        </button>
-                    </div>
-                </div>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Raisya Decoration - Sistem Manajemen Laporan</title>
+    
+    <!-- META PWA -->
+    <meta name="theme-color" content="#f43f5e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Raisya Dec">
+    <meta name="description" content="Sistem Manajemen Laporan & Bisnis Raisya Decoration - Dapat diinstal langsung di HP">
+    
+    <!-- PWA MANIFEST -->
+    <link rel="manifest" href="data:application/manifest+json,{%22name%22:%22Raisya%20Decoration%20System%22,%22short_name%22:%22RaisyaDec%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22%23ffffff%22,%22theme_color%22:%22%23f43f5e%22,%22icons%22:[{%22src%22:%22https://cdn-icons-png.flaticon.com/512/3068/3068321.png%22,%22sizes%22:%22512x512%22,%22type%22:%22image/png%22}]}">
+    
+    <!-- FAVICON -->
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3068/3068321.png">
 
-                <!-- PWA INSTALL BANNER -->
-                <div id="pwa-install-banner" class="hidden bg-gradient-to-r from-amber-500 to-orange-500 text-white p-4 rounded-2xl shadow-lg flex flex-col items-center text-center gap-2 border border-amber-400 animate-pulse">
-                    <div class="flex items-center gap-2">
-                        <i class="fa-solid fa-mobile-screen-button text-xl"></i>
-                        <span class="text-xs font-black uppercase tracking-wider">Aplikasi Bisa Diinstal di HP!</span>
-                    </div>
-                    <p class="text-[11px] font-medium opacity-95">Akses sistem jauh lebih cepat, hemat kuota, dan mendukung akses penuh offline.</p>
-                    <button onclick="triggerPWAInstall()" 
-                            class="mt-1 w-full bg-white text-orange-600 hover:bg-slate-50 font-bold py-2.5 rounded-xl text-xs shadow-sm cursor-pointer transition-all active:scale-95 flex items-center justify-center gap-1">
-                        <i class="fa-solid fa-cloud-arrow-down"></i> Pasang Aplikasi Sekarang
-                    </button>
-                </div>
+    <!-- CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
-                <!-- PAPAN INFORMASI (HANYA UNTUK PELANGGAN, CS, DAN STAF) -->
-                <div id="section-papan-info" class="space-y-3 hidden">
-                    <!-- PAPAN INFORMASI MASAL -->
-                    <div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-4">
-                        <h3 class="text-xs font-extrabold text-amber-700 uppercase flex items-center gap-2 mb-2">
-                            <i class="fa-solid fa-bullhorn text-amber-500"></i> Informasi Penting
-                        </h3>
-                        <div id="info-masal-content" class="text-xs text-slate-600 leading-relaxed whitespace-pre-line">
-                            Tidak ada informasi.
-                        </div>
-                    </div>
+    <!-- CUSTOM STYLE -->
+    <style>
+        /* ========== CUSTOM SCROLLBAR ========== */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #f43f5e; border-radius: 20px; }
+        
+        /* ========== ANIMASI ========== */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        @keyframes glow { 0%, 100% { box-shadow: 0 0 10px rgba(244,63,94,0.3); } 50% { box-shadow: 0 0 25px rgba(244,63,94,0.6); } }
+        
+        .animate-fadeIn { animation: fadeIn 0.4s ease forwards; }
+        .animate-slideUp { animation: slideUp 0.5s ease forwards; }
+        .animate-pulse { animation: pulse 2s infinite; }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        .animate-glow { animation: glow 2s infinite; }
+        
+        /* ========== DARK MODE ========== */
+        body.dark { background: #0f172a; color: #e2e8f0; }
+        body.dark #main-container { background: #1e293b; border-color: #334155; }
+        body.dark .bg-slate-50 { background: #0f172a; }
+        body.dark .bg-white { background: #1e293b; }
+        body.dark .text-slate-700 { color: #e2e8f0; }
+        body.dark .text-slate-400 { color: #94a3b8; }
+        body.dark .text-slate-500 { color: #94a3b8; }
+        body.dark .text-slate-600 { color: #cbd5e1; }
+        body.dark .border-slate-100 { border-color: #334155; }
+        body.dark .border-slate-200 { border-color: #334155; }
+        body.dark .border-slate-200\/60 { border-color: rgba(51,65,85,0.6); }
+        body.dark .bg-slate-100 { background: #334155; }
+        body.dark .bg-slate-50\/50 { background: rgba(15,23,42,0.5); }
+        body.dark input, body.dark select { background: #0f172a; color: #e2e8f0; border-color: #475569; }
+        body.dark .bg-gradient-to-br.from-rose-500 { background: linear-gradient(to bottom right, #be123c, #9f1239); }
+        body.dark .bg-slate-900 { background: #020617; }
+        body.dark .from-cyan-700 { --tw-gradient-from: #0e7490; }
+        body.dark .to-slate-900 { --tw-gradient-to: #020617; }
+        body.dark .from-emerald-600 { --tw-gradient-from: #047857; }
+        body.dark .from-rose-600 { --tw-gradient-from: #be123c; }
+        body.dark .from-amber-500 { --tw-gradient-from: #b45309; }
+        body.dark .from-purple-900 { --tw-gradient-from: #4c1d95; }
+        body.dark .to-indigo-950 { --tw-gradient-to: #1e1b4b; }
+        body.dark .from-amber-600 { --tw-gradient-from: #b45309; }
+        body.dark .to-amber-800 { --tw-gradient-to: #78350f; }
+        
+        /* ========== MODAL OVERLAY ========== */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(6px);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 9999; padding: 16px;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-overlay.hidden { display: none; }
+        .modal-content {
+            background: white; border-radius: 20px; max-width: 480px; width: 100%;
+            max-height: 85vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideUp 0.35s ease;
+        }
+        body.dark .modal-content { background: #1e293b; border: 1px solid #334155; }
+        
+        /* ========== TOAST ========== */
+        .toast-container {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            z-index: 99999; max-width: 90%; pointer-events: none;
+        }
+        .toast {
+            background: #1e293b; color: #fff; padding: 12px 20px;
+            border-radius: 12px; font-size: 13px; font-weight: 600;
+            opacity: 0; transform: translateY(20px); transition: all 0.3s ease;
+            pointer-events: auto; text-align: center; margin-top: 8px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3); border-left: 4px solid #f43f5e;
+        }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .toast-success { border-left-color: #10b981; }
+        .toast-error { border-left-color: #ef4444; }
+        .toast-warning { border-left-color: #f59e0b; }
+        body.dark .toast { background: #0f172a; }
+        
+        /* ========== TRANSISI HALAMAN ========== */
+        .page-transition { animation: fadeIn 0.35s ease; }
+        
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 480px) {
+            body { padding: 8px; }
+            .modal-content { margin: 8px; border-radius: 16px; }
+        }
 
-                    <!-- PAPAN INFORMASI PRIBADI -->
-                    <div class="bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 rounded-2xl p-4">
-                        <h3 class="text-xs font-extrabold text-blue-700 uppercase flex items-center gap-2 mb-2">
-                            <i class="fa-solid fa-envelope text-blue-500"></i> Pesan Untuk Anda
-                        </h3>
-                        <div id="info-pribadi-content" class="text-xs text-slate-600 leading-relaxed whitespace-pre-line">
-                            Tidak ada pesan pribadi.
-                        </div>
-                    </div>
-                </div>
+        /* ========== STATUS KONEKSI ========== */
+        #connection-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #ef4444;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            z-index: 99999;
+            display: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            animation: fadeIn 0.3s ease;
+        }
+        #connection-status.online {
+            background: #10b981;
+        }
 
-                <!-- SHORTCUT STATS (hanya untuk superadmin, admin internet, staf) -->
-                <div id="section-stats" class="grid grid-cols-3 gap-3">
-                    <div class="bg-slate-50 rounded-xl p-3 text-center border border-slate-100">
-                        <div class="text-lg font-bold text-rose-500" id="stat-total-family">0</div>
-                        <div class="text-[9px] font-semibold text-slate-400 uppercase">Keluarga</div>
-                    </div>
-                    <div class="bg-slate-50 rounded-xl p-3 text-center border border-slate-100">
-                        <div class="text-lg font-bold text-purple-500" id="stat-total-biz">0</div>
-                        <div class="text-[9px] font-semibold text-slate-400 uppercase">Bisnis</div>
-                    </div>
-                    <div class="bg-slate-50 rounded-xl p-3 text-center border border-slate-100">
-                        <div class="text-lg font-bold text-cyan-500" id="stat-total-internet">0</div>
-                        <div class="text-[9px] font-semibold text-slate-400 uppercase">Internet</div>
-                    </div>
-                </div>
+        /* ========== GRADIENT TEXT ========== */
+        .gradient-text {
+            background: linear-gradient(to right, #f43f5e, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-                <!-- MENU LAPORAN (hanya untuk superadmin, admin internet, staf) -->
-                <div id="section-menu-laporan" class="space-y-1.5">
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-1">Menu Laporan</p>
-                    
-                    <!-- 1. LAPORAN KELUARGA -->
-                    <button onclick="openFamilyReportConf()" 
-                            class="group w-full flex items-center p-3.5 bg-slate-50 hover:bg-rose-50/40 border border-slate-200 hover:border-rose-300 rounded-xl transition-all text-left cursor-pointer active:scale-[0.98]">
-                        <div class="w-9 h-9 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform shadow-sm">
-                            <i class="fa-solid fa-house-chimney"></i>
-                        </div>
-                        <div class="ml-3 flex-1">
-                            <div class="font-semibold text-slate-700 group-hover:text-rose-600 text-xs uppercase tracking-wide">Laporan Keuangan Keluarga</div>
-                            <div class="text-[10px] text-slate-400 font-medium">Pengeluaran rumah tangga</div>
-                        </div>
-                        <i class="fa-solid fa-chevron-right text-slate-300 group-hover:text-rose-400 text-[10px]"></i>
-                    </button>
-                    
-                    <!-- 2. BISNIS RUMAH HANTU -->
-                    <button onclick="openBizLogin('GHOST')" 
-                            class="group w-full flex items-center p-3.5 bg-slate-50 hover:bg-purple-50/40 border border-slate-200 hover:border-purple-300 rounded-xl transition-all text-left cursor-pointer active:scale-[0.98]">
-                        <div class="w-9 h-9 rounded-xl bg-purple-500/10 text-purple-600 flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform shadow-sm">
-                            <i class="fa-solid fa-ghost"></i>
-                        </div>
-                        <div class="ml-3 flex-1">
-                            <div class="font-semibold text-slate-700 group-hover:text-purple-600 text-xs uppercase tracking-wide">Laporan Bisnis Rumah Hantu</div>
-                            <div class="text-[10px] text-slate-400 font-medium">Anggaran masuk & keluar</div>
-                        </div>
-                        <i class="fa-solid fa-chevron-right text-slate-300 group-hover:text-purple-400 text-[10px]"></i>
-                    </button>
-                    
-                    <!-- 3. BISNIS PLAYGROUND -->
-                    <button onclick="openBizLogin('PLAYGROUND')" 
-                            class="group w-full flex items-center p-3.5 bg-slate-50 hover:bg-amber-50/40 border border-slate-200 hover:border-amber-300 rounded-xl transition-all text-left cursor-pointer active:scale-[0.98]">
-                        <div class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform shadow-sm">
-                            <i class="fa-solid fa-gamepad"></i>
-                        </div>
-                        <div class="ml-3 flex-1">
-                            <div class="font-semibold text-slate-700 group-hover:text-amber-600 text-xs uppercase tracking-wide">Laporan Bisnis Playground</div>
-                            <div class="text-[10px] text-slate-400 font-medium">Anggaran masuk & keluar</div>
-                        </div>
-                        <i class="fa-solid fa-chevron-right text-slate-300 group-hover:text-amber-400 text-[10px]"></i>
-                    </button>
-                    
-                    <!-- 4. BISNIS RAISYA DECORATION -->
-                    <button onclick="openBizLogin('RAISYA_DEC')" 
-                            class="group w-full flex items-center p-3.5 bg-slate-50 hover:bg-rose-50/40 border border-slate-200 hover:border-rose-300 rounded-xl transition-all text-left cursor-pointer active:scale-[0.98]">
-                        <div class="w-9 h-9 rounded-xl bg-rose-500/10 text-rose-600 flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform shadow-sm">
-                            <i class="fa-solid fa-paint-roller"></i>
-                        </div>
-                        <div class="ml-3 flex-1">
-                            <div class="font-semibold text-slate-700 group-hover:text-rose-600 text-xs uppercase tracking-wide">Laporan Bisnis Raisya Decoration</div>
-                            <div class="text-[10px] text-slate-400 font-medium">Anggaran masuk & keluar</div>
-                        </div>
-                        <i class="fa-solid fa-chevron-right text-slate-300 group-hover:text-rose-400 text-[10px]"></i>
-                    </button>
-                    
-                    <!-- 5. BISNIS INTERNET -->
-                    <button onclick="openBizLogin('INTERNET')" 
-                            class="group w-full flex items-center p-3.5 bg-slate-50 hover:bg-cyan-50/40 border border-slate-200 hover:border-cyan-300 rounded-xl transition-all text-left cursor-pointer active:scale-[0.98]">
-                        <div class="w-9 h-9 rounded-xl bg-cyan-500/10 text-cyan-600 flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform shadow-sm">
-                            <i class="fa-solid fa-wifi"></i>
-                        </div>
-                        <div class="ml-3 flex-1">
-                            <div class="font-semibold text-slate-700 group-hover:text-cyan-600 text-xs uppercase tracking-wide">Laporan Bisnis Internet</div>
-                            <div class="text-[10px] text-slate-400 font-medium">Pelanggan, tagihan, keuangan</div>
-                        </div>
-                        <i class="fa-solid fa-chevron-right text-slate-300 group-hover:text-cyan-400 text-[10px]"></i>
-                    </button>
-                    
-                    <!-- 6. REKAP SEMUA -->
-                    <button onclick="openBizLogin('REKAP')" 
-                            class="group w-full flex items-center p-3.5 bg-slate-50 hover:bg-emerald-50/40 border border-slate-200 hover:border-emerald-300 rounded-xl transition-all text-left cursor-pointer active:scale-[0.98]">
-                        <div class="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform shadow-sm">
-                            <i class="fa-solid fa-chart-pie"></i>
-                        </div>
-                        <div class="ml-3 flex-1">
-                            <div class="font-semibold text-slate-700 group-hover:text-emerald-600 text-xs uppercase tracking-wide">Rekap Semua Laporan</div>
-                            <div class="text-[10px] text-slate-400 font-medium">Dashboard eksekutif global</div>
-                        </div>
-                        <i class="fa-solid fa-chevron-right text-slate-300 group-hover:text-emerald-400 text-[10px]"></i>
-                    </button>
-                </div>
+        /* ========== TOMBOL COPY HTML ========== */
+        .btn-copy-html {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-size: 0.75rem;
+            background: #f43f5e;
+            color: #fff;
+            transition: all 0.2s;
+        }
+        .btn-copy-html:hover {
+            background: #e11d48;
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex items-center justify-center font-sans antialiased text-slate-800 p-4 selection:bg-rose-500 selection:text-white">
 
-                <!-- MENU PELANGGAN & CUSTOMER SERVICE (hanya untuk role tersebut) -->
-                <div id="section-menu-cs" class="space-y-1.5 hidden">
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-1">Menu Layanan</p>
-                    
-                    <!-- KENDALA INTERNET -->
-                    <button onclick="switchPage('page-kendala')" 
-                            class="group w-full flex items-center p-3.5 bg-slate-50 hover:bg-red-50/40 border border-slate-200 hover:border-red-300 rounded-xl transition-all text-left cursor-pointer active:scale-[0.98]">
-                        <div class="w-9 h-9 rounded-xl bg-red-500/10 text-red-600 flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform shadow-sm">
-                            <i class="fa-solid fa-triangle-exclamation"></i>
-                        </div>
-                        <div class="ml-3 flex-1">
-                            <div class="font-semibold text-slate-700 group-hover:text-red-600 text-xs uppercase tracking-wide">Kendala Internet</div>
-                            <div class="text-[10px] text-slate-400 font-medium">Laporkan masalah internet</div>
-                        </div>
-                        <i class="fa-solid fa-chevron-right text-slate-300 group-hover:text-red-400 text-[10px]"></i>
-                    </button>
-                    
-                    <!-- CHAT CUST SERVICE -->
-                    <button onclick="switchPage('page-cust-chat-list')" 
-                            class="group w-full flex items-center p-3.5 bg-slate-50 hover:bg-indigo-50/40 border border-slate-200 hover:border-indigo-300 rounded-xl transition-all text-left cursor-pointer active:scale-[0.98]">
-                        <div class="w-9 h-9 rounded-xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform shadow-sm">
-                            <i class="fa-solid fa-headset"></i>
-                        </div>
-                        <div class="ml-3 flex-1">
-                            <div class="font-semibold text-slate-700 group-hover:text-indigo-600 text-xs uppercase tracking-wide">Chat Cust Service</div>
-                            <div class="text-[10px] text-slate-400 font-medium">Hubungi tim support</div>
-                        </div>
-                        <i class="fa-solid fa-chevron-right text-slate-300 group-hover:text-indigo-400 text-[10px]"></i>
-                    </button>
-                </div>
+    <!-- STATUS KONEKSI -->
+    <div id="connection-status">Offline</div>
 
-                <!-- TOMBOL COPY HTML -->
-                <div class="text-center pt-2 border-t border-slate-100">
-                    <button onclick="downloadCurrentPage('raisya_menu.html')" 
-                            class="text-xs font-medium text-slate-400 hover:text-indigo-500 cursor-pointer transition-colors">
-                        <i class="fa-solid fa-download mr-1"></i> Copy HTML (Download Halaman)
-                    </button>
-                </div>
+    <!-- TOAST CONTAINER -->
+    <div id="toastContainer" class="toast-container"></div>
 
-                <!-- FOOTER MENU -->
-                <div class="text-center pt-2">
-                    <p class="text-[10px] text-slate-400">
-                        <i class="fa-solid fa-circle-check text-emerald-500 mr-1"></i> 
-                        Semua data tersimpan aman di perangkat Anda
-                    </p>
-                </div>
-            </div>
-<!-- END BLOK 4 -->
+    <div id="main-container" class="w-full max-w-md bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden transition-all duration-300">
+        
+        <!-- HEADER APP -->
+        <div class="bg-gradient-to-br from-rose-500 to-pink-600 p-7 text-center text-white relative">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
+            <div class="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full blur-xl -ml-8 -mb-8"></div>
+            <h1 class="text-2xl font-extrabold tracking-wider uppercase drop-shadow-md relative z-10">Raisya Decoration</h1>
+            <p id="app-subtitle" class="text-rose-100 text-xs mt-1 font-medium relative z-10">Sistem Manajemen Laporan & Bisnis</p>
+        </div>
+
+        <div class="p-6 relative">
+<!-- END BLOK 1 -->
 
 
 <!-- ===== RAISYA PRODUCTION → BLOK 2 - RAISYA DECORATION v2.0 - LOGIN PAGE ===== -->
