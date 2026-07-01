@@ -1673,11 +1673,10 @@
 
 <!-- ===== RAISYA PRODUCTION → BLOK 11 R2 - RAISYA DECORATION v2.0 - JAVASCRIPT ENGINE PART 1 ===== -->
 <!-- ============================================================
-     BLOK 11 R2 - RAISYA DECORATION v2.1 - JAVASCRIPT PART 1
+     BLOK 11 - RAISYA DECORATION v2.1 - JAVASCRIPT PART 1
      (PWA, Toast, Theme, Multi-User Auth, Navigation, Settings,
-      Backup, Reset, Family CRUD, Database Baru)
-     REVISI FINAL: Service Worker Offline, systemCredentials,
-     changeReportPasswords, Jabatan Manual
+      Backup, Reset, Family CRUD, Database Baru, Manajemen Akun)
+     SUPER LENGKAP - Semua fungsi CRUD staf & perbaikan render
      ============================================================ -->
     <script>
         // ========== PWA SERVICE WORKER (OFFLINE CACHE) ==========
@@ -1717,9 +1716,7 @@
                                 });
                             }
                             return response;
-                        }).catch(() => {
-                            // Fallback jika offline dan tidak ada di cache
-                        });
+                        }).catch(() => {});
                     })
                 );
             });
@@ -1931,6 +1928,7 @@
                 document.getElementById('pwa-install-banner').classList.remove('hidden');
             }
 
+            // Role-based menu access
             if (pageId === 'page-menu' && currentUser) {
                 const isSuperadmin = currentUser.role === 'superadmin';
                 const isStafInternet = currentUser.role === 'staf_internet';
@@ -2278,6 +2276,7 @@
                 return;
             }
 
+            // Cek duplikasi username (kecuali saat edit username yang sama)
             const dup = users.find(u => u.username === username && (idx === -1 || users[idx].username !== username));
             if (dup) {
                 showToast('⚠️ Username sudah digunakan!', 'error');
@@ -2289,13 +2288,16 @@
                 password,
                 words,
                 nama,
-                email: '',
+                email: '', // staf mungkin tidak perlu email
                 hp,
                 role,
                 status,
                 alamat,
                 nomor,
-                jabatan: jabatan || '' // Diisi manual oleh superadmin
+                jabatan: role === 'staf_rumah_hantu' ? 'Staf Rumah Hantu' :
+                          role === 'staf_playground' ? 'Staf Playground' :
+                          role === 'staf_raisya_dec' ? 'Staf Raisya Decoration' :
+                          role === 'staf_internet' ? 'Staf Internet' : jabatan
             };
 
             if (idx === -1) {
@@ -2315,6 +2317,11 @@
             if (!currentUser || currentUser.role !== 'superadmin') return;
             const u = users[index];
             if (!u) return;
+            // Jangan izinkan edit superadmin utama dari sini
+            if (u.role === 'superadmin') {
+                showToast('❌ Gunakan menu Password untuk mengubah akun superadmin.', 'error');
+                return;
+            }
             document.getElementById('edit-akun-index').value = index;
             document.getElementById('akun-nama').value = u.nama || '';
             document.getElementById('akun-alamat').value = u.alamat || '';
@@ -2381,7 +2388,7 @@
             container.innerHTML = '';
             let count = 0;
             users.forEach((u, i) => {
-                if (u.role === 'superadmin') return;
+                if (u.role === 'superadmin') return; // jangan tampilkan superadmin di daftar
                 count++;
                 const statusBadge = u.status === 'aktif' 
                     ? '<span class="bg-emerald-100 text-emerald-700 text-[9px] font-bold px-1.5 py-0.5 rounded">AKTIF</span>'
@@ -2618,6 +2625,7 @@
                 return;
             }
 
+            // Reset users ke default superadmin saja
             users = [
                 {
                     username: "Radhika",
@@ -2635,15 +2643,7 @@
             ];
             saveUsers();
 
-            systemCredentials = {
-                GHOST: { user: "RumahHantu", pass: "002886", name: "Rumah Hantu", theme: "purple" },
-                PLAYGROUND: { user: "Playground", pass: "002886", name: "Playground", theme: "amber" },
-                RAISYA_DEC: { user: "RaisyaDecoration", pass: "002886", name: "Raisya Decoration", theme: "rose" },
-                INTERNET: { user: "Internet", pass: "002886", name: "Internet", theme: "cyan" },
-                REKAP: { user: "Rekap", pass: "002886", name: "Rekap Semua Laporan", theme: "emerald" }
-            };
-            saveSystemCredentials();
-
+            // Reset databases
             localStorage.removeItem('family_reports');
             localStorage.removeItem('ghost_inbound');
             localStorage.removeItem('ghost_outbound');
@@ -2843,10 +2843,9 @@
             console.log('👤 Multi-User System Active');
             console.log('💾 Database: 10 Array Internet');
             console.log('📱 PWA, Auth, Settings, Backup, Family CRUD loaded');
-            console.log('📦 Service Worker Offline Cache Ready');
         })();
     </script>
-<!-- END BLOK 11 R2 -->
+<!-- END BLOK 11 -->
 
 
 <!-- ===== RAISYA PRODUCTION → BLOK 12 - RAISYA DECORATION v2.1 - JAVASCRIPT PART 2a ===== -->
@@ -3163,7 +3162,7 @@
 <!-- ============================================================
      BLOK 13 - RAISYA DECORATION v2.1 - JAVASCRIPT PART 2b
      (Internet Sub 1-20: Form Input, Render Data, Edit, Hapus, Export)
-     PERBAIKAN FINAL: Tombol Edit & Hapus muncul untuk Superadmin
+     SUPER LENGKAP - Tombol Edit & Hapus untuk Superadmin di semua sub
      ============================================================ -->
     <script>
         // ========== JALUR INTERNET (SUB 1-20) ==========
@@ -3816,7 +3815,7 @@
                 else if (item.status === 'Belum Terbayar') label = '<span class="bg-red-100 text-red-700 text-[9px] font-bold px-1.5 py-0.5 rounded">BELUM</span>';
                 if (pelanggan && pelanggan.siklus) label += ` <span class="bg-cyan-100 text-cyan-700 text-[9px] font-bold px-1.5 py-0.5 rounded">Tgl ${pelanggan.siklus}</span>`;
 
-                // 🔥 PERBAIKAN: Superadmin bisa edit & hapus di sub 1-10 dan 19
+                // 🔥 PERBAIKAN: Superadmin bisa edit & hapus di SEMUA sub 1-10 dan 19
                 const showActions = isSuperadmin && (activeNetSub <= 10 || activeNetSub === 19);
                 const actionButtons = showActions ? `
                     <div class="flex space-x-1 ml-2">
@@ -3831,7 +3830,7 @@
                                 <h4 class="font-bold text-slate-700">${item.nama}</h4>
                                 ${label}
                             </div>
-                            <p class="text-[10px] text-slate-400 mt-0.5">${item.tanggal || ''} ${item.petugas ? '| ' + item.petugas : ''} ${item.metode ? '| ' + item.metode : ''} ${item.ket ? '| ' + item.ket : ''} ${item.keterangan ? '| ' + item.keterangan : ''}</p>
+                            <p class="text-[10px] text-slate-400 mt-0.5">${item.tanggal || ''} ${item.alamat ? '| ' + item.alamat : ''} ${item.petugas ? '| ' + item.petugas : ''} ${item.ket ? '| ' + item.ket : ''} ${item.keterangan ? '| ' + item.keterangan : ''}</p>
                             <p class="text-cyan-600 font-extrabold mt-0.5">Rp ${amt.toLocaleString('id-ID')}</p>
                         </div>
                         ${actionButtons}
@@ -4061,7 +4060,7 @@
             showToast('✅ Excel berhasil didownload!', 'success');
         }
 
-        console.log('✅ Blok 13 FINAL – Semua Form Input + Render Data + Edit + Hapus + Export (Sub 1-20) siap');
+        console.log('✅ Blok 13 SUPER LENGKAP – Semua Form Input + Render Data + Edit + Hapus + Export (Sub 1-20) siap');
     </script>
 <!-- END BLOK 13 -->
 
