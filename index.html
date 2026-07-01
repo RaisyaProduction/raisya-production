@@ -3449,547 +3449,601 @@
 
 <!-- ===== RAISYA PRODUCTION → BLOK 15 - RAISYA DECORATION v2.1 - HALAMAN DAFTAR CHAT ===== -->
 <!-- ============================================================
-     BLOK 15 - RAISYA DECORATION v2.1 - HALAMAN DAFTAR CHAT
-     (Daftar Kontak Chat untuk Superadmin & Staf)
+     BLOK 15 - RAISYA DECORATION v2.1 - HALAMAN KENDALA INTERNET
+     (Form Pengaduan + Upload Foto + Riwayat)
      ============================================================ -->
-            <div id="page-chat-list" class="hidden space-y-4 page-transition">
-                
-                <!-- HEADER -->
-                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                    <div>
-                        <span class="px-2 py-0.5 text-[9px] font-extrabold bg-indigo-100 text-indigo-700 rounded-full uppercase tracking-wider">
-                            <i class="fa-solid fa-comments mr-1"></i> Komunikasi
-                        </span>
-                        <h2 class="text-md font-bold text-slate-700 mt-0.5 flex items-center gap-2">
-                            <i class="fa-solid fa-comments text-indigo-500"></i> Chat Staf
-                        </h2>
-                    </div>
-                    <button onclick="switchPage('page-menu')" 
-                            class="text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-1.5 rounded-lg transition-all cursor-pointer">
-                        <i class="fa-solid fa-house mr-1"></i> Menu
-                    </button>
-                </div>
+<div id="page-kendala" class="hidden space-y-4 page-transition">
+    <!-- HEADER -->
+    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+        <div>
+            <span class="px-2 py-0.5 text-[9px] font-extrabold bg-red-100 text-red-700 rounded-full uppercase tracking-wider">Kendala</span>
+            <h2 class="text-md font-bold text-slate-700 mt-0.5 flex items-center gap-2">
+                <i class="fa-solid fa-triangle-exclamation text-red-500"></i> Kendala Internet
+            </h2>
+        </div>
+        <button onclick="switchPage('page-menu')" class="text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-1.5 rounded-lg transition-all cursor-pointer">
+            <i class="fa-solid fa-house mr-1"></i> Menu
+        </button>
+    </div>
 
-                <!-- FILTER BISNIS (KHUSUS SUPERADMIN) -->
-                <div id="chat-biz-filter" class="hidden bg-slate-100 p-1.5 rounded-xl">
-                    <p class="text-[9px] font-bold text-slate-400 uppercase px-1 mb-1">Filter Bisnis</p>
-                    <div class="flex gap-1.5 flex-wrap">
-                        <button onclick="filterChatList('all')" id="chat-filter-all"
-                                class="px-3 py-1.5 rounded-lg text-[10px] font-bold bg-white text-indigo-600 shadow-sm transition-all cursor-pointer">
-                            Semua
-                        </button>
-                        <button onclick="filterChatList('GHOST')" id="chat-filter-ghost"
-                                class="px-3 py-1.5 rounded-lg text-[10px] font-bold text-slate-500 hover:bg-slate-200/50 transition-all cursor-pointer">
-                            <i class="fa-solid fa-ghost mr-1"></i> Rumah Hantu
-                        </button>
-                        <button onclick="filterChatList('PLAYGROUND')" id="chat-filter-playground"
-                                class="px-3 py-1.5 rounded-lg text-[10px] font-bold text-slate-500 hover:bg-slate-200/50 transition-all cursor-pointer">
-                            <i class="fa-solid fa-gamepad mr-1"></i> Playground
-                        </button>
-                        <button onclick="filterChatList('RAISYA_DEC')" id="chat-filter-dec"
-                                class="px-3 py-1.5 rounded-lg text-[10px] font-bold text-slate-500 hover:bg-slate-200/50 transition-all cursor-pointer">
-                            <i class="fa-solid fa-paint-roller mr-1"></i> Raisya Dec
-                        </button>
-                        <button onclick="filterChatList('INTERNET')" id="chat-filter-internet"
-                                class="px-3 py-1.5 rounded-lg text-[10px] font-bold text-slate-500 hover:bg-slate-200/50 transition-all cursor-pointer">
-                            <i class="fa-solid fa-wifi mr-1"></i> Internet
-                        </button>
-                    </div>
-                </div>
+    <!-- FORM PENGADUAN -->
+    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+        <h3 class="text-xs font-bold text-slate-500 uppercase flex items-center gap-2">
+            <i class="fa-solid fa-pen-to-square text-red-500"></i> Form Pengaduan
+        </h3>
 
-                <!-- TOMBOL CHAT MASSAL (KHUSUS SUPERADMIN) -->
-                <div id="chat-massal-container" class="hidden">
-                    <button onclick="openMassalChat()" 
-                            class="w-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md shadow-indigo-500/20 active:scale-[0.97] transition-all cursor-pointer flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-bullhorn"></i> Kirim Pesan Massal ke Semua Staf
-                    </button>
-                </div>
+        <!-- KETERANGAN KENDALA -->
+        <div>
+            <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Kendala Internet *</label>
+            <textarea id="kendala-text" rows="3" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-all resize-none" placeholder="Jelaskan kendala Anda..."></textarea>
+        </div>
 
-                <!-- DAFTAR KONTAK -->
-                <div class="space-y-1.5">
-                    <h3 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider flex items-center gap-2 px-1">
-                        <i class="fa-solid fa-address-book text-indigo-400"></i> Daftar Kontak
-                        <span id="chat-contact-count" class="bg-indigo-100 text-indigo-600 px-2 py-0.5 rounded-full text-[9px]">0</span>
-                    </h3>
-                    <div id="chat-contact-list" class="space-y-1.5 max-h-[400px] overflow-y-auto pr-1">
-                        <div class="text-center text-slate-400 py-6 text-xs italic">Memuat kontak...</div>
-                    </div>
-                    
-                    <div id="chat-empty-state" class="text-center py-8 hidden">
-                        <div class="text-4xl mb-2">💬</div>
-                        <p class="text-xs text-slate-400 font-medium">Belum ada kontak chat</p>
-                        <p class="text-[10px] text-slate-400 mt-1">Staf akan muncul di sini</p>
-                    </div>
-                </div>
+        <!-- UPLOAD FOTO -->
+        <div>
+            <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Lampirkan Foto (opsional, maks 1)</label>
+            <input type="file" id="kendala-foto" accept="image/*" onchange="previewKendalaFoto(this)" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-red-50 file:text-red-600 hover:file:bg-red-100 transition-all">
+            <!-- PRATINJAU FOTO -->
+            <div id="kendala-preview" class="mt-2 hidden">
+                <img id="kendala-preview-img" class="max-w-full h-auto rounded-lg border border-slate-200" style="max-height:200px;">
+                <button onclick="removeKendalaFoto()" class="mt-1 text-xs text-red-500 hover:text-red-700 cursor-pointer">
+                    <i class="fa-solid fa-xmark mr-1"></i> Hapus Foto
+                </button>
             </div>
+            <p class="text-[9px] text-slate-400 mt-1">
+                <i class="fa-solid fa-circle-info mr-1"></i> Maksimal 1 foto, ukuran ≤ 2MB.
+            </p>
+        </div>
+
+        <!-- TOMBOL KIRIM -->
+        <button onclick="kirimKendala()" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-xl text-xs transition-all active:scale-95 cursor-pointer shadow-md flex items-center justify-center gap-2">
+            <i class="fa-solid fa-paper-plane"></i> Kirim Pengaduan
+        </button>
+
+        <!-- LINK CHAT CUST SERVICE -->
+        <div class="text-center">
+            <button onclick="switchPage('page-chat-list')" class="text-xs font-medium text-indigo-500 hover:text-indigo-700 cursor-pointer transition-colors">
+                <i class="fa-solid fa-headset mr-1"></i> Chat Cust Service
+            </button>
+        </div>
+    </div>
+
+    <!-- RIWAYAT PENGADUAN -->
+    <div class="pt-2 border-t border-slate-200">
+        <h4 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-clock-rotate-left text-red-400"></i> Riwayat Pengaduan Saya
+            <span id="kendala-count-badge" class="bg-red-100 text-red-600 px-2 py-0.5 rounded-full text-[9px]">0</span>
+        </h4>
+        <div id="riwayat-kendala" class="space-y-2 max-h-[300px] overflow-y-auto pr-1">
+            <div class="text-center text-slate-400 py-4 text-xs italic">Belum ada pengaduan.</div>
+        </div>
+    </div>
+</div>
 <!-- END BLOK 15 -->
 
 
 <!-- ===== RAISYA PRODUCTION → BLOK 16 - RAISYA DECORATION v2.1 - HALAMAN PERCAKAPAN CHAT ===== -->
 <!-- ============================================================
-     BLOK 16 - RAISYA DECORATION v2.1 - HALAMAN PERCAKAPAN CHAT
-     (Bubble Chat, Input Pesan, Kirim)
+     BLOK 16 - RAISYA DECORATION v2.1 - CHAT CUST SERVICE PELANGGAN
+     (End-to-end, hanya dengan Admin / Staf + Copy HTML)
      ============================================================ -->
-            <div id="page-chat-conversation" class="hidden space-y-4 page-transition">
-                
-                <!-- HEADER -->
-                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                    <div class="flex items-center gap-3">
-                        <button onclick="backToChatList()" 
-                                class="w-8 h-8 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg flex items-center justify-center cursor-pointer transition-all">
-                            <i class="fa-solid fa-arrow-left text-xs"></i>
-                        </button>
-                        <div>
-                            <h2 id="chat-contact-name" class="text-sm font-bold text-slate-700">Nama Kontak</h2>
-                            <p id="chat-contact-id" class="text-[10px] text-slate-400">ID: ---</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <!-- INDIKATOR ONLINE -->
-                        <span class="w-2 h-2 bg-emerald-500 rounded-full" title="Online"></span>
-                        <span class="text-[10px] text-slate-400">Online</span>
-                    </div>
-                </div>
+<div id="page-cust-chat-list" class="hidden space-y-4 page-transition">
+    <!-- HEADER -->
+    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+        <div>
+            <span class="px-2 py-0.5 text-[9px] font-extrabold bg-indigo-100 text-indigo-700 rounded-full uppercase tracking-wider">
+                <i class="fa-solid fa-headset mr-1"></i> Cust Service
+            </span>
+            <h2 class="text-md font-bold text-slate-700 mt-0.5 flex items-center gap-2">
+                <i class="fa-solid fa-comments text-indigo-500"></i> Chat Bantuan
+            </h2>
+        </div>
+        <button onclick="switchPage('page-menu')" class="text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-1.5 rounded-lg transition-all cursor-pointer">
+            <i class="fa-solid fa-house mr-1"></i> Menu
+        </button>
+    </div>
 
-                <!-- AREA PERCAKAPAN -->
-                <div id="chat-messages-container" class="space-y-3 max-h-[350px] overflow-y-auto pr-1 bg-slate-50 rounded-2xl p-4 border border-slate-100" style="min-height: 300px;">
-                    <div class="text-center text-slate-400 py-6 text-xs italic">Belum ada pesan</div>
-                </div>
+    <!-- DAFTAR KONTAK CUST SERVICE -->
+    <div class="space-y-1.5">
+        <h3 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider flex items-center gap-2 px-1">
+            <i class="fa-solid fa-address-book text-indigo-400"></i> Tim Support
+            <span id="cust-contact-count" class="bg-indigo-100 text-indigo-600 px-2 py-0.5 rounded-full text-[9px]">0</span>
+        </h3>
+        <div id="cust-contact-list" class="space-y-1.5 max-h-[400px] overflow-y-auto pr-1">
+            <div class="text-center text-slate-400 py-6 text-xs italic">Memuat kontak...</div>
+        </div>
+        <div id="cust-empty-state" class="text-center py-8 hidden">
+            <div class="text-4xl mb-2">💬</div>
+            <p class="text-xs text-slate-400 font-medium">Belum ada kontak support</p>
+            <p class="text-[10px] text-slate-400 mt-1">Silakan hubungi admin untuk bantuan.</p>
+        </div>
+    </div>
 
-                <!-- INPUT PESAN -->
-                <div class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-2xl p-2">
-                    <input type="text" id="chat-message-input" 
-                           class="flex-1 bg-transparent border-none outline-none text-xs px-2 py-2"
-                           placeholder="Ketik pesan..."
-                           onkeydown="if(event.key==='Enter')sendChatMessage()">
-                    <button onclick="sendChatMessage()" 
-                            class="w-9 h-9 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl flex items-center justify-center cursor-pointer transition-all active:scale-90 shadow-md">
-                        <i class="fa-solid fa-paper-plane text-xs"></i>
-                    </button>
-                </div>
+    <!-- TOMBOL COPY HTML -->
+    <div style="text-align:center;margin:30px 0;">
+        <button class="btn btn-lg" style="background:var(--accent-primary);color:#fff;" onclick="downloadCurrentPage('raisya_cust_chat_list.html')">
+            ⬇️ Copy HTML (Download Halaman)
+        </button>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-top:8px;">Simpan halaman ini sebagai file .html untuk offline.</p>
+    </div>
+</div>
 
-                <!-- INFO CHAT -->
-                <p class="text-[9px] text-slate-400 text-center">
-                    <i class="fa-solid fa-shield-halved mr-1"></i> 
-                    Pesan tersimpan aman di perangkat Anda
-                </p>
+<!-- HALAMAN PERCAKAPAN CUST SERVICE -->
+<div id="page-cust-conversation" class="hidden space-y-4 page-transition">
+    <!-- HEADER -->
+    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-3">
+            <button onclick="backToCustChatList()" class="w-8 h-8 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg flex items-center justify-center cursor-pointer transition-all">
+                <i class="fa-solid fa-arrow-left text-xs"></i>
+            </button>
+            <div>
+                <h2 id="cust-contact-name" class="text-sm font-bold text-slate-700">Nama Kontak</h2>
+                <p id="cust-contact-id" class="text-[10px] text-slate-400">ID: ---</p>
             </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="w-2 h-2 bg-emerald-500 rounded-full" title="Online"></span>
+            <span class="text-[10px] text-slate-400">Online</span>
+        </div>
+    </div>
+
+    <!-- AREA PERCAKAPAN -->
+    <div id="cust-messages-container" class="space-y-3 max-h-[350px] overflow-y-auto pr-1 bg-slate-50 rounded-2xl p-4 border border-slate-100" style="min-height: 300px;">
+        <div class="text-center text-slate-400 py-6 text-xs italic">Belum ada pesan</div>
+    </div>
+
+    <!-- INPUT PESAN -->
+    <div class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-2xl p-2">
+        <input type="text" id="cust-message-input" class="flex-1 bg-transparent border-none outline-none text-xs px-2 py-2"
+               placeholder="Ketik pesan..." onkeydown="if(event.key==='Enter')sendCustMessage()">
+        <button onclick="sendCustMessage()" class="w-9 h-9 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl flex items-center justify-center cursor-pointer transition-all active:scale-90 shadow-md">
+            <i class="fa-solid fa-paper-plane text-xs"></i>
+        </button>
+    </div>
+
+    <!-- INFO -->
+    <p class="text-[9px] text-slate-400 text-center">
+        <i class="fa-solid fa-shield-halved mr-1"></i> 
+        Percakapan hanya terlihat oleh Anda dan Cust Service.
+    </p>
+
+    <!-- TOMBOL COPY HTML -->
+    <div style="text-align:center;margin:30px 0;">
+        <button class="btn btn-lg" style="background:var(--accent-primary);color:#fff;" onclick="downloadCurrentPage('raisya_cust_conv.html')">
+            ⬇️ Copy HTML (Download Halaman)
+        </button>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-top:8px;">Simpan halaman ini sebagai file .html untuk offline.</p>
+    </div>
+</div>
 <!-- END BLOK 16 -->
 
 
 <!-- ===== RAISYA PRODUCTION → BLOK 17 - RAISYA DECORATION v2.1 - JAVASCRIPT CHAT ===== -->
 <!-- ============================================================
-     BLOK 17 - RAISYA DECORATION v2.1 - JAVASCRIPT CHAT
-     (Database Chat, Render Daftar, Render Percakapan, Kirim Pesan)
+     BLOK 17 - RAISYA DECORATION v2.1 - CHAT CUST SERVICE PELANGGAN
+     (End-to-end, hanya dengan Admin / Staf + Copy HTML)
      ============================================================ -->
-    <script>
-        // ========== DATABASE CHAT ==========
-        let chatDatabase = JSON.parse(localStorage.getItem('raisya_chats')) || {};
+<div id="page-cust-chat-list" class="hidden space-y-4 page-transition">
+    <!-- HEADER -->
+    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+        <div>
+            <span class="px-2 py-0.5 text-[9px] font-extrabold bg-indigo-100 text-indigo-700 rounded-full uppercase tracking-wider">
+                <i class="fa-solid fa-headset mr-1"></i> Cust Service
+            </span>
+            <h2 class="text-md font-bold text-slate-700 mt-0.5 flex items-center gap-2">
+                <i class="fa-solid fa-comments text-indigo-500"></i> Chat Bantuan
+            </h2>
+        </div>
+        <button onclick="switchPage('page-menu')" class="text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-1.5 rounded-lg transition-all cursor-pointer">
+            <i class="fa-solid fa-house mr-1"></i> Menu
+        </button>
+    </div>
 
-        function saveChatDatabase() {
-            localStorage.setItem('raisya_chats', JSON.stringify(chatDatabase));
-        }
+    <!-- DAFTAR KONTAK CUST SERVICE -->
+    <div class="space-y-1.5">
+        <h3 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider flex items-center gap-2 px-1">
+            <i class="fa-solid fa-address-book text-indigo-400"></i> Tim Support
+            <span id="cust-contact-count" class="bg-indigo-100 text-indigo-600 px-2 py-0.5 rounded-full text-[9px]">0</span>
+        </h3>
+        <div id="cust-contact-list" class="space-y-1.5 max-h-[400px] overflow-y-auto pr-1">
+            <div class="text-center text-slate-400 py-6 text-xs italic">Memuat kontak...</div>
+        </div>
+        <div id="cust-empty-state" class="text-center py-8 hidden">
+            <div class="text-4xl mb-2">💬</div>
+            <p class="text-xs text-slate-400 font-medium">Belum ada kontak support</p>
+            <p class="text-[10px] text-slate-400 mt-1">Silakan hubungi admin untuk bantuan.</p>
+        </div>
+    </div>
 
-        // ========== GENERATE ID STAF ==========
-        function generateStaffId(user) {
-            if (!user || user.role === 'superadmin') return 'SA-001';
-            const prefixMap = {
-                'staf_rumah_hantu': 'RH',
-                'staf_playground': 'PG',
-                'staf_raisya_dec': 'RD',
-                'staf_internet': 'IN'
-            };
-            const prefix = prefixMap[user.role] || 'ST';
-            const usersWithSameRole = users.filter(u => u.role === user.role);
-            const index = usersWithSameRole.findIndex(u => u.username === user.username);
-            const number = String(index + 1).padStart(3, '0');
-            return prefix + '-' + number;
-        }
+    <!-- TOMBOL COPY HTML -->
+    <div style="text-align:center;margin:30px 0;">
+        <button class="btn btn-lg" style="background:var(--accent-primary);color:#fff;" onclick="downloadCurrentPage('raisya_cust_chat.html')">
+            ⬇️ Copy HTML (Download Halaman)
+        </button>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-top:8px;">Simpan halaman ini sebagai file .html untuk offline.</p>
+    </div>
+</div>
 
-        function getUserByStaffId(staffId) {
-            return users.find(u => generateStaffId(u) === staffId);
-        }
+<!-- HALAMAN PERCAKAPAN CUST SERVICE -->
+<div id="page-cust-conversation" class="hidden space-y-4 page-transition">
+    <!-- HEADER -->
+    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-3">
+            <button onclick="backToCustChatList()" class="w-8 h-8 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg flex items-center justify-center cursor-pointer transition-all">
+                <i class="fa-solid fa-arrow-left text-xs"></i>
+            </button>
+            <div>
+                <h2 id="cust-contact-name" class="text-sm font-bold text-slate-700">Nama Kontak</h2>
+                <p id="cust-contact-id" class="text-[10px] text-slate-400">ID: ---</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="w-2 h-2 bg-emerald-500 rounded-full" title="Online"></span>
+            <span class="text-[10px] text-slate-400">Online</span>
+        </div>
+    </div>
 
-        // ========== AMBIL DAFTAR KONTAK BERDASARKAN ROLE ==========
-        function getContactsForCurrentUser() {
-            if (!currentUser) return [];
-            
-            const isSuperadmin = currentUser.role === 'superadmin';
-            const contacts = [];
-            
-            if (isSuperadmin) {
-                // Superadmin bisa chat dengan semua staf
-                users.forEach(u => {
-                    if (u.role !== 'superadmin') {
-                        contacts.push({
-                            username: u.username,
-                            nama: u.nama,
-                            staffId: generateStaffId(u),
-                            role: u.role,
-                            jabatan: u.jabatan || '',
-                            bisnis: getBisnisFromRole(u.role),
-                            status: u.status
-                        });
-                    }
-                });
-            } else {
-                // Staf bisa chat dengan Superadmin dan staf lain dalam bisnis yang sama
-                const currentBisnis = getBisnisFromRole(currentUser.role);
-                
-                // Tambahkan Superadmin
-                const superAdmin = users.find(u => u.role === 'superadmin');
-                if (superAdmin) {
-                    contacts.push({
-                        username: superAdmin.username,
-                        nama: superAdmin.nama,
-                        staffId: generateStaffId(superAdmin),
-                        role: superAdmin.role,
-                        jabatan: 'Superadmin',
-                        bisnis: 'all',
-                        status: superAdmin.status
-                    });
-                }
-                
-                // Tambahkan staf lain dalam bisnis yang sama
-                users.forEach(u => {
-                    if (u.username !== currentUser.username && u.role !== 'superadmin') {
-                        const bisnis = getBisnisFromRole(u.role);
-                        if (bisnis === currentBisnis) {
-                            contacts.push({
-                                username: u.username,
-                                nama: u.nama,
-                                staffId: generateStaffId(u),
-                                role: u.role,
-                                jabatan: u.jabatan || '',
-                                bisnis: bisnis,
-                                status: u.status
-                            });
-                        }
-                    }
-                });
-            }
-            
-            return contacts;
-        }
+    <!-- AREA PERCAKAPAN -->
+    <div id="cust-messages-container" class="space-y-3 max-h-[350px] overflow-y-auto pr-1 bg-slate-50 rounded-2xl p-4 border border-slate-100" style="min-height: 300px;">
+        <div class="text-center text-slate-400 py-6 text-xs italic">Belum ada pesan</div>
+    </div>
 
-        function getBisnisFromRole(role) {
-            const map = {
-                'staf_rumah_hantu': 'GHOST',
-                'staf_playground': 'PLAYGROUND',
-                'staf_raisya_dec': 'RAISYA_DEC',
-                'staf_internet': 'INTERNET'
-            };
-            return map[role] || '';
-        }
+    <!-- INPUT PESAN -->
+    <div class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-2xl p-2">
+        <input type="text" id="cust-message-input" class="flex-1 bg-transparent border-none outline-none text-xs px-2 py-2"
+               placeholder="Ketik pesan..." onkeydown="if(event.key==='Enter')sendCustMessage()">
+        <button onclick="sendCustMessage()" class="w-9 h-9 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl flex items-center justify-center cursor-pointer transition-all active:scale-90 shadow-md">
+            <i class="fa-solid fa-paper-plane text-xs"></i>
+        </button>
+    </div>
 
-        function getBisnisName(bisnisKey) {
-            const map = {
-                'GHOST': 'Rumah Hantu',
-                'PLAYGROUND': 'Playground',
-                'RAISYA_DEC': 'Raisya Decoration',
-                'INTERNET': 'Internet'
-            };
-            return map[bisnisKey] || bisnisKey;
-        }
+    <!-- INFO -->
+    <p class="text-[9px] text-slate-400 text-center">
+        <i class="fa-solid fa-shield-halved mr-1"></i> 
+        Percakapan hanya terlihat oleh Anda dan Cust Service.
+    </p>
 
-        // ========== KUNCI CHAT ==========
-        function getChatKey(user1, user2) {
-            const sorted = [user1, user2].sort();
-            return sorted[0] + '___' + sorted[1];
-        }
-
-        function getMessages(contactUsername) {
-            if (!currentUser) return [];
-            const chatKey = getChatKey(currentUser.username, contactUsername);
-            return chatDatabase[chatKey] || [];
-        }
-
-        function saveMessage(contactUsername, senderUsername, text) {
-            const chatKey = getChatKey(currentUser.username, contactUsername);
-            if (!chatDatabase[chatKey]) {
-                chatDatabase[chatKey] = [];
-            }
-            chatDatabase[chatKey].push({
-                sender: senderUsername,
-                text: text,
-                timestamp: new Date().toISOString()
-            });
-            saveChatDatabase();
-        }
-
-        function getLastMessage(contactUsername) {
-            const messages = getMessages(contactUsername);
-            if (messages.length === 0) return null;
-            return messages[messages.length - 1];
-        }
-
-        function getUnreadCount(contactUsername) {
-            // Untuk penyederhanaan, hitung semua pesan dari kontak sebagai "belum dibaca"
-            // Bisa dikembangkan dengan sistem read receipt
-            const messages = getMessages(contactUsername);
-            return messages.filter(m => m.sender === contactUsername).length;
-        }
-
-        // ========== VARIABEL CHAT AKTIF ==========
-        let activeChatContact = null;
-        let chatFilterBisnis = 'all';
-
-        // ========== BUKA DAFTAR CHAT ==========
-        function openChatList() {
-            if (!currentUser) return;
-            switchPage('page-chat-list');
-            
-            const isSuperadmin = currentUser.role === 'superadmin';
-            const filterContainer = document.getElementById('chat-biz-filter');
-            const massalContainer = document.getElementById('chat-massal-container');
-            
-            if (filterContainer) {
-                filterContainer.style.display = isSuperadmin ? '' : 'none';
-            }
-            if (massalContainer) {
-                massalContainer.style.display = isSuperadmin ? '' : 'none';
-            }
-            
-            chatFilterBisnis = 'all';
-            updateChatFilterButtons();
-            renderChatContactList();
-        }
-
-        function filterChatList(bisnis) {
-            chatFilterBisnis = bisnis;
-            updateChatFilterButtons();
-            renderChatContactList();
-        }
-
-        function updateChatFilterButtons() {
-            const filterIds = ['all', 'GHOST', 'PLAYGROUND', 'RAISYA_DEC', 'INTERNET'];
-            filterIds.forEach(id => {
-                const btn = document.getElementById('chat-filter-' + id.toLowerCase().replace('_', '-').replace('_dec', '-dec'));
-                if (!btn) return;
-                const cleanId = id === 'all' ? 'all' : id;
-                if (chatFilterBisnis === cleanId) {
-                    btn.className = 'px-3 py-1.5 rounded-lg text-[10px] font-bold bg-white text-indigo-600 shadow-sm transition-all cursor-pointer';
-                } else {
-                    btn.className = 'px-3 py-1.5 rounded-lg text-[10px] font-bold text-slate-500 hover:bg-slate-200/50 transition-all cursor-pointer';
-                }
-            });
-        }
-
-        function renderChatContactList() {
-            const container = document.getElementById('chat-contact-list');
-            if (!container) return;
-            container.innerHTML = '';
-            
-            const contacts = getContactsForCurrentUser();
-            
-            // Filter berdasarkan bisnis jika superadmin
-            let filteredContacts = contacts;
-            if (currentUser && currentUser.role === 'superadmin' && chatFilterBisnis !== 'all') {
-                filteredContacts = contacts.filter(c => c.bisnis === chatFilterBisnis);
-            }
-            
-            const emptyState = document.getElementById('chat-empty-state');
-            if (filteredContacts.length === 0) {
-                if (emptyState) emptyState.classList.remove('hidden');
-                document.getElementById('chat-contact-count').textContent = '0';
-                return;
-            }
-            
-            if (emptyState) emptyState.classList.add('hidden');
-            
-            filteredContacts.forEach(contact => {
-                const lastMsg = getLastMessage(contact.username);
-                const unread = getUnreadCount(contact.username);
-                const lastMsgText = lastMsg ? (lastMsg.text.length > 30 ? lastMsg.text.substring(0, 30) + '...' : lastMsg.text) : 'Belum ada pesan';
-                const lastMsgTime = lastMsg ? formatChatTime(new Date(lastMsg.timestamp)) : '';
-                const isOnline = contact.status === 'aktif';
-                const bisnisName = contact.bisnis !== 'all' ? getBisnisName(contact.bisnis) : 'Semua';
-                
-                container.innerHTML += `
-                    <div onclick="openConversation('${contact.username}')" 
-                         class="bg-white border border-slate-200 p-3 rounded-xl cursor-pointer hover:bg-indigo-50/30 transition-all flex items-center gap-3">
-                        <div class="relative">
-                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm shadow-sm">
-                                ${contact.nama.charAt(0).toUpperCase()}
-                            </div>
-                            ${isOnline ? '<span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white"></span>' : ''}
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex justify-between items-center">
-                                <h4 class="text-xs font-bold text-slate-700 truncate">${contact.nama}</h4>
-                                <span class="text-[9px] text-slate-400">${lastMsgTime}</span>
-                            </div>
-                            <p class="text-[10px] text-slate-400 truncate mt-0.5">${lastMsgText}</p>
-                            <div class="flex items-center gap-2 mt-1">
-                                <span class="text-[9px] font-bold text-indigo-500 bg-indigo-50 px-1.5 py-0.5 rounded">${contact.staffId}</span>
-                                <span class="text-[9px] text-slate-400">${bisnisName}</span>
-                            </div>
-                        </div>
-                        ${unread > 0 ? `<span class="bg-red-500 text-white text-[9px] font-bold w-5 h-5 rounded-full flex items-center justify-center">${unread}</span>` : ''}
-                    </div>`;
-            });
-            
-            document.getElementById('chat-contact-count').textContent = filteredContacts.length;
-        }
-
-        function formatChatTime(date) {
-            const now = new Date();
-            const diff = now - date;
-            const minutes = Math.floor(diff / 60000);
-            const hours = Math.floor(diff / 3600000);
-            const days = Math.floor(diff / 86400000);
-            
-            if (minutes < 1) return 'Baru saja';
-            if (minutes < 60) return minutes + ' mnt';
-            if (hours < 24) return hours + ' jam';
-            if (days < 7) return days + ' hari';
-            
-            return date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
-        }
-
-        // ========== BUKA PERCAKAPAN ==========
-        function openConversation(contactUsername) {
-            if (!currentUser) return;
-            activeChatContact = contactUsername;
-            
-            const contact = users.find(u => u.username === contactUsername);
-            if (!contact) return;
-            
-            switchPage('page-chat-conversation');
-            
-            document.getElementById('chat-contact-name').innerText = contact.nama;
-            document.getElementById('chat-contact-id').innerText = 'ID: ' + generateStaffId(contact);
-            
-            renderChatMessages();
-            document.getElementById('chat-message-input').focus();
-        }
-
-        function backToChatList() {
-            activeChatContact = null;
-            switchPage('page-chat-list');
-            renderChatContactList();
-        }
-
-        // ========== RENDER PESAN ==========
-        function renderChatMessages() {
-            const container = document.getElementById('chat-messages-container');
-            if (!container) return;
-            container.innerHTML = '';
-            
-            if (!activeChatContact) return;
-            
-            const messages = getMessages(activeChatContact);
-            
-            if (messages.length === 0) {
-                container.innerHTML = '<div class="text-center text-slate-400 py-6 text-xs italic">Belum ada pesan. Mulai percakapan sekarang.</div>';
-                return;
-            }
-            
-            messages.forEach(msg => {
-                const isMe = msg.sender === currentUser.username;
-                const sender = users.find(u => u.username === msg.sender);
-                const senderName = sender ? sender.nama : msg.sender;
-                const senderId = sender ? generateStaffId(sender) : '';
-                const time = new Date(msg.timestamp);
-                const timeStr = time.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-                
-                if (isMe) {
-                    container.innerHTML += `
-                        <div class="flex justify-end">
-                            <div class="max-w-[75%] bg-indigo-500 text-white p-3 rounded-2xl rounded-br-md shadow-sm">
-                                <p class="text-xs">${msg.text}</p>
-                                <p class="text-[9px] text-indigo-200 text-right mt-1">${timeStr}</p>
-                            </div>
-                        </div>`;
-                } else {
-                    container.innerHTML += `
-                        <div class="flex justify-start">
-                            <div class="max-w-[75%] bg-white border border-slate-200 p-3 rounded-2xl rounded-bl-md shadow-sm">
-                                <p class="text-[10px] font-bold text-indigo-600">${senderName} <span class="text-[9px] text-slate-400 font-normal">${senderId}</span></p>
-                                <p class="text-xs text-slate-700 mt-1">${msg.text}</p>
-                                <p class="text-[9px] text-slate-400 text-right mt-1">${timeStr}</p>
-                            </div>
-                        </div>`;
-                }
-            });
-            
-            // Scroll ke bawah
-            container.scrollTop = container.scrollHeight;
-        }
-
-        // ========== KIRIM PESAN ==========
-        function sendChatMessage() {
-            if (!currentUser || !activeChatContact) return;
-            
-            const input = document.getElementById('chat-message-input');
-            if (!input) return;
-            
-            const text = input.value.trim();
-            if (!text) return;
-            
-            saveMessage(activeChatContact, currentUser.username, text);
-            input.value = '';
-            renderChatMessages();
-            
-            // Auto-scroll
-            const container = document.getElementById('chat-messages-container');
-            if (container) {
-                container.scrollTop = container.scrollHeight;
-            }
-        }
-
-        // ========== CHAT MASSAL (SUPERADMIN) ==========
-        function openMassalChat() {
-            if (!currentUser || currentUser.role !== 'superadmin') return;
-            
-            // Pilih bisnis untuk chat massal
-            const bisnisOptions = [
-                { key: 'GHOST', name: 'Rumah Hantu' },
-                { key: 'PLAYGROUND', name: 'Playground' },
-                { key: 'RAISYA_DEC', name: 'Raisya Decoration' },
-                { key: 'INTERNET', name: 'Internet' },
-                { key: 'all', name: 'Semua Bisnis' }
-            ];
-            
-            let optionsText = 'Pilih bisnis untuk chat massal:\n\n';
-            bisnisOptions.forEach((opt, i) => {
-                optionsText += (i + 1) + '. ' + opt.name + '\n';
-            });
-            optionsText += '\nKetik nomor pilihan:';
-            
-            const choice = prompt(optionsText);
-            if (!choice) return;
-            
-            const index = parseInt(choice) - 1;
-            if (index < 0 || index >= bisnisOptions.length) {
-                showToast('⚠️ Pilihan tidak valid!', 'error');
-                return;
-            }
-            
-            const selectedBisnis = bisnisOptions[index];
-            const message = prompt('Ketik pesan massal untuk ' + selectedBisnis.name + ':');
-            if (!message || !message.trim()) return;
-            
-            // Kirim ke semua staf dalam bisnis yang dipilih
-            const contacts = getContactsForCurrentUser();
-            const targetContacts = selectedBisnis.key === 'all' 
-                ? contacts 
-                : contacts.filter(c => c.bisnis === selectedBisnis.key);
-            
-            if (targetContacts.length === 0) {
-                showToast('⚠️ Tidak ada staf dalam bisnis ini!', 'warning');
-                return;
-            }
-            
-            targetContacts.forEach(contact => {
-                saveMessage(contact.username, currentUser.username, message.trim());
-            });
-            
-            showToast('✅ Pesan massal terkirim ke ' + targetContacts.length + ' staf!', 'success');
-            renderChatContactList();
-        }
-
-        console.log('✅ Blok 17 – Sistem Chat siap');
-        console.log('💬 Chat Staf, Chat Massal, ID Staf, Filter Bisnis');
-    </script>
+    <!-- TOMBOL COPY HTML -->
+    <div style="text-align:center;margin:30px 0;">
+        <button class="btn btn-lg" style="background:var(--accent-primary);color:#fff;" onclick="downloadCurrentPage('raisya_cust_conv.html')">
+            ⬇️ Copy HTML (Download Halaman)
+        </button>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-top:8px;">Simpan halaman ini sebagai file .html untuk offline.</p>
+    </div>
+</div>
 <!-- END BLOK 17 -->
+
+
+<!-- ===== RAISYA PRODUCTION → =================      BLOK 18 - RAISYA DECORATION v2.1 - PAPAN INFORMASI + ADMIN ===== -->
+<!-- ============================================================
+     BLOK 18 - RAISYA DECORATION v2.1 - PAPAN INFORMASI + ADMIN
+     ============================================================ -->
+            <!-- BAGIAN INFORMASI DI HALAMAN MENU PELANGGAN -->
+            <div id="section-papan-info" class="space-y-4 pt-2">
+                <!-- PAPAN INFORMASI MASAL -->
+                <div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-4">
+                    <h3 class="text-xs font-extrabold text-amber-700 uppercase flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-bullhorn text-amber-500"></i> Informasi Penting
+                    </h3>
+                    <div id="info-masal-content" class="text-xs text-slate-600 leading-relaxed whitespace-pre-line">
+                        Tidak ada informasi.
+                    </div>
+                </div>
+
+                <!-- PAPAN INFORMASI PRIBADI -->
+                <div class="bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 rounded-2xl p-4">
+                    <h3 class="text-xs font-extrabold text-blue-700 uppercase flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-envelope text-blue-500"></i> Pesan Untuk Anda
+                    </h3>
+                    <div id="info-pribadi-content" class="text-xs text-slate-600 leading-relaxed whitespace-pre-line">
+                        Tidak ada pesan pribadi.
+                    </div>
+                </div>
+            </div>
+
+            <!-- HALAMAN ADMIN UNTUK KELOLA PAPAN INFORMASI -->
+            <div id="page-admin-info" class="hidden space-y-4 page-transition">
+                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                    <div>
+                        <span class="px-2 py-0.5 text-[9px] font-extrabold bg-amber-100 text-amber-700 rounded-full uppercase tracking-wider">Admin</span>
+                        <h2 class="text-md font-bold text-slate-700 mt-0.5 flex items-center gap-2">
+                            <i class="fa-solid fa-bullhorn text-amber-500"></i> Kelola Papan Informasi
+                        </h2>
+                    </div>
+                    <button onclick="switchPage('page-menu')" class="text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-1.5 rounded-lg transition-all cursor-pointer">
+                        <i class="fa-solid fa-house mr-1"></i> Menu
+                    </button>
+                </div>
+
+                <!-- Edit Informasi Masal -->
+                <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 space-y-3">
+                    <h4 class="text-xs font-bold text-slate-500 uppercase flex items-center gap-2">
+                        <i class="fa-solid fa-bullhorn text-amber-500"></i> Informasi Masal (Semua Pelanggan)
+                    </h4>
+                    <textarea id="admin-info-masal" rows="4" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 resize-none" placeholder="Tulis informasi masal..."></textarea>
+                    <button onclick="saveInfoMasal()" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer transition-all active:scale-95">
+                        <i class="fa-solid fa-floppy-disk mr-1"></i> Simpan Informasi Masal
+                    </button>
+                </div>
+
+                <!-- Edit Informasi Pribadi per Pelanggan -->
+                <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 space-y-3">
+                    <h4 class="text-xs font-bold text-slate-500 uppercase flex items-center gap-2">
+                        <i class="fa-solid fa-envelope text-blue-500"></i> Informasi Pribadi (Per Pelanggan)
+                    </h4>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Pilih Pelanggan</label>
+                        <select id="admin-select-pelanggan" onchange="loadInfoPribadiForAdmin()" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
+                            <option value="">-- Pilih Pelanggan --</option>
+                        </select>
+                    </div>
+                    <textarea id="admin-info-pribadi" rows="4" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 resize-none" placeholder="Tulis pesan pribadi..."></textarea>
+                    <button onclick="saveInfoPribadi()" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer transition-all active:scale-95">
+                        <i class="fa-solid fa-floppy-disk mr-1"></i> Simpan Pesan Pribadi
+                    </button>
+                </div>
+            </div>
+<!-- END BLOK 18 -->
+
+
+<!-- ===== RAISYA PRODUCTION → BLOK 19 - RAISYA DECORATION v2.1 - JAVASCRIPT FITUR BARU ===== -->
+<!-- ============================================================
+     BLOK 19 - RAISYA DECORATION v2.1 - JAVASCRIPT FITUR BARU
+     (Kendala, Cust Service Chat, Papan Informasi, Notifikasi)
+     ============================================================ -->
+<script>
+    // ========== DATABASE FITUR BARU ==========
+    let kendalaData = JSON.parse(localStorage.getItem('raisya_kendala')) || [];
+    let custChatData = JSON.parse(localStorage.getItem('raisya_cust_chats')) || {};
+    let papanInfo = JSON.parse(localStorage.getItem('raisya_papan_info')) || {
+        masal: '',
+        pribadi: {}   // { "username": "pesan untuk dia" }
+    };
+
+    function saveKendala() { localStorage.setItem('raisya_kendala', JSON.stringify(kendalaData)); }
+    function saveCustChatData() { localStorage.setItem('raisya_cust_chats', JSON.stringify(custChatData)); }
+    function savePapanInfo() { localStorage.setItem('raisya_papan_info', JSON.stringify(papanInfo)); }
+
+    // ========== NOTIFIKASI & GETAR ==========
+    function requestNotifPermission() {
+        if ('Notification' in window && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+            Notification.requestPermission();
+        }
+    }
+
+    function notifyNewMessage(fromName, text) {
+        if ('Notification' in window && Notification.permission === 'granted') {
+            new Notification('📩 Pesan Baru dari ' + fromName, {
+                body: text.length > 50 ? text.substring(0, 50) + '...' : text,
+                icon: 'https://cdn-icons-png.flaticon.com/512/3068/3068321.png'
+            });
+        }
+        if (navigator.vibrate) {
+            navigator.vibrate(200);
+        }
+    }
+
+    // ========== KENDALA INTERNET ==========
+    let kendalaFotoData = null; // base64
+
+    function previewKendalaFoto(input) {
+        const file = input.files[0];
+        if (!file) return;
+        if (file.size > 2 * 1024 * 1024) { showToast('⚠️ Ukuran foto maksimal 2MB!', 'error'); return; }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            kendalaFotoData = e.target.result;
+            document.getElementById('kendala-preview-img').src = kendalaFotoData;
+            document.getElementById('kendala-preview').classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function removeKendalaFoto() {
+        kendalaFotoData = null;
+        document.getElementById('kendala-foto').value = '';
+        document.getElementById('kendala-preview').classList.add('hidden');
+    }
+
+    function kirimKendala() {
+        const text = document.getElementById('kendala-text').value.trim();
+        if (!text) { showToast('⚠️ Isi kendala terlebih dahulu!', 'error'); return; }
+        if (!currentUser) { showToast('⚠️ Anda harus login!', 'error'); return; }
+
+        const laporan = {
+            id: Date.now(),
+            username: currentUser.username,
+            nama: currentUser.nama,
+            text: text,
+            foto: kendalaFotoData || '',
+            timestamp: new Date().toISOString(),
+            status: 'baru'
+        };
+        kendalaData.unshift(laporan);
+        saveKendala();
+        document.getElementById('kendala-text').value = '';
+        removeKendalaFoto();
+        renderRiwayatKendala();
+        showToast('✅ Pengaduan berhasil dikirim!', 'success');
+    }
+
+    function renderRiwayatKendala() {
+        const container = document.getElementById('riwayat-kendala');
+        if (!container || !currentUser) return;
+        const milikSaya = kendalaData.filter(k => k.username === currentUser.username);
+        document.getElementById('kendala-count-badge').textContent = milikSaya.length;
+        if (milikSaya.length === 0) {
+            container.innerHTML = '<div class="text-center text-slate-400 py-4 text-xs italic">Belum ada pengaduan.</div>';
+            return;
+        }
+        container.innerHTML = milikSaya.map(k => `
+            <div class="bg-white border border-slate-200 p-3 rounded-xl text-xs">
+                <div class="flex justify-between">
+                    <span class="font-bold text-slate-700">${new Date(k.timestamp).toLocaleString('id-ID')}</span>
+                    <span class="px-2 py-0.5 rounded-full text-[9px] font-bold ${k.status === 'baru' ? 'bg-red-100 text-red-600' : 'bg-emerald-100 text-emerald-600'}">${k.status}</span>
+                </div>
+                <p class="mt-1 text-slate-600">${k.text}</p>
+                ${k.foto ? `<img src="${k.foto}" class="mt-2 rounded-lg max-h-32">` : ''}
+            </div>
+        `).join('');
+    }
+
+    // ========== CUST SERVICE CHAT ==========
+    let activeCustContact = null;
+
+    function getCustContacts() {
+        // Tampilkan admin + staf yang aktif
+        return users.filter(u => u.role === 'superadmin' || (u.role !== 'superadmin' && u.status === 'aktif'));
+    }
+
+    function renderCustContactList() {
+        const container = document.getElementById('cust-contact-list');
+        if (!container) return;
+        const contacts = getCustContacts();
+        document.getElementById('cust-contact-count').textContent = contacts.length;
+        if (contacts.length === 0) {
+            document.getElementById('cust-empty-state').classList.remove('hidden');
+            return;
+        }
+        document.getElementById('cust-empty-state').classList.add('hidden');
+        container.innerHTML = contacts.map(c => {
+            const last = getLastCustMessage(c.username);
+            return `
+                <div onclick="openCustConversation('${c.username}')" class="bg-white border border-slate-200 p-3 rounded-xl cursor-pointer hover:bg-indigo-50/30 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold">${c.nama.charAt(0)}</div>
+                    <div class="flex-1">
+                        <h4 class="text-xs font-bold text-slate-700">${c.nama} <span class="text-[9px] text-slate-400">${c.role === 'superadmin' ? 'Admin' : (c.jabatan || 'Staf')}</span></h4>
+                        <p class="text-[10px] text-slate-400">${last ? last.text.substring(0, 30) : 'Belum ada pesan'}</p>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function openCustConversation(username) {
+        activeCustContact = username;
+        const contact = users.find(u => u.username === username);
+        document.getElementById('cust-contact-name').textContent = contact ? contact.nama : username;
+        document.getElementById('cust-contact-id').textContent = contact ? 'ID: ' + (contact.jabatan || 'Staf') : '';
+        switchPage('page-cust-conversation');
+        renderCustMessages();
+    }
+
+    function backToCustChatList() {
+        activeCustContact = null;
+        switchPage('page-cust-chat-list');
+        renderCustContactList();
+    }
+
+    function renderCustMessages() {
+        const container = document.getElementById('cust-messages-container');
+        if (!container || !activeCustContact) return;
+        const key = [currentUser.username, activeCustContact].sort().join('___');
+        const msgs = custChatData[key] || [];
+        if (msgs.length === 0) {
+            container.innerHTML = '<div class="text-center text-slate-400 py-6 text-xs italic">Belum ada pesan</div>';
+            return;
+        }
+        container.innerHTML = msgs.map(m => {
+            const isMe = m.from === currentUser.username;
+            return isMe
+                ? `<div class="flex justify-end"><div class="max-w-[75%] bg-indigo-500 text-white p-3 rounded-2xl rounded-br-md"><p class="text-xs">${m.text}</p><p class="text-[9px] text-indigo-200 text-right mt-1">${new Date(m.time).toLocaleTimeString('id-ID', {hour:'2-digit',minute:'2-digit'})}</p></div></div>`
+                : `<div class="flex justify-start"><div class="max-w-[75%] bg-white border p-3 rounded-2xl rounded-bl-md"><p class="text-[10px] font-bold text-indigo-600">${m.from}</p><p class="text-xs mt-1">${m.text}</p><p class="text-[9px] text-slate-400 text-right mt-1">${new Date(m.time).toLocaleTimeString('id-ID', {hour:'2-digit',minute:'2-digit'})}</p></div></div>`;
+        }).join('');
+        container.scrollTop = container.scrollHeight;
+    }
+
+    function sendCustMessage() {
+        if (!activeCustContact) return;
+        const input = document.getElementById('cust-message-input');
+        const text = input.value.trim();
+        if (!text) return;
+
+        const key = [currentUser.username, activeCustContact].sort().join('___');
+        if (!custChatData[key]) custChatData[key] = [];
+        custChatData[key].push({ from: currentUser.username, text, time: new Date().toISOString() });
+        saveCustChatData();
+        input.value = '';
+        renderCustMessages();
+
+        // 🔔 Notifikasi ke lawan bicara
+        if (activeCustContact !== currentUser.username) {
+            notifyNewMessage(currentUser.nama, text);
+        }
+    }
+
+    function getLastCustMessage(username) {
+        const key = [currentUser.username, username].sort().join('___');
+        const msgs = custChatData[key] || [];
+        return msgs[msgs.length - 1];
+    }
+
+    // ========== PAPAN INFORMASI ==========
+    function loadPapanInfo() {
+        if (!currentUser) return;
+        const masalEl = document.getElementById('info-masal-content');
+        const pribadiEl = document.getElementById('info-pribadi-content');
+        if (masalEl) masalEl.textContent = papanInfo.masal || 'Tidak ada informasi.';
+        if (pribadiEl) {
+            const pribadi = (papanInfo.pribadi && papanInfo.pribadi[currentUser.username]) || 'Tidak ada pesan pribadi.';
+            pribadiEl.textContent = pribadi;
+        }
+    }
+
+    // Untuk admin
+    function loadInfoPribadiForAdmin() {
+        const select = document.getElementById('admin-select-pelanggan');
+        const username = select ? select.value : '';
+        const textarea = document.getElementById('admin-info-pribadi');
+        if (textarea) textarea.value = (papanInfo.pribadi && papanInfo.pribadi[username]) || '';
+    }
+
+    function saveInfoMasal() {
+        const textarea = document.getElementById('admin-info-masal');
+        if (!textarea) return;
+        papanInfo.masal = textarea.value;
+        savePapanInfo();
+        showToast('✅ Informasi masal disimpan!', 'success');
+    }
+
+    function saveInfoPribadi() {
+        const select = document.getElementById('admin-select-pelanggan');
+        const username = select ? select.value : '';
+        if (!username) { showToast('⚠️ Pilih pelanggan dulu!', 'error'); return; }
+        if (!papanInfo.pribadi) papanInfo.pribadi = {};
+        const textarea = document.getElementById('admin-info-pribadi');
+        if (textarea) papanInfo.pribadi[username] = textarea.value;
+        savePapanInfo();
+        showToast('✅ Pesan pribadi disimpan!', 'success');
+    }
+
+    // Panggil loadPapanInfo saat buka halaman menu (opsional, bisa ditambahkan di pageInit)
+    // Untuk sekarang, akan dipanggil di switchPage jika diperlukan.
+    // ========== OVERRIDE switchPage UNTUK HALAMAN BARU ==========
+    const originalSwitchPage = switchPage;
+    switchPage = function(pageId, ...args) {
+        // Panggil fungsi asli
+        originalSwitchPage(pageId, ...args);
+        
+        // Render konten sesuai halaman baru
+        if (pageId === 'page-kendala') {
+            renderRiwayatKendala();
+        } else if (pageId === 'page-cust-chat-list') {
+            renderCustContactList();
+        } else if (pageId === 'page-cust-conversation') {
+            // sudah diatur oleh openCustConversation
+        } else if (pageId === 'page-admin-info') {
+            // Isi dropdown pelanggan
+            const select = document.getElementById('admin-select-pelanggan');
+            if (select) {
+                const pelanggan = users.filter(u => u.role !== 'superadmin' && u.role !== 'staf_internet' && u.role !== 'staf_rumah_hantu' && u.role !== 'staf_playground' && u.role !== 'staf_raisya_dec');
+                select.innerHTML = '<option value="">-- Pilih Pelanggan --</option>' + 
+                    pelanggan.map(p => `<option value="${p.username}">${p.nama} (${p.username})</option>`).join('');
+            }
+        } else if (pageId === 'page-menu') {
+            loadPapanInfo();
+        }
+    };
+
+    console.log('✅ Blok 19 – Fitur baru (Kendala, Cust Service Chat, Papan Informasi) siap.');
+</script>
+<!-- END BLOK 19 -->
